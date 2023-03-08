@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<view>
+    <view class="title">同行/游记：title计划单</view>
+    <view class="s-item">
+        <view class="layout_horizontal">
+            <view class="circle"></view>
+            <view class="layout_vertical item_time">
+                <view>00:00</view>
+                <view>04:00</view>
+            </view>
+            <view class="item_title">今天熬夜软工</view>
+            <image src="/images/alarm.png" class="pic_alarm"></image>
+            <image src="/images/edit1.png" class="pic_edit"></image>
+        </view>
+        <view class="money_box">
+            <text space="nbsp" class="money">预算:￥100</text>
+        </view>
+    </view>
+    <view class="s-item">
+        <view class="layout_horizontal">
+            <view class="circle"></view>
+            <view class="layout_vertical item_time">
+                <view>00:00</view>
+                <view>04:00</view>
+            </view>
+            <view class="item_title">今天熬夜软工</view>
+            <image src="/images/alarm.png" class="pic_alarm"></image>
+            <image src="/images/edit1.png" class="pic_edit"></image>
+        </view>
+        <view class="money_box">
+            <text space="nbsp" class="money">预算:￥100</text>
+        </view>
+    </view>
+    <view class="s-item add" style="font-size: small;">
+        <text>预算：￥80</text>
+    </view>
+</view>

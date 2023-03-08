@@ -1,0 +1,25 @@
+<!--pages/Settings/Settings.wxml-->
+<view class="settings">
+    <mp-cells>
+        <mp-cell link hover value="修改密码" bindtap="navigate2editpass">
+        </mp-cell>
+        <mp-cell link hover value="编辑资料" bindtap="navigate2Edit">
+        </mp-cell>
+    </mp-cells>
+
+    <mp-cells>
+        <mp-cell link hover value="问题反馈" bindtap="navigate2feedback">
+        </mp-cell>
+    </mp-cells>
+
+    <mp-cells>
+        <mp-cell link hover value="关于我们" bindtap="navigate2about">
+        </mp-cell>
+    </mp-cells>
+
+    <mp-cells>
+        <mp-cell hover bindtap="navigate2logout">
+            <text class="textstyle">退出登录</text>
+        </mp-cell>
+    </mp-cells>
+</view>

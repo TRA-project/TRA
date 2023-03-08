@@ -1,0 +1,57 @@
+<!--pages/Collection/Collection.wxml-->
+<!--it is right-->
+
+<wxs module="findimg">
+    module.exports = {
+        getimg: function(cover) {
+            var img = ''
+            if (cover == null) {
+                img = 'http://114.116.194.214/media/travelRecordCover/1.jpg'
+            } else {
+                img = 'http://114.116.194.214' + '/api/core/images/' + cover + '/data/'
+            }
+            return img
+        }
+    }
+</wxs>
+<view>
+    <view class="col_head">
+        <view class="col_head_title">我的游记</view>
+            <!--<button class="add_btn" bindtap="addCollection"></button>
+            <button class="man_btn" bindtap="manCollection"></button>-->
+            <view class="add_btn" bindtap="addCollection">新增合集</view>
+            <view class="man_btn" bindtap="manCollection">管理合集</view>
+    </view>
+    
+    <block wx:for-items="{{collections}}" wx:key="{{item.id}}">
+        <view class="kind-list-item" >
+            <view id="{{item.id}}" class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}" bindtap="kindToggle" >
+                <image class="col_img" src="{{images[1]}}" wx:if="{{item.open}}"></image>
+                <image wx:else class="col_img" src="{{images[0]}}" ></image>
+                <view class="col_item">{{item.title}} · {{item.collection_travels.length}}</view>
+                <!--<button class="upd_btn" type="primary" plain="true"></button>-->
+            </view>
+        </view>
+
+        <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
+            <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
+                <mp-cells wx:for-items="{{item.collection_travels}}" wx:for-item="travel" wx:key="*item">
+                    <mp-cell link hover class="tra_item" value="{{travel.title}}" id="{{travel.id}}" bindtap="navigate2travel">
+                    <image slot="icon" src="{{findimg.getimg(travel.cover)}}" style="height: 60px; width: 60px; margin-right: 20px;" data-pics="{{travel.cover}}" ></image>
+                    </mp-cell>
+                </mp-cells>
+                <!--<block wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
+                  <navigator wx:if="{{page.appid}}" target="miniProgram" open-type="navigate" app-id="{{page.appid}}" path="" extra-data="" version="release" class="navigator">
+                    <view class="navigator-text">{{page.name}}</view>
+                    <view class="navigator-arrow"></view>
+                  </navigator>
+                  <navigator wx:else url="/packageComponent/pages/{{item.id}}/{{page}}/{{page}}" class="navigator">
+                    <view class="navigator-text">{{page}}</view>
+                    <view class="navigator-arrow"></view>
+                  </navigator>
+                </block>-->
+            </view>
+        </view>
+    </block>
+
+</view>

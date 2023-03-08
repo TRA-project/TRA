@@ -1,0 +1,3 @@
+<picker mode="multiSelector" range="{{cur}}" range-key="name" value="{{idx}}" bindchange="change" bindcolumnchange ="columnChange">
+{{city}}
+</picker>

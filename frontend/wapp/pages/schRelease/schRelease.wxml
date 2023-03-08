@@ -1,0 +1,2 @@
+<!--pages/schRelease/schRelease.wxml-->
+<mySchRelease schedule="{{schedule}}" copydate="{{schdate}}"></mySchRelease>

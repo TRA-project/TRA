@@ -1,0 +1,143 @@
+.textBox {
+  padding-top: 10rpx;
+  height: 50rpx;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+  background-color: rgb(245, 245, 245);
+}
+
+.travelRecords{
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  background-color: rgb(245, 245, 245);
+}
+
+.travelRecord{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  justify-items: center;
+  align-content: left;
+  align-items: left;
+  /* border: 3rpx solid #44cdf0; */
+  border-radius: 15rpx;
+  height: 400rpx;
+  width: 85%;
+  background:white;
+  margin-bottom:20rpx;
+}
+
+
+.trCoverPic{
+  border-top-left-radius: 15rpx;
+  border-top-right-radius: 15rpx;
+  height: 270rpx;
+  width: 100%;
+}
+
+.trLocBox{
+  display:flex;
+  height: 40rpx;
+  width: fit-content;
+  align-items: center;
+  align-content: left;
+  background: rgb(255, 255, 255);
+  border-bottom-right-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  position: relative;
+  top:-175rpx;
+}
+
+.trLocIcon{
+  width: 30rpx;
+}
+
+.trLocText{
+  height: 40rpx;
+  font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  font-family:  ‘Segoe UI’, Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tr_title{
+  width: 100%;
+  height: 60rpx;
+  font-size:45rpx;
+  font-weight: bolder;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  margin-left:15rpx;
+}
+
+.tr_protrait_nickname_like{
+  width: 100%;
+  height: 40rpx;
+  display:flex;
+  margin-left:5rpx;
+  margin-top: 15rpx;
+}
+
+.tr_protrait{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  width:9%;
+  height: 0;
+  position: relative;
+  padding-top: 7%;
+  margin-right: 3%;
+  margin-left: 1%;
+}
+
+.tr_protrait_pic{
+  height:100%;
+  width: 100%;
+  position: absolute;
+  top:-12%;
+  border-radius:100rpx;
+}
+
+.tr_nickname{
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width:60%;
+  height: 40rpx;
+  font-size:30rpx;
+  color:grey;
+}
+
+.tr_like{
+  width:60%;
+  height: 40rpx;
+  display:flex;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+  margin-right: 20rpx;
+}
+
+.tr_like_pic{
+ height: 40rpx;
+ width:20%;
+ position: relative;
+}
+
+.tr_text{
+  display:flex;
+  justify-content: flex-end;
+  height: 40rpx;
+  font-size:30rpx;
+  color:grey;
+  font-weight: normal;
+  align-content: center;
+  align-items: center;
+}

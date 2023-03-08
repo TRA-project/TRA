@@ -1,0 +1,83 @@
+<view style="overflow-y:scroll;width:100%;flex:1">
+
+    <view class="swiper_box">
+            <view class="swiper_tab_navigator">
+                <view wx:for="{{tab.tabitem}}" wx:key="index"
+                bindtap="setTab" data-tabindex="{{index}}" 
+                class="swiper_tab_item">
+                    <view wx:if="{{show_tab == index}}" class = "swiper_tab_item_text_choose">
+                            <view>
+                                {{item.text}}
+                            </view>
+                            <mp-badge content="{{item.messagenum}}" style="position: absolute;top: -.4em;left:calc({{(22+(index)*33)}}%);"/>
+                    </view>
+                    <view wx:if="{{show_tab != index}}" class = "swiper_tab_item_text" >
+                        <view>
+                            {{item.text}}
+                        </view>
+                        <mp-badge content="{{item.messagenum}}" style="position: absolute;top: -.4em;left:calc({{(22+(index)*33)}}%);"/>
+                    </view>
+                </view>
+            </view>
+        <view>
+            <view class="swiper_tab_line" 
+            style="width:{{100/tab.tabnum}}%;transform:translateX({{100*show_tab}}%);">
+            </view>
+        </view> 
+    </view>
+    <swiper current="{{current_tab}}"  duration="800" bindchange="bindChange"
+            circular="true" class = "subscription_box" style="--pageSize--:{{swiper_height[current_tab]}}rpx">
+        <swiper-item class = "subscription_list">
+                <view wx:for = "{{subscriber_list}}" wx:key="index"
+                style="width: 750rpx; height: 214rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx">
+                    <view class = "subscription" id = "{{index}}">
+                        <view class = "subscription_protrait" id="{{item.id}}" catchtap="navigate2OtherZone">
+                            <image class = "subscription_protrait_pic" src = "{{item.protrait}}" mode = "scaleToFill"></image>
+                        </view>
+                        <view class = "subscription_info" >
+                            <view class = "subscription_info_nickname"  style="width: 258rpx; height: 136rpx; display: flex; box-sizing: border-box; left: NaNrpx; top: NaNrpx">
+                                {{item.nickname}}
+                            </view>
+                        </view>
+                        <!--关注-->
+                        <view id="{{index}}" class="subscribe_view" wx:if="{{!item.subscribed}}" style="background-color:rgb(80, 161, 236); color:#fff;" catchtap="subscribe">
+                            <text>关注</text>
+                        </view>
+        
+                        <view id="{{index}}" class="subscribe_view" wx:if="{{item.subscribed}}" style="background-color:rgb(230, 230, 230); color:#aaa;" catchtap="disSubscribe">
+                            <text>取消关注</text>
+                        </view>
+                    </view>
+            </view>
+            <view wx:if="{{next_subscriber!=null}}" class="textBox" bindtap="getSubscriber">
+                <text>点击查看更多关注</text>
+            </view>
+        </swiper-item>
+        <swiper-item class = "subscription_list">
+                <view wx:for = "{{follower_list}}" wx:key="index"
+                style="width: 750rpx; height: 214rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx">
+                    <view class = "subscription" id = "{{index}}">
+                        <view class = "subscription_protrait" id="{{item.id}}" catchtap="navigate2OtherZone">
+                            <image class = "subscription_protrait_pic" src = "{{item.protrait}}" mode = "scaleToFill"></image>
+                        </view>
+                        <view class = "subscription_info" >
+                            <view class = "subscription_info_nickname"  style="width: 258rpx; height: 136rpx; display: flex; box-sizing: border-box; left: NaNrpx; top: NaNrpx">
+                                {{item.nickname}}
+                            </view>
+                        </view>
+                        <!--关注-->
+                        <view id="{{index}}" class="subscribe_view" wx:if="{{!item.subscribed}}" style="background-color:rgb(80, 161, 236); color:#fff;" catchtap="subscribe">
+                            <text>关注</text>
+                        </view>
+        
+                        <view id="{{index}}" class="subscribe_view" wx:if="{{item.subscribed}}" style="background-color:rgb(230, 230, 230); color:#aaa;" catchtap="disSubscribe">
+                            <text>取消关注</text>
+                        </view>
+                    </view>
+            </view>
+            <view wx:if="{{next_follower!=null}}" class="textBox" bindtap="getFollower">
+                <text>点击查看更多粉丝</text>
+            </view>
+        </swiper-item>
+    </swiper>
+</view>

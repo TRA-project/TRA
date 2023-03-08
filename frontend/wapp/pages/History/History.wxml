@@ -1,0 +1,43 @@
+<!--pages/History/History.wxml-->
+<view class="weui-panel weui-panel_access">
+            <view class="weui-panel__hd">我的旅行记录</view>
+            <view class="weui-panel__bd">
+                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="{{images.cities_num}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">时光旅行馆</view>
+                        <view class="weui-media-box__desc">至少出行过 {{cities_num}} 座城市</view>
+                    </view>
+                </navigator>
+                 <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="{{images.love_city}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">度假胜地</view>
+                        <view class="weui-media-box__desc">去过次数最多的地方是: {{love_city}}</view>
+                    </view>
+                </navigator>
+                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="{{images.love_people}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">同行挚友</view>
+                        <view class="weui-media-box__desc">同行次数最多的人: {{love_people}}</view>
+                    </view>
+                </navigator>
+               
+                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="{{images.travel_num}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">旅行次数</view>
+                        <view class="weui-media-box__desc">总计出行过 {{travel_num}} 次</view>
+                    </view>
+                </navigator>
+            </view>
+</view>

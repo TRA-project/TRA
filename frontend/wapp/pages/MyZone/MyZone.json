@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "mp-badge": "weui-miniprogram/badge/badge"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "onReachBottomDistance": 30,
+  "navigationBarTitleText": ""
+}

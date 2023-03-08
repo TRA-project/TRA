@@ -1,0 +1,196 @@
+
+<view class = "search_box" >
+    <view class = "search_icon">
+        <image src = "{{server_imagename}}/magnifier.png"  class = "search_icon_pic">
+        </image>
+    </view>
+    <input class = "input_box" value = "{{search_value}}" confirm-type="search" bindconfirm="redirect2SearchResult" placeholder-class="serachvalue">
+    </input>
+    <!-- <view class = "clear_icon">
+        <image src ="{{server_imagename}}/clear.png" mode = 'widthFix' class = "clear_icon_pic" bindtap = "clear">
+        </image>
+    </view> -->
+</view>
+
+<view class="swiper_box">
+        <view class="swiper_tab_navigator">
+            <view wx:for="{{tab.tabitem}}" wx:key="index"
+            bindtap="setTab" data-tabindex="{{index}}" 
+            class="swiper_tab_item">
+                <view wx:if="{{show_tab == index}}" class = "swiper_tab_item_text_choose">
+                        <view>
+                            {{item.text}}
+                        </view>
+                </view>
+                <view wx:if="{{show_tab != index}}" class = "swiper_tab_item_text" >
+                    <view>
+                        {{item.text}}
+                    </view>
+                </view>
+            </view>
+        </view>
+    <view>
+        <view class="swiper_tab_line" 
+        style="width:{{100/tab.tabnum}}%;transform:translateX({{100*show_tab}}%);">
+        </view>
+    </view> 
+</view>
+<swiper current="{{current_tab}}"  duration="800" bindchange="bindChange"
+        circular="true" class = "notification_box" style="--pageSize--:{{pageSize}}rpx">
+        
+    <swiper-item>
+    <text space="nbsp" bindtap="bindsortTra" class="sortbutton"> {{data_order_text[data_order_travel]}}</text>
+        <view class = "travelRecords" wx:if="{{travelEmpty==false}}">
+            <view wx:for="{{travel_ids}}"  class = 'travelRecord' id="{{index}}" bindtap="navigate2Travel" wx:key="item">
+                    <view class = "trCover">
+                        <image class = 'trCoverPic' src = '{{travel_covers[index]}}' mode="aspectFill"></image>
+                    </view>
+                    <view class = "tr_title">
+                        {{travel_titles[index]}}
+                    </view>
+                    <view class = "tr_protrait_nickname_like">
+                        <view class = "tr_protrait">
+                            <image class = "tr_protrait_pic" src = "{{travel_icons[index]}}" mode = "scaleToFill"> </image>
+                        </view>
+                        <view class = "tr_nickname">
+                            <text style = "font-weight:bolder">{{travel_nicknames[index]}}</text>
+                        </view>
+                        <view class = "tr_like">
+                            <image wx:if="{{travel_liked_now[index]==true}}"  src="{{server_imagename}}/likes.png" class = "tr_like_pic" mode = "aspectFit"  id = "{{index}}" catchtap="disThumbsUp"></image>
+                            <image wx:else src="{{server_imagename}}/like_grey.png" class = "tr_like_pic" mode = "aspectFit"  id = "{{index}}" catchtap="thumbsUp"></image>
+                            <view wx:if="{{travel_liked_now[index]==true}}" class = "tr_text">{{travel_likes[index]+(travel_liked[index]==false)}}</view>
+                            <view wx:else class = "tr_text">{{travel_likes[index]-(travel_liked[index]==true)}}</view>
+                        </view>
+                    </view>
+                    <view class = "trLocBox">
+                        <image class = "trLocIcon" src = "{{server_imagename}}/location.png" mode = "widthFix"></image>
+                        <view class = "trLocText">
+                            <text space="ensp">{{travel_names[index]}} </text>
+                        </view>
+                    </view>
+                </view>
+            <view wx:if = "{{hasMoreTravel}}" class = "show_more_info" bindtap = "showMoreTravel">点击显示更多...</view>
+            </view>
+            <view wx:else style = "display:flex; justify-content:center;justify-items:center;align-items:center;flex-direction:column">
+                <image class = "not_found_pic" src = "{{server_imagename}}/404.png" mode = "widthFix"></image>
+                
+            </view>
+    </swiper-item>
+    <swiper-item>
+        <view wx:if="{{userEmpty==false}}">
+            <view wx:for= "{{users_ids}}" class = "user" wx:key="index" >
+                <view class = "user_protrait" bindtap  = "navigate2User" id = "{{index}}">
+                    <image class = "user_protrait_pic" mode = "scaleToFill" src = "{{users_icons[index]}}"></image>
+                </view>
+                <view class = "user_info">
+                    <view class = "user_nickname">
+                        {{users_nicknames[index]}}
+                    </view>
+                    <view class = "user_fans">
+                        粉丝数：{{users_fans[index]}}
+                    </view>
+                </view>
+                <view class = "concern_box" >
+                    <view wx:if="{{users_concerned[index] == false}}" class = "concern_icon" bindtap = "concern" id = "{{index}}">
+                        关注
+                    </view>
+                    <view wx:else class = "concerned_icon" bindtap = "cancelConcern" id = "{{index}}">
+                        已关注
+                    </view>
+                </view>
+            </view>
+            <view wx:if = "{{hasMoreUser}}" class = "show_more_info" bindtap = "showMoreUser">点击显示更多...</view>
+        </view>
+        <view wx:else style = "display:flex; justify-content:center;justify-items:center;align-items:center;flex-direction:column">
+                <image class = "not_found_pic" src = "{{server_imagename}}/404.png" mode = "widthFix"></image>
+                <view class = "divline" ></view>
+                <view class = "not_found_text">什么都没找到</view>
+            </view>
+    </swiper-item>
+    <swiper-item >
+        <text space="nbsp" bindtap="bindsortPal" class="sortbutton"> {{data_order_text[data_order_pal]}}</text>
+        <view class = "peer_activity_box" wx:if = "{{palEmpty == false}}">
+                <view wx:for = "{{pal_ids}}" class = "peer_activity" wx:key="item" id="{{index}}" bindtap="navigate2Pal">
+                    <view class = "activity_owner">
+                        <view class = "activity_owner_protrait" >
+                            <image class = "activity_owner_protrait_pic" src= "{{pal_icons[index]}}" mode = "scaleToFill">
+                            </image>
+                        </view>
+                        <view class = "activity_owner_info">
+                            <view class = "activity_owner_nickname">
+                                {{pal_nicknames[index]}}
+                            </view>
+                            <view class = "activity_owner_gender">
+                                <image wx:if = "{{pal_genders[index]==0}}"class = "activity_owner_gender_pic" src= "{{server_imagename}}/male.png" mode = "heightFix"></image>
+                                <image wx:else class = "activity_owner_gender_pic" src= "{{server_imagename}}/female.png" mode = "heightFix"></image>
+                            </view>
+                        </view>
+                    </view>
+                    
+                    <view class = "activity_detail">
+                        <view class = "activity_detail_item">
+                            <view class = "activity_subject">
+                                <text space="ensp"> {{pal_titles[index]}} </text>
+                            </view>
+                        </view>
+                        <view class = "activity_detail_item">
+                            <view class = "activity_detail_item_icon">
+                                <image class = "activity_detail_item_icon_pic" mode = "heightFix" src = "{{server_imagename}}/clock.png">
+                                </image>
+                            </view>
+                            <view class = "activity_time">
+                                {{pal_startTimes[index]}} 至 {{pal_endTimes[index]}}
+                            </view>
+                        </view>
+                        <view class = "activity_detail_item">
+                            <view class = "activity_detail_item_icon">
+                                <image class = "activity_detail_item_icon_pic" mode = "heightFix" src = "{{server_imagename}}/location_ peer.png">
+                                </image>
+                            </view>
+                            <view class = "activity_loc">
+                                {{pal_locations[index]}}
+                            </view>
+                        </view>
+                        <view class = "activity_detail_item">
+                            <view class = "activity_detail_item_icon">
+                                <image class = "activity_detail_item_icon_pic" mode = "heightFix" src = "{{server_imagename}}/mine_grey.png">
+                                </image>
+                            </view>
+                            <view class = "activity_time">
+                                {{pal_nums[index]}} / {{pal_capacities[index]}}
+                            </view>
+                        </view>
+                    </view>
+            </view>
+            <view wx:if = "{{hasMorePal}}" class = "show_more_info" bindtap = "showMoreTravelPal">点击显示更多...</view>
+            </view>
+            <view wx:else style = "display:flex; justify-content:center;justify-items:center;align-items:center;flex-direction:column">
+                <image class = "not_found_pic" src = "{{server_imagename}}/404.png" mode = "widthFix"></image>
+             
+            </view>
+    </swiper-item>
+    <swiper-item >
+        <view class = "loc_box">
+                <view wx:for="{{loc_ids}}" class = 'loc' wx:for-index = "i" wx:for-item="item" wx:key="index">
+                        <swiper class = "loc_covers" circular="true" indicator-active-color="white" indicator-dots="true" bindtap="navigate2Loc" id="{{i}}" >
+                            <swiper-item wx:for = "{{loc_images[i]}}" wx:for-item="cover_item" wx:key='index'>
+                                <image  class = 'loc_cover_pic' src = "{{server_hostname}}/api/core/images/{{cover_item}}/data/" mode="widthtFix" ></image>
+                            </swiper-item>
+                        </swiper>
+                    <view class = "divline"></view>
+                    <view class = "loc_info">
+                        <view class = "loc_name">
+                            {{loc_names[i]}}
+                        </view>
+                        <view class = "loc_intro">
+                            {{loc_descriptions[i]}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view wx:if = "{{hasMoreLoc}}" class = "show_more_info" bindtap = "showMoreLoc">点击显示更多...</view>
+            <view wx:else style = "display:flex; justify-content:center;justify-items:center;align-items:center;flex-direction:column">
+                <image class = "not_found_pic" src = "{{server_imagename}}/404.png" mode = "widthFix"></image>
+            </view>
+    </swiper-item>
+</swiper>

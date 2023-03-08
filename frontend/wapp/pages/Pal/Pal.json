@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "mypaltable":"/components/palTable/paltable"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "活动详情"
+  
+}

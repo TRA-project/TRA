@@ -1,0 +1,159 @@
+.logo_view {
+  margin-top: 50rpx;
+  margin-bottom: 50rpx;
+  display: flex;
+  justify-content: center;
+  /* border: 1px solid #000 ; */
+}
+
+.logo_img {
+  height: 150rpx;
+  /* border: 1px solid #000 ; */
+}
+
+.box_view {
+  margin-top: 20rpx;
+  display: flex;
+  height: 130rpx;
+  justify-content: center;
+  /* border: 1px solid #000 ; */
+}
+
+.input_bg {
+  position: absolute;
+  z-index: 0;
+  height: 130rpx;
+  width: 600rpx;
+  /* border: 1px solid #000 ; */
+}
+
+.input_view {
+  position: absolute;
+  z-index: 1;
+  height: 130rpx;
+  width: 600rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid #000 ; */
+}
+
+.name {
+  height: 130rpx;
+  width: 400rpx;
+  line-height: 130rpx;
+  text-align: center;
+  font-weight: bolder;
+  /* border: 1px solid #000 ; */
+}
+
+.password {
+  position: absolute;
+  left: 100rpx;
+  height: 130rpx;
+  width: 400rpx;
+  line-height: 130rpx;
+  text-align: center;
+  font-weight: bolder;
+  /* border: 1px solid #000 ; */
+}
+
+.visible_btt {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  left: 20rpx;
+  /* border: 1px solid #000 ; */
+}
+
+.visible_img {
+  position: absolute;
+  z-index: 0;
+  left: 40rpx;
+  width: 50rpx;
+  height: 50rpx;
+  /* border: 1px solid #000 ; */
+}
+
+.login_btt_view {
+  margin-top: 120rpx;
+  position: relative;
+  padding-top: 20%;
+  height: 0;
+  display: flex;
+  justify-content: center;
+  /* border: 1px solid #000 ; */
+}
+
+.login_btt {
+  position: absolute;
+  top: 0;
+  left: 40%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightskyblue;
+  /* border: 1px solid #000 ; */
+}
+
+.arrow_img {
+  width: 100%;
+  /* border: 1px solid #000 ; */
+}
+
+.other_method_view {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 60%;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: rgb(123, 123, 123);
+  font-weight: bold;
+  /* border: 1px solid #000 ; */
+}
+
+.wechat_btt {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  left: 10%;
+  /* border: 1px solid #000 ; */
+}
+
+.wechat_text {
+  position: absolute;
+  z-index: 0;
+  width: 30%;
+  height: 50rpx;
+  left: 10%;
+}
+
+.space_text {
+  position: absolute;
+  z-index: 0;
+  width: 20%;
+  height: 50rpx;
+  left: 40%;
+}
+
+.regist_btt {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  left: 60%;
+  /* border: 1px solid #000 ; */
+}
+
+.regist_text {
+  position: absolute;
+  z-index: 0;
+  width: 30%;
+  height: 50rpx;
+  left: 60%;
+}

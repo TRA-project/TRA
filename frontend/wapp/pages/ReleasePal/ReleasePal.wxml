@@ -1,0 +1,122 @@
+<view wx:if = "{{show}}" style="height:fit-content" class="page">
+<form bindsubmit="onSubmit">
+  <view class="title_view">
+    <input class = "title_input" maxlength="30" placeholder="请输入同行标题"
+    id="title" bindinput="inputTitle"></input>
+  </view>
+
+  <view class = "divline"></view>
+
+  <view class="section">
+    <view class="section-title">活动日期</view>
+    <view class="section-content">
+      <view class="date_time">
+        <view class="table">
+          <picker mode="date" bindchange="startDateChange">
+            <view class="picker">{{startDate}}</view>
+          </picker>
+        </view>
+        <view class="word">:</view>
+        <view class="table">
+          <picker mode="time" bindchange="startTimeChange">
+            <view class="picker">{{startTime}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="date_time">
+        <view class="table">
+          <picker mode="date" bindchange="endDateChange">
+            <view class="picker">{{endDate}}</view>
+          </picker>
+        </view>
+        <view class="word">:</view>
+        <view class="table">
+          <picker mode="time" bindchange="endTimeChange">
+            <view class="picker">{{endTime}}</view>
+          </picker>
+        </view>
+      </view>
+    </view> 
+  </view>
+
+  <view class="divLine"></view>
+
+  <view class="section" >
+    <view class="section-title">活动地点</view>
+    <view class="table">
+      <view bindtap="setLoc">{{locName}}</view>
+    </view>
+  </view>
+
+  <view class="divLine"></view>
+
+  <view class="section">
+      <view class="section-title">活动人数</view>
+      <view class="table">
+        <input type="number" bindinput="capacityInput" placeholder="请输入活动最多人数" class="palnum_input" maxlength="4"></input>
+      </view>
+  </view>
+
+  <view class="divLine"></view>
+
+  <view class="section">
+      <view class="section-title">报名截止日期</view>
+      <view class="date_time">
+        <view class="table">
+          <picker mode="date" bindchange="deadDateChange">
+            <view class="picker">{{deadDate}}</view>
+          </picker>
+        </view>
+        <view class="word">:</view>
+        <view class="table">
+          <picker mode="time" bindchange="deadTimeChange">
+            <view class="picker">{{deadTime}}</view>
+          </picker>
+        </view>
+      </view>
+  </view>
+
+  <view class="divLine"></view>
+
+  <view class="section">
+    <view class="section-title">活动详情描述</view>
+    <view class="detailBox">
+      <textarea placeholder="请输入活动详情" bindinput="inputDetail" maxlength="-1"></textarea>
+    </view>
+  </view>
+
+  <view class="divLine"></view>
+  <view class="section">
+    <view class="section-title">Tag标签</view>
+    <view class="tag layout_horizontal">
+         <view wx:for-items="{{tagset}}" wx:for-item="tag" class="tag-content">
+            <text space="nbsp">#{{tag}} </text>
+            <image src="/images/chawhite.png" bindtap="deletetag" data-tagname="{{tag}}" class="pic-tag">x</image>
+        </view>
+        <view bindtap="openEditor" class="tag-default">添加tag</view>
+        <!--<view bindtap="testtitle" class="tag-default">test</view>-->
+    </view>
+  </view>
+  <!-- TODO// -->
+  <view class="section">
+    <view class="section-title">关联日程:</view>
+    <view class="layout_horizontal tag" style="font-weight:bold;">
+      <view wx:if="{{schdate==''}}" bindtap="navigate2Cal" class="tag-default" style="font-weight: normal;font-style: normal;">添加日程</view>
+      <view wx:else class="tag-content layout_horizontal" style="font-weight: normal;font-style: normal;">
+        <view>{{schtitle}}</view>
+        <image src="/images/chawhite.png" bindtap="deletesch" data-tagname="{{tag}}" class="pic-tag" style="margin-left: 5px;margin-top:5px;"></image>
+      </view>
+    </view>
+  </view>
+
+  <view>
+    <button form-type="submit" style="width:500rpx;margin-bottom:50rpx">发布</button>
+  </view>
+</form>
+</view>
+<view wx:else>
+  知行合一
+</view>
+
+<edit_keyboard showEditor="{{showEditor}}" bind:add-newtag="addnewtag" bind:editor-switch="switchEditor" />

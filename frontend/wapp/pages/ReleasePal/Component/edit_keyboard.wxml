@@ -1,0 +1,12 @@
+<!--pages/ReleasePal/Component/edit_keyboard.wxml-->
+<view class="editor {{showEditor === true ? 'editor-show' : 'editor-none'}}" >
+  <view class="editor-wraper {{showEditor === true ? 'editor-wraper-show' : 'editor-wraper-none'}}" >
+   
+    <image src="/images/cha.png" bindtap="switchEditor" class="pic"></image>
+    <view>
+        <input class="tag_input"  placeholder="请在此输入TAG" value="{{addtag}}" bindinput="handleinput" maxlength="6"></input>
+    </view>
+    <button bindtap="addnewtag" class="button-bottom">添加</button>
+  </view>
+
+</view>

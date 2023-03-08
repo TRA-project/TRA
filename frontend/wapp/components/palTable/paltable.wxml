@@ -1,0 +1,7 @@
+<!--components/palTable/paltable.wxml-->
+<!-- <view>components/palTable/paltable.wxml</view> -->
+
+<view hidden="{{hidden}}" >
+    <view class="relative_title" style="margin-left: 5%;"> 同行日程 </view>
+    <myTable data="{{schData}}"></myTable> 
+</view>

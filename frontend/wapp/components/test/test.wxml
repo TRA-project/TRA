@@ -1,0 +1,5 @@
+<!--components/test/test.wxml-->
+<view hidden="{{hidden}}" >
+    <view class="relative_title" style="margin-left: 5%;">游玩日程</view>
+    <myTable data="{{schData}}"></myTable> 
+</view>

@@ -1,0 +1,16 @@
+@import '/pages/SchPublic/schedule.wxss';
+.pic{
+    width: 20px;
+    height: 20px;
+    transform: rotate(43deg);
+    opacity: 0.3;
+}
+.pic_background{
+    margin-top: 4%;
+    text-align: center;
+}
+.button{
+    background-color: rgb(160, 206, 243);
+    margin-top: 3%;
+    color: white;
+}

@@ -1,0 +1,14 @@
+/* pages/newSchedule/newSchedule.wxss *//**index.wxss**/
+@import '/pages/SchPublic/schedule.wxss';
+
+.title{
+    height: auto;
+    background-color:rgb(153, 209, 255);
+    margin: 3%;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold;
+}

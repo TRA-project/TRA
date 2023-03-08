@@ -1,0 +1,129 @@
+/* pages/EditInfo/EditInfo.wxss */
+.bp_picture{
+    width: 100%;
+    opacity: 0.8;
+    filter:blur(2px);
+    margin-bottom:10rpx;
+    z-index:-1;
+}
+
+.protrait{
+    display: flex;
+    justify-content: center;
+    height: 1rpx;
+    width: 100%;
+    border-radius: 150rpx; 
+    position: relative;
+    z-index: 2;
+    top: -360rpx; 
+  }
+  
+.protraitPic{
+    height: 240rpx;
+    width: 240rpx;
+    border-radius: 150rpx; 
+    background: white;
+}
+
+.editProtraitPic{
+    height: 60rpx;
+    width: 60rpx;
+    position: relative;
+    left: -50rpx;
+    top: 180rpx;
+    background:white;
+    border-radius: 50rpx;
+    border-width: 0rpx;
+    /* border-radius: 50rpx;
+    border:rgb(122, 122, 122) 5rpx solid; */
+ }
+
+.editBox{
+    height: 500rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin-bottom: 60rpx;
+}  
+
+.editBoxItem{
+    height: 100rpx;
+    width: auto;
+    border-bottom:solid 3rpx rgb(201, 201, 201);
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    margin-left: 30rpx;
+    margin-right: 30rpx;
+}
+
+.editBoxItemTitle{
+    display: flex;
+    height: 100rpx;
+    width: 20%;
+    font-size:30rpx;
+    color: rgb(201, 201, 201);
+    align-items: center;
+}
+
+.editBoxItemContent{
+    display: flex;
+    width: 80%;
+    font-size:28rpx;
+    align-items: center;
+}
+
+
+.nickNameEdit{
+    width: auto;
+    font-weight: normal;
+    align-items: center;
+}
+
+.genderEdit{
+    width: auto;
+    align-items: center;
+}
+
+.birthEdit{
+    width: auto;
+    align-items: center;
+}
+
+.locatioinEdit{
+    width: auto;
+    align-items: center;
+}
+
+.signatureEdit{
+    width: auto;
+    align-items: center;
+}
+
+.locBox{
+    width: 500rpx;
+}
+
+.inputBox{
+    width: 500rpx;
+}
+
+.saveButtonBox{
+    display: flex;
+    height: 100rpx;
+    width: 100%;
+    align-items: center;
+}
+
+.saveButton{
+    margin:10rpx;
+    height: 50rpx;
+}
+
+.locBox{
+    display: flex;
+    align-items: center;
+    width: 500rpx;
+    height: 100rpx;
+}

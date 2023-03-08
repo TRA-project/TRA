@@ -1,0 +1,158 @@
+@import '/pages/FlightPublic/FlightPublic.wxss';
+
+.title{
+    font-size: medium;
+    text-align: center;
+    color: white;
+    background-color: rgb(121, 192, 255) ;
+    padding: 3px;
+}
+.incoming_flight{
+    padding-top: 5px;
+    background-color:  rgba(255, 255, 255, 1);
+    height: 100px;
+    border-bottom:thin solid #72abff80;
+}
+.content{
+    margin-left: 10px;
+    /* padding-top:7px; */
+}
+.text_flight_time{
+    font-size: medium;
+    font-weight: bolder;
+    color: rgba(0, 0, 0, 0.7);
+}
+.text_flight{
+    font-size: small;
+    color: rgba(0, 0, 0, 0.7);
+}
+.price {
+    margin-left: 10px;
+    color: rgb(255, 105, 51);
+    font-weight: bold;
+    float:right;
+    margin-right: 10px;
+    margin-top:-45px;
+}
+.text_num {
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.4);
+}
+.text_num.bottom{
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.4);
+}
+.hot_plane {
+    width: 30px;
+    height: 30px;
+    transform: rotate(90deg);
+    margin-left: 26%;
+    margin-top: -32px;
+    float: left;
+    margin-top: -80px;
+}
+.button_quit{
+    float:right;
+    width: 20px;
+    height: 20px;
+    margin: 3px;
+    position: relative;
+    top: -20px;
+    right: -28px;
+    opacity: 0.6;
+}
+.button_alarm_up{
+    float:right;
+    width: 30px;
+    height: 37px;
+    margin: 3px;
+    position: relative;
+    top: -30px;
+    left: -40px;
+    opacity: 100%;
+}
+.button_alarm_down{
+    float:right;
+    width: 30px;
+    height: 37px;
+    margin: 3px;
+    position: relative;
+    top: -30px;
+    left: -40px;
+    opacity: 30%;
+}
+.button_calendar_up{
+    float:right;
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    position: relative;
+    top: -30px;
+    left: -40px;
+    opacity: 30%;
+}
+.outdated_flight{
+    padding-top: 5px;
+    background-color: rgb(195, 200, 202);
+    height: 100px;
+    border-bottom:thin solid rgba(124, 177, 255, 0.5);
+}
+.button_quit_dated{
+    float:right;
+    width: 20px;
+    height: 20px;
+    margin: 3px;
+    position: relative;
+    top:-20px;
+    left: -7px;
+    opacity: 0.8;
+}
+.text_moreInfo{
+    font-size: small;
+    color: rgba(0, 0, 0, 0.6);
+    position: relative;
+    text-align: right;
+    float:right;
+    text-decoration-line: underline;
+    margin-top: -18px;
+    margin-right: 22px;
+}
+.transmit{
+    width: 30px;
+    height: 20px;
+    transform: rotate(360deg);
+    margin-left: 26%;
+    float: left;
+    margin-top: -25px;
+    position: absolute;
+  
+  }
+  .transmit_text{
+    font-size: x-small;
+    font-weight: thin;
+    color: rgba(0, 0, 0, 0.6);
+    float: left;
+    margin-left: 26.5%;
+    margin-top: -40px;
+    position: absolute;
+ 
+  }
+  .transmit_text.time{
+    font-size: x-small;
+    font-weight: thin;
+    color: rgba(0, 0, 0, 0.6);
+    float: left;
+    margin-left: 21%;
+    margin-top: -10px;
+    position: absolute;
+
+  }
+.text_hightlight{
+    background-color: rgb(207, 225, 253);
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 20px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    color:rgba(0, 0, 0, 0.7);
+}

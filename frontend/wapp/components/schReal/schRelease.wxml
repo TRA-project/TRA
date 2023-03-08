@@ -1,0 +1,44 @@
+<!--components/schRelease/schRelease.wxml-->
+<view>
+    <view class="title" bindtap="copySch">{{type}}：{{title}}</view>
+    <view class="s-item" style="text-align: center;" wx:if="{{isShowModel}}">
+    日程拷贝
+        <view style="font-weight:bold;text-align: left;">将日程拷贝至:
+            <view wx:if="{{schdate==''}}" bindtap="navigate2Cal" class="tag-default" style="font-weight: normal;font-style: normal;">选择日期</view>
+            <view wx:else class="tag-default" style="font-weight: normal;font-style: normal;">
+            <view>{{schdate}}</view>
+            </view>
+            <view>
+            <view>是否覆盖原日程</view>
+            <radio-group class="radio-group" style="text-align: left;" bindchange="radioChange">
+             <view class="radio" wx:for="{{list}}">
+            <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+             </view>
+            </radio-group>
+            <button class="send" bindtap="post">确定</button>
+
+</view>
+ 
+        </view>
+    </view>
+    <view class="s-item" wx:for="{{items}}" wx:for-item="schitem">
+        <view class="layout_horizontal">
+            <view class="circle"></view>
+            <view class="layout_vertical item_time">
+                <view>{{schitem.start_time}}</view>
+                <view>{{schitem.end_time}}</view>
+            </view>
+            <view class="item_title">{{schitem.content}}</view>
+            <!-- <image src="/images/alarm.png" class="pic_alarm"></image>
+            <image src="/images/edit1.png" class="pic_edit"></image> -->
+        </view>
+        <view class="money_box">
+            <text space="nbsp" class="position">地点:{{schitem.position==null ? '无':schitem.position.name}}</text>
+            <text space="nbsp" class="money">预算:￥{{schitem.budget==null?0:schitem.budget}}</text>
+
+        </view>
+    </view>
+    <view class="s-item add" style="font-size: small;">
+        <text>预算：￥{{allbudget}}</text>
+    </view>
+</view>

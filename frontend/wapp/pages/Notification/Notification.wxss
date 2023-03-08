@@ -1,0 +1,191 @@
+/* pages/notification/notification.wxss */
+.all_read_button{
+    height:100rpx;
+    width:100rpx;
+    border: 4rpx solid #82b3fd81;
+    border-radius:100rpx;
+    position: fixed;
+    top: calc(85%);
+    left: calc(50% - 75rpx);
+    opacity: .8;
+    background: rgba(248, 250, 250, 0.925);
+    box-shadow: 0 0 30rpx 5rpx rgba(219, 219, 219, 0.925);
+    z-index:4;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+
+.all_read_button_pic{
+  height:50rpx;
+  width:50rpx;
+  margin-top: 10rpx;
+  opacity: 0.8;
+}
+
+.all_read_text{
+  font-size: 20rpx;
+  font-weight: bold;
+  color:rgb(0,132,255);
+}
+
+
+.divline{
+  display: flex;
+  justify-items: center;
+  width: 80%;
+  margin-top: 5rpx;
+  margin-bottom: 10rpx;
+  margin-left:10%;
+  margin-right: 10%;
+  border-radius: 100rpx;
+}
+
+.swiper_box{
+  height: fit-content;
+  border:5rpx solid white;
+  width:100%;
+  background:white;
+
+}
+
+
+.swiper_tab_line{
+  position: relative;
+  width: 50%;
+  height: 10rpx;
+  background: #869cff;
+  transition: all 0.3s;
+  bottom: 10rpx;
+  border-radius: 10rpx;
+  z-index:2;
+}
+
+.swiper_tab_navigator{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  align-items:center;
+  font-size:12px;
+ 
+}
+
+.swiper_tab_item{
+  display: flex;
+  flex-direction: row;
+  min-width:33%;
+  max-width:33%;
+  height: 100%;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  border-bottom: 10rpx solid grey;
+  color:rgb(160, 160, 160);
+}
+
+.swiper_tab_item_text{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: normal;
+    font-size: large;
+}
+
+.swiper_tab_item_text_choose{
+  display:flex;
+  align-items: center;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bolder;
+  color:black;
+  font-size: large;
+}
+
+.notification_box{
+  width:100%;
+  height: 1300rpx;
+  margin-bottom: 50rpx;
+}
+
+.notification_list{
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  width:90%;
+  height: fit-content;
+  overflow-y: scroll;
+}
+
+.notification{
+  display: flex;
+  height: fit-content;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 2rpx;
+  background-color: rgb(255, 255, 255);
+}
+.read{
+  opacity: 0.5;
+}
+.notification_protrait{
+  margin:20rpx;
+  display: flex;
+  max-width: 10%;
+  min-width: 10%;
+  height: 0;
+  padding-top: 10%;
+  position: relative;
+  margin-top: 5%;
+}
+
+
+.notification_protrait_pic{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 100rpx;
+  top:0%;
+  box-shadow: 0 0 30rpx 5rpx rgba(219, 219, 219, 0.925);
+}
+
+.notification_info{
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  width: 60%;
+  margin:3%;
+  font-size: small;
+}
+
+.notification_info_content{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: fit-content;
+  width: 100%;
+  word-break: break-all;
+  align-items: center;
+  font-weight: bold;
+  font-size: small;
+}
+
+.notification_cover{
+  display: flex;
+  margin-top:20rpx;
+  margin-right:10rpx;
+  width: 20%;
+}
+
+.notification_cover_pic{
+  display: flex;
+  align-content: center;
+  height: 90%;
+  width:90%;
+}
+
+.textBox {
+  margin-top: 10rpx;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+}

@@ -1,0 +1,215 @@
+/* pages/Flight/Flight.wxss */
+@import '/pages/FlightPublic/FlightPublic.wxss';
+
+.flight_head {
+    width: 90%;
+    min-height: 210px;
+    height: 26%;
+    background-color: white;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    border-radius: 40rpx;
+    box-shadow: 0 4px 8px 0 rgba(33, 90, 143, 0.05), 0 6px 20px 0 rgba(33, 90, 143, 0.05);
+    overflow: scroll;
+
+}
+
+.linear_background {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-image: linear-gradient(rgba(216, 235, 252), rgba(182, 192, 202, 0.1), rgba(182, 192, 202, 0.1),rgba(182, 192, 202, 0.1));
+    overflow:scroll;
+}
+
+.text_head {
+    width:50%;
+    height: 40px;
+    font-size: x-large;
+    overflow: scroll;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.layout_horizontal{
+    height: 100rpx;
+    display: flex;
+    /*row 横向  column 列表  */
+    flex-direction: row;
+  }
+.arrow{
+    max-width: 30px;
+    max-height: 30px;
+    margin-top: 4%;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+
+}
+.pic_head {
+    width: 30px;
+    height: 30px;
+    /* margin-top: 15px; */
+    
+}
+.from_arrvial {
+    margin: 3px;
+    width: auto;
+    max-height: 100px;
+}
+
+.date_section {
+    margin-top: 15px;
+}
+
+.accept_transit {
+    width: auto;
+    height: 30px;
+    font-size: small;
+    color: rgb(165, 164, 164);
+    margin-top: 10px;
+    margin-left: 3%;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.date_font {
+    font-size: medium;
+    font-weight: normal;
+    text-align: left;
+    margin-left: 3%;
+    font-style: unset;
+    color: rgb(68, 68, 68);
+    height:20px;
+}
+
+.bottom_rim {
+    height: 1px;
+    width: 100%;
+    align-self: center;
+    margin-top: 10px;
+    border-bottom: thin solid rgb(245, 245, 245);
+}
+
+.button_query {
+    color: white;
+    font-weight: bold;
+    background-color: rgb(0, 174, 255);
+    border-radius: 5px;
+}
+
+
+.cheap_flight_commend {
+    width: 100%;
+    background-image: linear-gradient(rgb(255, 221, 221,0.6), rgb(255, 233, 233,0.6),rgb(255, 242, 242,0.6), rgb(255, 239, 239,0.6));
+    background-color: rgb(255, 240, 240);
+    border-radius: 20rpx;
+    overflow: scroll;
+    box-shadow: 0 2px 2px 0 rgba(143, 55, 33, 0.05), 0 2px 2px 0 rgba(143, 45, 32, 0.05);
+   
+}
+
+.pic_fire {
+    width: 20px;
+    height: 20px;
+    float: left;
+    opacity: 0.4;
+    margin-top: 1%;
+}
+
+.text_hot {
+    height: 20px;
+    font-weight: bold;
+    font-size: medium;
+    color: rgba(252, 56, 82, 0.8);
+}
+
+.text_hot_flight {
+    font-size: small;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.text_hot_flight_time {
+    font-size: medium;
+    font-weight: bolder;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.hot_title {
+    height: 30px;
+}
+
+.hot_content {
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+
+.favourate_des_flight {
+   padding-top:3px;
+   padding-bottom:3px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    border-radius: 20rpx;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 2px 2px 0 rgba(33, 90, 143, 0.05), 0 2px 2px 0 rgba(32, 89, 143, 0.05);
+    margin-top: -5%;
+}
+.hot_price {
+    color: rgb(255, 73, 97);
+    font-weight: bold;
+    z-index: 2;
+    float: right;
+    text-align: right;
+    right: 0;
+    position:absolute;
+    margin-right: 3%;
+}
+.text_moreInfo{
+    font-size: small;
+    color: rgba(0, 0, 0, 0.6);
+    position: relative;
+    text-align: right;
+    float:right;
+    text-decoration-line: underline;
+    margin-top: -23px;
+    margin-right: 10px;
+}
+
+
+
+.cart{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  button{
+    border-radius: 0;
+    background: #fd5f00;
+    color: #fff;
+  }
+  
+  .button_love_up{
+    float:right;
+    width: 33px;
+    height: 28px;
+    margin-right:3px;
+    top: -5px;
+    left: -10px;
+    opacity: 80%;
+    margin-top: -27px;
+}
+.button_love_down{
+    float:right;
+    width: 33px;
+    height: 28px;
+    margin-right:3px;
+    top: -5px;
+    left: -10px;
+    opacity: 20%;
+    margin-top: -27px;
+}

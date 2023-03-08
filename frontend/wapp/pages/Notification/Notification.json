@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "mp-half-screen-dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog",
+    "mp-badge": "weui-miniprogram/badge/badge"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "消息通知"
+}

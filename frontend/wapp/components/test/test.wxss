@@ -1,0 +1,11 @@
+/* components/test/test.wxss */
+
+.relative_title {
+    width: 98%;
+    margin-left: 1%;
+    text-align: left;
+    font-weight: bold;
+    font-size: 110%;
+    color: #030303;
+    margin-bottom: 15rpx;
+  }

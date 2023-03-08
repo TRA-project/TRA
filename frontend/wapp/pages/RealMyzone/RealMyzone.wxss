@@ -1,0 +1,57 @@
+/* pages/RealMyzone/RealMyzone.wxss */
+
+.myzone{
+    background-color: rgb(244, 244, 247);
+}
+.zone_head{
+    height: 110px;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+}
+
+.user_img {
+    height: 130rpx;
+    width: 130rpx;
+    /*border-radius: 30rpx;
+    border-color: skyblue;
+    border-width: 5rpx;
+    border-style: solid;*/
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.user_pic{
+    height: 130rpx;
+    width: 130rpx;
+    border-radius: 20rpx;
+    background: white;
+}
+
+.user_name{
+    margin-top: 14px;
+    margin-left: 18px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 26px;
+}
+
+.right_button{
+    margin-top: 20px;
+    margin-left: 80px;
+    font-size: 18px;
+    border-color: rgb(230, 230, 230);
+    border-style: solid;
+    border-width: 5rpx;
+    width: fit-content;
+    height: 30px;
+   /*float: right;
+   margin-top: 6%;
+   margin-left: 10%;*/
+}
+
+.zone_body{
+    height: fit-content;
+    /*margin-top: 50px;*/
+    background-color:rgb(244, 244, 247);
+}
+

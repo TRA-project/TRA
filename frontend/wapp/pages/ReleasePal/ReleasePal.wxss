@@ -1,0 +1,133 @@
+.title_view {
+  margin-top: 50rpx;
+  margin-bottom: 20rpx;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.title_input {
+  height: auto;
+  font-weight: bold;
+  font-size: 150%;
+}
+
+.divline{
+  width: 94%;
+  border-bottom:solid 4rpx rgb(244, 247, 253);
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 3%;
+}
+
+.divLine{
+  width: 84%;
+  border-bottom:solid 4rpx rgb(244, 247, 253);
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 8%;
+}
+
+.section {
+  margin: 30rpx;
+  padding: 20rpx;
+  background-color: rgb(247, 250, 255);
+  border-radius: 30rpx;
+  height: fit-content;
+}
+
+.section-title {
+  font-weight:bolder;
+  margin-bottom: 20rpx;
+}
+
+.word {
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+}
+
+.section-content {
+  margin: 10rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.date_time {
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.table {
+  width: fit-content;
+  color: rgb(0,0,0,0.6);
+  background-color: rgba(199, 223, 255, 0.2);
+	border-radius: 100rpx;
+  padding: 10rpx;
+}
+
+.palnum_input {
+  text-align: center;
+}
+
+
+.detailBox{
+  padding: 0 25rpx;
+  height: fit-content;
+}
+
+button {
+  width: 500rpx;
+  background-color: rgb(199, 231, 255);
+  margin-bottom: 50rpx;
+  color:rgb(0,0,0,.6);
+}
+.tag{
+  height: 25px;
+  width: 100%;
+  overflow-x: scroll;
+
+  margin-right: 6%;
+  white-space:nowrap; 
+}
+.layout_horizontal{
+  height: 40px;
+  display: flex;
+  /*row 横向  column 列表  */
+  flex-direction: row;
+}
+.tag-default{
+  margin-left:5px;
+  height: 20px;
+  padding-top:3px;
+  padding-bottom:3px;
+  padding-left: 13px;
+  padding-right: 13px;
+  border-radius: 13px;
+  font-size: small;
+  color: rgba(106, 119, 138, 0.8);
+  background-color: rgb(240, 240, 240);
+  text-align:center;
+  width: auto;
+}
+.tag-content{
+  width: auto;
+  height: 20px;
+  margin-left:5px;
+  padding-top:3px;
+  padding-bottom:3px;
+  padding-left: 13px;
+  padding-right: 13px;
+  border-radius: 13px;
+  font-size: small;
+  font-weight: bold;
+  color: rgba(255, 255, 255);
+  background-color: rgba(61, 177, 255, 0.8);
+  text-align:center;
+  align-content: center;
+}
+.pic-tag{
+  width: 10px;
+  height: 10px;
+}

@@ -1,0 +1,312 @@
+<view style="overflow-x:hidden;width:100%;">
+
+  <!-- 背景模块 -->
+  <view class = "bg_view" >
+    <image class = "bg_images" src = "{{server_imagename}}/bg_1.jpg" mode = "heightFix">
+    </image>
+  </view>
+
+  <!-- 用户个人基础信息模块 -->
+  <view class = "personInfo">
+    <!-- 国家城市 -->
+    <cover-view class  = "footprint_box">
+        <cover-view class = "footprint_info">
+          <cover-view class = "footprint_info_num">
+            {{cities}}
+          </cover-view>
+          <cover-view class = "footprint_info_text">
+              座城市
+          </cover-view>
+        </cover-view>
+        <cover-view class = "footprint_info">
+          <cover-view class = "footprint_info_num">
+              {{travels}}
+          </cover-view>
+          <cover-view class = "footprint_info_text">
+              个足迹
+          </cover-view>
+        </cover-view>
+    </cover-view>
+
+    <view class = "protraitSocial">
+      <view class = "protrait">
+        <image src="{{icon}}"  class = "protraitPic" bindtap="preview" id="{{icon}}"></image>
+      </view>
+      <view class = "social">
+        <view class ="social_item">
+            <view>
+              粉丝
+            </view>
+            <view class = "social_item_num">
+              {{fans}}
+            </view>
+        </view>
+        <view class ="social_item_divline"></view>
+        <view class ="social_item">
+          <view>
+              关注
+            </view>
+            <view class = "social_item_num">
+              {{concern}}
+            </view>
+        </view>
+        <view class ="social_item_divline"></view>
+        <view class ="social_item">
+          <view>
+              获赞
+            </view>
+            <view class = "social_item_num">
+              {{likes}}
+            </view>
+        </view>
+      </view>
+    </view>
+    <view class = "idGenderEdit">
+      <view wx:if="{{gender == 0}}" class = "idMale">
+        {{nickname}}
+      </view>
+      <view wx:if="{{gender == 1}}" class = "idFemale">
+        {{nickname}}
+      </view>
+      <view class = "gender">
+        <image wx:if="{{gender == 0}}" src = "{{server_imagename}}/male.png" mode = "heightFix" class = "genderPic">
+        </image>
+        <image wx:if="{{gender == 1}}" src = "{{server_imagename}}/female.png" mode = "heightFix" class = "genderPic">
+        </image>
+      </view>
+      <view wx:if = "{{concernOther == false}}" class = "editBox" bindtap="subscribe">
+        <view class ="editText" >
+              关注
+        </view>
+      </view>
+      <view wx:if = "{{concernOther == true}}" class = "editBox" bindtap="disSubscribe">
+        <view class ="editText" style = 'background:#418ef3; color:white'>
+              已关注
+        </view>
+      </view>
+    </view>
+    <view class = "signatureMoreInfo">
+      <view class = "signature">
+        {{signature}}
+      </view>
+    </view>
+    <view  class = "moreInfo">
+      <view class = "moreInfoItem">
+        生日: {{birthday}}
+      </view>
+      <view class = "moreInfoItem">
+        常住地: {{location.address.province}} {{(location.address.province == location.address.city)? " " : " · " + location.address.city}}
+      </view>
+    </view>
+    
+  </view>
+  <view class="travel_pal">
+    <view class="tabBar">
+      <view>
+        <view class="tabLine" 
+        style="width:{{100/tab.tabnum}}%;transform:translateX({{100*showtab}}%);">
+        </view>
+      </view> 
+      <view class="tabNavigator">
+        <view wx:for="{{tab.tabitem}}" wx:key='item'
+        bindtap="setTab" data-tabindex="{{index}}" 
+        class="tabItem"
+        style="border-bottom:{{index>2?'1rpx solid #ddd;':''}};color:{{showtab==index?'#869cff':''}}">
+          <view class = "tabItemText">
+            {{item.text}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <swiper current="{{currentTab}}" class="swiperBox" duration="300" bindchange="bindChange"
+        style="--pageSize--:{{pageSize}}rpx">
+        <swiper-item class = "swiperItemTravelRecord">
+          <view class = "travelRecords">
+            <view wx:for="{{travel_ids}}" wx:if="{{index < travel_num}}" wx:key='item' class = 'travelRecord' id="{{index}}"
+            bindtap="navigate2Travel">
+              <view class = "trCover">
+                  <image class = 'trCoverPic' src = '{{travel_covers[index]}}' mode="aspectFill" ></image>
+              </view>
+              <view class = "trLocBox">
+                <image class = "trLocIcon" src = "{{server_imagename}}/location.png" mode = "widthFix"></image>
+                <view class = "trLocText">
+                  <text space="ensp"> {{travel_names[index]}} </text>
+                </view>
+              </view>
+              <view class = "trInfo">
+                  <view class = "trOrder">{{travel_titles[index]}}</view>
+                  <view class = "trDateSocial">
+                    <view class = "trDate">
+                      发布于<text style = "font-weight:bolder" space="ensp"> {{travel_times[index]}} · </text>
+                    </view>
+                    <view class = "trSocial">
+                      <view class = "trSocialItem">
+                            <view class = "trSocialRead">
+                                <image src="{{server_imagename}}/read.png" class = "trSocialReadIcon" mode = "heightFix"></image>
+                            </view>
+                            <view class = "trSocialText">{{travel_reads[index]}}</view>
+                        </view>
+                        <view class = "trSocialItem">
+                          <view class = "trSocialLike">
+                            <image src="{{server_imagename}}/like.png" class = "trSocialLikeIcon" mode = "heightFix"></image>
+                            </view>
+                            <view class = "trSocialText">{{travel_likes[index]}}</view>
+                        </view>
+                        
+                        <view class = "trSocialItem">
+                          <view class = "trSocialComment">
+                            <image src="{{server_imagename}}/comment.png" class = "trSocialCommentIcon" mode = "heightFix"></image>
+                            </view>
+                            <view class = "trSocialText">{{travel_comments[index]}}</view>
+                        </view>
+                    </view>
+                  </view>
+              </view>
+            </view>
+          </view>
+        </swiper-item>
+
+        <swiper-item>
+                <view class = "peer_activity_box">
+                    <view wx:for = "{{pal_ids}}" class = "peer_activity" wx:key="item" id="{{index}}" bindtap="navigate2Pal">
+                        <view class = "activity_owner">
+                            <view class = "activity_owner_protrait" >
+                                <image class = "activity_owner_protrait_pic" src= "{{pal_icons[index]}}" mode = "scaleToFill">
+                                </image>
+                            </view>
+                            <view class = "activity_owner_info">
+                                <view class = "activity_owner_nickname">
+                                    {{pal_nicknames[index]}}
+                                </view>
+                                <view class = "activity_owner_gender">
+                                    <image wx:if = "{{pal_genders[index]==0}}"class = "activity_owner_gender_pic" src= "{{server_imagename}}/male.png" mode = "heightFix"></image>
+                                    <image wx:else class = "activity_owner_gender_pic" src= "{{server_imagename}}/female.png" mode = "heightFix"></image>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="divline_pal"></view>
+                        <view class = "activity_detail">
+                            <view class = "activity_detail_item">
+                                <view class = "activity_subject">
+                                    <text space="ensp"> {{pal_titles[index]}} </text>
+                                </view>
+                            </view>
+                            <view class = "activity_detail_item">
+                                <view class = "activity_detail_item_icon">
+                                    <image class = "activity_detail_item_icon_pic" mode = "heightFix" src = "{{server_imagename}}/clock.png">
+                                    </image>
+                                </view>
+                                <view class = "activity_time">
+                                    {{pal_startTimes[index]}} 至 {{pal_endTimes[index]}}
+                                </view>
+                            </view>
+                            <view class = "activity_detail_item">
+                                <view class = "activity_detail_item_icon">
+                                    <image class = "activity_detail_item_icon_pic" mode = "heightFix" src = "{{server_imagename}}/location_ peer.png">
+                                    </image>
+                                </view>
+                                <view class = "activity_loc">
+                                    {{pal_locations[index]}}
+                                </view>
+                            </view>
+                            <view class = "activity_detail_item">
+                                <view class = "activity_detail_item_icon">
+                                    <image class = "activity_detail_item_icon_pic" mode = "heightFix" src = "{{server_imagename}}/mine_grey.png">
+                                    </image>
+                                </view>
+                                <view class = "activity_time">
+                                    {{pal_nums[index]}} / {{pal_capacities[index]}}
+                                </view>
+                            </view>
+                        </view>
+                </view>
+                </view>
+            </swiper-item>
+
+            <!-- <swiper-item>
+                <view class="peer_activity_box">
+                    <view wx:for="{{schedule_ids}}" class="peer_activity" wx:key="item" id="{{index}}" bindtap="navigate2Schedule">
+                        <view class="divline_pal">
+                            <view class="activity_detail_item">
+                                <view class="activity_subject">
+                                    <text space="ensp">{{schedule_titles[index]}}</text>
+                                </view>
+                            </view>
+                            <view class="activity_detail_item">
+                                <view class="activity_detail_item_icon">
+                                    <image class = "activity_detail_item_icon_pic" mode = "heightFix" src = "{{server_imagename}}/clock.png">
+                                    </image>
+                                </view>
+                                <view class="activity_time">
+                                    {{schedule_startTimes[index]}} 至 {{schedule_endTimes[index]}}
+                                </view>
+                            </view>
+                            <view class="activity_detail_item">
+                                <view class="activity_detail_item_icon">
+                                    <image class = "activity_detail_item_icon_pic" mode = "heightFix" src = "{{server_imagename}}/location_ peer.png">
+                                    </image>
+                                </view>
+                                <view class="activity_loc">
+                                    {{schedule_locations[index]}}
+                                </view>
+                            </view>
+                            <view class="activity_detail_item">
+                                <view class = "activity_detail_item_icon">
+                                    <image class = "activity_detail_item_icon_pic" mode = "heightFix" src = "{{server_imagename}}/mine_grey.png">
+                                    </image>
+                                </view>
+                                <view class = "activity_time">
+                                    实际支出：{{schedule_real_consumptions[index]}} / 预算: {{schedule_budgets[index]}}
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </swiper-item> -->
+            <swiper-item>
+                <view class="peer_activity_box">
+                <view wx:for="{{schedule_ids}}" wx:if="{{schedule_forbidden[index] != 1}}" class="peer_activity" wx:key="item" id="{{index}}" bindtap="navigate2Schedule">
+                    <view class="divline_pal"></view>
+                    <view class="activity_detail">
+                    <view class="activity_detail_item">
+                        <view class="activity_subject">
+                        <!-- <text wx:if="{{schedule_forbbiden[index] == 1}}" space="ensp" class="reject_text"> 未过审： </text> -->
+                        <text space="ensp">{{schedule_titles[index]}}</text>
+                        </view>
+                    </view>
+                    <view class="activity_detail_item">
+                        <view class="activity_detail_item_icon">
+                        <image class="activity_detail_item_icon_pic" mode="heightFix" src="{{server_imagename}}/clock.png">
+                        </image>
+                        </view>
+                        <view class="activity_time">
+                        {{schedule_startTimes[index]}} 至 {{schedule_endTimes[index]}}
+                        </view>
+                    </view>
+                    <view class="activity_detail_item">
+                        <view class="activity_detail_item_icon">
+                        <image class="activity_detail_item_icon_pic" mode="heightFix" src="{{server_imagename}}/location_ peer.png">
+                        </image>
+                        </view>
+                        <view class="activity_loc">
+                        {{schedule_locations[index]}}
+                        </view>
+                    </view>
+                    <view class="activity_detail_item">
+                        <view class="activity_detail_item_icon">
+                        <image class="activity_detail_item_icon_pic" mode="heightFix" src="{{server_imagename}}/mine_grey.png">
+                        </image>
+                        </view>
+                        <view class="activity_time">
+                        实际支出：{{schedule_real_consumptions[index]}} / 预算: {{schedule_budgets[index]}}
+                        </view>
+                    </view>
+                    </view>
+                </view>
+                </view>
+            </swiper-item>
+    </swiper>
+  </view>
+
+</view>

@@ -1,0 +1,14 @@
+/* components/myTable/myTable.wxss */
+
+.mytable_cell_head {
+    display: flex;
+    flex-direction: row;
+    padding-left: 8vh;
+    padding-right: 8vh;
+    justify-content: space-between;
+
+}
+.mytable_cell{
+    display: flex;
+
+}

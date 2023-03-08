@@ -1,0 +1,71 @@
+<!--pages/Schedule/Schedule.wxml-->
+<scroll-view scroll-y="true">
+
+    <view class="user-head">
+        <view class="head" bindtap="navigate2OtherZone">
+            <image src="{{author.icon}}"/><!--用户头像地址-->
+            <text>{{author.nickname}}</text><!--用户昵称-->
+        </view>
+
+        <!--关注、拷贝和通知-->
+        <view class="subscribe_view" wx:if="{{!if_alarm & isMine}}" style="background-color:rgb(80, 161, 236); color:#fff;" catchtap="enableAlarm">
+        <text>开启通知</text>
+        </view>
+
+        <view class="subscribe_view" wx:if="{{if_alarm & isMine}}" style="background-color:rgb(80, 161, 236); color:#fff;" catchtap="disableAlarm">
+        <text>取消通知</text>
+        </view>
+
+        <view class="subscribe_view" wx:if="{{!subscribed}}" style="background-color:rgb(80, 161, 236); color:#fff;" catchtap="subscribe">
+        <text>关注</text>
+        </view>
+        
+        <view class="subscribe_view" wx:if="{{subscribed}}" style="background-color:rgb(230, 230, 230); color:#aaa;" catchtap="disSubscribe">
+        <text>取消关注</text>
+        </view>
+
+        <view class="subscribe_view" wx:if="{{!isMine}}" style="background-color:rgb(80, 161, 236); color:#aaa;" catchtap="copy">
+        <text>拷贝</text>
+        </view>
+    </view>
+
+    <!--日程信息-->
+    <view class="pal_view">
+        <view class="pal_title">{{schedule.title}}</view>
+        <view class="location_view" catchtap="searchLocation">
+            <text class="pal_location" decode="{{true}}" space="{{true}}">&nbsp;</text>
+            <image class="loc_image" src="{{server_imagename}}/地点.png"></image>
+            <text class="pal_loction" space="ensp">{{schedule.position.city}} · {{schedule.position.name}} </text>        </view>
+    </view>
+
+    <view class="divLine"></view>
+
+    <view class="pal_content">{{schedule.content}}</view>
+    <!-- 活动内容 -->
+    <view class="pal_time">
+        <text space="ensp">日程开始时间 {{schedule.start_time}}</text>
+    </view>
+    <view class="pal_time">
+        <text space="ensp">日程结束时间 {{schedule.end_time}}</text>
+    </view>
+    <view class="pal_time">
+        <text space="ensp">日程预算 {{schedule.budget}}</text>
+    </view>
+    <view class="pal_time">
+        <text space="ensp">日程实际支出 {{schedule.real_consumption}}</text>
+    </view>
+
+    <view class="section" wx:if="{{isMine}}">
+        <view class="section-title">修改实际支出</view>
+        <view class="table">
+            <input type="number" bindinput="real_comsumptionInput" placeholder="请输入实际支出" class="palnum_input" maxlength="4"></input>
+        </view>
+    </view>
+
+    <view class = "divline"></view>
+
+    <form bindsubmit="onSubmit" wx:if="{{isMine}}">
+        <button form-type="submit" style="width: 500rpx;margin-bottom:50rpx;">确认</button>
+    </form>
+
+</scroll-view>

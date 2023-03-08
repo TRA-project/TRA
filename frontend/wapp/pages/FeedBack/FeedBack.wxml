@@ -1,0 +1,21 @@
+
+<!-- LOGO模块 -->
+<view class="logo_view">
+  <image class="logo_img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
+</view>
+
+<!-- 问题反馈模块 -->
+<view class="box_view">
+  <text class="title">问题反馈</text>
+  
+  <textarea class="info" id="info" bindinput="input" adjust-position auto-height="true"></textarea>
+
+  <text class="tip">· 写下您的意见，发送后将被管理员看到</text>
+  <text class="tip">· 每天最多进行一次问题反馈哦</text>
+</view>
+
+<!-- 按钮模块 -->
+<view class="box_view">
+  <button class="submit_btt" type="primary" style="height:80rpx;width:400rpx" disabled="{{disabled}}"
+bindtap="send">发送</button>
+</view>

@@ -1,0 +1,109 @@
+<!--pages/Flight/Flight.wxml-->
+<!-- 航班主查询界面 -->
+<view class="linear_background">
+    <flight-infos show="{{moreInfoShow}}" bind:cancle="moreInfoClick" flightid="{{moreInfoid}}" isTransit="false"></flight-infos>
+    <!-- 头部查询模块 -->
+    <view class="flight_head">
+        <view class="from_arrival layout_horizontal">
+            <city-picker class="text_head" style=" margin-left: auto;margin-right: 5%" bind:value="bindleftChange" obs="{{city}}" input="{{citys}}" cur="{{defaultcity}}">
+                {{city}}
+            </city-picker>
+            <view class="arrow">
+                <image src="{{icon[2]}}" style="transform: rotate(45deg);" class="pic_head" bindtap="returnFlight"></image>
+            </view>
+            <city-picker class="text_head" style=" margin-right: auto;margin-left: 5%;" bind:value="bindrightChange" obs="{{endcity}}" input="{{citys}}" cur="{{defaultcity}}">
+                {{endcity}}
+            </city-picker>
+        </view>
+        <view class="date_section">
+            <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+                <text class="date_font">{{date}}</text>
+            </picker>
+        </view>
+        <view class="bottom_rim"></view>
+        <view class="accept_transit">
+            <checkbox-group bindchange="transitChange">
+                <checkbox checked="true"></checkbox>
+                是否接受换乘
+            </checkbox-group>
+        </view>
+
+        <button class="button_query" bindtap="query">
+            查询机票
+        </button>
+    </view>
+
+    <!-- 廉价航班推荐 -->
+    <swiper autoplay="true" interval="3000" circular="true" easing-function="linear" style="margin-top:5%;margin-left: 5%;margin-right: 5%;">
+        <swiper-item wx:for="{{cheapflight}}" wx:key="id">
+            <view class="cheap_flight_commend">
+                <view class="cheap_flight" style="margin: 3px;">
+                    <view class="hot_title">
+                        <image wx:for="{{3}}" src="{{icon[0]}}" class="pic_fire"></image>
+                        <view class="text_hot">
+                            HOT!!!近日巨惠
+                        </view>
+                    </view>
+                    <view class="hot_content">
+                        <view class="layout_horizontal">
+                            <view style="float: left;">
+                                <view class="text_flight_time">{{item.depatureTime}}</view>
+                                <view class="text_flight">{{item.city}}</view>
+                            </view>
+                            <view style="float:center;margin-left: 37%;">
+                                <view class="text_flight_time">{{item.arrivalTime}}<text style="font-size: x-small;">{{item.timelag}}</text></view>
+                                <view class="text_flight">{{item.endcity}}</view>
+                            </view>
+                            <view class="hot_price">￥{{item.price}}
+                                <view class="sale">{{item.discount}}%</view>
+                            </view>
+                        </view>
+                    </view>
+                    <image src="{{icon[4]}}" class="hot_plane" style="opacity:100%"></image>
+                    <text class="text_num" space="nbsp"> 航班号:{{item.flightno}} 预计时长:{{item.costtime}}</text>
+                    <view style="margin-top: -10px;margin-left: 3px;"><text class="text_num" space="nbsp">{{item.departureDate}}</text></view>
+                    <image wx:if="{{item.attention==1}}" src="{{icon[1]}}" class="button_love_up" data-idx="{{index}}" bindtap="changeAttentionState"></image>
+                    <image wx:else src="{{icon[1]}}" class="button_love_down" data-idx="{{index}}" bindtap="changeAttentionState"></image>
+                    <text class="text_moreInfo" bindtap="moreInfoClick" data-idx="{{index}}">详情</text>
+                </view>
+            </view>
+        </swiper-item>
+    </swiper>
+
+    <!-- 其余推荐算法推荐 -->
+    <view class="favourate_des_flight" style="background-color: rgb(66, 164, 255,0.1);margin-top:5%">
+        <view class="hot_title">
+            <image src="{{icon[3]}}" class="pic_fire" style="margin-left: 2%;margin-right: 1%;"></image>
+            <view class="text_title">
+                猜你想飞
+            </view>
+        </view>
+        <view wx:for="{{recommendflight}}" wx:key="id" style="background-color: white;border-radius: 20rpx;margin-right: 1%;margin-left:1%;">
+            <view class="common_flight" style="margin: 3px;">
+                <view class="common_content">
+                    <view class="layout_horizontal">
+                        <view style="float: left;">
+                            <view class="text_flight_time">{{item.depatureTime}}</view>
+                            <view class="text_flight">{{item.city}}</view>
+                        </view>
+                        <view style="float:center;margin-left: 37%;">
+                            <view class="text_flight_time">{{item.arrivalTime}}<text style="font-size: x-small;">{{item.timelag}}</text></view>
+                            <view class="text_flight">{{item.endcity}}</view>
+                        </view>
+                        <view class="price">￥{{item.price}}
+                            <view class="sale">{{item.discount}}%</view>
+                        </view>
+                    </view>
+                    <image src="{{icon[3]}}" class="hot_plane"></image>
+                    <text class="text_num" space="nbsp">航班号:{{item.flightno}} 预计时长:{{item.costtime}}</text>
+                    <view style="margin-top: -10px;"><text class="text_num" space="nbsp">{{item.departureDate}}</text></view>
+                    <image wx:if="{{item.attention==1}}" src="{{icon[1]}}" class="button_love_up" data-idx="{{index}}" bindtap="changerecommendAttentionState"></image>
+                    <image wx:else src="{{icon[1]}}" class="button_love_down" data-idx="{{index}}" bindtap="changerecommendAttentionState"></image>
+                    <text class="text_moreInfo" bindtap="moreInfoClick1" data-idx="{{index}}">详情</text>
+                </view>
+                <view class="{{index!=2?'.bottom_rim_blue':''}}"></view>
+            </view>
+        </view>
+
+    </view>
+</view>

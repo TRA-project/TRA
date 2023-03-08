@@ -1,0 +1,202 @@
+<view style="overflow-y:hidden;overflow-x:hidden;width:100%;" class="page">
+    <cover-view class="all_read_button" catchtap="allRead">
+        <cover-image class="all_read_button_pic" src="/images/allRead.png"></cover-image>
+        <cover-view class="all_read_text">一键已读</cover-view>
+    </cover-view>
+    <view class="swiper_box">
+        <view class="swiper_tab_navigator">
+            <view wx:for="{{tab.tabitem}}" wx:key="index" bindtap="setTab" data-tabindex="{{index}}" class="swiper_tab_item" bindlongpress="markAllRead" id="{{index}}">
+                <view wx:if="{{show_tab == index}}" class="swiper_tab_item_text_choose">
+                    <view>
+                        {{item.text}}
+                    </view>
+                    <mp-badge wx:if="{{item.unread}}" style="position: absolute;top: -.4em;left:calc({{(22+(index)*33)}}%);" />
+                </view>
+                <view wx:if="{{show_tab != index}}" class="swiper_tab_item_text">
+                    <view>
+                        {{item.text}}
+                    </view>
+                    <mp-badge wx:if="{{item.unread}}" style="position: absolute;top: -.4em;left:calc({{(22+(index)*33)}}%);" />
+                </view>
+            </view>
+        </view>
+        <view>
+            <view class="swiper_tab_line" style="width:{{100/tab.tabnum}}%;transform:translateX({{100*show_tab}}%);">
+            </view>
+        </view>
+    </view>
+    <swiper current="{{current_tab}}" duration="800" bindchange="bindChange" circular="true" class="notification_box">
+        <swiper-item class="notification_list">
+            <view wx:for="{{system_list_unread}}" wx:key="index">
+                <view class="{{item.unread?'unread':'read'}}">
+                    <view class="notification" bindtap="markAsRead" id="{{item.id}}" animation="{{disappear_animation}}" wx:key="{{index}}">
+                        <view class="notification_protrait">
+                            <image class="notification_protrait_pic" src="{{item.icon}}" mode="scaleToFill"></image>
+                        </view>
+                        <view class="notification_info">
+                            <view class="notification_info_nickname">
+                                {{item.nickname}}
+                            </view>
+                            <view class="notification_info_content">
+                                {{item.content}}
+                            </view>
+                            <view class="notification_info_time">
+                                {{item.time}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <view wx:if="{{next_unread!=null}}" class="textBox" bindtap="moreUnread">
+                <text>点击获取更多未读消息</text>
+            </view>
+
+            <view wx:for="{{system_list}}" wx:key="index">
+                <view class="{{item.unread?'unread':'read'}}">
+                    <view class="notification" bindtap="delete" id="{{item.id}}" animation="{{disappear_animation}}" wx:key="{{index}}">
+                        <view class="notification_protrait">
+                            <image class="notification_protrait_pic" src="{{item.icon}}" mode="scaleToFill"></image>
+                        </view>
+                        <view class="notification_info">
+                            <view class="notification_info_nickname">
+                                {{item.nickname}}
+                            </view>
+                            <view class="notification_info_content">
+                                {{item.content}}
+                            </view>
+                            <view class="notification_info_time">
+                                {{item.time}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <view wx:if="{{next_read!=null}}" class="textBox" bindtap="moreRead">
+                <text>点击获取更多已读消息</text>
+            </view>
+        </swiper-item>
+
+        <swiper-item class="notification_list">
+            <view wx:for="{{interact_list_unread}}" wx:key="index">
+                <view class="{{item.unread?'unread':'read'}}">
+                    <view class="notification" bindtap="markAsRead" id="{{item.id}}" animation="{{disappear_animation}}" wx:key="{{index}}">
+                        <view class="notification_protrait" id="{{item.owner_id}}" catchtap="navigate2OtherZone">
+                            <image class="notification_protrait_pic" src="{{item.icon}}" mode="scaleToFill"></image>
+                        </view>
+                        <view class="notification_info">
+                            <view class="notification_info_nickname">
+                                {{item.nickname}}
+                            </view>
+                            <view class="notification_info_content">
+                                {{item.content}}
+                            </view>
+                            <view class="notification_info_time">
+                                {{item.time}}
+                            </view>
+                        </view>
+                        <view wx:if="{{item.travel_id!=null}}" class="notification_cover" id="{{index}}" catchtap="navigate2Travel_Unread">
+                            <image class="notification_cover_pic" src="{{item.travel_cover}}" mode="aspectFill"></image>
+                        </view>
+                    </view>
+                </view>
+
+            </view>
+
+            <view wx:if="{{next_unread!=null}}" class="textBox" bindtap="moreUnread">
+                <text>点击获取更多未读消息</text>
+            </view>
+
+            <view wx:for="{{interact_list}}" wx:key="index">
+                <view class="{{item.unread?'unread':'read'}}">
+                    <view class="notification" bindtap="delete" id="{{item.id}}" animation="{{disappear_animation}}" wx:key="{{index}}">
+                        <view class="notification_protrait" id="{{item.owner_id}}" catchtap="navigate2OtherZone">
+                            <image class="notification_protrait_pic" src="{{item.icon}}" mode="scaleToFill"></image>
+                        </view>
+                        <view class="notification_info">
+                            <view class="notification_info_nickname">
+                                {{item.nickname}}
+                            </view>
+                            <view class="notification_info_content">
+                                {{item.content}}
+                            </view>
+                            <view class="notification_info_time">
+                                {{item.time}}
+                            </view>
+                        </view>
+                        <view wx:if="{{item.travel_id!=null}}" class="notification_cover" id="{{index}}" catchtap="navigate2Travel_Read">
+                            <image class="notification_cover_pic" src="{{item.travel_cover}}" mode="aspectFill"></image>
+                        </view>
+                        <view wx:else class="notification_cover" id="{{index}}">
+                            <image class="notification_cover_pic"></image>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <view wx:if="{{next_read!=null}}" class="textBox" bindtap="moreRead">
+                <text>点击获取更多已读消息</text>
+            </view>
+        </swiper-item>
+
+        <swiper-item class="notification_list">
+            <view wx:for="{{pal_list_unread}}" wx:key="index">
+                <view class="{{item.unread?'unread':'read'}}">
+                    <view class="notification" bindtap="markAsRead" id="{{item.id}}" animation="{{disappear_animation}}" wx:key="{{index}}">
+                        <view class="notification_protrait" id="{{item.owner_id}}" catchtap="navigate2OtherZone">
+                            <image class="notification_protrait_pic" src="{{item.icon}}" mode="scaleToFill"></image>
+                        </view>
+                        <view class="notification_info">
+                            <view class="notification_info_nickname">
+                                {{item.nickname}}
+                            </view>
+                            <view class="notification_info_content">
+                                {{item.content}}
+                            </view>
+                            <view class="notification_info_time">
+                                {{item.time}}
+                            </view>
+                        </view>
+                        <view class="notification_cover" id="{{index}}" catchtap="navigate2Pal_Unread">
+                            <image class="notification_cover_pic" src="{{item.pal_cover}}" mode="aspectFill"></image>
+                        </view>
+                    </view>
+                </view>
+
+            </view>
+
+            <view wx:if="{{next_unread!=null}}" class="textBox" bindtap="moreUnread">
+                <text>点击获取更多未读消息</text>
+            </view>
+
+            <view wx:for="{{pal_list}}" wx:key="index">
+                <view class="{{item.unread?'unread':'read'}}">
+                    <view class="notification" bindtap="delete" id="{{item.id}}" animation="{{disappear_animation}}" wx:key="{{index}}">
+                        <view class="notification_protrait" id="{{item.owner_id}}" catchtap="navigate2OtherZone">
+                            <image class="notification_protrait_pic" src="{{item.icon}}" mode="scaleToFill"></image>
+                        </view>
+                        <view class="notification_info">
+                            <view class="notification_info_nickname">
+                                {{item.nickname}}
+                            </view>
+                            <view class="notification_info_content">
+                                {{item.content}}
+                            </view>
+                            <view class="notification_info_time">
+                                {{item.time}}
+                            </view>
+                        </view>
+                        <view class="notification_cover" id="{{index}}" catchtap="navigate2Pal_Read">
+                            <image class="notification_cover_pic" src="{{item.pal_cover}}" mode="aspectFill"></image>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <view wx:if="{{next_read!=null}}" class="textBox" bindtap="moreRead">
+                <text>点击获取更多已读消息</text>
+            </view>
+        </swiper-item>
+    </swiper>
+</view>

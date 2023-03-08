@@ -1,0 +1,286 @@
+<view style="width:100%;height:100%;background-color: rgb(245,245,245);background-size: cover;">
+    <view style="overflow-x:hidden;width:100%;overflow-y: scroll;background-color: rgb(245,245,245);" class="page">
+
+        <view class="searchbox_notificaionbox">
+            <view class="searchbox">
+                <view class="search_icon">
+                    <image src="{{server_imagename}}/magnifier.png" mode='widthFix' class="search_icon_pic">
+                    </image>
+                </view>
+                <input class="input_box" confirm-type="search" bindconfirm="navigate2SearchResult" bindtap="clearDefault" placeholder="可使用#tag#搜索tag">
+                </input>
+
+                <!-- <view class="clear_icon">
+                <image src="{{server_imagename}}/clear.png" mode='widthFix' class="clear_icon_pic" bindtap="clear">
+
+                </image>
+            </view> -->
+            </view>
+            <view class='notificationbox' bindtap='navigate2Notification'>
+                <view class="notification_icon">
+                    <image src="{{server_imagename}}/notification.png" mode='widthFix' class="notification_icon_pic">
+                    </image>
+                    <mp-badge wx:if="{{notification}}" class="badge" />
+                </view>
+            </view>
+        </view>
+
+
+        <swiper class="ad_box" indicator-dots="true" indicator-active-color="rgb(0,132,255,.3)" autoplay="true" circular="true">
+
+            <swiper-item>
+                <view class="pos_show">
+                    <text class="text_title">最近待办\n</text>
+                    <view class="layout_horizontal" wx:if="{{todo_items.length == 0}}">
+                        <view class="circle"></view>
+                        <text class="text_max">无</text>
+                    </view>
+                    <view class="layout_horizontal" wx:if="{{todo_items.length > 0}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> {{todo_items[0].content}}</text>
+                        <text class="text_medium" space="nbsp"> {{todo_items[0].date}}  {{todo_items[0].start_time}}</text>
+                    </view>
+                    <view class="layout_horizontal" wx:if="{{todo_items.length > 1}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> {{todo_items[1].content}}</text>
+                        <text class="text_medium" space="nbsp"> {{todo_items[1].date}}  {{todo_items[1].start_time}}</text>
+                    </view>
+                    <view class="layout_horizontal" wx:if="{{todo_items.length > 2}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> {{todo_items[2].content}}</text>
+                        <text class="text_medium" space="nbsp"> {{todo_items[2].date}}  {{todo_items[2].start_time}}</text>
+                    </view>
+                </view>
+            </swiper-item>
+            <swiper-item>
+                <view class="pos_show">
+                    <text class="text_title">最近航班\n</text>
+                    <view class="layout_horizontal" wx:if="{{todo_flights.length == 0}}">
+                        <view class="circle"></view>
+                        <text class="text_max">无</text>
+                    </view>
+                    <view class="layout_horizontal" wx:if="{{todo_flights.length > 0}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> {{todo_flights[0].flight.city.name}}至{{todo_flights[0].flight.endcity.name}}({{todo_flights[0].flight.flight_no}})</text>
+                        <text class="text_medium" space="nbsp"> {{todo_flights[0].flight.depart_time}}</text>
+                    </view>
+                    <view class="layout_horizontal" style="overflow: hidden;" wx:if="{{todo_flights.length > 1}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> {{todo_flights[1].flight.city.name}}至{{todo_flights[1].flight.endcity.name}}({{todo_flights[1].flight.flight_no}})</text>
+                        <text class="text_medium" space="nbsp"> {{todo_flights[1].flight.depart_time}}</text>
+                    </view>
+                    <view class="layout_horizontal" style="overflow: hidden;" wx:if="{{todo_flights.length > 2}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> {{todo_flights[2].flight.city.name}}至{{todo_flights[2].flight.endcity.name}}({{todo_flights[2].flight.flight_no}})</text>
+                        <text class="text_medium" space="nbsp"> {{todo_flights[2].flight.depart_time}}</text>
+                    </view>
+                </view>
+            </swiper-item>
+            <swiper-item>
+                <view class="pos_show">
+                    <text class="text_title">最近提醒\n</text>
+                    <view class="layout_horizontal" wx:if="{{alarm_flights.length + alarm_items.length == 0}}">
+                        <view class="circle"></view>
+                        <text class="text_max">无</text>
+                    </view>
+                    <view class="layout_horizontal" wx:if="{{alarm_flights.length > 0}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> 航班：{{alarm_flights[0].flight.city.name}}至{{alarm_flights[0].flight.endcity.name}}({{alarm_flights[0].flight.flight_no}})</text>
+                        <text class="text_medium" space="nbsp"> {{alarm_flights[0].flight.depart_time}}</text>
+                    </view>
+                    <view class="layout_horizontal" style="overflow: hidden;" wx:if="{{alarm_flights.length > 1}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> 航班：{{alarm_flights[1].flight.city.name}}至{{alarm_flights[1].flight.endcity.name}}({{alarm_flights[1].flight.flight_no}})</text>
+                        <text class="text_medium" space="nbsp"> {{alarm_flights[1].flight.depart_time}}</text>
+                    </view>
+                    <view class="layout_horizontal" style="overflow: hidden;" wx:if="{{alarm_items.length > 0}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> 日程：{{alarm_items[0].content}}</text>
+                        <text class="text_medium" space="nbsp"> {{alarm_items[0].date}}  {{alarm_items[0].start_time}}</text>
+                    </view>
+                    <view class="layout_horizontal" style="overflow: hidden;" wx:if="{{alarm_items.length > 1 & alarm_items.length + alarm_flights.length < 3}}">
+                        <view class="circle"></view>
+                        <text class="text_max"> 日程：{{alarm_items[1].content}}</text>
+                        <text class="text_medium" space="nbsp"> {{alarm_items[1].date}}  {{alarm_items[1].start_time}}</text>
+                    </view>
+                </view>
+            </swiper-item>
+        </swiper>
+
+
+
+
+        <view class="swiper_box">
+            <view class="swiper_tab_bar">
+                <view class="swiper_tab_navigator">
+                    <view wx:for="{{tab.tabitem}}" wx:key="item" bindtap="setTab" data-tabindex="{{index}}" class="swiper_tab_item">
+                        <view wx:if="{{showtab == index}}" class="swiper_tab_item_text" animation="{{big_animation}}">
+                            <view>{{item.text}}</view>
+                        </view>
+                        <view wx:if="{{showtab != index}}" class="swiper_tab_item_text">
+                            <view>{{item.text}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view>
+                <view class="swiper_tab_line" style="width:{{100/tab.tabnum}}%;transform:translateX({{100*showtab}}%);">
+                </view>
+            </view>
+            <view class="fly_icon_box" animation="{{fly_animation}}">
+                <!-- <image class="fly_icon_pic" src="{{server_imagename}}/plane.png"></image> -->
+            </view>
+
+            <swiper current="{{currentTab}}" class="swiper_content" duration="500" bindchange="bindChange" style="--pageSize--:{{pageSize}}rpx">
+                <swiper-item>
+                    <view class="travelRecords">
+                        <view wx:for="{{travel_ids}}" wx:if="{{index < travel_num}}" class='travelRecord' id="{{index}}" bindtap="navigate2Travel" wx:key="item">
+                            <view class="trCover">
+                                <image class='trCoverPic' src='{{travel_covers[index]}}' mode="aspectFill"></image>
+                            </view>
+                            <view class="tr_title">
+                                {{travel_titles[index]}}
+                            </view>
+                            <!--<view class="tr_title">
+                            title
+                        </view>-->
+                            <view class="trTagview layout_horizontal">
+                                <view wx:for="{{travel_tags[index]}}" wx:for-item="tag" class="tag_content">
+                                    <text space="nbsp">#{{tag}}</text>
+                                </view>
+                            </view>
+                            <view class="tr_protrait_nickname_like">
+                                <view class="tr_protrait">
+                                    <image class="tr_protrait_pic" src="{{travel_icons[index]}}" mode="scaleToFill"> </image>
+                                </view>
+                                <view class="tr_nickname">
+                                    <text style="font-weight:bolder">{{travel_nicknames[index]}}</text>
+                                </view>
+                                <view class="tr_like">
+                                    <image wx:if="{{travel_liked_now[index]==true}}" src="{{server_imagename}}/likes.png" class="tr_like_pic" mode="aspectFit" id="{{index}}" catchtap="disThumbsUp"></image>
+                                    <image wx:else src="{{server_imagename}}/like_grey.png" class="tr_like_pic" mode="aspectFit" id="{{index}}" catchtap="thumbsUp"></image>
+                                    <view wx:if="{{travel_liked_now[index]==true}}" class="tr_text">{{travel_likes[index]+(travel_liked[index]==false)}}</view>
+                                    <view wx:else class="tr_text">{{travel_likes[index]-(travel_liked[index]==true)}}</view>
+                                </view>
+                            </view>
+                            <view class="trLocBox">
+                                <image class="trLocIcon" src="{{server_imagename}}/location.png" mode="widthFix"></image>
+                                <view class="trLocText">
+                                    <text space="ensp">{{travel_names[index]}} </text>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </swiper-item>
+
+                <swiper-item>
+                    <view class="peer_activity_box">
+                        <view wx:for="{{pal_ids}}" class="peer_activity" wx:key="item" id="{{index}}" bindtap="navigate2Pal">
+                            <view class="activity_owner">
+                                <view class="activity_owner_protrait">
+                                    <image class="activity_owner_protrait_pic" src="{{pal_icons[index]}}" mode="scaleToFill">
+                                    </image>
+                                </view>
+                                <view class="activity_owner_info">
+                                    <view class="activity_owner_nickname">
+                                        {{pal_nicknames[index]}}
+                                    </view>
+                                    <view class="activity_owner_gender">
+                                        <image wx:if="{{pal_genders[index]==0}}" class="activity_owner_gender_pic" src="{{server_imagename}}/male.png" mode="heightFix"></image>
+                                        <image wx:else class="activity_owner_gender_pic" src="{{server_imagename}}/female.png" mode="heightFix"></image>
+                                    </view>
+                                </view>
+                            </view>
+                            <view class="divline"></view>
+                            <view class="activity_detail">
+                                <view class="activity_detail_item">
+                                    <view class="activity_subject">
+                                        <text space="ensp"> {{pal_titles[index]}} </text>
+                                    </view>
+                                </view>
+                                <view class="activity_detail_item">
+                                    <view class="activity_detail_item_icon">
+                                        <image class="activity_detail_item_icon_pic" mode="heightFix" src="{{server_imagename}}/clock.png">
+                                        </image>
+                                    </view>
+                                    <view class="activity_time">
+                                        {{pal_startTimes[index]}} 至 {{pal_endTimes[index]}}
+                                    </view>
+                                </view>
+                                <view class="activity_detail_item">
+                                    <view class="activity_detail_item_icon">
+                                        <image class="activity_detail_item_icon_pic" mode="heightFix" src="{{server_imagename}}/location_ peer.png">
+                                        </image>
+                                    </view>
+                                    <view class="activity_loc">
+                                        {{pal_locations[index]}}
+                                    </view>
+                                </view>
+                                <view class="activity_detail_item">
+                                    <view class="activity_detail_item_icon">
+                                        <image class="activity_detail_item_icon_pic" mode="heightFix" src="{{server_imagename}}/mine_grey.png">
+                                        </image>
+                                    </view>
+                                    <view class="activity_time">
+                                        {{pal_nums[index]}} / {{pal_capacities[index]}}
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </swiper-item>
+
+                <swiper-item>
+                    <view class="loc_box">
+                        <view wx:for="{{loc_ids}}" wx:if="{{index < loc_num}}" class='loc' id="{{index}}" bindtap="navigate2Loc" wx:key="item">
+                            <swiper class="loc_covers" circular="true" indicator-active-color="white" indicator-dots="true" id="{{index}}">
+                                <swiper-item wx:for="{{loc_images[index]}}" wx:for-item="cover_item" wx:key='index'>
+                                    <image class='loc_cover_pic' src="{{server_hostname}}/api/core/images/{{cover_item}}/data/" mode="widthtFix"></image>
+                                </swiper-item>
+                            </swiper>
+                            <view class="divline"></view>
+                            <view class="loc_info">
+                                <view class="loc_name">
+                                    {{loc_names[index]}}
+                                </view>
+                                <view class="loc_intro">
+                                    {{loc_descriptions[index]}}
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </swiper-item>
+            </swiper>
+        </view>
+        <view style="justify-content: center;align-content: center;text-align: center;">
+        <text style="font-size: x-small;color: rgb(0,0,0,0.6);padding-bottom: 30px;">已经到底了！！！</text>
+    </view>
+    </view>
+    <view id="bottom"></view>
+    <view class="tabbar_cover_view_3">
+        <view class="tabbar_box">
+
+            <image wx:if="{{tabbar_homepage}}" class="tabbar_pic" mode="widthFix" src="{{server_imagename}}/public/navigation1.png" style="left: 7%;"></image>
+            <image wx:else class="tabbar_pic" src="{{server_imagename}}/public/navigation5.png" bindtap="changeTabbarHomepage" style="left: 7%;">
+            </image>
+
+            <image class="tabbar_pic" src="{{server_imagename}}/public/navigation6.png" style="left:22%;" bindtap="navigate2Flight">
+            </image>
+
+            <image class="tabbar_pic" src="{{server_imagename}}/public/navigation7.png" style="left: 65%;" bindtap="navigate2calendar"></image>
+
+            <image class="tabbar_pic" src="{{server_imagename}}/public/navigation8.png" bindtap="changeTabbarMine" style="left:82%"></image>
+
+        </view>
+    </view>
+    <!-- 底部的tabbar只有1个加号 -->
+    <view class="tabbar_cover_view_1">
+        <view class="tabbar_box">
+            <view class="flex-item_1" bindtap="navigate2Release">
+                <image class="tabbar_pic_plus" src="/images/chawhite.png" mode="widthFix">
+                </image>
+            </view>
+        </view>
+    </view>
+    <!-- </view> -->
+</view>

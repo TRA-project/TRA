@@ -1,0 +1,52 @@
+<!--pages/RealMyzone/RealMyzone.wxml-->
+
+<view class="myzone">
+<view class="zone_head">
+    <view class="user_img">
+        <image src="{{user_icon}}" class="user_pic" bindtap="preview" id="{{user_icon}}"></image>
+    </view>
+    <view class="user_name">
+        {{username}}
+    </view>
+    <view class="right_button" bindtap="navigate2Notification">
+        我的消息
+    </view>
+</view>
+
+<view class="zone_body">
+    <mp-cells>
+         <mp-cell link hover value="个人空间" bindtap="navigate2MyZone">
+            <image slot="icon" src="{{images.myzone}}" style="margin-right: 16px; vertical-align: middle; height: 20px; width: 20px;"></image>
+        </mp-cell>
+    </mp-cells>
+    <mp-cells>
+    <mp-cell link hover value="旅行记录" bindtap="navigate2History">
+        <image slot="icon" src="{{images.history}}" style="margin-right: 16px; vertical-align: middle; height: 20px; width: 20px;"></image>
+    </mp-cell>
+    <mp-cell link hover value="我的点赞" bindtap="navigate2Likes">
+        <image slot="icon" src="{{images.likes}}" style="margin-right: 16px; vertical-align: middle; height: 20px; width: 20px;"></image>
+    </mp-cell>
+    <mp-cell link hover value="关注航班" bindtap="navigate2Flight">
+        <image slot="icon" src="{{images.flight}}" style="margin-right: 16px; vertical-align: middle; height: 20px; width: 20px;"></image>
+    </mp-cell>
+    <mp-cell link hover value="游记合集" bindtap="navigate2Collection">
+        <image slot="icon" src="{{images.collection}}" style="margin-right: 16px; vertical-align: middle; height: 20px; width: 20px;"></image>
+    </mp-cell>
+    <mp-cell link hover value="我的足迹" bindtap="navigate2footprint">
+        <image slot="icon" src="{{images.foot}}" style="margin-right: 16px; vertical-align: middle; height: 20px; width: 20px;"></image>
+    </mp-cell>
+    </mp-cells>
+
+    <mp-cells>
+        <mp-cell link hover value="设置" bindtap="navigate2settings">
+            <image slot="icon" src="{{images.settings}}" style="margin-right: 16px; vertical-align: middle; height: 20px; width: 20px;"></image>
+        </mp-cell>
+    </mp-cells>
+</view>
+
+<view>
+
+</view>
+</view>
+
+

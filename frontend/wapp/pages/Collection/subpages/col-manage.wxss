@@ -1,0 +1,18 @@
+/* pages/Collection/subpages/col-manage.wxss */
+
+.titlehead{
+    font-size: 20px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 20px;
+}
+
+.rename_btn{
+    color: cornflowerblue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.delete_btn{
+    color: brown;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+

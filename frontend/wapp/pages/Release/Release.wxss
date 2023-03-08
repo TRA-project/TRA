@@ -1,0 +1,143 @@
+.cover_img {
+  width: 100%;
+}
+
+.title_view {
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.title_input {
+  height: auto;
+  font-weight: bold;
+  font-size: 150%;
+}
+
+.divline{
+  width: 94%;
+  border-bottom:solid 4rpx rgb(248, 248, 248);
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 3%;
+}
+
+.section {
+    margin: 30rpx;
+    padding: 20rpx;
+    background-color: rgb(248, 248, 248);
+    border-radius: 30rpx;
+    height: fit-content;
+  }
+
+  .section-title {
+    font-weight:bolder;
+    margin-bottom: 20rpx;
+  }
+
+.content_view {
+  padding: 6%;
+}
+
+.content_textarea {
+  width: 100%;
+  margin-bottom: 100rpx;
+  font-size: 120%;
+}
+
+.image_view {
+  padding: 6%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image{
+  width:31%;
+  height: 100px;
+  padding: 2px
+}
+
+.moment_img{
+  width: 98px;
+  height: 98px;
+}
+
+.btns_view {
+  padding: 6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add_location{
+  width: 100% !important;
+  height: 35px;
+  margin-bottom: 10rpx;
+  font-size: 14px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.send{
+  margin-top: 100rpx;
+  background-color: rgb(199, 231, 255);
+}
+
+.img{
+  height: 30px;
+  width: 30px;
+}
+.tag{
+  height: 25px;
+  width: 88%;
+  overflow-x: scroll;
+  margin-left: 6%;
+  margin-right: 6%;
+  white-space:nowrap; 
+}
+.layout_horizontal{
+  height: 40px;
+  display: flex;
+  /*row 横向  column 列表  */
+  flex-direction: row;
+}
+.tag-default{
+  margin-left:5px;
+  height: 20px;
+  padding-top:3px;
+  padding-bottom:3px;
+  padding-left: 13px;
+  padding-right: 13px;
+  border-radius: 13px;
+  font-size: small;
+  color: rgba(106, 119, 138, 0.8);
+  background-color: rgb(240, 240, 240);
+  text-align:center;
+  width: auto;
+}
+.tag-content{
+  width: auto;
+  height: 20px;
+  margin-left:5px;
+  padding-top:3px;
+  padding-bottom:3px;
+  padding-left: 13px;
+  padding-right: 13px;
+  border-radius: 13px;
+  font-size: small;
+  font-weight: bold;
+  color: rgba(255, 255, 255);
+  background-color: rgba(61, 177, 255, 0.8);
+  text-align:center;
+  align-content: center;
+}
+.pic-tag{
+  width: 10px;
+  height: 10px;
+}
+

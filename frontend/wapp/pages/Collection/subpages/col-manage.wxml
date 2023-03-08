@@ -1,0 +1,27 @@
+<!--pages/Collection/subpages/col-manage.wxml-->
+<view>
+    <view class="titlehead">游记合集管理 </view>
+    <mp-cells wx:for-items="{{collections}}" wx:for-item="collection"  ext-class="my-cells" >
+            <!--<mp-cell value="标题文字" footer="说明文字"></mp-cell>-->
+            <mp-cell value="{{collection.title}}">
+                <!--<view>{{collection.name}}</view>-->
+                <view slot="footer">
+                    <view wx:if="{{collection.title!=='默认合集'}}" class="delete_btn" id="{{collection.id}}" bindtap="confirmdelete">删除</view>
+                    <view wx:if="{{collection.title!=='默认合集'}}" class="rename_btn" id="{{collection.id}}" data-name="{{collection.title}}" bindtap="confirmrename">重命名</view>
+                </view>
+            </mp-cell>
+            <!--<mp-slideview show="{{true}}" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap">
+                <mp-cell >
+                    <view slot="">
+                        {{collection.name}}
+                    </view>
+                    <view slot="footer">
+                        <view>
+                            <button class="rename_btn"></button>
+                            <button class="rename_btn"></button>
+                        </view>
+                    </view>
+                </mp-cell>
+            </mp-slideview>-->
+        </mp-cells>
+</view>

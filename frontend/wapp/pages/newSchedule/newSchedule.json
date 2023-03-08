@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "calendar":"../components/calendar/calendar",
+      "cells": "weui-miniprogram/cells/cells",
+      "cell": "weui-miniprogram/cell/cell"
+  }
+}

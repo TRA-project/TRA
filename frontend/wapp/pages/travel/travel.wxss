@@ -1,0 +1,570 @@
+/* pages/travel/travel.wxss */
+.image_swiper {
+  height: 550rpx;
+}
+
+.image_swiperitem {
+  display: flex;
+  justify-content: center;
+}
+
+.user-head{
+  margin-top: 70rpx;
+  margin-bottom: 30rpx;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.head{
+  width: auto;
+  max-width: 220px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.head image{
+  max-width:40px;
+  max-height:40px;
+  margin: 0 10px;
+  border-radius: 100%;
+}
+
+.head text {
+  font-size: 18px;
+  color:#030303;
+  font-weight: bold;
+}
+
+.footprint {
+  margin-top: 5rpx;
+  font-size: 13px;
+  color:#030303;
+  font-weight: bold;
+  background-color: rgb(146, 203, 250);
+  border-radius: 30rpx;
+}
+
+.subscribe_view {
+  width: 70px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  margin-top: 7rpx;
+  margin-right: 10px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.travel_view {
+  width: calc(100% - 24px);
+  height: auto;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 150rpx;
+}
+
+.travel_title {
+  width: 98%;
+  margin-left: 1%;
+  text-align: justify;
+  font-weight: bold;
+  font-size: 150%;
+  color: #030303;
+  margin-bottom: 15rpx;
+
+  word-break:break-all;
+}
+
+.location_view {
+  width: fit-content;
+  margin-left: 1%;
+  margin-bottom: 15rpx;
+  display: flex;
+  align-items: center;
+  background-color: rgb(248, 248, 248);
+  border-radius: 6px;
+}
+
+.loc_image {
+  width: 12px;
+  height: 12px;
+}
+
+.travel_location {
+  margin-top: 2px;
+  color: #014175;
+  font-size: 14px;
+}
+
+
+.divline{
+  width: 98%;
+  border-bottom:solid 4rpx rgb(248, 248, 248);
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 1%;
+}
+
+.travel_content {
+  width: 96%;
+  margin-left: 2%;
+  margin-top: 15rpx;
+  text-align: justify;
+  font-size: 18px;
+  /* color: #555; */
+  margin-bottom: 10px;
+
+  word-break:break-all;
+}
+.travel_time {
+  font-size: 12px;
+  color:#aaa;
+  text-align: right;
+  margin-right: 2%;
+}
+
+.divview {
+  width: 100%;
+  height: 10rpx;
+  background-color: rgb(248, 248, 248);
+}
+
+.relative_view {
+  width: calc(100% - 24px);
+  height: fit-content;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20rpx;
+  background-color: rgb(245,245,245);
+}
+
+.relative_title {
+  width: 98%;
+  margin-left: 1%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 110%;
+  color: #030303;
+  margin-bottom: 15rpx;
+}
+
+
+.travelRecords{
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  margin-top: 30rpx;
+  margin-bottom: 100rpx;
+  background-color: rgb(245,245,245);
+}
+
+.travelRecord{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  justify-items: center;
+  align-content: left;
+  align-items: left;
+  /* border: 3rpx solid #44cdf0; */
+  border-radius: 15rpx;
+  height: 470rpx;
+  width: 90%;
+  background:white;
+  margin-bottom:20rpx;
+}
+
+
+.trCoverPic{
+  border-top-left-radius: 15rpx;
+  border-top-right-radius: 15rpx;
+  height: 270rpx;
+  width: 100%;
+}
+
+.trLocBox{
+  display:flex;
+  height: 40rpx;
+  width: fit-content;
+  align-items: center;
+  align-content: left;
+  background: rgb(255, 255, 255);
+  border-bottom-right-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  position: relative;
+  top:-235rpx;
+  left:0rpx;
+}
+
+.trLocIcon{
+  width: 30rpx;
+}
+
+.trLocText{
+  height: 40rpx;
+  font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  font-family:  ‘Segoe UI’, Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tr_title{
+  width: 100%;
+  height: 60rpx;
+  font-size:45rpx;
+  font-weight: bolder;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  margin-left:15rpx;
+}
+
+.tr_protrait_nickname_like{
+  width: 100%;
+  height: 40rpx;
+  display:flex;
+  margin-left:5rpx;
+  margin-top: 15rpx;
+}
+
+.tr_protrait{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  width:9%;
+  height: 0;
+  position: relative;
+  padding-top: 7%;
+  margin-right: 3%;
+  margin-left: 1%;
+}
+
+.tr_protrait_pic{
+  height:100%;
+  width: 100%;
+  position: absolute;
+  top:-12%;
+  border-radius:100rpx;
+}
+
+.tr_nickname{
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width:60%;
+  height: 40rpx;
+  font-size:30rpx;
+  color:grey;
+}
+
+.tr_like{
+  width:60%;
+  height: 40rpx;
+  display:flex;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+  margin-right: 20rpx;
+}
+
+.tr_like_pic{
+ height: 40rpx;
+ width:20%;
+ position: relative;
+}
+
+.tr_text{
+  display:flex;
+  justify-content: flex-end;
+  height: 40rpx;
+  font-size:30rpx;
+  color:grey;
+  font-weight: normal;
+  align-content: center;
+  align-items: center;
+}
+
+
+.bot-btnsarea {
+  width: 100%;
+  height: 44px;
+  background-color: #fff;
+
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.bot-btnsarea button {
+  background-color: #fff;
+  border-radius: 0;
+}
+.bot-btnsarea button:active {
+  background-color: whitesmoke;
+}
+.bot-btnsarea button image {
+  width: 25px;
+  height: 25px;
+}
+/* 评论 */
+/*模态框*/
+.modals{
+  position:fixed;
+  z-index: 100000;
+  top:0; 
+  left: 0; 
+  right:0; 
+  bottom: 0;
+  }
+ .modals-cancel{
+  position:absolute; 
+  z-index:1000; 
+  top:0; 
+  left: 0; 
+  right:0; 
+  bottom: 0; 
+  /* background-color: rgba(0,0,0,.5); */
+  }
+ .bottom-dialog-body{
+  width: 99%;
+  margin: 0 auto;
+  position:absolute; 
+  z-index:10001; 
+  bottom:0; 
+  left:0; 
+  right:0; 
+  height:65%; 
+  background-color: #fff;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  }
+ /*动画前初始位置*/
+ .bottom-pos{
+  -webkit-transform:translateY(100%);
+  transform:translateY(100%);
+ }
+ .comment_top{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #f2f2f2;
+  padding: 10rpx 24rpx;
+  box-sizing: border-box;
+ }
+ .comment_num{
+  font-size: 30rpx;
+ }
+ .comment_close{
+  font-size: 62rpx;
+  line-height: 50rpx;
+ }
+ .comment_list{
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  overflow-y: scroll;
+ }
+ .comment_li{
+  display: flex;
+  padding: 20rpx 24rpx;
+  box-sizing: border-box;
+  flex-direction: column;
+ }
+.father_comment {
+  display: flex;
+  flex-direction: row;
+}
+ .comment_li_img{
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+ }
+ .comment_li_info{
+  flex: 1;
+ }
+ .comment_li_name{
+  font-size: 30rpx;
+  font-weight: bold;
+ }
+ .comment_li_content{
+  font-size: 28rpx;
+  max-width: 80%;
+  word-break:break-all;
+ }
+ .comment_li_date{
+  color: #999;
+  font-size: 24rpx;
+ }
+ .comment_inputbox{
+   height: fit-content;
+  display: flex;
+  padding: 20rpx 24rpx;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1rpx solid #f2f2f2;
+ }
+ .comment_input{
+    min-height:40rpx;
+    line-height:30rpx;
+    font-size: 30rpx;
+    flex: 1;
+ }
+
+ .comment_sendbtn{
+  font-size: 30rpx;
+  background: rgb(80, 161, 236);
+  color: #fff;
+  padding: 5rpx 18rpx;
+  border-radius: 10rpx;
+ }
+
+ .reply{
+  display: flex;
+  padding: 20rpx 24rpx;
+  margin-left: 50rpx;
+  margin-top: 10rpx;
+  box-sizing: border-box;
+  flex-direction: row;
+  background-color: #fafafa;
+ }
+ /* .activity_owner{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top:5rpx;
+  margin-bottom: 10rpx;
+  width: 100%;
+  height: 25%;
+}
+
+.activity_owner_protrait{
+  height: 0;
+  position: relative;
+  padding-top:15%;
+  width: 15%;
+} */
+
+ .reply_img{
+  max-width: 40rpx;
+  min-width: 40rpx;
+  max-height: 40rpx;
+  min-height: 40rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+ }
+ .reply_info{
+   display: flex;
+   flex-direction: column;
+ }
+ .reply_name{
+  font-size: 30rpx;
+  font-weight: bold;
+
+  word-break:break-all;
+ }
+ .reply_date{
+  color: #999;
+  font-size: 24rpx;
+ }
+.reply_content{
+  font-size: 28rpx;
+
+  word-break:break-all;
+}
+
+.textBox {
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+}
+
+.tag{
+    height: 20px;
+    /*width: 88%;*/
+    overflow-x: scroll;
+    margin-left: 3px;
+    margin-right: 3px;
+    white-space:nowrap; 
+  }
+
+.tag_view{
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+.tag-content{
+    width: auto;
+    height: 20px;
+    margin-left:5px;
+    padding-top:4px;
+    padding-bottom:4px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 13px;
+    font-size: small;
+    font-weight: bold;
+    color: rgba(2, 94, 155, 0.8);
+    background-color: rgba(201, 253, 244, 0.8);
+    text-align:center;
+    align-content: center;
+  }
+
+  .trTagview {
+    display: flex;
+    flex-direction: row;
+    width: 98%;
+    overflow-x: scroll;
+    white-space:nowrap; 
+    align-items: center;
+    min-height: 25px;
+}
+.layout_horizontal{
+    height: 40px;
+    display: flex;
+    /*row 横向  column 列表  */
+    flex-direction: row;
+  }
+.tag_content {
+    display: flex;
+    margin-left: 5px;
+    padding-top:2px;
+    padding-bottom:2px;
+    height: 20px;
+    padding-left: 8px;
+    padding-right: 10px;
+    border-radius: 13px;
+    font-size: small;
+    font-weight: bolder;
+    color: rgba(2, 94, 155, 0.8);
+    background-color: rgba(204, 222, 255, 0.8);
+    text-align:center;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+ 
+
+}

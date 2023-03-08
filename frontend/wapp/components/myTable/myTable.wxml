@@ -1,0 +1,29 @@
+<!--components/myTable/myTable.wxml-->
+<!-- <view class="mytable" >
+    <view class="mytable_head" >
+        <view class="mytable_cell_head " wx:for="{{mydata[0]}}" wx:for-index="key">{{key}}</view>
+    </view>
+    <view class="mytable_body" wx:for="{{mydata}}" wx:for-item="dataitem">
+        <view class="mytable_cell" wx:for="{{dataitem}}"  wx:for-item="value">
+            <view class="mytable_content" > 
+                {{value}}
+            </view>
+        </view>
+    </view>
+    <view class="mytable_foot">
+        这是表格底
+    </view>
+</view> -->
+<view class="mytable_cell_head">
+    <view class="mytable_cell">
+        时间
+    </view>
+    <view class="mytable_cell">
+        活动
+    </view>
+</view>
+<view style="margin-left: 11%;margin-right: 8%;margin-bottom:5%;">
+<van-cell-group>
+  <van-cell center="true" wx:for="{{mydata}}" wx:for-item="dataitem" title="{{dataitem.time}}" value="{{dataitem.content}}" />
+</van-cell-group>
+</view>

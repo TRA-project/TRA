@@ -1,0 +1,36 @@
+<view class="page">
+    <view class="date">{{date}}</view>
+    <view class="card">
+        <input placeholder="{{title}}" class="title" bindblur="getTitle" maxlength="20"></input>
+        <view class="divline"></view>
+        <view bindtap="setLoc" class="other">{{locName}}</view>
+        <view class="divline"></view>
+        <picker mode="time" class="other" value="{{startTime}}" bindchange="getStart">{{startTime}}</picker>
+        <view class="divline"></view>
+        <picker mode="time" class="other" value="{{endTime}}" bindchange="getEnd">{{endTime}}</picker>
+    </view>
+    <view class="card second">
+        <view class="layout_horizontal">
+            <text class="other" style="color: rgb(0,0,0,0.6);">提醒</text>
+            <switch checked="{{if_alarm==0?false:true}}" color="rgb(175, 228, 253)" class="title" bindchange="alarm"></switch>
+        </view>
+        <view class="divline"></view>
+        <view>
+            <view class="layout_horizontal">
+                <text class="other" style="color: rgb(0,0,0,0.6);">预算</text><input placeholder="未设置" class="other" type="digit" bindinput="getBudget" value="{{budget}}"></input>
+            </view>
+            <view class="divline"></view>
+        </view>
+        <view>
+            <view class="layout_horizontal">
+                <text class="other" style="color: rgb(0,0,0,0.6);">实际支出</text><input placeholder="未设置" class="other" type="digit" bindinput="getConsumption" value="{{consumption}}"></input>
+            </view>
+            <!-- <view class="divline"></view> -->
+        </view>
+        <!-- <textarea placeholder="备注" class="more"></textarea> -->
+    </view>
+    <view class="layout_horizontal">
+        <image src="/images/delete.png" class="pic left" bindtap="delete"></image>
+        <image src="/images/save.png" class="pic right" bindtap="save"></image>
+    </view>
+</view>

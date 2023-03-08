@@ -1,0 +1,176 @@
+<scroll-view scroll-y="true" style="{{hideModal?'':'position:fixed'}}">
+  <swiper class="image_swiper" indicator-dots="true" circular="true">
+    <swiper-item wx:for="{{travel.images}}" wx:key="index" class="image_swiperitem" style="height:100%;">
+      <image src="{{item}}" mode="heightFix" style="height:100%;" bindtap="preview" id="{{item}}"></image>
+    </swiper-item>
+  </swiper>
+
+  <view class="user-head">
+    <view class="head" bindtap="navigate2OtherZone">
+      <image src="{{author.icon}}" />
+      <!--用户头像地址-->
+      <text>{{author.nickname}}</text>
+      <!--用户昵称-->
+    </view>
+
+    <view class="footprint" bindtap="navigate2footprint">
+      <text space="ensp"> {{author.cities}}城 {{author.travels}}足迹 </text>
+    </view>
+
+    <!--关注-->
+    <view class="subscribe_view" wx:if="{{!subscribed}}" style="background-color:rgb(80, 161, 236); color:#fff;" catchtap="subscribe">
+      <text>关注</text>
+    </view>
+
+    <view class="subscribe_view" wx:if="{{subscribed}}" style="background-color:rgb(230, 230, 230); color:#aaa;" catchtap="disSubscribe">
+      <text>取消关注</text>
+    </view>
+  </view>
+
+  <!--游记标题，内容，创建时间-->
+  <view class="travel_view">
+    <view class="travel_title">{{travel.title}}</view>
+    <view class="location_view" catchtap="searchLocation">
+      <text class="travel_location" decode="{{true}}" space="{{true}}">&nbsp;</text>
+      <image class="loc_image" src="{{server_imagename}}/地点.png"></image>
+      <text class="travel_location" space="ensp"> {{travel.position.city}} · {{travel.position.name}} </text>
+    </view>
+
+    <view class="tag tag_view">
+      <view class="tag_view">
+        <view wx:for-items="{{travel.tagset}}" wx:for-item="tag" class="tag-content" bindtap="navigate2Tagsearch" data-tagname="{{tag}}">
+          <text space="nbsp">#{{tag}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="divline"></view>
+    <text class="travel_content">{{travel.content}}</text>
+    <view class="travel_time">
+      <text space="ensp">发布于 {{travel.time}} </text>
+    </view>
+  </view>
+
+  <!--TODO//-->
+  <my-schedule isHidden="{{false}}" schData="{{schdata}}" catchtap="navigate2schrelease"> </my-schedule>
+
+
+  <view class="divview"></view>
+  <!--推荐栏-->
+  <view class="relative_view" wx:if="{{travel.forbidden == 0}}">
+    <view class="relative_title">相关推荐</view>
+    <view class="divline"></view>
+
+    <view class="travelRecords">
+      <view wx:for="{{travel_ids}}" class='travelRecord' id="{{index}}" bindtap="navigate2Travel" wx:key="item">
+        <view class="trCover">
+          <image class='trCoverPic' src='{{travel_covers[index]}}' mode="aspectFill"></image>
+        </view>
+        <view class="tr_title">
+          {{travel_titles[index]}}
+        </view>
+        <view class="trTagview layout_horizontal">
+            <view wx:for="{{travel_tags[index]}}" wx:for-item="tag" class="tag_content">
+                <text space="nbsp">#{{tag}}</text>
+            </view>
+        </view>
+        <view class="tr_protrait_nickname_like">
+          <view class="tr_protrait">
+            <image class="tr_protrait_pic" src="{{travel_icons[index]}}" mode="scaleToFill"> </image>
+          </view>
+          <view class="tr_nickname">
+            <text style="font-weight:bolder">{{travel_nicknames[index]}}</text>
+          </view>
+          <view class="tr_like">
+            <image wx:if="{{travel_liked_now[index]==true}}" src="{{server_imagename}}/likes.png" class="tr_like_pic" mode="aspectFit" id="{{index}}" catchtap="disThumbsUpRelative"></image>
+            <image wx:else src="{{server_imagename}}/like_grey.png" class="tr_like_pic" mode="aspectFit" id="{{index}}" catchtap="thumbsUpRelative"></image>
+            <view wx:if="{{travel_liked_now[index]==true}}" class="tr_text">{{travel_likes[index]+(travel_liked[index]==false)}}</view>
+            <view wx:else class="tr_text">{{travel_likes[index]-(travel_liked[index]==true)}}</view>
+          </view>
+        </view>
+        <view class="trLocBox">
+          <image class="trLocIcon" src="{{server_imagename}}/location.png" mode="widthFix"></image>
+          <view class="trLocText">
+            <text space="ensp">{{travel_names[index]}} </text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{show}}">
+    <view class="bot-btnsarea" wx:if="{{travel.forbidden == 0}}">
+      <button bindtap='showModal'>
+        <image src="{{server_imagename}}/评论.png"></image>
+      </button>
+      <button wx:if="{{!liked}}" catchtap="thumbsUp">
+        <image src="{{server_imagename}}/点赞.png"></image>
+      </button>
+      <button wx:if="{{liked}}" catchtap="disThumbsUp">
+        <image src="{{server_imagename}}/已点赞.png"></image>
+      </button>
+    </view>
+    <!--隐藏区域-->
+    <view class="modals modals-bottom-dialog" hidden="{{hideModal}}" style="width:100%;height:{{widheight}}px" wx:if="{{travel.forbidden == 0}}">
+      <view class="modals-cancel" bindtap="hideModal"></view>
+      <view class="bottom-dialog-body bottom-pos" animation="{{animationData}}">
+        <!--top-->
+        <view class="comment_top">
+          <view></view>
+          <view class="comment_num">{{comments}}条评论</view>
+          <view class="comment_close" bindtap="hideModal">×</view>
+        </view>
+
+        <!--comment_list-->
+        <view class="comment_list">
+          <view class="comment_li" wx:for="{{comment_list}}" wx:key="index">
+            <view class="father_comment" id="{{item}}" bindtap="reply" bindlongpress="deleteReply">
+              <!--avatar-->
+              <image class="comment_li_img" id="{{comment_dict[item].owner.id}}" src="{{server_hostname}}/api/core/images/{{comment_dict[item].owner.icon}}/data/" catchtap="navigate2Replyer"></image>
+              <view class="comment_li_info">
+                <!--nickname-->
+                <view class="comment_li_name" id="{{comment_dict[item].owner.id}}" catchtap="navigate2Replyer">
+                  {{comment_dict[item].owner.nickname}}
+                </view>
+                <!--content and time-->
+                <view class="comment_li_content">
+                  {{comment_dict[item].content}}
+                </view>
+                <text class="comment_li_date">{{comment_dict[item].time}}</text>
+              </view>
+            </view>
+
+            <view class="reply" wx:for="{{comment_dict[item].reply_list}}" wx:for-item="reply_id" wx:key="index" bindtap='reply' id="{{reply_id}}" bindlongpress="deleteReply">
+              <!--avatar-->
+
+              <image class="reply_img" id="{{comment_dict[reply_id].owner.id}}" src="{{server_hostname}}/api/core/images/{{comment_dict[reply_id].owner.icon}}/data/" catchtap="navigate2Replyer"></image>
+
+
+              <view class="reply_info">
+                <!--username-->
+                <view class="reply_name" id="{{comment_dict[reply_id].owner.id}}" catchtap="navigate2Replyer">{{comment_dict[reply_id].owner.nickname}}</view>
+                <!--content-->
+                <text data-type="2" class="reply_content">回复 <text class="right_name">{{comment_dict[comment_dict[reply_id].reply].owner.nickname}}：</text>{{comment_dict[reply_id].content}}</text>
+                <!--time-->
+                <text class="reply_date">{{comment_dict[reply_id].time}}</text>
+              </view>
+            </view>
+
+            <view wx:if="{{comment_dict[item].next!=null}}" class="textBox" bindtap="moreReply" id="{{item}}">
+              <text>点击获取更多回复</text>
+            </view>
+          </view>
+
+          <view wx:if="{{next_comments!=null}}" class="textBox" bindtap="getComments">
+            <text>点击获取更多评论</text>
+          </view>
+        </view>
+
+        <!--comment_inputbox-->
+        <view class="comment_inputbox">
+          <textarea class="comment_input" maxlength="120" adjust-position auto-height="true" bindinput="commentInput" focus="{{focus}}" value="{{comment_content}}" placeholder="写下你的评论吧"></textarea>
+          <view class="comment_sendbtn" bindtap="sendComment" bindlongpress="clearReply">{{reply_nickname}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

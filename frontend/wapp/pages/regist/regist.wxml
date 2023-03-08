@@ -1,0 +1,51 @@
+
+<!-- LOGO模块 -->
+<view class="logo_view">
+  <image class="logo_img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
+</view>
+
+<!-- 设置用户名模块 -->
+<view class="box_view">
+  <text class="title">设置用户名</text>
+  <input class="info" id="name"
+  type="text" maxlength="16"
+  placeholder="用户名" placeholder-class="center"
+  bindinput="input"></input>
+
+  <text class="tip">· 用户名由1-16位数字、字母或下划线组成，将与微信账号唯一绑定</text>
+</view>
+
+<!-- 设置昵称与密码模块 -->
+<view class="box_view">
+  <text class="title">设置昵称与密码</text>
+  
+  <input class="info" id="nickname"
+  type="text" maxlength="9"
+  placeholder="昵称" placeholder-class="center"
+  bindinput="input"></input>
+  
+  <text class="tip">· 昵称由1-9位数字、字母、符号或文字组成</text>
+
+  <input class="info" id="password_1"
+  type="text" password="true" maxlength="16"
+  placeholder="密码" placeholder-class="center"
+  bindinput="input"></input>
+  
+  <input class="info" id="password_2"
+  type="text" password="true" maxlength="16"
+  placeholder="请再次输入密码" placeholder-class="center"
+  bindinput="input"></input>
+  
+  <text class="tip">· 密码由8-16位数字、字母或符号组成</text>
+</view>
+
+<!-- 注册并登录按钮模块 -->
+<view class="box_view">
+  <button class="submit_btt" type="primary" style="height:80rpx;width:400rpx" disabled="{{disabled}}"
+bindtap="regist">注册并登录</button>
+
+  <radio-group class="radio_group">
+    <radio class="radio" checked="{{checked}}" bindtap="check"></radio>
+    <text class="contract" bindtap="navigate2Contract">已同意《服务协议》及《隐私政策》</text>
+  </radio-group>
+</view>

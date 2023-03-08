@@ -1,0 +1,65 @@
+<view class="cover_view">
+  <image class="cover_img" src="{{cover_url}}" mode="widthFix" bindtap="chooseCover">
+  </image>
+</view>
+
+<view class="title_view">
+  <input class="title_input" maxlength="30" placeholder="请输入游记标题" id="title" bindinput="input"></input>
+</view>
+
+<view class="divline"></view>
+
+<view class="content_view">
+  <textarea class='content_textarea' placeholder="请输入正文" auto-height maxlength="-1" id="content" bindinput="input"></textarea>
+</view>
+
+<view class="image_view">
+  <view class='image' wx:for="{{img_url}}" wx:key="item">
+    <image class="moment_img" src="{{item}}"></image>
+  </view>
+  <view class='image' style='display:{{hideAdd?"none":"block"}}'>
+    <image bindtap="chooseimage" class="moment_img" src='{{server_imagename}}/add.jpg'></image>
+  </view>
+</view>
+
+<view class="tag layout_horizontal">
+  <view wx:for-items="{{tagset}}" wx:for-item="tag" class="tag-content">
+    <text space="nbsp">#{{tag}} </text>
+    <image src="/images/chawhite.png" bindtap="deletetag" data-tagname="{{tag}}" class="pic-tag">x</image>
+  </view>
+  <view bindtap="openEditor" class="tag-default">添加TAG</view>
+</view>
+
+<view class="btns_view">
+  <button class="add_location" bindtap="chooseLocation">
+    <image class="img" src='{{server_imagename}}/add_location.jpg'></image>
+    {{(location.latitude == -1)? '添加地点' : location.address.city + " · " + location.name}}
+  </button>
+  <button class="add_location" bindtap="chooseVis">
+    <image class="img" src='{{server_imagename}}/visibility.jpg'></image>
+    {{access_list[access]}}
+  </button>
+  <button class="add_location">
+    <picker bindchange="bindPinkerchange" value="{{col_index}}" range="{{col_array}}">
+      添加合集: {{col_array[col_index]}}
+    </picker>
+  </button>
+  <!-- TODO -->
+  <view class="add_location">
+    <!-- <picker mode="date" bindchange="changeSchDate">
+      关联日程: {{schdate}}
+    </picker> -->
+    <view class="layout_horizontal tag" style="font-weight:bold;">关联日程:
+      <view wx:if="{{schdate==''}}" bindtap="navigate2Cal" class="tag-default" style="font-weight: normal;font-style: normal;">添加日程</view>
+      <view wx:else class="tag-content layout_horizontal" style="font-weight: normal;font-style: normal;">
+        <view>{{schtitle}}</view>
+        <image src="/images/chawhite.png" bindtap="deletesch" data-tagname="{{tag}}" class="pic-tag" style="margin-left: 5px;margin-top:5px;"></image>
+      </view>
+    </view>
+  </view>
+  <button bindtap="post" class="send">发布</button>
+</view>
+
+
+
+<edit_keyboard showEditor="{{showEditor}}" bind:add-newtag="addnewtag" bind:editor-switch="switchEditor" />

@@ -1,0 +1,28 @@
+<view style="height:100%;position:fixed;width:100%;">
+        <cover-view class = "jump_box" bindtap = "navigate2Web">
+            <cover-view class = "jump_button">
+                <cover-image class = "jump_pic" src = "{{server_imagename}}/jump.png" mode = "widthFix">
+                </cover-image>
+            </cover-view>
+        </cover-view>
+        <view class = "ad_box">
+            <swiper class = "ad_swiper_box" autoplay="true" indicator-dots="true" circular="true">
+                <swiper-item wx:for = "{{img}}"class = "ad_swiper_item" wx:key="index">
+                    <image class = "ad_pic" src = "{{item}}" mode = "widthFix">
+                    </image>
+                </swiper-item>
+            </swiper>
+            <view  class = "ad_info" animation = "{{translate_animation}}">
+                <view class = "ad_text_box">
+                    <view class = "ad_hidden_button" bindtap = "hideOrShow">
+                        <image class = "ad_hidden_pic" src = "{{server_imagename}}/triangle_down.png " mode = "scaleToFill"  animation = "{{rotate_animation}}"></image>
+                        </view>
+                    <scroll-view style = "height: 270rpx" scroll-y="true" >
+                        <view class = "ad_text">
+                            {{content}}
+                        </view>
+                    </scroll-view>
+                </view>
+            </view>
+        </view>
+</view>

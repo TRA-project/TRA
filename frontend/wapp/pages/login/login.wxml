@@ -1,0 +1,52 @@
+<!-- LOGO模块 -->
+<view class="logo_view">
+  <image class="logo_img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
+</view>
+
+<!-- 用户名输入模块 -->
+<view class="box_view">
+  <image class="input_bg" src="{{server_imagename}}/input_bg.png"></image>
+  <view class="input_view">
+    <input id="name" class="name" 
+    type="text" placeholder="用户名" placeholder-class="center"
+    bindinput="input" bindfocus="focus" bindblur="blur"></input>
+  </view>
+</view>
+
+<!-- 密码输入模块 -->
+<view class="box_view">
+  <image class="input_bg" src="{{server_imagename}}/input_bg.png"></image>
+  <view class="input_view">
+    <button id="visible_btt" class="visible_btt" style="width:80rpx;height:100rpx" bindtap="visibleTap">
+    </button>
+    <!-- <image class="visible_img" src="{{visible_img}}"></image> -->
+
+    <input id="password" class="password" 
+    type="text" password="{{unvisible}}" placeholder="输入密码" placeholder-class="center" hold-keyboard="true"
+    bindinput="input" bindfocus="focus" bindblur="blur">
+    </input>
+  </view>
+</view>
+
+
+<!-- 登录按钮模块 -->
+<view class="login_btt_view">
+  <button id="login_btt" class="login_btt"
+  style="width:20%;{{login_btt}}" disabled="{{disabled}}" 
+  bindtouchstart="bttStart" bindtouchend="bttEnd" bindtap="accountLogin">
+    <image class="arrow_img" src="{{server_imagename}}/arrow.png" mode="widthFix"></image>
+  </button>
+</view>
+
+<!-- 其他登陆方式模块 -->
+<view class="other_method_view">
+  <button class="wechat_btt" id="wechat_btt" style="width:30%;height:50rpx"
+  bindtouchstart="bttStart" bindtouchend="bttEnd"></button>
+  <text class="wechat_text" style="{{wechat_btt}}">微信登陆</text>
+
+  <text class="space_text" space="emsp"> | </text>
+
+  <button class="regist_btt" id="regist_btt" style="width:30%;height:50rpx"
+  bindtouchstart="bttStart" bindtouchend="bttEnd"></button>
+  <text class="regist_text" style="{{regist_btt}}">用户注册</text>
+</view>

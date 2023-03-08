@@ -1,0 +1,102 @@
+<!--pages/ReleaseSche/ReleaseSche.wxml-->
+<view wx:if="{{show}}" style="height: fit-content" class="page">
+<form bindsubmit="onSubmit"> 
+    <view class="title_view">
+        <input class= "title_input" maxlength="30" placeholder="请输入日程标题"
+        id="title" bindinput="inputTitle"></input>
+    </view>
+
+    <view class="divline"></view>
+
+    <view class="section">
+        <view class="section-title">日程日期</view>
+        <view class="section-content">
+            <view class="date_time">
+                <view class="table">
+                    <picker mode="date" bindchange="startDateChange">
+                        <view class="picker">{{startDate}}</view>
+                    </picker>
+                </view>
+                <view class="word">:</view>
+                <view class="table">
+                    <picker mode="time" bindchange="startTimeChange">
+                        <view class="picker">{{startTime}}</view>
+                    </picker>
+                </view>
+            </view>
+
+            <view class = "date_time">
+                <view class="table">
+                    <picker mode="date" bindchange="endDateChange">
+                        <view class="picker">{{endDate}}</view>
+                    </picker>
+                </view>
+                <view class="word">:</view>
+                <view class="table">
+                    <picker mode="time" bindchange="endTimeChange">
+                        <view class="picker">{{endTime}}</view>
+                    </picker>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="divLine"></view>
+
+    <view class="section">
+        <view class="section-title">日程地点</view>
+        <view class="table">
+            <view bindtap="setLoc">{{locName}}</view>
+        </view>
+    </view>
+
+    <view class="divLine"></view>
+
+    <view class="section">
+        <view class="section-title">日程预算</view>
+        <view class="table">
+            <input type="number" bindinput="budgetInput" placeholder="请输入日程预算" class="palnum_input" maxlength="4"></input>
+        </view>
+    </view>
+
+    <view class="divLine"></view>
+
+    <view class="section">
+        <view class="section-title">实际支出</view>
+        <view class="table">
+            <input type="number" bindinput="real_comsumptionInput" placeholder="请输入实际支出" class="palnum_input" maxlength="4"></input>
+        </view>
+    </view>
+
+    <view class="divLine"></view>
+
+    <view class="section">
+        <view class="section-title">日程详情描述</view>
+        <view class="detailBox">
+            <textarea placeholder="请输入日程详情" bindinput="inputDetail" maxlength="-1"></textarea>
+        </view>
+    </view>
+
+    <view class="divLine"></view>
+
+    <view class="btns_view">
+        <button class="add_location" bindtap="chooseVis">
+            <image class="img" src='{{server_imagename}}/visibility.jpg'></image>
+            {{access_list[access]}}
+        </button>
+        <button class="add_location" bindtap="chooseAlarm">
+            <image class="img" src='{{server_imagename}}/visibility.jpg'></image>
+            {{if_alarm_list[if_alarm]}}
+        </button>
+    </view>
+
+
+    <view>
+        <button form-type="submit" style="width: 500rpx;margin-bottom:50rpx;">发布</button>
+    </view>
+</form>
+</view>
+
+<view wx:else>
+  知行合一2.0
+</view>

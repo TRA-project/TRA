@@ -1,0 +1,83 @@
+<!--pages/EditInfo/EditInfo.wxml-->
+<view wx:if="{{show}}" style="overflow-x:hidden;width:100%;">
+<view class = "bp_picture">
+    <image src ="{{server_imagename}}/background.png" mode = "heightFix"></image>
+</view>
+<view class = "protrait">
+    <image class = "protraitPic" src = "{{icon}}" bindtap = "changeProtrait"></image>
+    <image class = "editProtraitPic" src = "{{server_imagename}}/editPic.png" bindtap = "changeProtrait"></image>
+</view>
+<view class = "editBox">
+    <view class = 'editBoxItem'>
+        <view class = "editBoxItemTitle">
+            昵  称:
+        </view>
+        <view class = "editBoxItemContent">
+            <view class = "nickNameEdit">
+                <input value = "{{nickname}}" maxlength="9" focus="true" class = "inputBox"
+                id="nickname" bindinput="input"></input>
+            </view>
+        </view>
+    </view>
+    <view class = 'editBoxItem'>
+        <view class = "editBoxItemTitle">
+            性  别:
+        </view>
+        <view class = "editBoxItemContent">
+            <view class = "genderEdit">
+                <picker bindchange="bindPickerChange" value="{{index}}" range="{{gender}}">
+                    <view >
+                    {{gender[index]}}
+                    </view>
+                </picker>
+            </view>
+        </view>
+    </view>
+    <view class = 'editBoxItem'>
+        <view class = "editBoxItemTitle">
+            生  日:
+        </view>
+        <view class = "editBoxItemContent">
+            <view class = "birthEdit">
+                <picker mode="date" value="{{date}}" start="1980-01-01" end="2021-04-15" bindchange="bindDateChange">
+                 {{date}}
+                </picker>
+            </view>
+        </view>
+    </view>
+    <view class = 'editBoxItem'>
+        <view class = "editBoxItemTitle">
+            所在地:
+        </view>
+        <view class = "editBoxItemContent">
+            <view class = "locationEdit" >
+                <view class="locBox" bindtap="getLoc">
+                    {{location.address.province}} {{(location.address.province == location.address.city)? " " : " · " + location.address.city}}
+                </view>
+            </view>
+        </view>
+        
+    </view>
+    <view class = 'editBoxItem'>
+        <view class = "editBoxItemTitle">
+            个性签名:
+        </view>
+        <view class = "editBoxItemContent">
+            <view class = "signatureEdit">
+                <input value = "{{signature}}" maxlength="50"  class = "inputBox"
+                id="signature" bindinput="input"></input>
+            </view>
+        </view>
+    </view>
+</view>
+<view class = "saveButtonBox" bindtap="editDone">
+    <button type = "primary" class = "savebutton">
+        保存
+    </button>
+</view>
+</view>
+<view wx:else>
+上网不涉密
+涉密不上网
+</view>
+    

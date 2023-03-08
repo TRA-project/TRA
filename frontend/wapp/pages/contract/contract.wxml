@@ -1,0 +1,9 @@
+<!-- LOGO模块 -->
+<view class="logo_view">
+  <image class="logo_img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
+</view>
+
+<!-- 问题反馈模块 -->
+<view class="box_view">
+  <text class="tip">· 您在本小程序下的唯一身份标识将仅用于后台账号管理</text>
+</view>

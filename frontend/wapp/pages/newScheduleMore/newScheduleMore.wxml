@@ -1,0 +1,35 @@
+<view class="page" style="background-color: rgb(245, 245, 245)" >
+    <view class="date">{{date}}</view>
+    <view class="card" bindtap="tip">
+        <view class="title" >{{title}}</view>
+        <view class="divline"></view>
+        <view class="other">{{locName}}</view>
+        <view class="divline"></view>
+        <view class="other">{{startTime}}</view>
+        <view class="divline"></view>
+        <view class="other">{{endTime}}</view>
+    </view>
+    <view class="card second" bindtap="tip">
+        <view class="layout_horizontal">
+            <text class="other" style="color: rgb(0,0,0,0.6);">提醒</text>
+            <switch checked="{{if_alarm==0?false:true}}" color="rgb(175, 228, 253)" class="title" disabled="true"></switch>
+        </view>
+        <view class="divline"></view>
+        <view>
+            <view class="layout_horizontal">
+                <text class="other" style="color: rgb(0,0,0,0.6);">预算</text><text class="other" wx:if="{{budget!=null}}">{{budget}}</text><text class="other" wx:else>未设置</text>
+            </view>
+            <view class="divline"></view>
+        </view>
+        <view>
+            <view class="layout_horizontal">
+                <text class="other" style="color: rgb(0,0,0,0.6);">实际支出</text><text class="other" wx:if="{{consumption!=null}}">{{consumption}}</text><text class="other" wx:else>未设置</text>
+            </view>
+            <!-- <view class="divline"></view> -->
+        </view>
+        <!-- <textarea placeholder="备注" class="more"></textarea> -->
+    </view>
+    <view class="layout_horizontal" style="justify-content: center;align-content: center;">
+        <image src="/images/edit1.png" class="pic" bindtap="edit"></image>
+    </view>
+</view>

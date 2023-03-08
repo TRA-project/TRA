@@ -1,0 +1,107 @@
+/* pages/newScheduleEdit/newScheduleEdit.wxss */
+.section {
+    margin: 30rpx;
+    padding: 20rpx;
+    background-color: rgb(255, 255, 255);
+    border-radius: 30rpx;
+    height: fit-content;
+  }
+  
+  .section-title {
+    font-weight:bolder;
+    margin-bottom: 20rpx;
+  }
+  .table {
+    width: fit-content;
+    color: rgb(0,0,0,0.6);
+    background-color: rgba(102, 168, 255, 0.2);
+      border-radius: 100rpx;
+    padding: 10rpx;
+  }
+  .page{
+      height: 100%;
+      width: 100%;
+      background-color: rgb(245,245,245);
+      position: fixed;
+      overflow-y: scroll;
+    
+  }
+  .card{
+      margin-top: 3%;
+      margin-left: 5%;
+      margin-right: 5%;
+      width: 90%;
+      height: auto;
+      border-radius: 10px;
+      background-color: white;
+   
+  }
+  .title{
+    height: auto;
+    font-size: large;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 5%;
+    margin-left: 5%;
+    overflow: scroll;
+  }
+  .divline{
+      height: 1px;
+      width: 96%;
+      border-radius: 100px;
+      margin-left: 2%;
+      background-color: rgba(240, 240, 240, 0.5);
+  }
+  .other{
+    height: auto;
+    font-size: medium;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 5%;
+    color: rgb(0,0,0,.6);
+    overflow: scroll;
+    margin-right: 5%;
+  }
+  .card.second{
+      margin-top: 5%;
+  }
+  .more{
+    width: 90%;
+    white-space: pre-wrap;
+    overflow-y:scroll;
+    max-height: 100px;
+    font-size: large;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 5%;
+    display: block;
+    text-overflow:ellipsis; 
+    word-break: break-all;
+  }
+  .layout_horizontal{
+    display: flex;
+    /*row 横向  column 列表  */
+    flex-direction: row;
+  }
+  .pic.left{
+      width: 20px;
+      height: 20px;
+      margin-top: 30%;
+      opacity: 0.6;
+      margin-left: 15%;
+      margin-bottom: 10%;
+     
+  }
+  .pic.right{
+    width: 20px;
+    height: 20px;
+    margin-top: 30%;
+    opacity: 0.6;
+    margin-left: 55%;
+    margin-bottom: 10%;
+}
+.date{
+    color: rgb(0,0,0,.6);
+    text-align: center;
+    margin-top:3%;
+}

@@ -1,0 +1,165 @@
+/* pages/AboutUs/AboutUs.wxss */
+page{
+    height: 100%;
+}
+
+.bg_up{
+    width:120%;
+    height: 500rpx;
+    position: relative;
+    left:-10%;
+    background-color: #0058fc;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0 0 3000rpx 3000rpx;
+    background: linear-gradient(120deg,#256df3, #256df3);
+    display: flex;
+    justify-content: center;
+    z-index:2;
+}
+
+.logo_name{
+    height: 400rpx;
+    width: 200rpx;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo{
+    height: 200rpx;
+    width: 200rpx;
+    border:15rpx solid #c6f8ff;
+    background: white;
+    border-radius: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo_pic{
+    position: relative;
+    height: 90%;
+    width: 90%;
+}
+
+.name{
+    font-size:60rpx;
+    font-weight: bolder;
+    color: white;
+
+}
+
+.scroll_up{
+    position: relative;
+    top:-500rpx;
+    height: 100%;
+}
+
+.bg_down{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    top:-500rpx;
+    height: 3300rpx;
+    background: #256df3;
+    z-index: 1;
+}
+.bg_down::before{
+    content: '';
+    width: 120%;
+    height: 2100rpx;
+    position: absolute;
+    z-index: 1;
+    left: -10%;
+    top: 0;
+    border-radius: 0 0 3000rpx 3000rpx;
+    background: linear-gradient(120deg,white, white);
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.info_blank{
+    height: 210rpx;
+    width: 100%;
+}
+
+.info_title{
+    display: flex;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+    z-index:2;
+    font-size: 50rpx;
+    font-weight:1000;
+    color:rgba(252, 175, 1, 0.911);
+}
+
+.info_sub_title{
+    display: flex;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+    z-index:2;
+    font-size: 45rpx;
+    font-weight:750;
+    color:#0058fc;
+}
+.info_content{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: auto;
+    width: 80%;
+    z-index:2;
+    font-size: 35rpx;
+    font-weight:500;
+    margin-bottom:10rpx;
+
+}
+
+.tail{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300rpx;
+    z-index:3;
+}
+
+.tail_plane{
+    height: 150rpx;
+    width: 150rpx;
+    border-radius: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tail_plane_pic{
+    height: 150rpx;
+    width: 150rpx;
+}
+
+.tail_info{
+    height: 300rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color:white;
+    font-size:30rpx;
+    font-weight: bold;
+}
+
+.tail_title{
+    margin:5rpx;
+}

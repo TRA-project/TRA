@@ -1,0 +1,28 @@
+.logo_view {
+  margin-top: 20rpx;
+  margin-bottom: 80rpx;
+  display: flex;
+  justify-content: center;
+  /* border: 1px solid #000 ; */
+}
+
+.logo_img {
+  height: 150rpx;
+  /* border: 1px solid #000 ; */
+}
+
+.box_view {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30rpx;
+  /* border: 1px solid #000 ; */
+}
+
+
+.tip {
+  width:60%;
+  margin-left: 20%;
+  margin-top: 20rpx;
+  color:rgb(123, 123, 123);
+  font-size: 80%;
+}

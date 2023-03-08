@@ -1,0 +1,6 @@
+<import src="../../we-cropper/dist/weCropper.wxml" />
+
+<view class="cropper-wrapper">
+  <template is="weCropper" data="{{...cropperOpt}}">
+  </template>
+</view>

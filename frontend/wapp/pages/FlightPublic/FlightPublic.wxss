@@ -1,0 +1,163 @@
+
+.layout_horizontal{
+    height: 100rpx;
+    display: flex;
+    /*row 横向  column 列表  */
+    flex-direction: row;
+  }
+
+.hot_price {
+    color: rgb(255, 105, 51);
+    font-weight: bold;
+    z-index: 2;
+    float:center;
+    margin-left: 10%;
+    text-align: right;
+}
+
+.hot_plane {
+    width: 30px;
+    height: 30px;
+    transform: rotate(90deg);
+    margin-left: 28%;
+    margin-top: -12%;
+    float: left;
+    opacity: 0.3;
+}
+
+.text_num {
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.cheap_flight {
+    margin: 3px;
+}
+
+.text_title {
+    height: 30px;
+    font-size: medium;
+    font-weight: bold;
+    margin-left: 3%;
+    color: rgba(0, 132, 255, 0.8);
+    margin-top:1%;
+   
+}
+
+.bottom_rim_blue {
+    height: 1px;
+    width: 100%;
+    border-bottom: thin solid rgba(180, 191, 202, 0.158);
+}
+
+.common_des_flight {
+   padding-top:3px;
+   padding-bottom:3px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 3%;
+    border-radius: 15rpx;
+    background-color: rgb(255, 255, 255);
+
+}
+.common_flight{
+    margin: 3px;
+}
+.common_content{
+    margin-top: 5px;
+    margin-left: 10px;
+    
+}
+.text_flight_time{
+    font-size: medium;
+    font-weight: bolder;
+    color: rgba(0, 0, 0, 0.7);
+}
+.text_flight{
+    font-size: small;
+    color: rgba(0, 0, 0, 0.7);
+}
+.price {
+    color: rgb(255, 105, 51);
+    font-weight: bold;
+    float: right;
+    margin-right: 8%;
+    text-align: right;
+    position: absolute;
+    right: 0;
+    font-size: medium;
+}
+.sale{
+    text-align:right;
+    margin-right: 1px;
+    font-size: x-small;
+    font-weight: thin;
+}
+.button_love_up{
+    float:right;
+    width: 33px;
+    height: 28px;
+    margin-right:3px;
+    top: -5px;
+    left: -10px;
+    opacity: 80%;
+}
+.button_love_down{
+    float:right;
+    width: 33px;
+    height: 28px;
+    margin-right:3px;
+    top: -5px;
+    left: -10px;
+    opacity: 20%;
+}
+.layout_vertical{
+    height: 100rpx;
+    display: flex;
+    width: 50%;
+    /*row 横向  column 列表  */
+    flex-direction: column;
+  }
+  .transmit{
+    width: 30px;
+    height: 30px;
+    transform: rotate(360deg);
+    margin-left: 28%;
+    margin-top: -12%;
+    float: left;
+    opacity: 0.3;
+  }
+  .transmit_background{
+    background-color: rgb(210, 233, 255);
+  }
+.late{
+    width: fit-content;
+    font-size: 10px;
+    text-align: left;
+    color: rgba(255, 255, 255);
+    border: thin solid rgb(255, 253, 162);
+    padding-left: 5px;
+    padding-right: 5px;
+    transform: rotate(-45deg);
+    position: absolute;
+    margin-left: -18px;
+    margin-top: -5px;
+    background-color: rgb(252, 194, 86);
+    opacity: 1.0;
+}
+.abnormal{
+    width: fit-content;
+    font-size: 10px;
+    text-align: left;
+    color: rgb(255, 255, 255);
+    border: thin solid rgb(255, 111, 111);
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    transform: rotate(-45deg);
+    position: absolute;
+    margin-left: -18px;
+    margin-top: -5px;
+    background-color: rgb(248, 80, 80);
+    opacity: 1.0;
+}

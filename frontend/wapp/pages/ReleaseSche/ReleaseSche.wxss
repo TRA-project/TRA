@@ -1,0 +1,111 @@
+/* pages/ReleaseSche/ReleaseSche.wxss */
+.title_view {
+    margin-top: 50rpx;
+    margin-bottom: 20rpx;
+    width: 90%;
+    margin-left: 5%;
+  }
+  
+  .title_input {
+    height: auto;
+    font-weight: bold;
+    font-size: 150%;
+  }
+  
+  .divline{
+    width: 94%;
+    border-bottom:solid 4rpx rgb(248, 248, 248);
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+    margin-left: 3%;
+  }
+  
+  .divLine{
+    width: 84%;
+    border-bottom:solid 4rpx rgb(248, 248, 248);
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+    margin-left: 8%;
+  }
+  
+  .section {
+    margin: 30rpx;
+    padding: 20rpx;
+    background-color: rgb(248, 248, 248);
+    border-radius: 30rpx;
+    height: fit-content;
+  }
+  
+  .section-title {
+    font-weight:bolder;
+    margin-bottom: 20rpx;
+  }
+  
+  .word {
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+  }
+  
+  .section-content {
+    margin: 10rpx;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .date_time {
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .table {
+    width: fit-content;
+    border: 3rpx solid #faca82;
+      border-radius: 10rpx;
+    padding: 10rpx;
+  }
+  
+  .palnum_input {
+    text-align: center;
+  }
+  
+  
+  .detailBox{
+    padding: 0 25rpx;
+    height: fit-content;
+  }
+  
+  button {
+    width: 500rpx;
+    background-color: rgb(199, 231, 255);
+    margin-bottom: 50rpx;
+  }
+
+.btns_view {
+    padding: 6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+.add_location{
+    width: 100% !important;
+    height: 35px;
+    margin-bottom: 10rpx;
+    font-size: 14px;
+    font-family: serif;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .img{
+    height: 30px;
+    width: 30px;
+  }

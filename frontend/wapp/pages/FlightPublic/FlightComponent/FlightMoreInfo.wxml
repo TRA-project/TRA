@@ -1,0 +1,135 @@
+<view class="cover {{show?'active':''}}" bindtap="close">
+    <view class="card {{show?'active':''}}">
+        <view wx:if="{{isTransit=='false'}}">
+            <view class="head" style="margin-bottom: 3%;">航班详情</view>
+            <view class="layout_horizontal">
+                <view class="layout_vertical">
+                    <text class="margin text_max">{{depatureTime}}</text>
+                    <text class="margin text_medium">{{city}}</text>
+                    <text class="margin text_min">{{depatureDate}}</text>
+                    <text class="margin text_xmin">{{depatureport}}</text>
+                </view>
+                <image src="{{icon[0]}}" class="pic_arrow"></image>
+                <view class="layout_vertical">
+                    <text class="margin text_max">{{arrivalTime}}</text>
+                    <text class="margin text_medium">{{endcity}}</text>
+                    <text class="margin text_min">{{arrivalDate}}</text>
+                    <text class="margin text_xmin">{{arrivalport}}</text>
+                </view>
+            </view>
+            <view class="line">
+                <view class="layout_horizontal list">
+                    <image src="{{icon[1]}}" class="pic_icon"></image>
+                    <text class="content_title" space="nbsp">航班号：</text>
+                    <text class="content" space="nbsp">{{flightno}}</text>
+                </view>
+                <view class="content_line"></view>
+                <view class="layout_horizontal list">
+                    <image src="{{icon[2]}}" class="pic_icon"></image>
+                    <text class="content_title">航空公司：</text>
+                    <text class="content">{{airline}}</text>
+                </view>
+                <view class="content_line"></view>
+                <view class="layout_horizontal list">
+                    <image src="{{icon[3]}}" class="pic_icon"></image>
+                    <text class="content_title">预计耗时：</text>
+                    <text class="content">{{costtime}}</text>
+                </view>
+                <view class="content_line"></view>
+                <view class="layout_horizontal list">
+                    <image src="{{icon[4]}}" class="pic_icon"></image>
+                    <text class="content_title">经济舱价格：</text>
+                    <text class="content">￥{{ecoprice}}起(折扣:{{ecocount}}%)</text>
+                </view>
+                <view class="content_line"></view>
+                <view class="layout_horizontal list">
+                    <image src="{{icon[5]}}" class="pic_icon"></image>
+                    <text class="content_title">商务舱价格：</text>
+                    <text class="content">￥{{cabinprice}}起(折扣:{{cabincount}}%)</text>
+                </view>
+                <view class="content_line"></view>
+                <view class="layout_horizontal list">
+                    <image src="{{icon[6]}}" class="pic_icon"></image>
+                    <text class="content_title">是否提供食物：</text>
+                    <text wx:if="{{food}}" class="content">提供</text>
+                    <text wx:else class="content">不提供</text>
+                </view>
+                <image src="{{icon[7]}}" class="pic_background"></image>
+            </view>
+        </view>
+        <view wx:else>
+            <view class="head" style="margin-bottom: 3%;">航班详情</view>
+            <view class="layout_horizontal">
+                <view class="layout_vertical">
+                    <text class="margin text_max transmit">{{depatureTime}}</text>
+                    <text class="margin text_medium transmit">{{city}}</text>
+                    <text class="margin text_min transmit">{{depatureDate}}</text>
+                    <text class="margin text_xmin transmit">{{depatureport}}</text>
+                </view>
+                <image src="{{icon[0]}}" class="pic_arrow transmit"></image>
+                <view class="medium layout_vertical" style="margin-top:10px">
+                    <text class="margin text_medium transmit" space="nbsp" style="color: rgb(0, 85, 165);">{{arrivalTransitTime}} {{depatureTransitTime}}</text>
+                    <text class="margin text_min transmit" style="font-weight:bold;color: rgb(0, 85, 165,0.8);">{{transcity}}</text>
+                    <text class="margin text_xmin transmit" space="nbsp" style="color: rgb(0, 85, 165,0.6);">{{arrivalTransitDate}} {{depatureTransitDate}}</text>
+                    <text class="margin text_xxmin transmit" style="color: rgb(0, 85, 165,0.4);">{{transport}}</text>
+                </view>
+                <image src="{{icon[0]}}" class="pic_arrow transmit"></image>
+                <view class="layout_vertical">
+                    <text class="margin text_max  transmit">{{arrivalTime}}</text>
+                    <text class="margin text_medium  transmit">{{endcity}}</text>
+                    <text class="margin text_min  transmit">{{arrivalDate}}</text>
+                    <text class="margin text_xmin  transmit">{{arrivalport}}</text>
+                </view>
+            </view>
+            <view class="line transmit">
+                <view class="layout_horizontal list transmit">
+                    <image src="{{icon[1]}}" class="pic_icon  transmit"></image>
+                    <text class="content_title transmit" space="nbsp">航班号：</text>
+                    <text class="content transmit" space="nbsp">{{flightno}}</text>
+                    <text class="content transmit deep" space="nbsp">{{flightno2}}</text>
+                </view>
+                <view class="content_line"></view>
+                <view class="layout_horizontal list transmit">
+                    <image src="{{icon[2]}}" class="pic_icon transmit"></image>
+                    <text class="content_title transmit">航空公司：</text>
+                    <text class="content transmit">{{airline}}</text>
+                    <text class="content transmit deep">{{airline2}}</text>
+                </view>
+                <view class="layout_horizontal list transmit">
+                    <image src="{{icon[6]}}" class="pic_icon transmit"></image>
+                    <text class="content_title transmit">是否提供食物：</text>
+                    <text wx:if="{{food}}" class="content transmit">提供</text>
+                    <text wx:else class="content transmit">不提供</text>
+                    <text wx:if="{{food2}}" class="content transmit deep">提供</text>
+                    <text wx:else class="content transmit deep">不提供</text>
+                </view>
+                <view class="content_line transmit"></view>
+                <view class="layout_horizontal list transmit">
+                    <image src="{{icon[3]}}" class="pic_icon transmit"></image>
+                    <text class="content_title transmit" style="font-weight: bold;">换乘时间：</text>
+                    <text class="content transmit red">{{deltaTime}}</text>
+                </view>
+                <view class="content_line transmit"></view>
+                <view class="layout_horizontal list transmit">
+                    <image src="{{icon[3]}}" class="pic_icon transmit"></image>
+                    <text class="content_title transmit" style="font-weight: bold;">预计总耗时：</text>
+                    <text class="content transmit red">{{totalTime}}</text>
+                </view>
+                <view class="content_line transmit"></view>
+                <view class="layout_horizontal list transmit">
+                    <image src="{{icon[4]}}" class="pic_icon transmit"></image>
+                    <text class="content_title transmit" style="font-weight: bold;">经济舱总价格：</text>
+                    <text class="content transmit red">￥{{ecoprice}}起</text>
+                </view>
+                <view class="content_line transmit"></view>
+                <view class="layout_horizontal list transmit">
+                    <image src="{{icon[5]}}" class="pic_icon transmit"></image>
+                    <text class="content_title transmit" style="font-weight: bold;">商务舱总价格：</text>
+                    <text class="content transmit red">￥{{cabinprice}}起</text>
+                </view>
+                <view class="content_line transmit"></view>
+                <image src="{{icon[7]}}" class="pic_background"></image>
+            </view>
+        </view>
+    </view>
+</view>

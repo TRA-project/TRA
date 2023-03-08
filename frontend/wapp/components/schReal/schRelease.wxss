@@ -1,0 +1,58 @@
+/* components/schRelease/schRelease.wxss */
+@import '/pages/SchPublic/schedule.wxss';
+
+.title{
+    height: auto;
+    background-color:rgb(153, 209, 255);
+    margin: 3%;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold;
+}
+.position{
+    position: relative;
+    right: 100px;
+    font-size: xx-small;
+    color: rgba(1, 58, 112, 0.7);
+    overflow-y: scroll;
+    word-break: keep-all;
+    width: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+
+  }
+  .money{
+    font-size: xx-small;
+    color: rgb(0,0,0,0.3);
+    overflow-y: scroll;
+    word-break: keep-all;
+    width: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+  .s-item-sch{
+    height: auto;
+    background-color: white;
+    margin: 3%;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+.tag-default{
+  margin-left:5px;
+  height: 20px;
+  padding-top:3px;
+  padding-bottom:3px;
+  padding-left: 13px;
+  padding-right: 13px;
+  border-radius: 13px;
+  font-size: small;
+  color: rgba(106, 119, 138, 0.8);
+  background-color: rgb(240, 240, 240);
+  text-align:center;
+  width: auto;
+}

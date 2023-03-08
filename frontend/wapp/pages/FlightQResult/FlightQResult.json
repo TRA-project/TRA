@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "flight-infos":"../FlightPublic/FlightComponent/FlightMoreInfo"
+  }
+}

@@ -1,0 +1,101 @@
+/* pages/newSchedule/newSchedule.wxss *//**index.wxss**/
+page{
+    background-color: rgb(245,245,245);
+  }
+  .date-string{
+    margin-top: 20rpx;
+    background-color: #fff;
+    font-size: 28rpx;
+    padding: 0 30rpx;
+    line-height: 60rpx;
+  }
+  .layout_horizontal{
+    display: flex;
+    /*row 横向  column 列表  */
+    flex-direction: row;
+  }
+  .layout_vertical{
+    display: flex;
+    /*row 横向  column 列表  */
+    flex-direction: column;
+  }
+  .s-item{
+      height: auto;
+      background-color: white;
+      margin: 3%;
+      padding: 5px;
+      border-radius: 10px;
+      text-align: right;
+      vertical-align: middle;
+  }
+  .s-item.add{
+   background-color:rgba(255, 255, 255, 0.6);
+   color: rgb(0,0,0,.6);
+   text-align: center;
+   overflow: scroll;
+}
+.green{
+  color: #06c106d7;
+}
+.red{
+  color: #fa5151d7;
+}
+  .item_title{
+    text-align: left;
+    vertical-align: middle;
+    padding-top:10px;
+    padding-bottom: 10px;
+    padding-left: 8px;
+    padding-right: 5px;
+    color: rgb(0,0,0,0.8);
+    width: 65%;
+      }
+  .item_time{
+      font-weight: bold;
+      color: rgb(0,0,0,0.6);
+  }
+  .circle{
+    width: 3px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgba(216, 235, 252);
+    /* border:medium solid rgb(140, 207, 252); */
+    margin-top: 12px;
+    margin-right:10px;
+}
+.pic_alarm{
+    width: 28px;
+    height: 28px;
+    margin-top: 11px;
+}
+.pic_alarm_no{
+    width: 28px;
+    height: 28px;
+    margin-top: 11px;
+    opacity: 0.4;
+}
+.pic_edit{
+    width: 20px;
+    height: 20px;
+    margin-top: 15px;
+    margin-left: 10px;
+    opacity:0.8
+}
+.money{
+  font-size: xx-small;
+  color: rgb(0,0,0,0.3);
+  overflow-y: scroll;
+  word-break: keep-all;
+  width: auto;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+.money_box{
+    margin-top: 2px;
+    width: 100%;
+    height: 30px;
+    background-color:rgb(250, 252, 255);
+    border-radius: 5px;
+   overflow-y: scroll;
+  
+}

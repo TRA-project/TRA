@@ -1,0 +1,163 @@
+
+<scroll-view scoll-y="true">
+
+  <view class="user-head">
+    <view class="head" bindtap="navigate2OtherZone">
+      <image src="{{author.icon}}"/><!--用户头像地址-->
+      <text>{{author.nickname}}</text><!--用户昵称-->
+    </view>
+
+    <view class="footprint" bindtap="navigate2footprint">
+      <text space="ensp">  {{author.cities}}城 {{author.travels}}足迹  </text>
+    </view>
+
+    <!--关注-->
+    <view class="subscribe_view" wx:if="{{!subscribed}}" style="background-color:rgb(80, 161, 236); color:#fff;" catchtap="subscribe">
+      <text>关注</text>
+    </view>
+    
+    <view class="subscribe_view" wx:if="{{subscribed}}" style="background-color:rgb(230, 230, 230); color:#aaa;" catchtap="disSubscribe">
+      <text>取消关注</text>
+    </view>
+  </view>
+
+  <!--同行信息-->
+  <view class="pal_view">
+    <view class="pal_title">{{pal.title}}</view>
+    <view class="location_view" catchtap="searchLocation">
+      <text class="pal_location" decode="{{true}}" space="{{true}}">&nbsp;</text>
+      <image class="loc_image" src="{{server_imagename}}/地点.png"></image>
+      <text class="pal_location" space="ensp"> {{pal.position.city}} · {{pal.position.name}} </text>
+    </view>
+
+    <view class="tag tag_view">
+        <view class="tag_view">
+            <view wx:for-items="{{pal.tagset}}" wx:for-item="tag" class="tag-content"
+            bindtap="navigate2Tagsearch" data-tagname="{{tag}}">
+                <text space="nbsp">#{{tag}}</text>
+            </view>
+        </view>
+    </view>
+
+    <view class = "divline"></view>
+
+    <view class="pal_content">{{pal.content}}</view>
+    <view class="pal_time">
+      <text space="ensp">活动开始时间 {{pal.start_time}}  </text>
+    </view>
+    <view class="pal_time">
+      <text space="ensp">活动结束时间 {{pal.end_time}}  </text>
+    </view>
+    <view class="pal_time">
+      <text space="ensp">报名截止时间 {{pal.deadline}}  </text>
+    </view>
+    <view class="pal_time">
+      <text space="ensp">报名人数 {{pal.num}} / {{pal.capacity}}  </text>
+    </view>
+    <!-- TODO// -->
+    <mypaltable isHidden="{{false}}" schData="{{schdata}}" bindtap="navigate2schrelease"></mypaltable>
+
+
+    <view class = "divline"></view>
+    <view class="textBox" hidden="{{isEntered}}">
+      <text>报名后可在讨论区与同行伙伴交流哦~</text>
+    </view>
+  </view>
+
+  <button bindtap="signUp" hidden="{{isMine || isEntered}}" style="width:500rpx">
+    报名
+  </button>
+  <button bindtap="quit" hidden="{{isMine || !isEntered}}" style="width:500rpx">
+    取消报名
+  </button>
+
+  <!-- 报名者信息 -->
+  <view class="participant_title" hidden="{{!isEntered && !isMine}}" wx:if="{{pal.forbidden == 0}}">
+    <text class="title">报名者</text>
+    <view class="unfold_button" wx:if="{{!unfolded}}" catchtap="unfold">
+      查看全部
+    </view>
+    
+    <view class="unfold_button" wx:if="{{unfolded}}" catchtap="fold">
+      <text>收起</text>
+    </view>
+  </view>
+  <!--未展开样式-->
+  <view class="participant_folded" hidden="{{(!isEntered&&!isMine)||unfolded}}" wx:if="{{pal.forbidden == 0}}">
+    <view wx:for="{{participants}}" wx:for-item="list" wx:key="list">
+      <image class="participant_img" src="{{list.icon}}" id="{{list.id}}" bindtap="navigate2Fellow"></image>
+    </view>
+  </view>
+  <!--展开后的样式-->
+  <view class="participant_unfolded" hidden="{{(!isEntered&&!isMine)||!unfolded}}" wx:if="{{pal.forbidden == 0}}">
+    <view wx:for="{{participants}}" wx:for-item="list" wx:key="list">
+      <image class="participant_img" src="{{list.icon}}" id="{{list.id}}" bindtap="navigate2Fellow"></image>
+    </view>
+  </view>   
+
+  <view wx:if="{{show}}">
+  <view class="comment" hidden="{{!isEntered && !isMine}}" wx:if="{{pal.forbidden == 0}}">
+    <!--comment_list-->
+    <view class="comment_list">
+      <view class="comment_li" wx:for="{{comment_list}}" wx:key="index">
+        <view class="father_comment" id="{{item}}" bindtap="reply" bindlongpress="deleteReply">
+          <!--avatar-->
+          <image class="comment_li_img" id="{{comment_dict[item].owner.id}}"
+          src="{{server_hostname}}/api/core/images/{{comment_dict[item].owner.icon}}/data/"
+          catchtap="navigate2Replyer"></image>
+          <view class="comment_li_info">
+            <!--nickname-->
+            <view class="comment_li_name" id="{{comment_dict[item].owner.id}}" 
+            catchtap="navigate2Replyer">
+              {{comment_dict[item].owner.nickname}}
+            </view>
+            <!--content and time-->
+            <view class="comment_li_content">
+              {{comment_dict[item].content}}
+            </view>
+            <text class="comment_li_date">{{comment_dict[item].time}}</text>
+          </view>
+        </view>
+          
+        <view class="reply" wx:for="{{comment_dict[item].reply_list}}" wx:for-item="reply_id" wx:key="index"
+        bindtap='reply' id="{{reply_id}}" bindlongpress="deleteReply">
+          <!--avatar-->
+          <image class="reply_img" id="{{comment_dict[reply_id].owner.id}}"
+          src="{{server_hostname}}/api/core/images/{{comment_dict[reply_id].owner.icon}}/data/"
+          catchtap="navigate2Replyer"></image>
+          <view class="reply_info">
+            <!--username-->
+            <view class="reply_name" id="{{comment_dict[reply_id].owner.id}}"
+            catchtap="navigate2Replyer">{{comment_dict[reply_id].owner.nickname}}</view>
+            <!--content-->
+            <text data-type="2" class="reply_content">回复 <text class="right_name">{{comment_dict[comment_dict[reply_id].reply].owner.nickname}}：</text>{{comment_dict[reply_id].content}}</text>
+            <!--time-->
+            <text class="reply_date">{{comment_dict[reply_id].time}}</text>
+          </view>
+        </view>
+
+        <view wx:if="{{comment_dict[item].next!=null}}" class="textBox" bindtap="moreReply" id="{{item}}">
+            <text>点击获取更多回复</text>
+        </view>
+      </view>
+
+      <view wx:if="{{next_comments!=null}}" class="textBox" bindtap="getComments">
+        <text>点击获取更多评论</text>
+      </view>
+    </view>
+
+    <!--comment_inputbox-->
+    <view class="comment_inputbox">
+      <textarea class="comment_input" maxlength="120" adjust-position auto-height="true"
+      bindinput="commentInput" focus="{{focus}}" value="{{comment_content}}"
+      placeholder="写下你的评论吧"></textarea>
+      <view class="comment_sendbtn" bindtap="sendComment" bindlongpress="clearReply">{{reply_nickname}}</view>
+    </view>
+  </view>
+</view>
+
+</scroll-view>
+
+
+
+  

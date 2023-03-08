@@ -1,0 +1,36 @@
+<scroll-view scroll-y="true">
+  <view class="textBox">
+      <text>只有你能看到自己的喜欢列表</text>
+  </view>
+
+  <view class = "travelRecords" >
+    <view wx:for="{{travel_ids}}" wx:if="{{index < travel_num}}" class = 'travelRecord' id="{{index}}" bindtap="navigate2Travel" wx:key="item">
+      <view class = "trCover">
+        <image class = 'trCoverPic' src = '{{travel_covers[index]}}' mode="aspectFill" ></image>
+      </view>
+      <view class = "tr_title">
+        {{travel_titles[index]}}
+      </view>
+      <view class = "tr_protrait_nickname_like">
+        <view class = "tr_protrait">
+          <image class = "tr_protrait_pic" src = "{{travel_icons[index]}}" mode = "scaleToFill"> </image>
+        </view>
+        <view class = "tr_nickname">
+          <text style = "font-weight:bolder">{{travel_nicknames[index]}}</text>
+        </view>
+        <view class = "tr_like">
+            <image wx:if="{{travel_liked_now[index]==true}}"  src="{{server_imagename}}/likes.png" class = "tr_like_pic" mode = "aspectFit"  id = "{{index}}" catchtap="disThumbsUp"></image>
+            <image wx:else src="{{server_imagename}}/like_grey.png" class = "tr_like_pic" mode = "aspectFit"  id = "{{index}}" catchtap="thumbsUp"></image>
+            <view wx:if="{{travel_liked_now[index]==true}}" class = "tr_text">{{travel_likes[index]+(travel_liked[index]==false)}}</view>
+            <view wx:else class = "tr_text">{{travel_likes[index]-(travel_liked[index]==true)}}</view>
+        </view>
+      </view>
+      <view class = "trLocBox">
+        <image class = "trLocIcon" src = "{{server_imagename}}/location.png" mode = "widthFix"></image>
+        <view class = "trLocText">
+          <text space="ensp">{{travel_names[index]}} </text>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

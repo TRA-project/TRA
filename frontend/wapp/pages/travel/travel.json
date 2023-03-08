@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "mp-badge": "weui-miniprogram/badge/badge",
+    "my-schedule" : "/components/test/test"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": ""
+}

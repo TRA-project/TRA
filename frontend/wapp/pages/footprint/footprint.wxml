@@ -1,0 +1,100 @@
+<!--pages/footprint/footprint.wxml-->
+
+<map class="map" name="map" subkey = "UMABZ-NKAKX-ILH4J-TFRB2-5EVZV-PWBIJ" layer-style="2"
+show-compass="true" enable-3D="true" skew="25" enable-overlooking = "true" 
+markers="{{markers}}" polyline="{{polyline}}"
+longitude="{{(longitude == null)? 116.397827 : longitude}}" latitude="{{(latitude == null)? 39.90374 : latitude}}" 
+scale="{{(longitude == null)? 7 : 8}}"
+>
+</map>
+
+<view class = "box">
+    <view class = "usr_info">
+        <view class = "usr_info_protrait">
+            <image class = "usr_info_protrait_pic" src = "{{icon}}"></image>
+        </view>
+        <view class = "usr_info_nickname">
+            <view class = "usr_info_nickname_text">{{nickname}}</view>
+        </view>
+        <view class="get_more" bindtap="getFootprint">
+            显示更多足迹
+        </view>
+    </view>
+    <view class = "divline"></view>
+    <view class = "arrow"> 
+        <image class = "arrow_pic_left" src = "{{server_imagename}}/arrow_left.png" mode="widthfix"></image>
+        <image class = "arrow_pic_right" src = "{{server_imagename}}/arrow_right.png" mode="widthfix"></image>
+    </view>
+    <swiper class = "swiper_box"
+        circular = "true"
+        indicator-dots = "true"
+        indicator-color="white"
+        indicator-active-color="yellow">
+        <swiper-item class = "swiper_content">
+            <view class = "swiper_item_myfootprint">
+                <view class = "swiper_item_myfootprint_title">
+                </view>
+                <view class = "swiper_item_myfootprint_info">
+                    <view class = "swiper_item_myfootprint_info_item">
+                        <view class = "swiper_item_myfootprint_info_item_num">
+                            {{cities}}
+                        </view>
+                        <view class = "swiper_item_myfootprint_info_item_word">
+                            城
+                        </view>
+                    </view>
+                    <view class = "swiper_item_myfootprint_info_item">
+                        <view class = "swiper_item_myfootprint_info_item_num">
+                            {{travels}}
+                        </view>
+                        <view class = "swiper_item_myfootprint_info_item_word">
+                            足迹
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <image class = "background_image" src = "{{server_imagename}}/myfootprint.jpg" mode = "heightFix"></image>
+        </swiper-item> 
+        
+        <swiper-item class = "swiper_content">
+            <view class = "swiper_item_southest">
+                <view class = "swiper_item_est_title">
+                    去过最南方的城市
+                </view>
+                <view class = "swiper_item_southest_name">
+                    {{southest_city}}
+                </view>     
+            </view>
+            <image class = "background_image" src = "{{server_imagename}}/southest.jpg" mode = "heightFix">
+            </image>
+        </swiper-item>
+        <swiper-item class = "swiper_content">
+            <view class = "swiper_item_est_title">
+                去过最北方的城市
+            </view>
+            <view class = "swiper_item_northest_name">
+                {{northest_city}}
+            </view>  
+            <image class = "background_image" src = "{{server_imagename}}/northest.jpg" mode = "heightFix">
+            </image>
+        </swiper-item>
+        <swiper-item class = "swiper_content" wx:if="{{isMine}}">
+            <view class = "swiper_item_future">
+                <view class = "swiper_item_future_title">
+                    你可能想去
+                </view>
+                <view class = "swiper_item_future_citys">
+                    <view class = "swiper_item_future_city">1.{{recommend_0}}</view>
+                </view>
+                <view class = "swiper_item_future_citys">
+                    <view class = "swiper_item_future_city">2.{{recommend_1}}</view>
+                </view>
+                <view class = "swiper_item_future_citys">
+                    <view class = "swiper_item_future_city">3.{{recommend_2}}</view>
+                </view>
+            </view>
+            <image class = "background_image" src = src = "{{server_imagename}}/future.jpg" mode = "heightFix">
+            </image>
+        </swiper-item>
+    </swiper>
+</view>

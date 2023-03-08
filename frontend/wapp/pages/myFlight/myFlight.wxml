@@ -1,0 +1,53 @@
+<view style="overflow: scroll;padding-bottom: 0px;">
+    <flight-infos show="{{moreInfoShow}}" bind:cancle="moreInfoClick" flightid="{{moreInfoid}}" isTransit="false"></flight-infos>
+    <view class="title">
+        <text class="title">我关注的航班</text>
+    </view>
+    <view class="incoming_flight" wx:for="{{flight}}">
+        <view class="content">
+            <view class="late" wx:if="{{item.status==1}}">晚点</view>
+            <view class="abnormal" wx:if="{{item.status==3}}">未知</view>
+            <view style="float: left;">
+                <view class="text_flight_time">{{item.depatureTime}}</view>
+                <view class="text_flight">{{item.city}}</view>
+            </view>
+            <view style="float:center;margin-left:50%;">
+                <view class="text_flight_time">{{item.arrivalTime}}<text style="font-size: x-small;">{{item.timelag}}</text></view>
+                <view class="text_flight">{{item.endcity}}</view>
+            </view>
+            <view class="price">￥{{item.price}}
+                <view class="sale">{{item.discount}}%</view>
+            </view>
+            <text class="text_num" space="nbsp">航班号:{{item.flightno}} 预计时长:{{item.costtime}}</text>
+            <view class="text_num">{{item.departureDate}}</view>
+            <image src="{{icon[0]}}" class="hot_plane"></image>
+        </view>
+        <image wx:if="{{item.alarm}}" src="{{icon[1]}}" class="button_alarm_up" bindtap="changeAlarmState" data-idx="{{index}}"></image>
+        <image wx:if="{{!item.alarm}}" src="{{icon[1]}}" class="button_alarm_down" bindtap="changeAlarmState" data-idx="{{index}}"></image>
+        <image src="{{icon[2]}}" class="button_quit" bindtap="cancelAttention" data-idx="{{index}}"></image>
+        <text class="text_moreInfo" bindtap="moreInfoClick" data-idx="{{index}}">详情</text>
+    </view>
+    <!-- <view class="incoming_flight" style="background-color: rgb(247, 251, 255);" wx:for="{{flight}}">
+        <view class="content ">
+            <view style="float: left;">
+                <view class="text_flight_time">{{item.depatureTime}}</view>
+                <view class="text_flight">{{item.city}}</view>
+            </view>
+            <view style="float:center;margin-left:50%;">
+                <view class="text_flight_time">{{item.arrivalTime}}<text style="font-size:small;">+1</text></view>
+                <view class="text_flight">{{item.endcity}}</view>
+            </view>
+            <view class="price">￥{{item.price}}
+                <view class="sale">{{item.discount}}%</view>
+            </view>
+            <view class="transmit_text">北京</view>
+            <image src="/images/transmit.png" class="transmit"></image>
+            <text class="text_num bottom" space="nbsp">航班号:{{item.flightno}}/{{item.flightno}} 预计总时长:{{item.costtime}}</text>
+            <view class="text_num bottom">{{item.departureDate}} <text class="text_hightlight">换乘:0时25分</text></view>
+        </view>
+        <image wx:if="{{item.alarm}}" src="{{icon[1]}}" class="button_alarm_up" bindtap="changeAlarmState" data-idx="{{index}}"></image>
+        <image wx:if="{{!item.alarm}}" src="{{icon[1]}}" class="button_alarm_down" bindtap="changeAlarmState" data-idx="{{index}}"></image>
+        <image src="{{icon[2]}}" class="button_quit" bindtap="cancelAttention" data-idx="{{index}}"></image>
+        <text class="text_moreInfo" bindtap="moreInfoClick" data-idx="{{index}}">详情</text>
+    </view> -->
+</view>

@@ -1,0 +1,116 @@
+<!--pages/FlightQResult/FlightQResult.wxml-->
+<view class="linear_background">
+    <flight-infos show="{{moreInfoShow}}" bind:cancle="moreInfoClick" flightid="{{moreInfoid}}" flightid2="{{moreInfoid2}}" isTransit="{{transitClick}}" deltaTime="{{deltaTime}}" totalTime="{{totalTime}}"></flight-infos>
+
+    <view class="week" wx:for="{{dates}}">
+        <view class="everyday layout_verdical {{white == index ? 'now' : ''}}" bindtap="highlight" data-num="{{index}}">
+            <text space="nbsp">周{{item.week}}\n</text>
+            <text>{{item.date}}</text>
+        </view>
+    </view>
+    <view class="layout_horizontal sort_style" style="clear: both;">
+        <picker bindchange="bindPickerChange" range="{{sortRange}}" value="{{index}}">
+            <text space="nbsp">排序方式：<text class="deep">{{sortRange[index]}}</text> </text>
+        </picker>
+        <image src="{{icon[2]}}" class="pic_sort" style="{{rise?'':'transform:rotateX(180deg)'}}" bindtap="isRise"></image>
+        <text space="nbsp" bindtap="isRise" class="deep"> {{rise?'升序':'降序'}}</text>
+    </view>
+    <view style="height:1px;width: 100%;margin-top:1%"></view>
+
+    <view wx:if="{{flight.length==0 && flightTransit==0}}" class="nothing">
+        <text>当日没有可达航班</text>
+    </view>
+    <!-- <view wx:if="{{flight.length==0 && flightTransit!=0}}"> -->
+    <view wx:if="{{flight.length==0 && flightTransit!=0}}">
+        <view class="nothing">
+            <text style="margin-top: 5px;">当日无直达航班，为您推荐中转方案</text>
+        </view>
+        <view class="transfer_title">以下为推荐中转方案</view>
+        <view class="common_des_flight" wx:for="{{flightTransit}}" wx:key="id" style="margin-top:5px">
+            <view class="common_flight" style="margin: 3px;">
+                <view class="common_content">
+                   
+                    <view class="layout_horizontal">
+                        <view style="float: left;">
+                            <view class="text_flight_time">{{item.first.depatureTime}}</view>
+                            <view class="text_flight">{{item.first.city}}</view>
+                        </view>
+                        <view style="float:center;margin-left: 37%;">
+                            <view class="text_flight_time">{{item.second.arrivalTime}}<text style="font-size: x-small;">{{item.timelag}}</text></view>
+                            <view class="text_flight">{{item.second.endcity}}</view>
+                        </view>
+                        <view class="price">￥{{item.totalPrice}}
+                        </view>
+                    </view>
+                    <view class="transmit_text">{{item.transitCity}}</view>
+                    <image src="{{icon[3]}}" class="transmit"></image>
+                    <text class="text_num" space="nbsp">航班号:{{item.first.flightno}}/{{item.second.flightno}}\n<text class="text_hightlight">中转:{{item.deltaTime}}</text>总时长:{{item.totalTime}}</text>
+                    <image wx:if="{{item.first.attention==1 && item.second.attention==1}}" src="{{icon[1]}}" class="button_love_up" data-idx="{{index}}"  bindtap="changeAttentionState1"></image>
+                    <image wx:else src="{{icon[1]}}" class="button_love_down" data-idx="{{index}}"  bindtap="changeAttentionState1"></image>
+                    <text class="text_moreInfo" bindtap="moreInfoClick" data-idx="{{index}}" data-trans="true">详情</text>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view wx:else>
+        <view class="common_des_flight" wx:for="{{flight}}" wx:key="id">
+            <view class="common_flight" style="margin: 3px;">
+                <view class="common_content">
+                    <view class="late" wx:if="{{item.status==1}}">晚点</view>
+                    <view class="abnormal" wx:if="{{item.status==3}}">未知</view>
+                    <view class="layout_horizontal">
+                        <view style="float: left;">
+                            <view class="text_flight_time">{{item.depatureTime}}</view>
+                            <view class="text_flight">{{item.city}}</view>
+                        </view>
+                        <view style="float:center;margin-left: 37%;">
+                            <view class="text_flight_time">{{item.arrivalTime}}<text style="font-size: x-small;">{{item.timelag}}</text></view>
+                            <view class="text_flight">{{item.endcity}}</view>
+                        </view>
+                        <view class="price">￥{{item.price}}
+                            <view class="sale">{{item.discount}}%</view>
+                        </view>
+                    </view>
+                    <image src="{{icon[0]}}" class="hot_plane"></image>
+                    <text class="text_num" space="nbsp">航班号:{{item.flightno}}时长:{{item.costtime}}</text>
+                    <image wx:if="{{item.attention==1}}" src="{{icon[1]}}" class="button_love_up" data-idx="{{index}}" bindtap="changeAttentionState"></image>
+                    <image wx:else src="{{icon[1]}}" class="button_love_down" data-idx="{{index}}" bindtap="changeAttentionState"></image>
+                    <text class="text_moreInfo" bindtap="moreInfoClick" data-idx="{{index}}" data-trans="false">详情</text>
+                </view>
+            </view>
+        </view>
+        <view wx:if="{{transit=='true'}}">
+            <view wx:if="{{flightTransit!=0}}">
+                <view class="transfer_title">以下为推荐中转方案</view>
+                <view class="common_des_flight" wx:for="{{flightTransit}}" wx:key="id" style="margin-top:5px">
+                    <view class="common_flight" style="margin: 3px;">
+                        <view class="common_content">
+                            <view class="layout_horizontal">
+                                <view style="float: left;">
+                                    <view class="text_flight_time">{{item.first.depatureTime}}</view>
+                                    <view class="text_flight">{{item.first.city}}</view>
+                                </view>
+                                <view style="float:center;margin-left: 37%;">
+                                    <view class="text_flight_time">{{item.second.arrivalTime}}<text style="font-size: x-small;">{{item.timelag}}</text></view>
+                                    <view class="text_flight">{{item.second.endcity}}</view>
+                                </view>
+                                <view class="price">￥{{item.totalPrice}}
+                                </view>
+                            </view>
+                            <view class="transmit_text">{{item.transitCity}}</view>
+                            <image src="{{icon[3]}}" class="transmit"></image>
+                            <text class="text_num" space="nbsp">航班号:{{item.first.flightno}}/{{item.second.flightno}}\n<text class="text_hightlight">中转:{{item.deltaTime}}</text> 总时长:{{item.totalTime}}</text>
+                            <image wx:if="{{item.first.attention==1 && item.second.attention==1}}" src="{{icon[1]}}" class="button_love_up" data-idx="{{index}}" bindtap="changeAttentionState1"></image>
+                            <image wx:else src="{{icon[1]}}" class="button_love_down" data-idx="{{index}}" bindtap="changeAttentionState1"></image>
+                            <text class="text_moreInfo" bindtap="moreInfoClick" data-idx="{{index}}" data-trans="true">详情</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view wx:else>
+                <view class="transfer_title">无中转方案</view>
+            </view>
+        </view>
+    </view>
+</view>

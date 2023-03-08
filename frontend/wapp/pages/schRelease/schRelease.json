@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "mySchRelease":"/components/schReal/schRelease"
+  }
+}

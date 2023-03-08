@@ -1,0 +1,9 @@
+/* pages/Settings/Settings.wxss */
+.settings{
+    background-color: ghostwhite;
+}
+
+.textstyle{
+    text-align: center;
+    align-items: center;
+}

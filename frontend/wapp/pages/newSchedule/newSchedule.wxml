@@ -1,0 +1,28 @@
+<!--index.wxml-->
+<calendar bind:change="dateChange" spot="{{spot}}" defaultTime="{{curDate}}"></calendar>
+<view class="date-string">当前选中的日期是：{{dateString}}</view>
+<view>
+    <view class="s-item" wx:for="{{curSch}}">
+        <view class="layout_horizontal">
+            <view class="circle"></view>
+            <view class="layout_vertical item_time" bindtap="more" data-idx="{{item.id}}">
+                <view>{{item.start_time}}</view>
+                <view>{{item.end_time}}</view>
+            </view>
+            <view class="item_title" bindtap="more" data-idx="{{item.id}}">{{item.content}}</view>
+            <image src="/images/alarm.png" class="pic_alarm" wx:if="{{item.if_alarm==1}}" bindtap="alarm" data-idx="{{item.id}}" data-ala="{{item.if_alarm}}" data-index="{{index}}"></image>
+            <image src="/images/alarmcancel.png" class="pic_alarm_no" wx:if="{{item.if_alarm==0}}" bindtap="alarm" data-idx="{{item.id}}" data-ala="{{item.if_alarm}}" data-index="{{index}}"></image>
+            <image src="/images/edit1.png" class="pic_edit" bindtap="editSch" data-idx="{{item.id}}"></image>
+        </view>
+        <view class="money_box">
+            <text space="nbsp" class="money"><text wx:if="{{item.position!=null}}" style="color: rgba(1, 58, 112, 0.7);" space="nbsp">{{item.position.name}} </text><text wx:if="{{item.budget!=null}}">预算:￥{{item.budget}} </text><text wx:else>预算:未设置 </text><text wx:if="{{item.real_consumption!=null}}" class="{{item.budget==null?'':((item.budget-item.real_consumption<0)?'red':'green')}}">实际支出:￥{{item.real_consumption}}</text><text wx:else>实际支出:未设置</text></text>
+        </view>
+    </view>
+    <view bindtap="newEditSch" data-idx="{{-1}}" class="pic_background">
+        <image src="{{icon}}" class="pic"></image>
+    </view>
+    <view class="s-item add" style="background-color: white;font-size: x-small;">
+        <text>今日实际支出：￥{{curSumConsumption}} 超支：￥{{curSumConsumption-curSumBudget}}（预算：￥{{curSumBudget}}）</text>
+    </view>
+    <button class="button" bindtap="return2Release" data-date="{{date-string}}" wx:if="{{release==1 || release == 2}}">确定</button>
+</view>
