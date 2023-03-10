@@ -13,10 +13,10 @@ module.exports = {
         //proxy:"http://127.0.0.1:8000";
         proxy: {  //配置跨域
             '/api': {
-                //target: 'http://127.0.0.1:8000/api',  //这里后台的地址模拟的;应该填写你们真实的后台接口
+                target: 'http://127.0.0.1:8000/api',  //这里后台的地址模拟的;应该填写你们真实的后台接口
                 //ws: true,
                 //target: 'http://39.106.249.212:80/api',
-                target: 'http://114.116.194.214/api/',
+                //target: 'http://114.116.194.214/api/',
                 secure:false,
                 changOrigin: true,  //允许跨域
                 pathRewrite: {

@@ -1,5 +1,5 @@
 {
-    "appid": "wx751436ed91362774",
+    "appid": "wxbbf99a9f4f347ce7",
     "projectname": "User",
     "compileType": "miniprogram",
     "libVersion": "2.16.0",
@@ -48,7 +48,8 @@
         "minifyWXML": true,
         "showES6CompileOption": false,
         "useCompilerPlugins": false,
-        "ignoreUploadUnusedFiles": false
+        "ignoreUploadUnusedFiles": false,
+        "condition": false
     },
     "editorSetting": {
         "tabIndent": "insertSpaces",

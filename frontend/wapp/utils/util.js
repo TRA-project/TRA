@@ -61,9 +61,9 @@ const noSecond = string => {
   return temp[0] + ':' + temp[1]
 }
 const server_hostname = {
-  url: "http://114.116.194.214"
+  //url: "http://114.116.194.214"
   // url:"http://114.116.53.144"
-  // url:"http://localhost"
+  url:"http://localhost:8000"
 }
 const timeLag =string=>{
   const before = string.substring(0,10)
