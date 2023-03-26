@@ -1,6 +1,7 @@
 {
     "entryPagePath": "pages/login/login",
     "pages": [
+        "pages/home/home",
         "pages/index/index",
         "pages/logs/logs",
         "pages/login/login",
