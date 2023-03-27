@@ -112,6 +112,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+!we-cropper/dist
 
 # Gatsby files
 .cache/

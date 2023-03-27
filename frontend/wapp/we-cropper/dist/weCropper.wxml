@@ -1,0 +1,12 @@
+<template name="weCropper">
+  <canvas class="cropper" disable-scroll="true" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" style="width:{{width}}px; height:{{height}}px; background-color: rgba(0, 0, 0, 0.8);" canvas-id="{{id}}">
+    <cover-view class="cropper-buttons">
+      <cover-view class="upload" bindtap="uploadTap">
+        重新选择
+      </cover-view>
+      <cover-view class="getCropperImage" bindtap="getCropperImage">
+        确定
+      </cover-view>
+    </cover-view>
+  </canvas>
+</template>
