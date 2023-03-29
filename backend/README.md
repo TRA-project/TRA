@@ -63,7 +63,7 @@ Django自带的管理工具，具体查阅Django文档
         "previous": null, // 每一页返回数量有限，该参数表示下一页URL
         "results": [
             {
-                "username": "admin",
+                "username": "manager",
                 "email": ""
             }
         ]
@@ -84,7 +84,7 @@ Django自带的管理工具，具体查阅Django文档
 
     ```json
     {
-        "username": "admin",
+        "username": "manager",
         "email": ""
     }
     ```
