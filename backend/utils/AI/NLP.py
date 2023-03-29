@@ -4,7 +4,7 @@ from django.db.models import Q
 from similarities import Similarity
 
 from backend import settings
-from wechat_app.models import TravelNotes
+from utility.models import TravelNotes
 
 
 class NLPModel:

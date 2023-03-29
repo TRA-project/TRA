@@ -5,7 +5,7 @@ from django.db import connection
 from django.db.models import Q, F, Count
 
 from wechat_app.serializers import LogSerializer
-from wechat_app.models import AppUser, TravelNotes, Log
+from utility.models import AppUser, TravelNotes, Log
 from django.conf import settings
 from wechat_app.serializers import ScheduleSerializer, ScheduleItemSerializer
 

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'sslserver',
     'drf_yasg',
     # 'django_crontab',
+    'utility.apps.UtilityConfig',
     'wechat_app.apps.UserConfig',
     'web.apps.ManagerConfig'
 ]
