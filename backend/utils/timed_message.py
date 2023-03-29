@@ -1,7 +1,7 @@
 from django.db.models import Q
 
 from backend import settings
-from user.models import Schedule, Message, UsersFlight, ScheduleItem
+from wechat_app.models import Schedule, Message, UsersFlight, ScheduleItem
 import datetime
 
 

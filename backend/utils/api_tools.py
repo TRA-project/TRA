@@ -4,17 +4,17 @@ from collections import Counter
 from django.db import connection
 from django.db.models import Q, F, Count
 
-from user.serializers import LogSerializer
-from user.models import AppUser, TravelNotes, Log
+from wechat_app.serializers import LogSerializer
+from wechat_app.models import AppUser, TravelNotes, Log
 from django.conf import settings
-from user.serializers import ScheduleSerializer, ScheduleItemSerializer
+from wechat_app.serializers import ScheduleSerializer, ScheduleItemSerializer
 
 
 def save_log(user_id, action, target_id):
     if user_id <= 0:
         return
     log = dict()
-    log['user'] = user_id
+    log['wechat_app'] = user_id
     log['action'] = action
     if target_id is not None:
         log['target_id'] = target_id

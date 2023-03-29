@@ -50,13 +50,13 @@ class UserView(viewsets.ModelViewSet):
             raise ParseError("Username and password are required!")
 
         if not request.user.is_superuser and is_superuser:
-            raise ValidationError("Super user can only be created by super users")
+            raise ValidationError("Super wechat_app can only be created by super users")
 
         try:
             User.objects.create(username=username, password=make_sha256_password(password), email=email,
                                 is_superuser=is_superuser, is_staff=True)
         except Exception:
-            raise NotAcceptable("Create user failed!")
+            raise NotAcceptable("Create wechat_app failed!")
 
         return Response(status=201)
 
@@ -95,5 +95,5 @@ class UserView(viewsets.ModelViewSet):
         try:
             self.get_object().delete()
         except Exception:
-            raise NotAcceptable("Delete user failed!")
+            raise NotAcceptable("Delete wechat_app failed!")
         return Response(status=204)

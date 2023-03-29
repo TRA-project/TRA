@@ -41,15 +41,15 @@ schema_view = get_schema_view(
 
 
 ROUTER = TravelRouter()
-ROUTER.register(r'user', user.UserView)
+ROUTER.register(r'wechat_app', user.UserView)
 
 urlpatterns = [
-    path('manager/', admin.site.urls),
+    path('web/', admin.site.urls),
     path('api/', include(ROUTER.urls)),
     path('api/token-auth/', TokenObtainPairView.as_view()),
     path('api/token-refresh/', TokenRefreshView.as_view()),
-    path('api/core/', include('user.urls')),
-    path('api/manager/', include('manager.urls')),
+    path('api/core/', include('wechat_app.urls')),
+    path('api/web/', include('web.urls')),
     re_path(r'^%s(?P<path>.*)$' % re.escape(settings.MEDIA_URL.lstrip('/')), serve,
             kwargs={'document_root': os.path.join(settings.MEDIA_ROOT, 'system')}),
 ]
