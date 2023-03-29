@@ -1,0 +1,13 @@
+/* pages/SceneryShow/SceneryShow.wxss */
+.pic {
+    height: 600rpx;
+}
+
+.sublist {
+    height: 200rpx;
+    margin-top: 40rpx;
+}
+
+.sublist view {
+    padding-left: 20rpx;
+}

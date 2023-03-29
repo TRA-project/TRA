@@ -39,7 +39,8 @@
         "pages/newScheduleEdit/newScheduleEdit",
         "pages/newSchrelease/newSchrelease",
         "pages/newScheduleMore/newScheduleMore",
-        "pages/schRelease/schRelease"
+        "pages/schRelease/schRelease", 
+        "pages/SceneryShow/SceneryShow"
     ],
     "window": {
         "backgroundTextStyle": "light",
