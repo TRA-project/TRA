@@ -1,0 +1,16 @@
+db.sqlite3
+
+logs/
+media/
+
+# python
+__pycache__
+
+# python env
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
