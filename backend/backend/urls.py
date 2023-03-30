@@ -49,7 +49,7 @@ urlpatterns = [
     path('api/token-auth/', TokenObtainPairView.as_view()),
     path('api/token-refresh/', TokenRefreshView.as_view()),
     path('api/core/', include('wechat_app.urls')),
-    path('api/web/', include('web.urls')),
+    path('api/admin/', include('web.urls')),
     re_path(r'^%s(?P<path>.*)$' % re.escape(settings.MEDIA_URL.lstrip('/')), serve,
             kwargs={'document_root': os.path.join(settings.MEDIA_ROOT, 'system')}),
 ]

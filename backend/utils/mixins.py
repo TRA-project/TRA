@@ -2,10 +2,12 @@ import os as _os
 from rest_framework.mixins import *
 from rest_framework.serializers import PrimaryKeyRelatedField, ImageField, Field
 
+
 class BulkDestroyModelMixin:
     """
     Destroy model instances.
     """
+
     def bulk_destroy(self, request, *args, **kwargs):
         instances = self.filter_queryset(self.get_queryset())
         self.perform_bulk_destroy(instances)
@@ -14,13 +16,15 @@ class BulkDestroyModelMixin:
     def perform_bulk_destroy(self, instances):
         instances.delete()
 
+
 class PrimaryKeyNestedField(PrimaryKeyRelatedField):
     def __init__(self, **kwargs):
         self.serializer = kwargs.pop('serializer', None)
         if not 'queryset' in kwargs and self.serializer:
             try:
                 kwargs['queryset'] = self.serializer.Meta.model.objects.all()
-            except: pass
+            except:
+                pass
         super().__init__(**kwargs)
 
     def to_representation(self, value):
@@ -35,6 +39,7 @@ class PrimaryKeyNestedField(PrimaryKeyRelatedField):
     def to_internal_value(self, data):
         return super().to_internal_value(data)
 
+
 class ImageNameField(ImageField):
     def __init__(self, *, name_truncate=None, **kwargs):
         if not isinstance(name_truncate, int):
@@ -48,6 +53,7 @@ class ImageNameField(ImageField):
 
     def to_internal_value(self, data):
         return super().to_internal_value(data)
+
 
 class WritableMethodField(Field):
     def __init__(self, method_name=None, set_method_name=None, **kwargs):
