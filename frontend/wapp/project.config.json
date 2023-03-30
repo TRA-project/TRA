@@ -1,319 +1,319 @@
 {
-    "appid": "wxbbf99a9f4f347ce7",
-    "projectname": "User",
-    "compileType": "miniprogram",
-    "libVersion": "2.16.0",
-    "packOptions": {
-        "ignore": [],
-        "include": []
+  "appid": "wxbbf99a9f4f347ce7",
+  "projectname": "User",
+  "compileType": "miniprogram",
+  "libVersion": "2.16.0",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": false,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": true,
+    "lazyloadPlaceholderEnable": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
     },
-    "setting": {
-        "urlCheck": false,
-        "es6": true,
-        "enhance": true,
-        "postcss": true,
-        "preloadBackgroundData": false,
-        "minified": true,
-        "newFeature": false,
-        "coverView": true,
-        "nodeModules": false,
-        "autoAudits": false,
-        "showShadowRootInWxmlPanel": true,
-        "scopeDataCheck": false,
-        "uglifyFileName": false,
-        "checkInvalidKey": true,
-        "checkSiteMap": true,
-        "uploadWithSourceMap": true,
-        "compileHotReLoad": true,
-        "lazyloadPlaceholderEnable": false,
-        "useMultiFrameRuntime": true,
-        "useApiHook": true,
-        "useApiHostProcess": true,
-        "babelSetting": {
-            "ignore": [],
-            "disablePlugins": [],
-            "outputPath": ""
+    "useIsolateContext": true,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [
+      {
+        "packageJsonPath": "./package.json",
+        "miniprogramNpmDistDir": "./miniprogram/"
+      }
+    ],
+    "minifyWXSS": true,
+    "disableUseStrict": false,
+    "minifyWXML": true,
+    "showES6CompileOption": false,
+    "useCompilerPlugins": false,
+    "ignoreUploadUnusedFiles": false,
+    "condition": false
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "description": "项目配置文件，详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/MyZone/MyZone",
+          "pathName": "pages/MyZone/MyZone",
+          "query": "",
+          "scene": null
         },
-        "useIsolateContext": true,
-        "userConfirmedBundleSwitch": false,
-        "packNpmManually": false,
-        "packNpmRelationList": [
-            {
-                "packageJsonPath": "./package.json",
-                "miniprogramNpmDistDir": "./miniprogram/"
-            }
-        ],
-        "minifyWXSS": true,
-        "disableUseStrict": false,
-        "minifyWXML": true,
-        "showES6CompileOption": false,
-        "useCompilerPlugins": false,
-        "ignoreUploadUnusedFiles": false,
-        "condition": false
-    },
-    "editorSetting": {
-        "tabIndent": "insertSpaces",
-        "tabSize": 4
-    },
-    "description": "项目配置文件，详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
-    "condition": {
-        "miniprogram": {
-            "list": [
-                {
-                    "name": "pages/MyZone/MyZone",
-                    "pathName": "pages/MyZone/MyZone",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/login/login",
-                    "pathName": "pages/login/login",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/EditInfo/EditInfo",
-                    "pathName": "pages/EditInfo/EditInfo",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/Release/Release",
-                    "pathName": "pages/Release/Release",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/footprint/footprint",
-                    "pathName": "pages/footprint/footprint",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/travel/travel",
-                    "pathName": "pages/travel/travel",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/index/index",
-                    "pathName": "pages/index/index",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/OtherZone/OtherZone",
-                    "pathName": "pages/OtherZone/OtherZone",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/ReleasePal/ReleasePal",
-                    "pathName": "pages/ReleasePal/ReleasePal",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/Pal/Pal",
-                    "pathName": "pages/Pal/Pal",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/Notification/Notification",
-                    "pathName": "pages/Notification/Notification",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/contract/contract",
-                    "pathName": "pages/contract/contract",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/AboutUs/AboutUs",
-                    "pathName": "pages/AboutUs/AboutUs",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/Location/Location",
-                    "pathName": "pages/Location/Location",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/EditInfo/EditInfo",
-                    "pathName": "pages/EditInfo/EditInfo",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/Release/Release",
-                    "pathName": "pages/Release/Release",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/Flight/Flight",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/History/History",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/RealMyzone/RealMyzone",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/FlightQResult/FlightQResult",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/FlightInfo/FlightInfo",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/Schedule/Schedule",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/ReleaseSche/ReleaseSche",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/ReleaseSche/ReleaseSche",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/Schedule/Schedule",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/myFlight/myFlight",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/Collection/Collection",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/Collection/subpages/col-manage",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/Release/Release",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/Settings/Settings",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/FlightPublic/FlightComponent/FlightMoreInfo",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/newSchedule/newSchedule",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/newScheduleEdit/newScheduleEdit",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/newSchrelease/newSchrelease",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/travel/travel",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null,
-                    "partialCompile": {
-                        "enabled": true,
-                        "pages": []
-                    }
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/index/index",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/Pal/Pal",
-                    "query": "pal_id=8&author_id=1&author_icon=http%3A%2F%2F114.116.194.214%2Fapi%2Fcore%2Fimages%2Fyamxr2KbOiDrGDy849ohQN9GaC7nknRt%2Fdata%2F&author_nickname=%E8%B5%9E%E7%BE%8E%E5%A4%AA%E9%98%B3&author_cities=7&author_travels=11",
-                    "launchMode": "default",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/MyZone/MyZone",
-                    "query": "",
-                    "launchMode": "default",
-                    "scene": null
-                }
-            ]
+        {
+          "name": "pages/login/login",
+          "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/EditInfo/EditInfo",
+          "pathName": "pages/EditInfo/EditInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/Release/Release",
+          "pathName": "pages/Release/Release",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/footprint/footprint",
+          "pathName": "pages/footprint/footprint",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/travel/travel",
+          "pathName": "pages/travel/travel",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/OtherZone/OtherZone",
+          "pathName": "pages/OtherZone/OtherZone",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/ReleasePal/ReleasePal",
+          "pathName": "pages/ReleasePal/ReleasePal",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/Pal/Pal",
+          "pathName": "pages/Pal/Pal",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/Notification/Notification",
+          "pathName": "pages/Notification/Notification",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/contract/contract",
+          "pathName": "pages/contract/contract",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/AboutUs/AboutUs",
+          "pathName": "pages/AboutUs/AboutUs",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/Location/Location",
+          "pathName": "pages/Location/Location",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/EditInfo/EditInfo",
+          "pathName": "pages/EditInfo/EditInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/Release/Release",
+          "pathName": "pages/Release/Release",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/Flight/Flight",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/History/History",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/RealMyzone/RealMyzone",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/FlightQResult/FlightQResult",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/FlightInfo/FlightInfo",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/Schedule/Schedule",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/ReleaseSche/ReleaseSche",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/ReleaseSche/ReleaseSche",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/Schedule/Schedule",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/myFlight/myFlight",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/Collection/Collection",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/Collection/subpages/col-manage",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/Release/Release",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/Settings/Settings",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/FlightPublic/FlightComponent/FlightMoreInfo",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/newSchedule/newSchedule",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/newScheduleEdit/newScheduleEdit",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/newSchrelease/newSchrelease",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/travel/travel",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "partialCompile": {
+            "enabled": true,
+            "pages": []
+          }
+        },
+        {
+          "name": "",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/Pal/Pal",
+          "query": "pal_id=8&author_id=1&author_icon=http%3A%2F%2F114.116.194.214%2Fapi%2Fcore%2Fimages%2Fyamxr2KbOiDrGDy849ohQN9GaC7nknRt%2Fdata%2F&author_nickname=%E8%B5%9E%E7%BE%8E%E5%A4%AA%E9%98%B3&author_cities=7&author_travels=11",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/MyZone/MyZone",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
+      ]
     }
+  }
 }

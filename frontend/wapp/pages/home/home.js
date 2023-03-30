@@ -1,4 +1,11 @@
+// pages/home/home.js
+const utils = require("../../utils/util.js");
+
 Page({
+    data: {
+      server_imagename: utils.server_imagename
+    },
+
     onLoad() {
       this.setData({
         opacity: 1,

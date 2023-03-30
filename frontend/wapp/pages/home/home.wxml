@@ -1,11 +1,18 @@
+
 <view class="container" style="opacity: {{opacity}};" bindtouchmove="navigateToNewPage">
-  <!-- 原页面的内容 -->
-  <view>TRA</view>
+
+  <view class="logo_view">
+    <image class="logo_img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
+  </view>
+
   <view class="search-bar">
     <image src="{{server_imagename}}/magnifier.png" mode='widthFix' class="search_icon_pic"></image>
-    <input class="search-input" type="text" placeholder="请输入搜索关键词"/>
+    <input class="search-input" type="text" placeholder="请输入景点关键词"/>
     <button class="search-btn" style="width: 176rpx;">搜索</button>
   </view>
 
-  <vertical-drag-gesture-handler ></vertical-drag-gesture-handler>
+</view>
+
+<view class="logo_view">
+  <image class="down_chevron_img" src="{{server_imagename}}/chevron-up.png" mode="aspectFit"></image>
 </view>

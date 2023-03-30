@@ -1,14 +1,11 @@
 .container {
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     transition: opacity 0.5s ease-in-out;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 50%;
 }
 
 .container.hidden {
@@ -16,7 +13,32 @@
   z-index: -1;
 }
 
+.logo_view {
+  margin-top: 350rpx;
+  margin-bottom: 50rpx;
+  display: flex;
+  justify-content: center;
+  /* border: 1px solid #000 ; */
+}
+
+.logo_img {
+  height: 150rpx;
+  /* border: 1px solid #000 ; */
+}
+
+.down_chevron_img {
+  position: fixed;
+  height: 7%;
+  bottom: 2%;
+}
+
+.placeholder_app_img {
+  width: 50%;
+}
+
 .search_icon_pic{
+    margin-left: 25rpx;
+    margin-right: 25rpx;
     height: 40rpx;
     width: 40rpx;
     border-radius:10rpx;
