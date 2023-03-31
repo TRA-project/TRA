@@ -1,0 +1,25 @@
+/* components/mySearchBar/mySeachBar.wxss */
+
+.search-container {
+  height: 100rpx;
+  /* background-color: rgb(4, 138, 201); 在properties中 */
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+}
+
+.search-box {
+  height: 72rpx;
+  background-color: white;
+  /* border-radius: 36rpx; 在properties中 */
+  width: 100%;
+  display: flex;
+  justify-content: center;  /* 内部元素横向居中 */
+  align-items: center;      /* 内部元素纵向居中 */
+}
+
+.search-input {
+  font-size: 30rpx;
+  margin-left: 10rpx;
+  width:85%;
+}

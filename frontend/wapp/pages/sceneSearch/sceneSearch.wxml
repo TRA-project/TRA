@@ -1,0 +1,6 @@
+<!--pages/sceneSearch/sceneSearch.wxml-->
+<!-- <text>pages/sceneSearch/sceneSearch.wxml</text> -->
+<view class="search-box">
+  <my-search-bar></my-search-bar>
+</view>
+

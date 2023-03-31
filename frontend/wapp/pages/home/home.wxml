@@ -1,18 +1,19 @@
 
 <view class="container" style="opacity: {{opacity}};" bindtouchmove="navigateToNewPage">
 
-  <view class="logo_view">
-    <image class="logo_img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
+  <view class="logo-view">
+    <image class="logo-img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
   </view>
 
-  <view class="search-bar">
-    <image src="{{server_imagename}}/magnifier.png" mode='widthFix' class="search_icon_pic"></image>
+  <view class="search-bar" bindtap="onSearchBarTap">
+    <icon class="search-icon" type="search" size="20"></icon>
     <input class="search-input" type="text" placeholder="请输入景点关键词"/>
     <button class="search-btn" style="width: 176rpx;">搜索</button>
   </view>
 
+  <view class="logo-view">
+    <image class="down-chevron-icon" src="{{server_imagename}}/chevron-up.png" mode="aspectFit"></image>
+  </view>
+
 </view>
 
-<view class="logo_view">
-  <image class="down_chevron_img" src="{{server_imagename}}/chevron-up.png" mode="aspectFit"></image>
-</view>

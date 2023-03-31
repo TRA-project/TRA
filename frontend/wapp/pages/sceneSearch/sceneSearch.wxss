@@ -1,0 +1,7 @@
+/* pages/sceneSearch/sceneSearch.wxss */
+
+.search-box {
+  position: sticky; /* 吸顶效果 */
+  top: 0;
+  z-index: 99;
+}

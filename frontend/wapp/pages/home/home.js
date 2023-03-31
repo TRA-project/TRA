@@ -6,21 +6,37 @@ Page({
       server_imagename: utils.server_imagename
     },
 
+    /**
+     * 生命周期函数--监听页面加载
+     */
     onLoad() {
       this.setData({
         opacity: 1,
       })
     },
   
-    onHide() {
-      this.setData({
-        opacity: 0,
-      })
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady() {
+
     },
-  
+
+    /**
+     * 生命周期函数--监听页面显示
+     */    
     onShow() {
       this.setData({
         opacity: 1,
+      })
+    },
+
+    /**
+     * 生命周期函数--监听页面隐藏
+     */
+    onHide() {
+      this.setData({
+        opacity: 0,
       })
     },
   
@@ -43,4 +59,11 @@ Page({
         })
       }, 500)
     },
+
+    onSearchBarTap() {
+      wx.navigateTo({
+        url: '/pages/sceneSearch/sceneSearch',
+      })
+    }
+
 })

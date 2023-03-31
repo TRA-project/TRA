@@ -5,7 +5,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50%;
+    height: 100%;
+    width: 100%;
 }
 
 .container.hidden {
@@ -13,7 +14,7 @@
   z-index: -1;
 }
 
-.logo_view {
+.logo-view {
   margin-top: 350rpx;
   margin-bottom: 50rpx;
   display: flex;
@@ -21,26 +22,20 @@
   /* border: 1px solid #000 ; */
 }
 
-.logo_img {
+.logo-img {
   height: 150rpx;
   /* border: 1px solid #000 ; */
 }
 
-.down_chevron_img {
+.down-chevron-icon {
   position: fixed;
   height: 7%;
   bottom: 2%;
 }
 
-.placeholder_app_img {
-  width: 50%;
-}
-
-.search_icon_pic{
+.search-icon{
     margin-left: 25rpx;
     margin-right: 25rpx;
-    height: 40rpx;
-    width: 40rpx;
     border-radius:10rpx;
     opacity:0.6;
 }
@@ -53,7 +48,7 @@
     height: 100rpx;
     border-radius: 50rpx;
     background-color: #fff;
-    box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5rpx 10rpx rgba(0, 0, 0, 0.1);
 }
   
 .logo {
