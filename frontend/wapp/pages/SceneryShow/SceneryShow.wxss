@@ -1,6 +1,14 @@
 /* pages/SceneryShow/SceneryShow.wxss */
 .pic {
     height: 600rpx;
+    width: 100%;
+}
+
+/* 设置display: flex;实现flex弹性布局，在设置justify-content: center;让图片水平居中对齐，设置align-items: center;让图片垂直居中对齐。 */
+.pic swiper-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .sublist {
@@ -10,4 +18,229 @@
 
 .sublist view {
     padding-left: 20rpx;
+}
+
+.curImage {
+    /* 矩形 1 */
+    position: absolute;
+    width: 116rpx;
+    height: 60rpx;
+    left: 620rpx;
+    top: 490rpx;
+    background: rgba(0, 0, 0, 0.8);
+
+    border-radius: 8px;
+}
+
+.curImage view {
+    font-size: 32rpx;
+    font-weight: 1000;
+    line-height: 60rpx;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cards {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -12px;
+}
+
+.card {
+    width: 720rpx;
+    height: auto;
+    box-sizing: border-box;
+
+    background: rgb(255, 255, 255);
+    border: 2px solid rgb(30, 144, 255);
+    border-radius: 8px;
+    padding: 25rpx;
+
+    margin-bottom: 10rpx;
+}
+
+.mainCard .name {
+    color: rgb(47, 53, 66);
+    font-family: Noto Sans SC;
+    font-size: 48rpx;
+    font-weight: 700;
+    line-height: 48rpx;
+    display: inline-block;
+}
+
+.mainCard .remark {
+    display: inline-block;
+    color: rgb(255, 99, 72);
+    font-family: Noto Sans SC;
+    font-size: 48rpx;
+    font-weight: 700;
+    line-height: 48rpx;
+    margin-left: 20rpx;
+}
+
+.mainCard .fen {
+    display: inline-block;
+    color: rgb(47, 53, 66);
+    font-family: Noto Sans SC;
+    font-size: 36rpx;
+    font-weight: 600;
+    line-height: 48rpx;
+    margin-left: 10rpx;
+}
+
+.mainCard .intro {
+    color: rgb(47, 53, 66);
+    font-family: Noto Sans SC;
+    font-size: 32rpx;
+    font-weight: 300;
+    line-height: 48rpx;
+    letter-spacing: 0px;
+    text-align: left;
+}
+
+.divLineX {
+    width: 680rpx;
+    height: 4rpx;
+    background: rgb(223, 228, 234);
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+}
+
+.leftColumn view {
+    font-family: Noto Sans SC;
+    color: rgb(47, 53, 66);
+    font-weight: 600;
+    font-size: 34rpx;
+}
+
+.leftColumn .dist {
+    font-weight: 300;
+}
+
+/* 伪类选择器 */
+/* 规定一个block的高度，并使其中的元素关于中心对齐，且对齐于父元素（通过伪类before实现） */
+.rightColumn::before { 
+    display: inline-block;
+    vertical-align: middle;
+    content: '';
+    height: 100%;
+}
+
+.rightColumn image, .rightColumn text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.rightColumn image {
+    vertical-align:middle;
+}
+
+.rightColumn text {
+    margin-left: 10rpx;
+    font-size: 34rpx;
+    font-weight: 400;
+}
+
+.leftColumn {
+    vertical-align: middle;
+    float: left;
+}
+
+.rightColumn {
+    align-items: center;
+    height: 100rpx;
+    float: right;
+}
+
+.card .cardTitle {
+    color: rgb(47, 53, 66);
+    font-family: Noto Sans SC;
+    font-size: 36rpx;
+    font-weight: 700;
+    line-height: 36rpx;
+    margin-bottom: 10rpx;
+}
+
+.priceCard .item {
+    /* 矩形 3 */
+    background: rgb(123, 237, 159);
+    margin-top: 15rpx;
+    border-radius: 15rpx;
+    padding: 15rpx;
+    height: 50rpx;
+}
+
+.priceCard .item .name {
+    color: rgba(87, 96, 111, 0.9);
+    font-family: Noto Sans SC;
+    font-size: 44rpx;
+    font-weight: 500;
+    line-height: 48rpx;
+    float: left;
+    margin-left: 10rpx;
+}
+
+.priceCard .item .price {
+    color: rgb(255, 127, 80);
+    font-family: Noto Sans SC;
+    font-size: 44rpx;
+    font-weight: 700;
+    line-height: 48rpx;
+    float: right;
+}
+
+.spotCard .cardTitle {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+
+.spotCard .add {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 15rpx;
+}
+
+.spotCard .topline {
+    margin-top: -15rpx;
+}
+
+.divLineX2 {
+    /* Rectangle 17 */
+    height: 2rpx;
+    background: rgb(116, 125, 140);
+    margin-top: 10rpx;
+}
+
+.listelm image {
+    width: 80rpx;
+    height: 80rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.listelm .info {
+    display: inline-block;
+    width: 560rpx;
+    margin-left: 15rpx;
+    vertical-align: middle;
+}
+
+.info view:nth-child(1) text {
+    color: rgba(0, 0, 0, 0.9);
+    font-family: Noto Sans SC;
+    font-size: 34rpx;
+    font-weight: 500;
+    line-height: 36rpx;
+}
+
+.info view:nth-child(2) text {
+    opacity: 0.6;
+    color: rgb(0, 0, 0);
+    font-family: Noto Sans SC;
+    font-size: 28rpx;
+    font-weight: 400;
+    line-height: 28rpx;
 }
