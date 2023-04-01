@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    historyList: ["ad", "南山", "江山"],
+    myInput: "空",
   },
 
   /**
@@ -62,5 +63,13 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  // 同步子组件input内容
+  syncInput(event) {
+    console.log("syncInput")
+    this.setData({
+      myInput: event.detail.value
+    })
   }
 })

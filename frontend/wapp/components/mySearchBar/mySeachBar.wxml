@@ -11,8 +11,11 @@
 
 <!-- 搜索建议列表 -->
 <view class="suggest-list">
-  <view class="suggest-item" wx:for="{{this.searchRes}}" wx:key="unique">
-    <view class="scenery-name"> item {{item.message}} </view>
-    <icon type="arrowright" size="20"></icon>
+  <view class="suggest-item" wx:for="{{searchRes}}" wx:key="unique">
+    <image src="/images/locate.png" class="locate-icon" />
+    <view class="scenery-name"> 
+      {{item.name}} {{item.position}} 
+    </view>
+    <image src="/images/roundrightarrow.png" class="rightarrow-icon" />
   </view>
 </view>

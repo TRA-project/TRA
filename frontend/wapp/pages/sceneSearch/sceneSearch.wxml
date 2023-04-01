@@ -1,6 +1,33 @@
 <!--pages/sceneSearch/sceneSearch.wxml-->
-<!-- <text>pages/sceneSearch/sceneSearch.wxml</text> -->
+
+<!-- 搜索框 -->
 <view class="search-box">
-  <my-search-bar></my-search-bar>
+  <my-search-bar bind:sync="syncInput"></my-search-bar>
+</view>
+
+<!-- 历史记录 -->
+<view class="history-box">
+  <view class="history-title">
+    <text> 历史记录 </text>
+    <image class="trash-icon" src="/images/trashbin.png"></image>
+  </view>
+  <view class="history-list">
+    <view wx:for="{{historyList}}" wx:key="unique">
+      <view class="history-item">{{ item }}</view>
+    </view>
+  </view>
+</view>
+
+<view class="preference-box">
+  <view class="preference-title">
+    <text> 猜你喜欢 </text>
+  </view>
+  <view class="preference-list">
+    
+  </view>
+</view>
+
+<view>
+  {{myInput}}
 </view>
 

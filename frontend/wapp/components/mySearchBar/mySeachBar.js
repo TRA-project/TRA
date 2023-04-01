@@ -2,6 +2,11 @@
 const utils = require("../../utils/util.js");
 
 Component({
+  options: {
+    // 纯数据字段定义：以下划线开头的数据字段
+    pureDataPattern: /^_/
+  },
+
   /**
    * 组件的属性列表
    */
@@ -27,8 +32,10 @@ Component({
     keyword: "",
     searchRes: [],  // 搜索结果列表
     tmpRes: [
-      "天空岛",
-      "红玉宫"
+      {"name": "天空岛", "position": "提瓦特"},
+      {"name": "红玉宫", "position": "艾恩格朗特"},
+      {"name": "碎片大厦","position": "伦蒂尼姆"},
+      {"name": "来生","position": "沃森-歌舞伎区"},
     ]
   },
 
@@ -44,11 +51,14 @@ Component({
         this.getSearchList()
         console.log(this.keyword)
       }, this.data.delay) // 还得这么用data的值
+      this.triggerEvent("syncInput", {value: this.keyword})
     },
 
     getSearchList() {
       if (this.keyword === "") {
-        this.searchRes = []
+        this.setData({
+          searchRes: []
+        })
         return
       }
 
@@ -76,5 +86,21 @@ Component({
         }
       })
     }
+  },
+
+  /**
+   * 组件的生命周期函数
+   */
+  lifetimes: {
+    created() {},
+    attached() {},
+  },
+
+  /**
+   * 组件所在页面的生命周期函数
+   */
+  pageLifetimes: {
+    show() {},
+    hide() {},
   }
 })
