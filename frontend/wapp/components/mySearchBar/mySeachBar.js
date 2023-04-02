@@ -47,15 +47,19 @@ Component({
       // 输入防抖动：延后500ms取值，不停输入则不断重置timer 
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
-        this.keyword = event.detail.value
+        this.setData({
+          keyword: event.detail.value,
+        })
         this.getSearchList()
-        console.log(this.keyword)
+        console.log(this.data.keyword)
+        
+        this.triggerEvent("syncinput", {value: this.data.keyword})
+        console.log("sync from son component:" + this.data.keyword)
       }, this.data.delay) // 还得这么用data的值
-      this.triggerEvent("syncInput", {value: this.keyword})
     },
 
     getSearchList() {
-      if (this.keyword === "") {
+      if (this.data.keyword === "") {
         this.setData({
           searchRes: []
         })
@@ -67,7 +71,7 @@ Component({
         url: url,
         method: "GET",
         data: {
-          "keyword": this.keyword
+          "keyword": this.data.keyword
         },
         header: {
 

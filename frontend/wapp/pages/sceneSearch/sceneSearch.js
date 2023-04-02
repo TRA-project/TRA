@@ -6,7 +6,12 @@ Page({
    */
   data: {
     historyList: ["ad", "南山", "江山"],
-    myInput: "空",
+    myInput: "",
+    preferenceList: [
+      {"name": "量子之海", "position": "？？？"},
+      {"name": "托尔巴纳", "position": "艾恩格朗特"},
+      {"name": "来生","position": "沃森-歌舞伎区"},
+    ]
   },
 
   /**
@@ -66,8 +71,8 @@ Page({
   },
 
   // 同步子组件input内容
-  syncInput(event) {
-    console.log("syncInput")
+  onSyncInput(event) {
+    console.log("syncInput from father page")
     this.setData({
       myInput: event.detail.value
     })
