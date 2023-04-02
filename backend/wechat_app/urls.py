@@ -21,8 +21,8 @@ ROUTER.register(r'city', CityApis)
 ROUTER.register(r'province', ProvinceApis)
 ROUTER.register(r'travelcollection', TravelCollectionApis)
 ROUTER.register(r'tag', TagApis)
-
-
+ROUTER.register(r'scenic', ScenicApis)
+ROUTER.register(r'sight', SightApis)
 urlpatterns = [
     path('', include(ROUTER.urls)),
 ]

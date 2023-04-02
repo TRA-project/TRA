@@ -18,3 +18,4 @@ from .tag import Tag
 from .log import Log
 from .shielded_word import ShieldedWord
 from .read_record import ReadRecord
+from .scenic import Scenic,Sight

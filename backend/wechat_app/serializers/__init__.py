@@ -13,3 +13,4 @@ from .flight import FlightSerializer, FlightDetailedSerializer, CitySerializer, 
 from .schedule import ScheduleSerializer, ScheduleBriefSerializer, ScheduleItemSerializer
 from .users_flight import UsersFlightSerializer
 from .log import LogSerializer
+from .scenic import ScenicSerializer, SightSerializer

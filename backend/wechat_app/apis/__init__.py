@@ -13,3 +13,4 @@ from .users_flight import UsersFlightApis
 from .travel_collection import TravelCollectionApis
 from .tag import TagApis
 from .companion import CompanionFilterBackend
+from .scenic import ScenicApis, SightApis
