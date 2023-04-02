@@ -1,0 +1,41 @@
+<!--pages/SceneryShow/SceneryShow.wxml-->
+<swiper class="pic">
+    <swiper-item>
+        <image src="../../images/guozhibeiyuan.jpg"></image>
+    </swiper-item>
+</swiper>
+
+<view>
+    <text selectable>国家植物园北园</text>
+</view>
+<view>
+    <text selectable>开放时间：8：00 ~ 18：00</text>
+</view>
+<view>
+    <text selectable>位置：北京市海淀区香山路</text>
+</view>
+<view>
+    <text selectable>门票价格：50</text>
+</view>
+<view>
+    <text selectable>评分：4.8</text>
+</view>
+
+<template name="staffName">
+  <view>
+    FirstName: {{short}}, LastName: {{full}}
+  </view>
+</template>
+
+<template is="staffName" data="{{...staffA}}"></template>
+
+<scroll-view class="sublist" scroll-y>
+    <view><text>曹雪芹纪念馆</text></view>
+    <view><text>卧佛寺</text></view>
+    <view><text>蜜蜂博物馆</text></view>
+    <view><text>植物园温室</text></view>
+    <view><text>樱桃沟</text></view>
+    <view><text>恐龙园</text></view>
+    <view><text>纪念馆碑林</text></view>
+    <view><text>碧桃园</text></view>
+</scroll-view>
