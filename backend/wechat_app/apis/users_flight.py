@@ -47,7 +47,7 @@ class UsersFlightApis(viewsets.ModelViewSet):
         if UsersFlight.objects.all().filter(Q(user_id=user) & Q(flight_id=flight_id)).count() > 0:
             return error_response(Error.USERS_FLIGHT_EXISTS, 'Already exists.', status=status.HTTP_403_FORBIDDEN)
 
-        data['wechat_app'] = user
+        data['user'] = user
         data['flight'] = eval(flight_id)
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)

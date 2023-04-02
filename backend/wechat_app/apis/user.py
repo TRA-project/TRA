@@ -13,6 +13,7 @@ from django.core.files.uploadedfile import UploadedFile
 from .travel_notes import TravelFilterBackend
 from utils.api_tools import *
 
+
 class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
                mixins.RetrieveModelMixin, mixins.ListModelMixin):
     filter_backends = [filters.QueryFilterBackend.custom(
@@ -98,8 +99,8 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
     def _retrieve(self, user, detail=False, request_user_id=None):
         serializer = self.get_serializer_class()(user, context=self.get_serializer_context())
         data = serializer.data
-        likes = TravelNotes.objects.filter(owner=user).annotate(likes_count=Count('likes')).aggregate(Sum('likes_count'))[
-            'likes_count__sum']
+        likes = TravelNotes.objects.filter(owner=user).annotate(likes_count=Count('likes')). \
+            aggregate(Sum('likes_count'))['likes_count__sum']
         if likes is None:
             likes = 0
         data['likes'] = likes
@@ -123,7 +124,7 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
                 openid = wechat.get_openid(wechat_code)
             instance = AppUser.objects.filter(openid=openid)
             if not instance:
-                return error_response(Error.INVALID_USER, 'Invalid wechat_app.')
+                return error_response(Error.INVALID_USER, 'Invalid user.')
         instance = instance.first()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -159,12 +160,12 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
             openid = wechat.get_openid(wechat_code)
             users = AppUser.objects.filter(openid=openid)
             if not users:
-                return error_response(Error.USER_INVALID_WECHAT_ID, 'Wechat wechat_app does not exist')
+                return error_response(Error.USER_INVALID_WECHAT_ID, 'Wechat user does not exist')
             user = users.first()
             """
             request.session['is_login'] = True
-            request.session['user_id'] = wechat_app.id
-            #"""
+            request.session['user_id'] = user.id
+            """
             res = self._retrieve(user, True)
             res['token'] = user.jwt_token()
             return response(res)
@@ -181,8 +182,8 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
         if pw_sha256 == real_pw:
             """
             request.session['is_login'] = True
-            request.session['user_id'] = wechat_app.id
-            #"""
+            request.session['user_id'] = user.id
+            """
             res = self._retrieve(user, True)
             res['token'] = user.jwt_token()
 
@@ -294,7 +295,7 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
             for companion in objs:
                 Message.create_message(user, companion.owner, companion=companion,
                                        type=settings.MESSAGE_TYPE_COMPANION_QUIT)
-                # companion.cancelled_users.add(wechat_app)
+                # companion.cancelled_users.add(user)
             failure = [{'id': companion.id, 'code': Error.COMPANION_DEADLINE_REACHED} for companion in deadline_reached]
             return response({'failed': failure},
                             status=status.HTTP_200_OK if not failure else status.HTTP_206_PARTIAL_CONTENT)
@@ -500,9 +501,11 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
         travels = user.travel_records.all()
         cities = travels.exclude(position=None)
         cities_num = Address.objects.filter(travel_record__forbidden=False,
-                                            travel_record__owner__id=owner).values_list('position__id',flat=True).distinct().count()
+                                            travel_record__owner__id=owner).values_list('position__id',
+                                                                                        flat=True).distinct().count()
         if cities.count() > 0:
-            love_city = cities.values('position__city').annotate(city=F('position__city'),city_count=Count(F('position__city')))\
+            love_city = cities.values('position__city').annotate(city=F('position__city'),
+                                                                 city_count=Count(F('position__city'))) \
                 .order_by('-city_count').first()
             love_city = love_city['city']
         else:

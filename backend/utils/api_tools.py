@@ -14,7 +14,7 @@ def save_log(user_id, action, target_id):
     if user_id <= 0:
         return
     log = dict()
-    log['wechat_app'] = user_id
+    log['user'] = user_id
     log['action'] = action
     if target_id is not None:
         log['target_id'] = target_id

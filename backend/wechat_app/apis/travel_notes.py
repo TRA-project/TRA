@@ -257,7 +257,7 @@ class TravelApis(viewsets.ModelViewSet):
         if owner <= 0:
             return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
         if not AppUser.objects.filter(id=owner):
-            return error_response(Error.INVALID_USER, 'Invalid wechat_app.', status=status.HTTP_400_BAD_REQUEST)
+            return error_response(Error.INVALID_USER, 'Invalid user.', status=status.HTTP_400_BAD_REQUEST)
         obj = self.get_object()
         cancel = conversion.get_bool(request.data, 'cancel')
         if cancel:

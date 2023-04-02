@@ -7,5 +7,5 @@ class LogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Log
-        fields = ["id", "time", "wechat_app", "action", "target_id", "remarks"]
+        fields = ["id", "time", "user", "action", "target_id", "remarks"]
         ref_name = "Admin_Log"

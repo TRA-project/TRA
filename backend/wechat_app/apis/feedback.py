@@ -18,7 +18,7 @@ class AdminMessageApis(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin
             return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
         user = AppUser.objects.filter(id=owner_id)
         if not user:
-            return error_response(Error.INVALID_USER, 'Invalid wechat_app.', status=status.HTTP_400_BAD_REQUEST)
+            return error_response(Error.INVALID_USER, 'Invalid user.', status=status.HTTP_400_BAD_REQUEST)
         user : AppUser = user.first()
 
         time_limit = user.last_admin_message_time + date.delta(settings.ADMIN_MESSAGE_TIME_LIMIT)

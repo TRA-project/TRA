@@ -27,11 +27,11 @@ class AppUser(models.Model):
     email = models.CharField(max_length=settings.MAX_USER_EMAIL_LEN, default='', blank=True)
     phone = models.CharField(max_length=settings.MAX_USER_PHONE_LEN, default='', blank=True)
     birthday = models.DateField(null=True)
-    icon = models.ForeignKey(Image, related_name='wechat_app', null=True, on_delete=models.CASCADE)
+    icon = models.ForeignKey(Image, related_name='user', null=True, on_delete=models.CASCADE)
 
     time = models.DateTimeField(auto_now_add=True)
 
-    position = models.OneToOneField(Address, related_name='wechat_app', null=True, on_delete=models.SET_NULL)
+    position = models.OneToOneField(Address, related_name='user', null=True, on_delete=models.SET_NULL)
 
     subscription = models.ManyToManyField('AppUser', related_name='subscribers')
     collection = models.ManyToManyField('TravelNotes', related_name='collectors')

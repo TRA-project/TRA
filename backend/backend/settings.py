@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     # 'django_crontab',
     'utility.apps.UtilityConfig',
-    'wechat_app.apps.UserConfig',
+    'wechat_app.apps.WechatAppConfig',
     'web.apps.ManagerConfig'
 ]
 

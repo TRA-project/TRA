@@ -15,7 +15,7 @@ from rest_framework import viewsets, permissions
 
 class LogFilterBackend(filters.QueryFilterBackend):
     filter_fields = [
-        ('wechat_app', 'user_id', 'exact'),
+        ('user', 'user_id', 'exact'),
         ('action', 'action', 'exact'),
     ]
     default_ordering_rule = '-time'
@@ -69,7 +69,7 @@ class LogApis(viewsets.GenericViewSet, viewsets.mixins.RetrieveModelMixin,
 
     @action(methods=["GET"], detail=False, url_path='userface')
     def userface(self, request, *args, **kwargs):
-        owner_id = request.query_params.get('wechat_app', None)
+        owner_id = request.query_params.get('user', None)
         owner = AppUser.objects.all().filter(id=owner_id).first()
         if owner is None:
             raise NotFound()
