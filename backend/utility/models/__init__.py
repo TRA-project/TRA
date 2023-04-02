@@ -8,7 +8,9 @@ from .image import Image
 from .address import Address
 from .feedback import FeedBack
 from .advertisement import Advertisement
-from .flight import Flight, City, Province
+from .flight import Flight
+from .city import City
+from .province import Province
 from .port import Port
 from .schedule import Schedule
 from .schedule_item import ScheduleItem

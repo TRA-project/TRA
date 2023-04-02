@@ -10,8 +10,9 @@ class AdvertisementFilterBackend(filters.QueryFilterBackend):
     def filter_queryset(self, request, queryset, view):
         return super().filter_queryset(request, queryset.filter(visible=True), view)
 
+
 class AdvertisementApis(viewsets.GenericViewSet, viewsets.mixins.RetrieveModelMixin,
-                  viewsets.mixins.ListModelMixin):
+                        viewsets.mixins.ListModelMixin):
     filter_backends = [AdvertisementFilterBackend]
     permission_classes = []
     queryset = Advertisement.objects.all()
