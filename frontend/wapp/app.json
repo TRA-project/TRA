@@ -41,7 +41,8 @@
     "pages/newSchrelease/newSchrelease",
     "pages/newScheduleMore/newScheduleMore",
     "pages/schRelease/schRelease",
-    "pages/sceneSearch/sceneSearch"
+    "pages/sceneSearch/sceneSearch", 
+    "pages/SceneryShow/SceneryShow"
   ],
   "window": {
     "backgroundTextStyle": "light",

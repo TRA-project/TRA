@@ -65,6 +65,7 @@ const server_hostname = {
   // url:"http://114.116.53.144"
   url:"http://10.128.55.86:8000"
 }
+// 测试账号：test， 密码：12345678
 const timeLag =string=>{
   const before = string.substring(0,10)
   const end = string.substring(25,35)
