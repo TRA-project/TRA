@@ -26,7 +26,7 @@ from django.views.static import serve
 from django.conf import settings
 
 from . import user
-from .routers import TravelRouter
+from utils.routers import TravelRouter
 
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view

@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from .apis import *
-from backend import routers
+from utils import routers
 
 ROUTER = routers.TravelRouter()
 ROUTER.register(r'users', UserApis)
