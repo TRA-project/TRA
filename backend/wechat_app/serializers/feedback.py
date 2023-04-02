@@ -3,6 +3,7 @@ from utility.models import FeedBack
 from utils.mixins import PrimaryKeyNestedField
 from .user import UserSerializer
 
+
 class AdminMessageSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
     owner = PrimaryKeyNestedField(serializer=UserSerializer)

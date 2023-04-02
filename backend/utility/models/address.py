@@ -6,7 +6,6 @@ from .position import Position
 
 class Address(models.Model):
     name = models.CharField(max_length=32, default='', blank=True)
-    # address = models.TextField()
     longitude = models.FloatField(default=0.0)
     latitude = models.FloatField(default=0.0)
     position = models.ForeignKey(Position, related_name='addresses', null=True, on_delete=models.SET_NULL)

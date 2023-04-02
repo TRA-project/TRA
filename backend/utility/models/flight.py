@@ -1,16 +1,8 @@
 from django.conf import settings
 from django.db import models
 
+from .city import City
 from .port import Port
-
-
-class Province(models.Model):
-    name = models.CharField(max_length=settings.MAX_PROVINCE_NAME_LEN)
-
-
-class City(models.Model):
-    name = models.CharField(max_length=settings.MAX_CITY_NAME_LEN, primary_key=True)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='city_province')
 
 
 class Flight(models.Model):

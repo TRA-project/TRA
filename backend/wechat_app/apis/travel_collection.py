@@ -11,7 +11,6 @@ from utils import permission, filters
 from django.db.models import Q
 
 
-
 class TravelCollectionFilterBackend(filters.QueryFilterBackend):
     default_ordering_rule = 'create_time'
 

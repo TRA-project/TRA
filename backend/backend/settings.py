@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import datetime
+from .constants import *
+from utils.log import *
 
 # TEMPDEBUG
 tDEBUG = 1
@@ -185,13 +187,7 @@ SESSION_COOKIE_AGE = 1209600  # Session的cookie失效日期（2周）（默认�
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # 是否关闭浏览器使得Session过期（默认）
 SESSION_SAVE_EVERY_REQUEST = False  # 是否每次请求都保存Session，默认修改之后才保存（默认）
 
-from utils.log import *
-
 # Custom settings
-
-# from .scripts import *
-
-from .constants import *
 
 # 解决中文乱码问题
 CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'
@@ -204,7 +200,8 @@ CRONJOBS = (
     # 每分钟执行一次TestCrontab App中crontabFun的timedExecution函数，执行后将打印结果存储在log文件中
     #  '2>&1'每项工作执行后要做的事
     # 每小时进行一次日程通知
-    ('00 */1 * * *', 'utils.timed_message.schedule_notify', '>>' + CRONJOBS_DIR + CRONJOBS_FILE_NAME + ' 2>&1'),  # 每整点执行一次
+    ('00 */1 * * *', 'utils.timed_message.schedule_notify', '>>' + CRONJOBS_DIR + CRONJOBS_FILE_NAME + ' 2>&1'),
+    # 每整点执行一次
     # 每天十点进行一次航班通知
     ('00 22 * * *', 'utils.timed_message.flight_notify', '>>' + CRONJOBS_DIR + CRONJOBS_FILE_NAME + ' 2>&1'),  # 每天22点执行
     # * * * * *

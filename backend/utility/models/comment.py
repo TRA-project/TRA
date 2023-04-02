@@ -1,10 +1,8 @@
-from django.db import models
 from django.conf import settings
-
-from utils import uuid
+from django.db import models
 
 from .appuser import AppUser
-from .position import Position
+
 
 class Comment(models.Model):
     """
