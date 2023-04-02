@@ -4,6 +4,7 @@ from django.core import exceptions
 from django.db import utils
 import os
 
+
 def create(username, password, *, database=None, **kwargs):
     user_model = get_user_model()
     user_data = {user_model.USERNAME_FIELD: username, PASSWORD_FIELD: password, **kwargs}
@@ -18,6 +19,7 @@ def create(username, password, *, database=None, **kwargs):
             return False
         else:
             return True
+
     if is_exist(username):
         return
 
@@ -33,7 +35,9 @@ def create(username, password, *, database=None, **kwargs):
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', f'main.settings')
     import django
+
     django.setup()
 
-    from main import constants
+    from backend import constants
+
     create(constants.ADMIN_USERNAME, constants.ADMIN_PASSWORD, email='')
