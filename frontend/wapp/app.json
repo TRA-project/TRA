@@ -1,65 +1,67 @@
 {
-    "entryPagePath": "pages/login/login",
-    "pages": [
-        "pages/index/index",
-        "pages/logs/logs",
-        "pages/login/login",
-        "pages/regist/regist",
-        "pages/contract/contract",
-        "pages/MyZone/MyZone",
-        "pages/EditInfo/EditInfo",
-        "pages/EditPassword/EditPassword",
-        "pages/FeedBack/FeedBack",
-        "pages/footprint/footprint",
-        "pages/OtherZone/OtherZone",
-        "pages/travel/travel",
-        "pages/Release/Release",
-        "pages/Pal/Pal",
-        "pages/ReleasePal/ReleasePal",
-        "pages/Location/Location",
-        "pages/Notification/Notification",
-        "pages/SearchResult/SearchResult",
-        "pages/Subscription/Subscription",
-        "pages/Likes/Likes",
-        "pages/Advertisement/Advertisement",
-        "pages/Outweb/Outweb",
-        "pages/AboutUs/AboutUs",
-        "pages/Cropper/Cropper",
-        "pages/History/History",
-        "pages/ReleaseSche/ReleaseSche",
-        "pages/Schedule/Schedule",
-        "pages/RealMyzone/RealMyzone",
-        "pages/Flight/Flight",
-        "pages/myFlight/myFlight",
-        "pages/FlightQResult/FlightQResult",
-        "pages/Collection/Collection",
-        "pages/Collection/subpages/col-manage",
-        "pages/Settings/Settings",
-        "pages/newSchedule/newSchedule",
-        "pages/newScheduleEdit/newScheduleEdit",
-        "pages/newSchrelease/newSchrelease",
-        "pages/newScheduleMore/newScheduleMore",
-        "pages/schRelease/schRelease", 
-        "pages/SceneryShow/SceneryShow"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "游迹",
-        "navigationBarTextStyle": "black"
-    },
-    "style": "v2",
-    "sitemapLocation": "sitemap.json",
-    "useExtendedLib": {
-        "weui": true
-    },
-    "permission": {
-        "scope.userLocation": {
-            "desc": "你的位置信息将用于小程序位置接口的效果展示"
-        }
-    },
-    "usingComponents": {
-        "van-cell": "./miniprogram/miniprogram_npm/@vant/weapp/cell",
-        "van-cell-group": "./miniprogram/miniprogram_npm/@vant/weapp/cell-group"
+  "entryPagePath": "pages/login/login",
+  "pages": [
+    "pages/home/home",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/login/login",
+    "pages/regist/regist",
+    "pages/contract/contract",
+    "pages/MyZone/MyZone",
+    "pages/EditInfo/EditInfo",
+    "pages/EditPassword/EditPassword",
+    "pages/FeedBack/FeedBack",
+    "pages/footprint/footprint",
+    "pages/OtherZone/OtherZone",
+    "pages/travel/travel",
+    "pages/Release/Release",
+    "pages/Pal/Pal",
+    "pages/ReleasePal/ReleasePal",
+    "pages/Location/Location",
+    "pages/Notification/Notification",
+    "pages/SearchResult/SearchResult",
+    "pages/Subscription/Subscription",
+    "pages/Likes/Likes",
+    "pages/Advertisement/Advertisement",
+    "pages/Outweb/Outweb",
+    "pages/AboutUs/AboutUs",
+    "pages/Cropper/Cropper",
+    "pages/History/History",
+    "pages/ReleaseSche/ReleaseSche",
+    "pages/Schedule/Schedule",
+    "pages/RealMyzone/RealMyzone",
+    "pages/Flight/Flight",
+    "pages/myFlight/myFlight",
+    "pages/FlightQResult/FlightQResult",
+    "pages/Collection/Collection",
+    "pages/Collection/subpages/col-manage",
+    "pages/Settings/Settings",
+    "pages/newSchedule/newSchedule",
+    "pages/newScheduleEdit/newScheduleEdit",
+    "pages/newSchrelease/newSchrelease",
+    "pages/newScheduleMore/newScheduleMore",
+    "pages/schRelease/schRelease",
+    "pages/sceneSearch/sceneSearch", 
+    "pages/SceneryShow/SceneryShow"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "游迹",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "useExtendedLib": {
+    "weui": true
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
+  },
+  "usingComponents": {
+    "van-cell": "./miniprogram/miniprogram_npm/@vant/weapp/cell",
+    "van-cell-group": "./miniprogram/miniprogram_npm/@vant/weapp/cell-group"
+  }
 }
