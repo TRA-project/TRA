@@ -17,3 +17,5 @@ class Sight(models.Model):
     open_time = models.TimeField(null=True)
     close_time = models.TimeField(null=True)
     playtime = models.FloatField(null=True)
+    cover = models.OneToOneField('Image', on_delete=models.CASCADE)
+

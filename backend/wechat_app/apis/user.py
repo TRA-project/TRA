@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from django.db.models import Sum
 
 from utility.models import Companion, Image, Message, \
-    TravelCollection, ScheduleItem, UsersFlight, Address
+    TravelNotesCollection, ScheduleItem, UsersFlight, Address
 from wechat_app.serializers import UserSerializer, TravelSerializer, MessageSerializer, \
     CompanionSerializer, UsersFlightSerializer
 from utils.response import *
@@ -57,7 +57,7 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
         save_log(user_id=obj.id, action=settings.LOG_USER_REGISTER, target_id=None)
 
         # 创建默认合集
-        TravelCollection.objects.create(title='默认合集', owner=obj)
+        TravelNotesCollection.objects.create(title='默认合集', owner=obj)
 
         headers = self.get_success_headers(serializer.data)
         data = serializer.data

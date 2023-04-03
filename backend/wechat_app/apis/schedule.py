@@ -34,7 +34,7 @@ class ScheduleFilterBackend(filters.QueryFilterBackend):
             queryset = super().filter_queryset(request, queryset.filter(
                 visibility=settings.SCHEDULE_VISIBILITIES_ALL), view)
         user = request.query_params.get('user', None)
-        if user != None:
+        if user is not None:
             queryset = queryset.filter(owner__name=user)
         query_date = request.query_params.get('date', None)
         if query_date is not None:

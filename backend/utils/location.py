@@ -3,6 +3,7 @@ from django.conf import settings
 
 EARTH_RADIUS = 6371.393
 
+
 def axis(lon, lat):
     lon, lat = math.pi * lon / 180, math.pi * lat / 180
     r = EARTH_RADIUS * math.cos(lat)
@@ -10,6 +11,7 @@ def axis(lon, lat):
     xrev = x - 2 * math.pi * r
     y = EARTH_RADIUS * lat
     return x, y, xrev
+
 
 def nearest(lon, lat):
     x, y, xrev = axis(lon, lat)

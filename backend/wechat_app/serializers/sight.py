@@ -6,22 +6,31 @@
 # @Comment :
 from rest_framework import serializers
 
-from utility.models.price import Price
 from utility.models.sight import Sight
 from .address import AddressSerializer
+from .price import PriceSerializer
+
+
+class SightDetailedSerializer(serializers.ModelSerializer):
+    address = AddressSerializer(required=False, allow_null=True)
+    prices = PriceSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Sight
+        extra_kwargs = {
+            'prices': {'min_value': 0, 'required': True}
+        }
 
 
 class SightSerializer(serializers.ModelSerializer):
     address = AddressSerializer(required=False, allow_null=True)
-    prices = serializers.PrimaryKeyRelatedField(queryset=Price.objects.all(), read_only=True)
 
     class Meta:
         model = Sight
-        fields = ['name', 'address', 'introduce', 'hot', 'grade', 'open_time', 'close_time', 'play_time', 'prices']
+        exclude = ['open_time', 'close_time', 'play_time']
 
 
 class SightBriefSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Sight
         fields = ['name', 'hot', 'grade']

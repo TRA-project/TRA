@@ -13,7 +13,7 @@ import random
 from django.conf import settings
 
 from utils.api_tools import save_log, copy_schedule, judge_shielding_words
-from utility.models import TravelNotes, AppUser, Image, Address, Comment, Message, TravelCollection, Tag, Schedule
+from utility.models import TravelNotes, AppUser, Image, Address, Comment, Message, TravelNotesCollection, Tag, Schedule
 from wechat_app.serializers import TravelSerializer, TravelAddressSerializer, CommentSerializer, \
     TravelListSerializer
 from utils.response import *
@@ -144,10 +144,10 @@ class TravelApis(viewsets.ModelViewSet):
         # Collection
         collection = data.get('collection', None)
         try:
-            data['collection'] = TravelCollection.objects.all().filter(
+            data['collection'] = TravelNotesCollection.objects.all().filter(
                 Q(owner_id=owner) & Q(id=collection)).first().id
         except Exception:
-            data['collection'] = TravelCollection.objects.all().filter(
+            data['collection'] = TravelNotesCollection.objects.all().filter(
                 Q(owner_id=owner) & Q(title=settings.DEFAULT_TITLE_NAME)).first().id
 
         # Tags

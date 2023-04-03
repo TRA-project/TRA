@@ -4,16 +4,20 @@ from django.conf import settings
 
 from .port import PortSerializer
 
+
 class ProvinceSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
+
     class Meta:
         model = Province
         fields = ['id', 'name']
+
 
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = ['name', 'province']
+
 
 class FlightBaseSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
@@ -22,8 +26,8 @@ class FlightBaseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Flight
-        fields = ["id","flight_no", "economy_minprice","economy_discount",
-                 "bussiness_minprice", "bussiness_discount", "depart_time",
+        fields = ["id", "flight_no", "economy_minprice", "economy_discount",
+                  "bussiness_minprice", "bussiness_discount", "depart_time",
                   "cost_time", "arrival_time", "city", "endcity", "status"]
 
 
@@ -45,9 +49,10 @@ class FlightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Flight
-        fields = ["id","flight_no", "economy_minprice","economy_discount",
-                 "bussiness_minprice", "bussiness_discount", "depart_time",
+        fields = ["id", "flight_no", "economy_minprice", "economy_discount",
+                  "bussiness_minprice", "bussiness_discount", "depart_time",
                   "cost_time", "arrival_time", "city", "endcity", "if_follow", "status"]
+
 
 class FlightDetailedSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
@@ -58,8 +63,7 @@ class FlightDetailedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Flight
-        fields = ["id","flight_no", "economy_minprice","economy_discount",
-                 "bussiness_minprice", "bussiness_discount","depart_time",
+        fields = ["id", "flight_no", "economy_minprice", "economy_discount",
+                  "bussiness_minprice", "bussiness_discount", "depart_time",
                   "cost_time", "arrival_time", "city", "endcity",
                   "food", "airline", "departport", "arrivalport", "status"]
-

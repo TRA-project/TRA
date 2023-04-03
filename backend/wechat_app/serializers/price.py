@@ -10,7 +10,7 @@ from utility.models.price import Price
 
 
 class PriceSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Price
-        field = []
+        fields = '__all__'
+

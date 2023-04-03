@@ -41,6 +41,7 @@ class Address(models.Model):
             adcode_province = ps.first().id
         else:
             adcode_province = adcode_city[:2] + '0000'
+
         address = Address.objects.create(name=pname, longitude=lon, latitude=lat, position_id=adcode,
                                          city_position_id=adcode_city, province_position_id=adcode_province,
                                          nation=n, province=p, city=c, district=d, street=s, street_number=sn)

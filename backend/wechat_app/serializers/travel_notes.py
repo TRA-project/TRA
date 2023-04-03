@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from utility.models import TravelNotes, Address, TravelCollection, Tag
+from utility.models import TravelNotes, Address, TravelNotesCollection, Tag
 from .schedule import ScheduleSerializer
 from .user import UserSerializer
 from .address import AddressSerializer
@@ -10,7 +10,7 @@ class TravelCollectionSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
 
     class Meta:
-        model = TravelCollection
+        model = TravelNotesCollection
         fields = ['id', 'owner', 'title', 'create_time']
 
 
@@ -133,5 +133,5 @@ class TravelCollectionDetailedSerializer(serializers.ModelSerializer):
     open = serializers.ReadOnlyField(default=False, required=False)
 
     class Meta:
-        model = TravelCollection
+        model = TravelNotesCollection
         fields = ['id', 'title', 'create_time', 'collection_travels', 'owner', 'open']

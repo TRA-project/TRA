@@ -2,6 +2,7 @@ from rest_framework import routers
 
 from rest_framework.routers import DefaultRouter, SimpleRouter, BaseRouter, Route, DynamicRoute
 
+
 class TravelRouter(routers.DefaultRouter):
     routes = [
         # List route.

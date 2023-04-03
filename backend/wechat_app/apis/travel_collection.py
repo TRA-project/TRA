@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 
 from utils.api_tools import save_log
 from utils.response import *
-from utility.models import TravelCollection
+from utility.models import TravelNotesCollection
 from wechat_app.serializers import TravelCollectionSerializer, TravelCollectionDetailedSerializer
 from django.conf import settings
 from utils import permission, filters
@@ -24,7 +24,7 @@ class TravelCollectionFilterBackend(filters.QueryFilterBackend):
 class TravelCollectionApis(viewsets.ModelViewSet):
     filter_backends = [TravelCollectionFilterBackend]
     permission_classes = [permission.ContentPermission]
-    queryset = TravelCollection.objects.all()
+    queryset = TravelNotesCollection.objects.all()
     serializer_class = TravelCollectionSerializer
 
     def create(self, request, *args, **kwargs):
@@ -38,7 +38,7 @@ class TravelCollectionApis(viewsets.ModelViewSet):
         title = request.data.get('title', None)
         if title is None:
             return error_response(Error.COLLECTION_NO_TITLE, 'Please offer a title.')
-        elif TravelCollection.objects.all().filter(Q(owner_id=request_user) & Q(title=title)):
+        elif TravelNotesCollection.objects.all().filter(Q(owner_id=request_user) & Q(title=title)):
             return error_response(Error.COLLECTION_TITLE_DUPLICATED, 'The title name already exists.')
 
         serializer = self.get_serializer(data=data)
@@ -61,7 +61,7 @@ class TravelCollectionApis(viewsets.ModelViewSet):
         title = request.data.get('title', None)
         if instance.title == settings.DEFAULT_TITLE_NAME and title is not None:
             return error_response(Error.COLLECTION_TITLE_UNCHANGEABLE, 'The default collection name cannot be changed.')
-        if TravelCollection.objects.all().filter(Q(owner_id=request_user) & Q(title=title)):
+        if TravelNotesCollection.objects.all().filter(Q(owner_id=request_user) & Q(title=title)):
             return error_response(Error.COLLECTION_TITLE_DUPLICATED, 'The title name already exists.')
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
