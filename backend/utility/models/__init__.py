@@ -15,7 +15,7 @@ from .port import Port
 from .schedule import Schedule
 from .schedule_item import ScheduleItem
 from .users_flight import UsersFlight
-from .travel_collection import TravelCollection
+from .travel_notes_collection import TravelNotesCollection
 from .tag import Tag
 from .log import Log
 from .shielded_word import ShieldedWord

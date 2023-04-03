@@ -1,8 +1,8 @@
-from django.db import models
 from django.conf import settings
-from django.core.validators import MaxValueValidator
+from django.db import models
 
 from .image import Image
+
 
 class Advertisement(models.Model):
     """

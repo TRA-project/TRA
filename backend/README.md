@@ -5,7 +5,7 @@
 
 - 推荐以下Django教学视频
   - Django基础：https://www.bilibili.com/video/BV1vK4y1o7jH?share_source=copy_web
-  - DRF教材：https://www.bilibili.com/video/BV1XR4y157rk?share_source=copy_web
+  - DRF教材：https://www.bilibili.com/video/BV1z5411D7BQ
 - DRF中文文档：https://q1mi.github.io/Django-REST-framework-documentation/
 
  ### FAQ

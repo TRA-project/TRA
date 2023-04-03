@@ -9,7 +9,7 @@ from .image import Image
 from .read_record import ReadRecord
 from .schedule import Schedule
 from .tag import Tag
-from .travel_collection import TravelCollection
+from .travel_notes_collection import TravelNotesCollection
 
 
 class TravelNotes(models.Model):
@@ -39,7 +39,7 @@ class TravelNotes(models.Model):
     forbidden = models.IntegerField(default=settings.TRAVEL_FORBIDDEN_FALSE)
     forbidden_reason = models.TextField(default='')
 
-    collection = models.ForeignKey(TravelCollection, related_name='collection_travels', null=False,
+    collection = models.ForeignKey(TravelNotesCollection, related_name='collection_travels', null=False,
                                    on_delete=models.CASCADE)
 
     def read_increase(self):
