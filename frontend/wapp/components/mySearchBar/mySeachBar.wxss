@@ -29,7 +29,7 @@
 }
 
 .suggest-item {
-  height: 80rpx;
+  height: 96rpx;
   font-size: 30rpx;
   display: flex;
   align-items: center;
@@ -42,10 +42,21 @@
   width: 40rpx;
 }
 
-.scenery-name {
+.scenery-info {
+  width: 80%;
   white-space: nowrap;  /* 不换行 */
   overflow: hidden;     /* 超出部分隐藏 */
   text-overflow: ellipsis;  /* 溢出元素省略号表示 */
+  text-align: left;
+}
+
+.scenery-name {
+  font-weight: bolder;
+}
+
+.scenery-position {
+  font-size: 24rpx;
+  color: rgba(119, 119, 119, 1);
 }
 
 .rightarrow-icon {

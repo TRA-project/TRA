@@ -13,8 +13,9 @@
 <view class="suggest-list">
   <view class="suggest-item" wx:for="{{searchRes}}" wx:key="unique">
     <image src="/images/locate.png" class="locate-icon" />
-    <view class="scenery-name"> 
-      {{item.name}} {{item.position}} 
+    <view class="scenery-info"> 
+      <view class="scenery-name"> {{item.name}} </view>
+      <view class="scenery-position"> {{item.position}} </view>
     </view>
     <image src="/images/roundrightarrow.png" class="rightarrow-icon" />
   </view>

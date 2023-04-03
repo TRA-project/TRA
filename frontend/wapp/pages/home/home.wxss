@@ -74,3 +74,42 @@
     font-size: 30rpx;
     margin-left: 20rpx;
 }
+
+.audio-button {
+  width: 64rpx;
+  height: 64rpx;
+  padding: 20rpx;
+}
+
+.function-area {
+  padding: 30rpx 20rpx;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.function-box {
+  text-align: center;
+  padding: 20rpx 10rpx;
+}
+
+.function-item {
+  height: 80rpx;
+  width: 80rpx;
+  border-radius: 40rpx;
+  padding: 16rpx;
+  background-color: rgba(17, 122, 221, 0.966);
+  align-items: center;
+}
+
+.function-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 20rpx;
+}
+
+.function-name {
+  margin-top: 6rpx;
+  font-weight: bolder;
+  font-size: 30rpx;
+}

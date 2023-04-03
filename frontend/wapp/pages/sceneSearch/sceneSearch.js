@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    historyList: ["ad", "南山", "江山"],
+    historyList: ["ad", "南山", "北京"],
     myInput: "",
     preferenceList: [
       {"name": "量子之海", "position": "？？？"},
