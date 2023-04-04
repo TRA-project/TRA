@@ -8,6 +8,7 @@ from utils.response import *
 from utils.location import nearest
 from utils import conversion, permission as _permission, filters
 
+
 class PositionFilterBackend(filters.QueryFilterBackend):
     filter_fields = [
         ('name', 'name', 'contains'),
@@ -17,6 +18,7 @@ class PositionFilterBackend(filters.QueryFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
         return super().filter_queryset(request, queryset.exclude(visibility=False), view)
+
 
 class PositionApis(viewsets.GenericViewSet, viewsets.mixins.ListModelMixin,
                    viewsets.mixins.RetrieveModelMixin):
@@ -82,10 +84,13 @@ class PositionApis(viewsets.GenericViewSet, viewsets.mixins.ListModelMixin,
 
         likes = TravelNotes.objects.filter(likes__cluster=user.cluster, position__position__isnull=False, **filter_args)
         if unique:
-            positions = filters.random_filter(likes, amount * settings.POSITION_RECOMMEND_TRUNCATE).values_list('position__position__id', flat=True).distinct()[:amount]
+            positions = filters.random_filter(likes, amount * settings.POSITION_RECOMMEND_TRUNCATE).values_list(
+                'position__position__id', flat=True).distinct()[:amount]
         else:
             positions = filters.random_filter(likes, amount).values_list('position__position__id', flat=True)
         positions = list(positions)
         if len(positions) < amount:
-            positions += list(filters.random_filter(Position.objects.exclude(id__in=positions), amount - len(positions)).values_list('id', flat=True))
+            positions += list(
+                filters.random_filter(Position.objects.exclude(id__in=positions), amount - len(positions)).values_list(
+                    'id', flat=True))
         return positions

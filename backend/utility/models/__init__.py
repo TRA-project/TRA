@@ -20,3 +20,5 @@ from .tag import Tag
 from .log import Log
 from .shielded_word import ShieldedWord
 from .read_record import ReadRecord
+from .sight import Sight
+from .subsight import Subsight

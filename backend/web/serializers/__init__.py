@@ -10,4 +10,5 @@ from .schedule import ScheduleSerializer
 from .flight import FlightSerializer, FlightDetailedSerializer, CitySerializer, ProvinceSerializer
 from .port import PortSerializer
 from .log import LogSerializer
+from .sight import SightSerializer
 from .image import ImageSerializer

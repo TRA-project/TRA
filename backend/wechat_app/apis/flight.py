@@ -178,7 +178,7 @@ class FlightApis(viewsets.GenericViewSet, viewsets.mixins.RetrieveModelMixin,
         order = request.query_params.get('order', None)
         if order is not None:
             order = eval(order)
-        if order == None or order not in settings.FLIGHT_TRANS_LIST_MODES:
+        if order is None or order not in settings.FLIGHT_TRANS_LIST_MODES:
             order = settings.FLIGHT_TRANS_LIST_MODE_DEFAULT
         query_sentence = "SELECT f1.id, f2.id, (f1.economy_minprice+f2.economy_minprice) as total_price, " \
                          "f1.depart_time as depart_time, f2.arrival_time as arrival_time, " \

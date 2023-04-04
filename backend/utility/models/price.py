@@ -9,15 +9,14 @@ from django.conf import settings
 
 
 class Price(models.Model):
-    name = models.CharField(max_length=settings)
+    name = models.CharField(max_length=settings.MAX_PRICE_NAME_LEN)
     sight = models.ForeignKey("Sight", on_delete=models.CASCADE, null=True)
     subsight = models.ForeignKey("Subsight", on_delete=models.CASCADE, null=True)
     price = models.FloatField()
-    price_type = {
-        '成人': 0,
-        '儿童': 1,
-        '学生': 2,
-        '老人': 3,
-        '军人': 4
-    }
+    price_type = [
+        (0, '成人'),
+        (1, '儿童'),
+        (2, '学生'),
+        (3, '老人')
+    ]
     type = models.SmallIntegerField(choices=price_type, default=0)

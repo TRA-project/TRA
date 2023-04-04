@@ -19,7 +19,7 @@ class SightApis(GenericViewSet, RetrieveModelMixin):
 
     @action(methods=['GET'], detail=False, url_path='brief_search')
     def brief_search(self, request):
-        sight_queryset = Sight.objects.filter(name__contains=request.GET.get('kw'))
+        sight_queryset = Sight.objects.filter(name__contains=request.GET.get('keyword'))
         serializer = SightBriefSerializer(instance=sight_queryset, many=True)
         return Response(serializer.data)
 
