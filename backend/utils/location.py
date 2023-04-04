@@ -1,5 +1,8 @@
 import math
 from django.conf import settings
+from rest_framework import serializers
+
+from utility.models.position import Position
 
 EARTH_RADIUS = 6371.393
 
@@ -26,3 +29,40 @@ def nearest(lon, lat):
 
     item = data.nsmallest(1, ['dis2']).iloc[0]
     return str(item['adcode']), item['name'], float(item['longitude']), float(item['latitude'])
+
+
+def encode_addr(addr, lon, lat):
+    """
+    根据地址为其所在行政区编码
+    :param addr: 地址
+    :param lon: 经度信息
+    :param lat: 纬度信息，当数据库中没有地址中的行政区信息时会根据定位信息查找，默认为北京
+    :return:
+    """
+    lonlat = lon is not None and lat is not None
+    n, p, c, d, s, sn = addr['nation'], addr['province'], addr['city'], addr['district'], addr['street'], \
+        addr['street_number']
+    ps = Position.objects.filter(name=d)
+    if ps:
+        adcode_district = ps.first().id
+        adcode_city = adcode_district[:4] + '00'
+        adcode_province = adcode_city[:2] + '0000'
+    elif lonlat:
+        adcode_district, *_ = nearest(lon, lat)
+        Position.objects.create(id=adcode_district, name=d, latitude=lat, longitude=lon)
+        ps = Position.objects.filter(name=c)
+        if ps:
+            adcode_city = ps.first().id
+            adcode_province = adcode_city[:2] + '0000'
+        else:
+            adcode_city = adcode_district[:4] + '00'
+            Position.objects.create(id=adcode_city, name=c, latitude=lat, longitude=lon)
+            ps = Position.objects.filter(name=p)
+            if ps:
+                adcode_province = ps.first().id
+            else:
+                adcode_province = adcode_city[:2] + '0000'
+                Position.objects.create(id=adcode_province, name=p, latitude=lat, longitude=lon)
+    else:
+        raise serializers.ValidationError('Requires longitude and latitude')
+    return n, p, c, d, s, sn, adcode_province, adcode_city, adcode_district

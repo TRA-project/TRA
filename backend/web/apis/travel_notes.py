@@ -29,7 +29,8 @@ class TravelNotesFilterBackend(filters.QueryFilterBackend):
         if tags is not None:
             tags = tags.split(' ')
             for tag in tags:
-                if tag == '': continue
+                if tag == '':
+                    continue
                 queryset = queryset.filter(tag=tag)
         queryset = super().filter_queryset(request, queryset, view)
         return queryset
@@ -58,21 +59,21 @@ class TravelNotesApis(viewsets.ModelViewSet):
     @action(methods=['POST'], detail=True, url_path='cover')
     def cover(self, request, *args, **kwargs):
         img = request.data.get('id', None)
-        imgobj = None
+        img_obj = None
         if img:
             images = Image.objects.filter(id=img)
             if images:
-                imgobj = images.first()
-        if not imgobj:
+                img_obj = images.first()
+        if not img_obj:
             imgfile = request.data.get('image', None)
             if imgfile is None or not isinstance(imgfile, UploadedFile):
                 return error_response(status.HTTP_400_BAD_REQUEST, 'Invalid image.', status=status.HTTP_400_BAD_REQUEST)
             desc = request.data.get('description', '')
-            imgobj = Image.objects.create(image=imgfile, description=desc)
+            img_obj = Image.objects.create(image=imgfile, description=desc)
         obj = self.get_object()
         if obj.cover is not None:
             obj.cover.delete()
-        obj.cover = imgobj
+        obj.cover = img_obj
         obj.save()
         return self.retrieve(None)
 
@@ -95,7 +96,7 @@ class TravelNotesApis(viewsets.ModelViewSet):
                 forbid = Message.objects.filter(target_users__id=obj.owner_id, related_travel_id=obj.id,
                                                 type=settings.MESSAGE_TYPE_TRAVEL_FORBIDDEN)
                 if forbid:
-                    forbid: Message = forbid.first()
+                    forbid = forbid.first()
                     forbid.time = date.now()
                     forbid.type = settings.MESSAGE_TYPE_TRAVEL_FORBIDDEN_CANCEL
                     obj.owner.unread_messages.remove(forbid)
@@ -110,7 +111,7 @@ class TravelNotesApis(viewsets.ModelViewSet):
                 cancel = Message.objects.filter(target_users__id=obj.owner_id, related_travel_id=obj.id,
                                                 type=settings.MESSAGE_TYPE_TRAVEL_FORBIDDEN_CANCEL)
                 if cancel:
-                    cancel: Message = cancel.first()
+                    cancel = cancel.first()
                     cancel.time = date.now()
                     cancel.type = settings.MESSAGE_TYPE_TRAVEL_FORBIDDEN
                     obj.owner.unread_messages.remove(cancel)

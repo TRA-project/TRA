@@ -11,3 +11,4 @@ from .schedule import ScheduleApis
 from .flight import FlightApis, CityApis, ProvinceApis
 from .port import PortApis
 from .log import LogApis
+from .sight import SightApis

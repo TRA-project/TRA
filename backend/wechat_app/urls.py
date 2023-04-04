@@ -21,6 +21,7 @@ ROUTER.register(r'city', CityApis)
 ROUTER.register(r'province', ProvinceApis)
 ROUTER.register(r'travelcollection', TravelCollectionApis)
 ROUTER.register(r'tag', TagApis)
+ROUTER.register(r'sight', SightApis)
 
 
 urlpatterns = [

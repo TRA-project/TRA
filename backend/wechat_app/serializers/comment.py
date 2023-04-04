@@ -5,6 +5,7 @@ from .images import ImageSerializer
 from utils.mixins import PrimaryKeyNestedField, WritableMethodField
 from django.conf import settings
 
+
 class CommentTravelSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)
     cover = ImageSerializer(read_only=True)
@@ -13,12 +14,14 @@ class CommentTravelSerializer(serializers.ModelSerializer):
         model = TravelNotes
         fields = ['id', 'cover', 'owner']
 
+
 class CommentCompanionSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)
 
     class Meta:
         model = Companion
         fields = ['id', 'owner']
+
 
 class CommentSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()

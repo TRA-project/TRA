@@ -19,6 +19,7 @@ ROUTER.register(r'port', PortApis)
 ROUTER.register(r'city', CityApis)
 ROUTER.register(r'province', ProvinceApis)
 ROUTER.register(r'log', LogApis)
+ROUTER.register(r'sight', SightApis)
 
 urlpatterns = [
     path('', include(ROUTER.urls)),

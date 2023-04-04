@@ -10,12 +10,11 @@ from django.conf import settings
 
 class Sight(models.Model):
     name = models.CharField(max_length=settings.MAX_SIGHT_NAME_LEN)
-    address = models.ForeignKey("Address", on_delete=models.CASCADE)
+    address = models.ForeignKey("Address", on_delete=models.CASCADE, null=True)
     introduce = models.TextField(null=True)
     hot = models.FloatField(default=0.0)
     grade = models.FloatField(default=5.0)
     open_time = models.TimeField(null=True)
     close_time = models.TimeField(null=True)
     playtime = models.FloatField(null=True)
-    cover = models.OneToOneField('Image', on_delete=models.CASCADE)
-
+    cover = models.OneToOneField('Image', on_delete=models.CASCADE, null=True)

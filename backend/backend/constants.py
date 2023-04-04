@@ -3,11 +3,10 @@ import os
 import json
 import pandas as pd
 
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-with open(BASE_DIR + '/adcode.json', 'r', encoding='utf8') as f: ADCODE = json.load(f)
+with open(BASE_DIR + '/adcode.json', 'r', encoding='utf8') as f:
+    ADCODE = json.load(f)
 ADCODE_DF = pd.read_csv(BASE_DIR + '/adcode.csv')
 
 ### App
@@ -244,7 +243,6 @@ FLIGHT_LIST_MODES = {
 }
 FLIGHT_LIST_MODE_DEFAULT = FLIGHT_LIST_MODE_DEPART_TIME_UP
 
-
 FLIGHT_TRANS_LIST_MODE_DEPART_COST_UP = 0
 FLIGHT_TRANS_LIST_MODE_DEPART_TOTAL_TIME_UP = 1
 FLIGHT_TRANS_LIST_MODES = {
@@ -355,11 +353,11 @@ LOG_ACTION_LIST = [
     LOG_COMPANION_DELETE,
     LOG_COMPANION_ADD,
     LOG_COMPANION_QUIT,
-    LOG_COMPANION_VIEW ,
+    LOG_COMPANION_VIEW,
     LOG_TRAVELCOLLECTION_CREATE,
     LOG_TRAVELCOLLECTION_EDIT,
     LOG_TRAVELCOLLECTION_DELETE,
-    LOG_FLIGHT_VIEW ,
+    LOG_FLIGHT_VIEW,
     LOG_FLIGHT_FOLLOW,
     LOG_FLIGHT_FOLLOW_CANCEL,
     LOG_SCHEDULE_CREATE,
@@ -391,4 +389,3 @@ TAG_QUERY_ORDER_BY_TIME_UP = 0
 TAG_QUERY_ORDER_BY_TIME_DOWN = 1
 TAG_QUERY_ORDER_BY_REC = 2
 TAG_QUERY_ORDER_BY_DEFAULT = TAG_QUERY_ORDER_BY_REC
-

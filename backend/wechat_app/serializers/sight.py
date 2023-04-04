@@ -9,16 +9,19 @@ from rest_framework import serializers
 from utility.models.sight import Sight
 from .address import AddressSerializer
 from .price import PriceSerializer
+from .subsight import SubsightSerializer
 
 
 class SightDetailedSerializer(serializers.ModelSerializer):
     address = AddressSerializer(required=False, allow_null=True)
-    prices = PriceSerializer(read_only=True, many=True)
+    price_list = PriceSerializer(read_only=True, many=True)
+    subsight_list = SubsightSerializer(read_only=True, many=True)
 
     class Meta:
         model = Sight
         extra_kwargs = {
-            'prices': {'min_value': 0, 'required': True}
+            'price_list': {'min_value': 0, 'required': True},
+            'subsight_list': {'min_value': 0, 'required': True}
         }
 
 
@@ -33,4 +36,4 @@ class SightSerializer(serializers.ModelSerializer):
 class SightBriefSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sight
-        fields = ['name', 'hot', 'grade']
+        fields = ['id', 'name', 'hot', 'grade']
