@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 class Sight(models.Model):
-    name = models.CharField(max_length=settings.MAX_SIGHT_NAME_LEN)
+    name = models.CharField(max_length=settings.MAX_SIGHT_NAME_LEN, unique=True)
     address = models.ForeignKey("Address", on_delete=models.CASCADE, null=True)
     introduce = models.TextField(null=True)
     hot = models.FloatField(default=0.0)
