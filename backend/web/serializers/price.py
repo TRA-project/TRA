@@ -10,6 +10,9 @@ from utility.models.price import Price
 
 
 class PriceSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        return super().to_representation(instance)
+
     class Meta:
         model = Price
         fields = '__all__'
