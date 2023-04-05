@@ -1,0 +1,22 @@
+<!--components/mySearchBar/mySeachBar.wxml-->
+
+<!-- 搜索栏 -->
+<view class="search-container" style="background-color: {{bgcolor}};">
+  <view class="search-box" style="border-radius: {{radius}}rpx;">
+    <icon type="search" size="20" />
+    <input class="search-input" type="text" placeholder="请输入景点关键词" bindinput="onInput" focus="true"/> 
+    <!-- 自动获取焦点 focus 属性 -->
+  </view>
+</view>
+
+<!-- 搜索建议列表 -->
+<view class="suggest-list">
+  <view class="suggest-item" wx:for="{{searchRes}}" wx:key="unique">
+    <image src="/images/locate.png" class="locate-icon" />
+    <view class="scenery-info"> 
+      <view class="scenery-name"> {{item.name}} </view>
+      <view class="scenery-position"> {{item.position}} </view>
+    </view>
+    <image src="/images/roundrightarrow.png" class="rightarrow-icon" />
+  </view>
+</view>

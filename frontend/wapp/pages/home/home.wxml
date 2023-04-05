@@ -1,0 +1,34 @@
+
+<view class="container" style="opacity: {{opacity}};" bindtouchmove="navigateToNewPage">
+
+  <view class="logo-view">
+    <image class="logo-img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
+  </view>
+
+  <view class="search-bar" bindtap="onSearchBarTap">
+    <icon class="search-icon" type="search" size="20"></icon>
+    <input class="search-input" type="text" placeholder="请输入景点关键词"/>
+    <image class="audio-button" src="/images/audio_button.png" />
+  </view>
+
+  <view class="function-area">
+    <view class="function-box">
+      <view class="function-item">
+        <image class="function-icon" src="/images/plan-function-icon.jpg"></image>
+      </view>
+      <view class="function-name">出行计划</view>
+    </view>
+    <view class="function-box">
+      <view class="function-item">
+        <image class="function-icon" src="/images/ai-function-icon.png"></image>
+      </view>
+      <view class="function-name">AI管家</view>
+    </view>
+  </view>
+
+  <view class="logo-view">
+    <image class="down-chevron-icon" src="/images/chevron-up.png" mode="aspectFit"></image>
+  </view>
+
+</view>
+

@@ -173,7 +173,7 @@ Page({
             delta: 1
           })*/
           wx.redirectTo({
-            url: '/pages/index/index',
+            url: '/pages/home/home',
           })
         },
         fail: function(err) {
