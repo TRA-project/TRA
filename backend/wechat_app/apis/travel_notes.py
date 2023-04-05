@@ -43,7 +43,8 @@ class TravelFilterBackend(filters.QueryFilterBackend):
         if tags is not None:
             tags = tags.split(' ')
             for tag in tags:
-                if tag == '': continue
+                if tag == '':
+                    continue
                 queryset = queryset.filter(tag=tag)
 
         position = request.query_params.get('position', None)

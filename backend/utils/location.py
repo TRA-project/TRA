@@ -31,6 +31,31 @@ def nearest(lon, lat):
     return str(item['adcode']), item['name'], float(item['longitude']), float(item['latitude'])
 
 
+def get_adcode(province, city, district):
+    """
+    根据省份、城市、区县获取行政区编码
+    :param province: 省份
+    :param city: 城市
+    :param district: 区县
+    :return: 行政区编码
+    """
+    province_adcode_list = settings.ADCODE['100000']['children']
+    for province_adcode in province_adcode_list:
+        if settings.ADCODE[province_adcode]['name'] == province:
+            province_dict = settings.ADCODE[province_adcode]
+            city_adcode_list = province_dict['children']
+            for city_adcode in city_adcode_list:
+                if settings.ADCODE[city_adcode]['name'] == city:
+                    city_dict = settings.ADCODE[city_adcode]
+                    district_adcode_list = city_dict['children']
+                    for district_adcode in district_adcode_list:
+                        if settings.ADCODE[district_adcode]['name'] == district:
+                            return province_adcode, city_adcode, district_adcode
+                    break
+            break
+    return None, None, None
+
+
 def encode_addr(addr, lon, lat):
     """
     根据地址为其所在行政区编码
@@ -42,27 +67,29 @@ def encode_addr(addr, lon, lat):
     lonlat = lon is not None and lat is not None
     n, p, c, d, s, sn = addr['nation'], addr['province'], addr['city'], addr['district'], addr['street'], \
         addr['street_number']
-    ps = Position.objects.filter(name=d)
-    if ps:
-        adcode_district = ps.first().id
-        adcode_city = adcode_district[:4] + '00'
-        adcode_province = adcode_city[:2] + '0000'
+
+    adcode_district, adcode_city, adcode_province = get_adcode(p, c, d)
+    pcd = adcode_district is not None and adcode_city is not None and adcode_province is not None
+    if pcd:
+        pass
     elif lonlat:
         adcode_district, *_ = nearest(lon, lat)
-        Position.objects.create(id=adcode_district, name=d, latitude=lat, longitude=lon)
-        ps = Position.objects.filter(name=c)
-        if ps:
-            adcode_city = ps.first().id
-            adcode_province = adcode_city[:2] + '0000'
-        else:
-            adcode_city = adcode_district[:4] + '00'
-            Position.objects.create(id=adcode_city, name=c, latitude=lat, longitude=lon)
-            ps = Position.objects.filter(name=p)
-            if ps:
-                adcode_province = ps.first().id
-            else:
-                adcode_province = adcode_city[:2] + '0000'
-                Position.objects.create(id=adcode_province, name=p, latitude=lat, longitude=lon)
+        adcode_city = settings.ADCODE[adcode_district]['father']
+        adcode_province = settings.ADCODE[adcode_city]['father']
     else:
         raise serializers.ValidationError('Requires longitude and latitude')
+    # if not exists then create
+    if not Position.objects.filter(id=adcode_district).exists():
+        district_dict = settings.ADCODE[adcode_district]
+        Position.objects.create(id=adcode_district, name=district_dict['name'],
+                                longitude=district_dict['longitude'], latitude=district_dict['latitude'])
+    if not Position.objects.filter(id=adcode_city).exists():
+        city_dict = settings.ADCODE[adcode_city]
+        Position.objects.create(id=adcode_city, name=city_dict['name'],
+                                longitude=city_dict['longitude'], latitude=city_dict['latitude'])
+    if not Position.objects.filter(id=adcode_province).exists():
+        province_dict = settings.ADCODE[adcode_province]
+        Position.objects.create(id=adcode_province, name=province_dict['name'],
+                                longitude=province_dict['longitude'], latitude=province_dict['latitude'])
     return n, p, c, d, s, sn, adcode_province, adcode_city, adcode_district
+
