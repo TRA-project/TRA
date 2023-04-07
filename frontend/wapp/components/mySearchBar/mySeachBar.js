@@ -58,6 +58,17 @@ Component({
       }, this.data.delay) // 还得这么用data的值
     },
 
+    deleteInput() {
+      console.log("delete input keyword")
+      this.setData({
+        keyword: "",
+        searchRes: []
+      })
+      console.log("currnet keyword:" + this.data.keyword)
+      this.triggerEvent("syncinput", {value: this.data.keyword})
+      console.log("sync from son component:" + this.data.keyword)
+    },
+
     getSearchList() {
       if (this.data.keyword === "") {
         this.setData({

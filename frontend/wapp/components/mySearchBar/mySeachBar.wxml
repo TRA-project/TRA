@@ -4,8 +4,10 @@
 <view class="search-container" style="background-color: {{bgcolor}};">
   <view class="search-box" style="border-radius: {{radius}}rpx;">
     <icon type="search" size="20" />
-    <input class="search-input" type="text" placeholder="请输入景点关键词" bindinput="onInput" focus="true"/> 
-    <!-- 自动获取焦点 focus 属性 -->
+    <input class="search-input" type="text" 
+           placeholder="请输入景点关键词" value="{{keyword}}" 
+           bindinput="onInput" focus="true"/> <!-- 自动获取焦点 focus 属性 -->
+    <icon type="clear" size="20" bindtap="deleteInput" wx:if="{{keyword !== ''}}" />
   </view>
 </view>
 
