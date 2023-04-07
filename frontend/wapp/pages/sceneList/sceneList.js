@@ -1,24 +1,33 @@
-// pages/sceneSearch/sceneSearch.js
+// pages/sceneList/sceneList.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    historyList: ["ad", "南山", "北京"],
-    myInput: "",
-    preferenceList: [
-      {"name": "量子之海", "position": "？？？"},
-      {"name": "托尔巴纳", "position": "艾恩格朗特"},
-      {"name": "来生","position": "沃森-歌舞伎区"},
-    ]
+    keyword: "all",
+    optionType: [
+      { text: '全部类型', value: 0 },
+      { text: '亲自出行', value: 1 },
+      { text: '休闲部分', value: 2 },
+    ],
+    optionTime: [
+      { text: '全部时长', value: 'a' },
+      { text: '好评排序', value: 'b' },
+      { text: '销量排序', value: 'c' },
+    ],
+    value1: 0,
+    value2: 'a',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    console.log("get:", options.keyword)
+    this.setData({
+      keyword: options.keyword
+    })
   },
 
   /**
@@ -32,11 +41,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    
   },
 
-  confirmHistory() {
-    /* 填入向子组件的keyword填入history值，并触发子组件的confirm事件 */
+  returnBackToSearch() {
+    wx.navigateBack()
   },
 
   /**
@@ -72,13 +81,5 @@ Page({
    */
   onShareAppMessage() {
 
-  },
-
-  // 同步子组件input内容
-  onSyncInput(event) {
-    console.log("syncInput from father page")
-    this.setData({
-      myInput: event.detail.value
-    })
   }
 })

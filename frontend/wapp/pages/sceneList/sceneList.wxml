@@ -1,0 +1,26 @@
+<!--pages/sceneList/sceneList.wxml-->
+<view class="search-container">
+  <view class="search-box" bindtap="returnBackToSearch">
+    <icon type="search" size="20" />
+    <input class="search-input" value="{{keyword}}" disabled="disabled"/>
+  </view>
+</view>
+
+<van-dropdown-menu active-color="#1989fa">
+  <van-dropdown-item value="{{ value1 }}" options="{{ optionType }}" />
+  <van-dropdown-item value="{{ value2 }}" options="{{ optionTime }}" />
+</van-dropdown-menu>
+
+<view class="scenery-list-container">
+  <view class="scenery-list">
+    <view class="scenery-card">
+      <van-card thumb="/images/guozhibeiyuan.jpg"
+        tag="pic" price="10.00" desc="描述信息" title="景点名称">
+        <view slot="footer">
+          HELLO
+        </view>
+      </van-card>
+    </view>
+  </view>
+</view>
+

@@ -14,12 +14,17 @@ Component({
     // 背景颜色
     bgcolor: {
       type: String,
-      value: "rgb(4, 138, 201);"
+      value: "rgba(30, 144, 255, 1.0);"
     },
     // 圆角尺寸
     radius: {
       type: Number,
       value: 36
+    },
+    // confirm跳转页面
+    confirmTargetUrl: {
+      type: String,
+      value: "/pages/sceneList/sceneList"
     }
   },
 
@@ -99,6 +104,13 @@ Component({
         fail: (res) => {  // 发送请求失败
           console.log(res)
         }
+      })
+    },
+
+    onConfirm() {
+      this.setData
+      wx.navigateTo({
+        url: this.properties.confirmTargetUrl + "?keyword=" + this.data.keyword,
       })
     }
   },
