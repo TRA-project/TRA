@@ -1,0 +1,23 @@
+<!--pages/travelPlanPreview/travelPlanPreview.wxml-->
+
+<view class="travel-plan-title-container">
+  <text class="travel-plan-title"> 出行计划生成 </text>
+</view>
+
+<view class="custom-argument-display-container">
+
+</view>
+
+<view class="travel-plan-map-container">
+  <map class="tencent-map" longitude="{{mapLongitude}}" latitude="{{mapLatitude}}" 
+       markers="{{mapMarkers}}"></map>
+</view>
+
+<view class="travel-plan-display-container">
+  <van-tabs animated active="{{tabsActive}}" bind:change="onTabChange">
+    <van-tab title="方案 1">内容 1</van-tab>
+    <van-tab title="方案 2">内容 2</van-tab>
+    <van-tab title="方案 3">内容 3</van-tab>
+    <van-tab title="方案 4">内容 4</van-tab>
+  </van-tabs>
+</view>

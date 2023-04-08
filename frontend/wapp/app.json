@@ -41,8 +41,10 @@
     "pages/newSchrelease/newSchrelease",
     "pages/newScheduleMore/newScheduleMore",
     "pages/schRelease/schRelease",
-    "pages/sceneSearch/sceneSearch", 
-    "pages/SceneryShow/SceneryShow"
+    "pages/sceneSearch/sceneSearch",
+    "pages/SceneryShow/SceneryShow",
+    "pages/travelPlanGen/travelPlanGen",
+    "pages/travelPlanPreview/travelPlanPreview"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -61,7 +63,7 @@
     }
   },
   "usingComponents": {
-    "van-cell": "./miniprogram/miniprogram_npm/@vant/weapp/cell",
-    "van-cell-group": "./miniprogram/miniprogram_npm/@vant/weapp/cell-group"
+    "van-cell": "@vant/weapp/cell",
+    "van-cell-group": "@vant/weapp/cell-group"
   }
 }

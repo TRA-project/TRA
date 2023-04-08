@@ -1,0 +1,32 @@
+/* pages/travelPlanPreview/travelPlanPreview.wxss */
+
+.travel-plan-title-container {
+  text-align: center;
+  height: 70rpx;
+}
+
+.travel-plan-title {
+  font-size: 36rpx;
+  font-weight: bolder;
+}
+
+.custom-argument-display-container {
+
+}
+
+.travel-plan-map-container {
+
+}
+
+.tencent-map {
+  width: 100%;
+  height: 600rpx;
+}
+
+.travel-plan-display-container {
+  margin: 10rpx;
+  border-radius: 20rpx;
+  background-color: rgba(190, 222, 229, 0.493);
+  min-height: 500rpx;
+}
+
