@@ -82,7 +82,7 @@ Component({
         return
       }
 
-      var url = utils.server_hostname + "/api/core/sceneries/quicksearch/"
+      var url = utils.server_hostname + "/api/core/" + "sceneries/quicksearch/"
       wx.request({
         url: url,
         method: "GET",

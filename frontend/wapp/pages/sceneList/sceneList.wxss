@@ -8,7 +8,7 @@
   padding: 0 20rpx;
 
   position: sticky; /* 吸顶效果 */
-  top: 0;
+  top: 0rpx;
   z-index: 99;
 }
 
@@ -49,8 +49,6 @@
 
 .add-scenery-button {
   width: 12%;
-  /* background-color: rgba(30, 144, 255, 1.0); */
-  /* color: white; */
   align-items: center;
   vertical-align: center;
   margin: 10rpx;
