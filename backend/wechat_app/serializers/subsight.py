@@ -17,6 +17,7 @@ class SubsightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Subsight
+        fields = '__all__'
         extra_kwargs = {
             'prices': {'min_value': 0, 'required': True}
         }
