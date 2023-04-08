@@ -6,18 +6,29 @@
   </view>
 </view>
 
-<van-dropdown-menu active-color="#1989fa">
-  <van-dropdown-item value="{{ value1 }}" options="{{ optionType }}" />
-  <van-dropdown-item value="{{ value2 }}" options="{{ optionTime }}" />
-</van-dropdown-menu>
+<view class="top-bar-container">
+  <van-dropdown-menu active-color="#1989fa" class="drop-down-menu">
+    <van-dropdown-item value="{{ typeValue }}" options="{{ optionType }}" />
+    <van-dropdown-item value="{{ timeValue }}" options="{{ optionTime }}" />
+    <van-dropdown-item value="{{ timeValue }}" options="{{ optionTime }}" />
+  </van-dropdown-menu>
+  <!-- <van-button round type="primary" class="add-scenery-button" icon="https://img.yzcdn.cn/vant/logo.png">+</van-button> -->
+  <view class="add-scenery-button">
+    <image src="/images/add-scenery-button.png" class="add-scenery-icon" bindtap="addScenery"/>
+  </view>
+</view>
 
 <view class="scenery-list-container">
   <view class="scenery-list">
-    <view class="scenery-card">
+    <view class="scenery-card" wx:for="{{tmpSceneryList}}" wx:key="unique">
       <van-card thumb="/images/guozhibeiyuan.jpg"
-        tag="pic" price="10.00" desc="描述信息" title="景点名称">
-        <view slot="footer">
-          HELLO
+        desc="{{item.desc}}" title="{{item.name}}" price="{{item.price}}" 
+        custom-class="self-custom-class"
+        thumb-class="self-thumb-class"
+        title-class="self-title-class"
+        desc-class="self-desc-class">
+        <view slot="tags">
+          预计时长：{{item.time}}
         </view>
       </van-card>
     </view>

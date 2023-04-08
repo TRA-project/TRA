@@ -11,13 +11,57 @@ Page({
       { text: '亲自出行', value: 1 },
       { text: '休闲部分', value: 2 },
     ],
+    typeValue: 0,
     optionTime: [
       { text: '全部时长', value: 'a' },
       { text: '好评排序', value: 'b' },
       { text: '销量排序', value: 'c' },
     ],
-    value1: 0,
-    value2: 'a',
+    timeValue: 'a',
+
+    sceneryList: [],
+    tmpSceneryList: [
+      {
+        name: "回忆之丘",
+        desc: "艾恩格朗特47层南侧野外迷宫",
+        tags: ["休闲娱乐", "复活"],
+        time: "3h",
+        score: 5,
+        price: 0,
+      },
+      {
+        name: "西边山脉",
+        desc: "艾恩格朗特55层，吞食水晶的魔龙出没",
+        tags: ["亲子出行", "锻造材料"],
+        time: "8h",
+        score: 4,
+        price: 0,
+      },
+      {
+        name: "回忆之丘",
+        desc: "艾恩格朗特47层南侧野外迷宫",
+        tags: ["休闲娱乐", "复活"],
+        time: "3h",
+        score: 5,
+        price: 0,
+      },
+      {
+        name: "回忆之丘",
+        desc: "艾恩格朗特47层南侧野外迷宫",
+        tags: ["休闲娱乐", "复活"],
+        time: "3h",
+        score: 5,
+        price: 0,
+      },
+      {
+        name: "回忆之丘",
+        desc: "艾恩格朗特47层南侧野外迷宫",
+        tags: ["休闲娱乐", "复活"],
+        time: "3h",
+        score: 5,
+        price: 0,
+      },
+    ]
   },
 
   /**
@@ -46,6 +90,10 @@ Page({
 
   returnBackToSearch() {
     wx.navigateBack()
+  },
+
+  addScenery() {
+    console.log("add scenery")
   },
 
   /**

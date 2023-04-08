@@ -6,6 +6,10 @@
   display: flex;
   align-items: center;
   padding: 0 20rpx;
+
+  position: sticky; /* 吸顶效果 */
+  top: 0;
+  z-index: 99;
 }
 
 .search-box {
@@ -24,4 +28,68 @@
   font-size: 30rpx;
   margin-left: 10rpx;
   width: 85%;
+}
+
+.top-bar-container {
+  display: flex;
+  align-items: center;
+  vertical-align: center;
+  justify-content: space-between;
+  background-color: rgba(160, 204, 252, 0.26);
+
+  position: sticky; /* 吸顶效果 */
+  top: 100rpx;
+  z-index: 98;
+}
+
+.drop-down-menu {
+  width: 83%;
+  margin-right: 0rpx;
+}
+
+.add-scenery-button {
+  width: 12%;
+  /* background-color: rgba(30, 144, 255, 1.0); */
+  /* color: white; */
+  align-items: center;
+  vertical-align: center;
+  margin: 10rpx;
+}
+
+.add-scenery-icon {
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.scenery-list {
+  border-radius: 10rpx;
+}
+
+.scenery-card {
+  border-radius: 10rpx;
+  margin: 5rpx;
+  width: 100%;
+}
+
+.self-custom-class {
+  border-bottom-style: solid;
+  border-bottom-width: 3rpx;
+  border-bottom-color: rgb(182, 182, 182);
+}
+
+.self-thumb-class {
+  padding: 5rpx 0rpx;
+
+  height: 100rpx;
+  width: 100rpx;
+}
+
+.self-title-class {
+  font-size: 30rpx;
+  height: 30%;
+}
+
+.self-desc-class {
+  margin-top: 10rpx;
+  height: 50%;
 }
