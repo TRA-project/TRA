@@ -229,6 +229,13 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
 
     @action(methods=['POST'], detail=False, url_path='collect')
     def collect(self, request, *args, **kwargs):
+        """
+        游记收藏
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         cancel = conversion.get_bool(request.data, 'cancel')
         ids = set(conversion.get_list(request.data, 'id'))
         request_user = permission.user_check(request)
@@ -242,6 +249,38 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
             user.collection.add(*ids)
         return response()
 
+    @action(methods=['POST'], detail=False, url_path='collect_sight')
+    def create_collect_sight(self, request):
+        """
+        景点收藏
+        :param request:
+        :return:
+        """
+        ids = set(conversion.get_list(request.data, 'id'))
+        request_user = permission.user_check(request)
+        user = AppUser.objects.filter(id=request_user)
+        if not user:
+            return error_response(Error.INVALID_USER, status=status.HTTP_403_FORBIDDEN)
+        user = user.first()
+        user.collections_sight.add(*ids)
+        return response()
+
+    @action(methods=['DELETE'], detail=False, url_path='collect_sight')
+    def del_collect_sight(self, request):
+        """
+        取消景点收藏
+        :param request:
+        :return:
+        """
+        ids = set(conversion.get_list(request.data, 'id'))
+        request_user = permission.user_check(request)
+        user = AppUser.objects.filter(id=request_user)
+        if not user:
+            return error_response(Error.INVALID_USER, status=status.HTTP_403_FORBIDDEN)
+        user = user.first()
+        user.collections_sight.remove(*ids)
+        return response()
+
     @action(methods=['GET', 'POST'], detail=False, url_path='join')
     def companion(self, request, *args, **kwargs):
         if request.method == 'POST':
@@ -253,7 +292,7 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
         user = AppUser.objects.filter(id=request_user)
         if not user:
             return error_response(Error.INVALID_USER, status=status.HTTP_403_FORBIDDEN)
-        user: AppUser = user.first()
+        user = user.first()
         queryset = user.joined_companions.all() | user.companions.all()
         page = self.paginate_queryset(self.filter_queryset(queryset).distinct())
         if page is not None:
@@ -415,7 +454,7 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
         user = user.first()
         queryset = user.subscribers.all()
         queryset = self.filter_queryset(queryset)
-        subscribed_set = set((user.subscription.all() & (queryset)).values_list('id', flat=True))
+        subscribed_set = set((user.subscription.all() & queryset).values_list('id', flat=True))
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)

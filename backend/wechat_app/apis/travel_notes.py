@@ -22,10 +22,6 @@ from django.core.files.uploadedfile import UploadedFile
 
 from utils.AI.NLP import my_model
 
-
-# TODO
-
-
 class TravelFilterBackend(filters.QueryFilterBackend):
     filter_fields = [
         ("owner", "owner_id", "exact"),
