@@ -27,7 +27,6 @@
 
 
         <swiper class="ad_box" indicator-dots="true" indicator-active-color="rgb(0,132,255,.3)" autoplay="true" circular="true">
-
             <swiper-item>
                 <view class="pos_show">
                     <text class="text_title">最近待办\n</text>
