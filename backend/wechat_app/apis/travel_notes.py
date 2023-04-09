@@ -284,18 +284,18 @@ class TravelApis(viewsets.ModelViewSet):
 
     def image_upload(self, request, *args, **kwargs):
         obj = self.get_object()
-        imgfile = request.data.get('image', None)
-        if imgfile is None or not isinstance(imgfile, UploadedFile):
+        img_file = request.data.get('image', None)
+        if img_file is None or not isinstance(img_file, UploadedFile):
             return error_response(status.HTTP_400_BAD_REQUEST, 'Invalid image.', status=status.HTTP_400_BAD_REQUEST)
         desc = request.data.get('description', '')
-        image = Image.objects.create(image=imgfile, description=desc)
+        image = Image.objects.create(image=img_file, description=desc)
         obj.images.add(image)
         return response({'id': image.id})
 
     def image_delete(self, request, *args, **kwargs):
         obj = self.get_object()
-        imgid = conversion.get_list(request.data, 'id')
-        images = obj.images.filter(id__in=imgid)
+        img_id = conversion.get_list(request.data, 'id')
+        images = obj.images.filter(id__in=img_id)
         images.delete()
         return response()
 
