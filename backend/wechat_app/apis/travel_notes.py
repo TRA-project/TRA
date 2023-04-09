@@ -223,7 +223,8 @@ class TravelApis(viewsets.ModelViewSet):
         tags = data['tag'].split(' ')
         data['tag'] = []
         for tag in tags:
-            if tag == '': continue
+            if tag == '':
+                continue
             try:
                 Tag.objects.all().get(name=tag)
             except Exception:
