@@ -22,3 +22,4 @@ from .shielded_word import ShieldedWord
 from .read_record import ReadRecord
 from .sight import Sight
 from .subsight import Subsight
+from .plan import Plan
