@@ -51,7 +51,7 @@ urlpatterns = [
     path('api/core/', include('wechat_app.urls')),
     path('api/admin/', include('web.urls')),
     re_path(r'^%s(?P<path>.*)$' % re.escape(settings.MEDIA_URL.lstrip('/')), serve,
-            kwargs={'document_root': os.path.join(settings.MEDIA_ROOT, 'system')}),
+            kwargs={'document_root': os.path.join(settings.MEDIA_ROOT, 'images')}),
 ]
 
 if not settings.APP_SHOW_STATUS:
