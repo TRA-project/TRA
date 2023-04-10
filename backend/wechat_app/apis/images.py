@@ -30,6 +30,7 @@ class ImageApis(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin,
     def data(self, requests, *args, **kwargs):
         obj = self.get_object()
         imgfile = obj.image
+        print(imgfile)
         return self.image_response(imgfile)
 
     @classmethod
@@ -43,6 +44,9 @@ class ImageApis(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin,
         ctype = cls.IMAGE_CONTENT_TYPE.get(ext, cls.IMAGE_CONTENT_TYPE[None])
         data = imgfile.read()
         return HttpResponse(data, content_type=ctype)
+
+    
+    
 
 @receiver(pre_delete, sender=Image)
 def image_delete(sender, instance:Image, **kwargs):

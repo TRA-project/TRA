@@ -12,3 +12,7 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         exclude = []
+
+    def create(self, validated_data):
+        print(validated_data)
+        return super().create(validated_data)
