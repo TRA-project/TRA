@@ -249,10 +249,10 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
             user.collection.add(*ids)
         return response()
 
-    @action(methods=['POST'], detail=False, url_path='collect_sight')
+    @action(methods=['POST', 'DELETE'], detail=False, url_path='collect_sight')
     def create_collect_sight(self, request):
         """
-        景点收藏
+        景点收藏、取消收藏
         :param request:
         :return:
         """
@@ -262,24 +262,12 @@ class UserApis(viewsets.GenericViewSet, mixins.CreateModelMixin,
         if not user:
             return error_response(Error.INVALID_USER, status=status.HTTP_403_FORBIDDEN)
         user = user.first()
-        user.collections_sight.add(*ids)
+        if request.method == 'POST':
+            user.collections_sight.add(*ids)
+        else:
+            user.collections_sight.remove(*ids)
         return response()
 
-    @action(methods=['DELETE'], detail=False, url_path='collect_sight')
-    def del_collect_sight(self, request):
-        """
-        取消景点收藏
-        :param request:
-        :return:
-        """
-        ids = set(conversion.get_list(request.data, 'id'))
-        request_user = permission.user_check(request)
-        user = AppUser.objects.filter(id=request_user)
-        if not user:
-            return error_response(Error.INVALID_USER, status=status.HTTP_403_FORBIDDEN)
-        user = user.first()
-        user.collections_sight.remove(*ids)
-        return response()
 
     @action(methods=['GET', 'POST'], detail=False, url_path='join')
     def companion(self, request, *args, **kwargs):
