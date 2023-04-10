@@ -31,7 +31,7 @@ class SightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sight
-        exclude = ['open_time', 'close_time', 'play_time']
+        exclude = ['open_time', 'close_time', 'playtime']
 
 
 class SightBriefSerializer(serializers.ModelSerializer):

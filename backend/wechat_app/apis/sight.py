@@ -6,7 +6,6 @@
 # @Comment :
 from django.http import QueryDict
 from rest_framework.decorators import action
-from rest_framework.exceptions import NotFound
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin
 from rest_framework.viewsets import GenericViewSet
 
@@ -33,16 +32,17 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
 
     @action(methods=['GET'], detail=False, url_path='search')
     def search(self, request):
-        sight_queryset = Sight.objects.filter(name__contains=request.GET.get('kw'))
+        kw = request.query_params.get('keyword')
+        sight_queryset = Sight.objects.filter(name__contains=kw)
         serializer = SightSerializer(instance=sight_queryset, many=True)
         return Response(serializer.data)
 
     def comment_retrieve(self, request, *args, **kwargs):
         direct = conversion.get_bool(request.GET, 'direct')
         if direct:
-            queryset = Comment.objects.filter(companion_master=self.get_object(), deleted=False, reply=None)
+            queryset = Comment.objects.filter(sight_master=self.get_object(), deleted=False, reply=None)
         else:
-            queryset = Comment.objects.filter(companion_master=self.get_object(), deleted=False)
+            queryset = Comment.objects.filter(sight_master=self.get_object(), deleted=False)
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -81,10 +81,6 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
             if owner_id != comment.reply.owner_id:
                 Message.create_message(comment.owner, comment.reply.owner, settings.MESSAGE_TYPE_COMMENT_ON_COMMENT,
                                        comment=comment.reply)
-        else:
-            if owner_id != obj.owner_id:
-                Message.create_message(comment.owner, obj.owner, settings.MESSAGE_TYPE_COMMENT_ON_TRAVEL, companion=obj)
-
         # Log
         save_log(user_id=owner_id, action=settings.LOG_COMMENT_CREATE, target_id=obj.id)
 
@@ -93,11 +89,6 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
 
     @permission.white_action(methods=['GET', 'POST'], detail=True, url_path='comment')
     def comments(self, request, *args, **kwargs):
-        request_user = permission.user_check(request)
-        obj = self.get_object()
-        is_owner = obj.owner_id == request_user
-        if (obj.forbidden or obj.visibility == settings.TRAVEL_VISIBILITIES_PRIVATE) and not is_owner:
-            raise NotFound()
         if request.method == 'POST':
             return self.comment_create(request, *args, **kwargs)
         return self.comment_retrieve(request, *args, **kwargs)

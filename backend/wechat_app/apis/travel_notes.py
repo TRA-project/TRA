@@ -279,6 +279,13 @@ class TravelApis(viewsets.ModelViewSet):
 
     @action(methods=['POST', 'DELETE'], detail=True, url_path='image')
     def image(self, request, *args, **kwargs):
+        """
+        添加图片，注意url需要detail形式，例如/api/core/travels/8/image/
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         if request.method == 'DELETE':
             return self.image_delete(request, *args, **kwargs)
         return self.image_upload(request, *args, **kwargs)
