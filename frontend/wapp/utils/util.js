@@ -63,8 +63,9 @@ const noSecond = string => {
 const server_hostname = {
   //url: "http://114.116.194.214"
   // url:"http://114.116.53.144"
-  url:"http://localhost:8000"
+  url:"http://8.130.65.210"
 }
+
 const timeLag =string=>{
   const before = string.substring(0,10)
   const end = string.substring(25,35)
@@ -316,3 +317,13 @@ module.exports = {
     })
   }
 }
+
+// An highlighted block
+const addSelectToArray = function (list) {
+    list.forEach(v=>{
+      v.select = false
+    })
+  }
+  module.exports = {
+      addSelectToArray
+  }  

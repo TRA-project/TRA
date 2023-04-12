@@ -1,6 +1,9 @@
 {
     "entryPagePath": "pages/login/login",
     "pages": [
+        "pages/pathPlanInside/pathPlanInside",
+        "pages/pathMapInside/pathMapInside",
+        "pages/spotAdd/spotAdd",
         "pages/index/index",
         "pages/logs/logs",
         "pages/login/login",
