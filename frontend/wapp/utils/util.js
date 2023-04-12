@@ -324,7 +324,5 @@ const addSelectToArray = function (list) {
     list.forEach(v=>{
       v.select = false
     })
-  }
-  module.exports = {
-      addSelectToArray
-  }  
+}
+ 
