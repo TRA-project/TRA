@@ -1,0 +1,61 @@
+<!--pages/SceneryShow/SceneryShow.wxml-->
+<swiper class="pic" bindchange="onSwiperChange">
+    <swiper-item wx:for="{{images}}">
+        <image src="{{item}}"></image>
+    </swiper-item>
+</swiper>
+
+<view class="curImage">
+    <view>{{curImage+1}}/{{images.length}}</view>
+</view>
+
+<view class="cards">
+    <view class="mainCard card">
+        <view class="name">{{name}}</view>
+        <view class="remark">{{remark}}</view> <view class="fen">分</view>
+        <view class="intro">{{intro}}</view>
+        <view class="divLineX"></view>
+        <view class="bottom">
+            <view class="leftColumn">
+                <view>{{position}}</view>
+                <view class="dist">距您{{distance}}公里</view>
+            </view>
+            <view class="rightColumn">
+                <image src="../../images/map.png" style="width: 64rpx; height: 64rpx;"></image>
+                <text style="line-height: 64rpx;">地图</text>
+            </view>
+        </view>
+    </view>
+    <view class="card timeCard">
+        <view class="cardTitle">开放时间</view>
+        <view class="time">{{open_time}}</view>
+    </view>
+    <view class="card priceCard">
+        <view class="cardTitle">门票价格</view>
+        <view wx:for="{{price}}">
+            <view class="item">
+                <view class="name">{{item.name}}</view>
+                <view class="price">￥{{item.price}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="card spotCard">
+        <view class="topline">
+            <view class="cardTitle">内部游览点</view> <image class="add" src="../../images/add.png" style="width: 48rpx; height: 48rpx;"></image>
+        </view>
+        <view wx:for="{{inner_spot}}">
+            <view class="divLineX2"></view>
+            <view class="listelm">
+                <image src="../../images/tour.png"></image>
+                <view class="info">
+                    <view>
+                        <text>{{item.name}}</text>
+                    </view>
+                    <view>
+                        <text>{{item.summary}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

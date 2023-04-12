@@ -1,4 +1,0 @@
-http://127.0.0.1/api/core/companions/8/comments/
-GET
-application/json
-token-auth: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjMsImlhdCI6MTY1Mzk5NTk1NiwiZXhwIjoxNjU0MDgyMzU2fQ.tcil33mjaX9v-i-LHn1Hi4JI-ATqDRZQIoPzsQwnbyw
