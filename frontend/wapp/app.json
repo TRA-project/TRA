@@ -42,7 +42,10 @@
     "pages/newScheduleMore/newScheduleMore",
     "pages/schRelease/schRelease",
     "pages/sceneSearch/sceneSearch", 
-    "pages/SceneryShow/SceneryShow"
+    "pages/SceneryShow/SceneryShow",
+    "pages/spotAdd/spotAdd",
+    "pages/pathMapInside/pathMapInside",
+    "pages/pathPlanInside/pathPlanInside"
   ],
   "window": {
     "backgroundTextStyle": "light",
