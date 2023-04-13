@@ -30,7 +30,6 @@ class ImageApis(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin,
     def data(self, requests, *args, **kwargs):
         obj = self.get_object()
         imgfile = obj.image
-        print(imgfile)
         return self.image_response(imgfile)
 
     @classmethod

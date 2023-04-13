@@ -13,6 +13,13 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Image
         exclude = []
 
-    def create(self, validated_data):
-        print(validated_data)
-        return super().create(validated_data)
+
+class TestSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True)
+    time = serializers.DateTimeField(read_only=True)
+    description = serializers.CharField(read_only=True)
+    image = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Image
+        exclude = []
