@@ -13,17 +13,27 @@
        markers="{{mapMarkers}}"></map>
 </view>
 
-<view class="travel-plan-display-container">
+<view class="travel-plans-display-container">
   <van-tabs animated active="{{plansActive}}" bind:change="onTabChange" color="rgba(30,144,255,1.0)">
-    <van-tab title="方案 1">
-      <van-steps bind:click-step="onStepClick"
-        steps="{{ steps }}"
-        active="{{ stepsActive }}"
-        direction="vertical"
-        active-color="rgba(30, 144, 255, 1.0)"
-      />
+    <van-tab wx:for="{{travelPlansList}}" wx:key="*this" title="方案{{index+1}}">
+      <view class="one-travel-plan-list" wx:for="{{item}}" wx:for-item="routeItem" wx:key="id">
+        <view class="travel-route-item">
+          <image class="travel-route-thumb" src="/images/guozhibeiyuan.jpg" />
+          <view class="travel-route-text">
+            <view class="travel-route-text-title">
+              {{routeItem.name}}
+            </view>
+            <view class="trave-route-text-desc">
+              {{routeItem.position}}
+            </view>
+          </view>
+          <van-icon class="trave-route-text-icon" name="wap-nav" size="40rpx"/>
+        </view>
+      </view>
     </van-tab>
-    <van-tab title="方案 2">内容 2</van-tab>
-    <van-tab title="方案 3">内容 3</van-tab>
   </van-tabs>
+</view>
+
+<view class="travel-plan-footer-container">
+  <button class="travel-plan-submit-button" type="primary" hover-class="button-hover">确认方案</button>
 </view>
