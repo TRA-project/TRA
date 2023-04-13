@@ -88,6 +88,10 @@
 }
 
 .self-desc-class {
-  margin-top: 10rpx;
+  margin-top: 7rpx;
   height: 50%;
+}
+
+.self-price-class {
+  padding-top: 5rpx;
 }
