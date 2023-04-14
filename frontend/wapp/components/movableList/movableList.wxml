@@ -5,7 +5,7 @@
     class="movable-list-item-view" wx:for="{{tarList}}" wx:key="unique"
     style="height: {{itemHeight}}rpx; margin-top: {{itemMarginTop}}rpx; z-index: {{index == moveId ? 2 : 1}};"
     direction="vertical" out-of-bounds disabled="{{moveDisabled}}" 
-    bindlongpress="activateMovable" bindchange="onMoving" bindtouchend="afterMoved"
+    bindlongpress="onLongPress" bindchange="onMoving" bindtouchend="onTouchEnd"
     y="{{item.y}}rpx" data-moveid="{{index}}"
   > 
     <view class="movable-item" style="height: {{itemHeight}}rpx;">

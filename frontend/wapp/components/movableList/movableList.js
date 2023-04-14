@@ -25,6 +25,7 @@ Component({
    */
   data: {
     moveDisabled: true,
+    statusLongpress: false,  /* 是否在longpress状态，用于在touchend中过滤短按结束的情况 */
     moveId: 0,
     endY: 0,
   },
@@ -58,31 +59,59 @@ Component({
       console.log("movable deactivate")
     },
 
-    onMoving(event) { 
+    onLongPress(event) {
+      console.log("[longpress]")
+      this.activateMovable()
+      console.log(event)
+      const {
+        currentTarget: {dataset}
+      } = event 
+      // 不用details.y，因为此时的y来自press的坐标，不来自我们需要的item左上角的坐标
+      const newEndY = this.properties.tarList[dataset.moveid].y
+      // 但仍需要将endY改为对应item中的y（因为touchEnd还会被触发）
+      this.setData({
+        statusLongpress: true,
+        moveId: dataset.moveid,
+        endY: newEndY,
+      })
+    },
+
+    // 注意：只有位置在发生改变才会持续触发bindchange
+    onMoving(event) {  
       /* moving时，调用间隔很快，是否应考虑优化 */
+      //console.log("[moving...]")
       const {
         detail,
         currentTarget: {dataset}
       } = event
-      //console.log("moving...")
       this.setData({
         moveId: dataset.moveid,
         endY: detail.y
       })
     },
 
-    afterMoved(event) {
-      console.log("[move stopped]")
-      console.log(this.data.endY)
+    onTouchEnd(event) {
+      console.log("[touch end]")
+      if (!this.data.statusLongpress) { // 过滤非长按结束的情况
+        console.log("not after longpress, change nothing\n")
+        return
+      }
+      // 确定为长按结束的情况
       var newList = JSON.parse(JSON.stringify(this.properties.tarList))
+      console.log("change endY to", this.data.endY)
       newList[this.data.moveId].y = this.data.endY
-      newList = newList.sort((a, b) => a.y - b.y)
-      console.log(newList[this.data.moveId].y, this.data.moveId, newList)
+      console.log(newList[this.data.moveId])  // TODO: 此y非彼y；bindchange返回的y有点怪
+      console.log(newList)
+      //newList.sort((a, b) => {return a.y - b.y})
+      console.log(this.data.moveId, newList[this.data.moveId].y,  newList)
       this.setData({
-        tarList: newList
+        tarList: newList,
+        statusLongpress: false
       })
+      console.log("tarList:", this.properties.tarList)
       this.drawList()
       this.deactiveMovable()
+      console.log("\n")
     }
   },
 
