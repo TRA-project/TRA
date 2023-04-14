@@ -1,0 +1,60 @@
+/* components/movableList/movableList.wxss */
+
+.movable-list-container {
+  width: 96%;
+  height: 900rpx;
+  background-color: rgba(230, 247, 240, 0.616);
+  margin-left: 2%;
+  margin-right: 2%;
+  border-radius: 20rpx;
+}
+
+.movable-list-item-view {
+  width: 100%;
+  height: 180rpx;
+  margin-top: 5rpx;
+  background-color: rgba(147, 187, 247, 0.527);
+  border-bottom: 2rpx solid rgba(172, 167, 167, 0.699);
+  z-index: 10;
+}
+
+.movable-item {
+  height: 180rpx;
+  border-bottom: 2rpx solid rgba(144, 156, 147, 0.788);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.movable-item-thumb {
+  width: 25%;
+  height: 140rpx;
+  padding: 15rpx;
+  align-self: center;
+}
+
+.movable-item-text {
+  width: 65%;
+  display: flex;  /* 开启flex布局 */
+  flex-direction: column; /* 子元素垂直排列 */
+  justify-content: space-between; /* 排布方式（空白方式） */
+  padding-top: 10rpx;
+  padding-bottom: 20rpx;
+}
+
+.movable-item-text-title {
+  font-weight: bolder;
+  font-size: 34rpx;
+}
+
+.movable-item-text-desc {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  color: rgba(87, 96, 111,1.0);
+}
+
+.movable-item-text-icon {
+  margin-left: 10rpx;
+  margin-right: 20rpx;
+  color: rgba(116, 125, 140,1.0);
+}

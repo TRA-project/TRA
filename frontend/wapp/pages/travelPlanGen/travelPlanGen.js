@@ -5,7 +5,26 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    testList: [
+      {
+        id: 1,
+        name: "北京航空航天大学",
+        position: "北京市海淀区学院路37号",
+        image: "scenery-preview.png"
+      },
+      {
+        id: 2,
+        name: "肯德基（长城电脑大厦店）",
+        position: "北京市海淀区学院路38号长城电脑大厦",
+        image: "scenery-preview.png"
+      },
+      {
+        id: 3,
+        name: "麦当劳（花园北路餐厅）",
+        position: "北京市海淀区学院路甲38号",
+        image: "scenery-preview.png"
+      },
+    ],
   },
 
   /**

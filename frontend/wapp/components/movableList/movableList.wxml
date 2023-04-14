@@ -1,0 +1,24 @@
+<!--components/movableList/movableList.wxml-->
+
+<movable-area class="movable-list-container" style="height: {{tarList.length * (itemHeight + itemMarginTop)}}rpx;">
+  <movable-view 
+    class="movable-list-item-view" wx:for="{{tarList}}" wx:key="unique"
+    style="height: {{itemHeight}}rpx; margin-top: {{itemMarginTop}}rpx; z-index: {{index == moveId ? 2 : 1}};"
+    direction="vertical" out-of-bounds disabled="{{moveDisabled}}" 
+    bindlongpress="activateMovable" bindchange="onMoving" bindtouchend="afterMoved"
+    y="{{item.y}}rpx" data-moveid="{{index}}"
+  > 
+    <view class="movable-item" style="height: {{itemHeight}}rpx;">
+      <image class="movable-item-thumb" src="/images/guozhibeiyuan.jpg" />
+      <view class="movable-item-text">
+        <view class="movable-item-text-title">
+          {{item.name}}
+        </view>
+        <view class="movable-item-text-desc">
+          {{item.position}}
+        </view>
+      </view>
+      <van-icon class="movable-item-text-icon" name="wap-nav" size="40rpx"/>
+    </view>
+  </movable-view>
+</movable-area>
