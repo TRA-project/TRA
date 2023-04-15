@@ -9,6 +9,7 @@
     y="{{item.y}}rpx" data-moveid="{{index}}"
   > 
     <view class="movable-item" style="height: {{itemHeight}}rpx;">
+
       <image class="movable-item-thumb" src="/images/guozhibeiyuan.jpg" />
       <view class="movable-item-text">
         <view class="movable-item-text-title">
@@ -19,6 +20,7 @@
         </view>
       </view>
       <van-icon class="movable-item-text-icon" name="wap-nav" size="40rpx"/>
+      
     </view>
   </movable-view>
 </movable-area>

@@ -67,7 +67,7 @@ const noSecond = string => {
   const temp = string.split(/:/)
   return temp[0] + ':' + temp[1]
 }
-const timeLag =string=>{
+const timeLag = string => {
   const before = string.substring(0,10)
   const end = string.substring(25,35)
   let b = new Date(before)
@@ -77,6 +77,10 @@ const timeLag =string=>{
 }
 const flightImage = string => {
   return server_hostname.url + '/media/flight/' + string
+}
+
+function deepClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
 }
 
 module.exports = {
@@ -93,6 +97,8 @@ module.exports = {
   ChineseWeek,
   server_hostname: server_hostname.url,
   formatDate,
+  deepClone,
+
   server_imagename: server_hostname.url + '/media',
   subkey: 'UMABZ-NKAKX-ILH4J-TFRB2-5EVZV-PWBIJ',
 
