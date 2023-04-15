@@ -3,8 +3,8 @@
 <movable-area class="movable-list-container" style="height: {{tarList.length * (itemHeight + itemMarginTop)}}rpx;">
   <movable-view 
     class="movable-list-item-view" wx:for="{{tarList}}" wx:key="unique"
-    style="height: {{itemHeight}}rpx; margin-top: {{itemMarginTop}}rpx; z-index: {{index == moveId ? 2 : 1}};"
-    direction="vertical" out-of-bounds disabled="{{moveDisabled}}" 
+    style="height: {{itemHeight}}rpx; margin-top: {{itemMarginTop}}rpx; z-index: {{index == moveId ? 12 : 11}};"
+    direction="vertical" disabled="{{moveDisabled}}" 
     bindlongpress="onLongPress" bindchange="onMoving" bindtouchend="onTouchEnd"
     y="{{item.y}}rpx" data-moveid="{{index}}"
   > 

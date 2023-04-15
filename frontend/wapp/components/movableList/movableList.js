@@ -1,5 +1,6 @@
 // components/movableList/movableList.js
 const utils = require("../../utils/util.js")
+const globalUtil = require("../../utils/global.js")
 
 Component({
   /**
@@ -16,7 +17,7 @@ Component({
     },
     itemMarginTop : {
       type: Number,
-      value: 5
+      value: 10
     }
   },
 
@@ -39,7 +40,7 @@ Component({
         item.y = (this.properties.itemMarginTop + this.properties.itemHeight) * index
         return item
       })
-      console.log('init list:', tarListWithPosition)
+      console.log('draw list:', tarListWithPosition)
       this.setData({
         tarList: tarListWithPosition
       })
@@ -78,15 +79,16 @@ Component({
 
     // 注意：只有位置在发生改变才会持续触发bindchange
     onMoving(event) {  
-      /* moving时，调用间隔很快，是否应考虑优化 */
+      /* moving时，调用间隔很短，是否应考虑优化 */
       //console.log("[moving...]")
+      //console.log(event)
       const {
         detail,
         currentTarget: {dataset}
       } = event
       this.setData({
         moveId: dataset.moveid,
-        endY: detail.y
+        endY: globalUtil.px2rpx(detail.y)
       })
     },
 
@@ -100,15 +102,14 @@ Component({
       var newList = JSON.parse(JSON.stringify(this.properties.tarList))
       console.log("change endY to", this.data.endY)
       newList[this.data.moveId].y = this.data.endY
-      console.log(newList[this.data.moveId])  // TODO: 此y非彼y；bindchange返回的y有点怪
-      console.log(newList)
-      //newList.sort((a, b) => {return a.y - b.y})
-      console.log(this.data.moveId, newList[this.data.moveId].y,  newList)
+      console.log(newList[this.data.moveId])  // TODO: 打印出的list object很怪
+      newList.sort((a, b) => {return a.y - b.y})
+      console.log("after sorting:", this.data.moveId, newList[this.data.moveId].y, newList) 
+      // TODO: 这里list的y值不对劲，好像受后买你的drawList()影响，但不是深拷贝了嘛
       this.setData({
         tarList: newList,
         statusLongpress: false
       })
-      console.log("tarList:", this.properties.tarList)
       this.drawList()
       this.deactiveMovable()
       console.log("\n")
