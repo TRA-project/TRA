@@ -115,6 +115,17 @@ Component({
       this.drawList()
       this.deactiveMovable()
       console.log("\n")
+    },
+
+    deleteListItem(event) {
+      console.log(event)
+      var newList = this.properties.tarList
+      var delIdx = event.currentTarget.dataset.id
+      newList.splice(delIdx, 1)
+      this.setData({
+        tarList: newList
+      })
+      this.drawList()
     }
   },
 

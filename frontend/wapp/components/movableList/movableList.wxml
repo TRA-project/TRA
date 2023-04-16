@@ -1,6 +1,7 @@
 <!--components/movableList/movableList.wxml-->
 
-<movable-area class="movable-list-container" style="height: {{tarList.length * (itemHeight + itemMarginTop)}}rpx;">
+<movable-area class="movable-list-container" 
+  style="height: {{tarList.length * (itemHeight + itemMarginTop) + itemMarginTop}}rpx;">
   <movable-view 
     class="movable-list-item-view" wx:for="{{tarList}}" wx:key="unique"
     style="height: {{itemHeight}}rpx; margin-top: {{itemMarginTop}}rpx; z-index: {{index == moveId ? 12 : 11}};"
@@ -8,19 +9,26 @@
     bindlongpress="onLongPress" bindchange="onMoving" bindtouchend="onTouchEnd"
     y="{{item.y}}rpx" data-moveid="{{index}}"
   > 
-    <view class="movable-item" style="height: {{itemHeight}}rpx;">
-
-      <image class="movable-item-thumb" src="/images/guozhibeiyuan.jpg" />
-      <view class="movable-item-text">
-        <view class="movable-item-text-title">
-          {{item.name}}
-        </view>
-        <view class="movable-item-text-desc">
-          {{item.position}}
-        </view>
-      </view>
-      <van-icon class="movable-item-text-icon" name="wap-nav" size="40rpx"/>
       
-    </view>
+      <van-swipe-cell class="swipe-cell-container" left-width="36">  <!-- 单位还是px -->
+        <view class="button-container" slot="left">
+          <button class="delete-item-button" type="warn" bindtap="deleteListItem" data-id="{{index}}">
+            删除
+          </button>
+        </view>
+        <view class="movable-item" style="height: {{itemHeight}}rpx;">
+          <image class="movable-item-thumb" src="/images/guozhibeiyuan.jpg" />
+          <view class="movable-item-text">
+            <view class="movable-item-text-title">
+              {{item.name}}
+            </view>
+            <view class="movable-item-text-desc">
+              {{item.position}}
+            </view>
+          </view>
+          <van-icon class="movable-item-text-icon" name="wap-nav" size="40rpx"/>
+        </view>
+      </van-swipe-cell>
+      
   </movable-view>
 </movable-area>

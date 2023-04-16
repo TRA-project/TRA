@@ -19,9 +19,25 @@
   border-radius: 20rpx;
 }
 
+.button-container {
+  height: 180rpx;
+  width: 72rpx;
+  border-radius: 20rpx;
+}
+
+.delete-item-button {
+  padding: 8rpx;
+  margin: 10rpx;
+  height: 90%;
+  width: 56rpx !important;
+  border-radius: 20rpx;
+  writing-mode: vertical-lr;
+  vertical-align: middle;
+  align-self: center;
+}
+
 .movable-item {
   height: 180rpx;
-  border-bottom: 2rpx solid rgba(144, 156, 147, 0.788);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
