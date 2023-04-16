@@ -14,14 +14,15 @@ from .subsight import SubsightSerializer
 
 class SightDetailedSerializer(serializers.ModelSerializer):
     address = AddressSerializer(required=False, allow_null=True)
-    price_list = PriceSerializer(read_only=True, many=True)
-    subsight_list = SubsightSerializer(read_only=True, many=True)
+    price_set = PriceSerializer(read_only=True, many=True)
+    subsight_set = SubsightSerializer(read_only=True, many=True)
 
     class Meta:
         model = Sight
+        fields = '__all__'
         extra_kwargs = {
-            'price_list': {'min_value': 0, 'required': True},
-            'subsight_list': {'min_value': 0, 'required': True}
+            'price_set': {},
+            'subsight_set': {}
         }
 
 
@@ -30,7 +31,7 @@ class SightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sight
-        exclude = ['open_time', 'close_time', 'play_time']
+        exclude = ['open_time', 'close_time', 'playtime']
 
 
 class SightBriefSerializer(serializers.ModelSerializer):
