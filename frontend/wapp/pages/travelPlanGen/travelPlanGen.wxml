@@ -1,0 +1,8 @@
+<!--pages/travelPlanGen/travelPlanGen.wxml-->
+
+<van-button plain hairline round size="normal" bind:click="navigateToPreview"
+  loading-type="spinner" loading-text="loading" type="info" >
+  去往Preview
+</van-button>
+
+<my-movable-list tarList="{{testList}}"></my-movable-list>

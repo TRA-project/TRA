@@ -43,6 +43,8 @@
     "pages/schRelease/schRelease",
     "pages/sceneSearch/sceneSearch",
     "pages/SceneryShow/SceneryShow",
+    "pages/travelPlanGen/travelPlanGen",
+    "pages/travelPlanPreview/travelPlanPreview",
     "pages/sceneList/sceneList"
   ],
   "window": {
@@ -63,6 +65,7 @@
   },
   "usingComponents": {
     "van-cell": "@vant/weapp/cell",
-    "van-cell-group": "@vant/weapp/cell-group"
+    "van-cell-group": "@vant/weapp/cell-group",
+    "van-icon": "@vant/weapp/icon/index"
   }
 }
