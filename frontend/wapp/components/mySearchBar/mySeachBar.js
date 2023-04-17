@@ -14,12 +14,17 @@ Component({
     // 背景颜色
     bgcolor: {
       type: String,
-      value: "rgb(4, 138, 201);"
+      value: "rgba(30, 144, 255, 1.0);"
     },
     // 圆角尺寸
     radius: {
       type: Number,
       value: 36
+    },
+    // confirm跳转页面
+    confirmTargetUrl: {
+      type: String,
+      value: "/pages/sceneList/sceneList"
     }
   },
 
@@ -58,6 +63,17 @@ Component({
       }, this.data.delay) // 还得这么用data的值
     },
 
+    deleteInput() {
+      console.log("delete input keyword")
+      this.setData({
+        keyword: "",
+        searchRes: []
+      })
+      console.log("currnet keyword:" + this.data.keyword)
+      this.triggerEvent("syncinput", {value: this.data.keyword})
+      console.log("sync from son component:" + this.data.keyword)
+    },
+
     getSearchList() {
       if (this.data.keyword === "") {
         this.setData({
@@ -66,7 +82,7 @@ Component({
         return
       }
 
-      var url = utils.server_hostname + "/api/core/sceneries/quicksearch/"
+      var url = utils.server_hostname + "/api/core/" + "sceneries/quicksearch/"
       wx.request({
         url: url,
         method: "GET",
@@ -88,6 +104,13 @@ Component({
         fail: (res) => {  // 发送请求失败
           console.log(res)
         }
+      })
+    },
+
+    onConfirm() {
+      this.setData
+      wx.navigateTo({
+        url: this.properties.confirmTargetUrl + "?keyword=" + this.data.keyword,
       })
     }
   },
