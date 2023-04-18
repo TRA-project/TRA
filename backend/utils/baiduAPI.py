@@ -3,16 +3,25 @@ import requests
 api_key = '4n9FbMFLfdU77lVEEtWBoFk7E3oRIEQx'
 
 
+def search_nearby_hotels(**kwargs):
+    return search(**kwargs, query='酒店', tag='星级酒店')
+
+
+def search_nearby_foods(**kwargs):
+    return search(**kwargs, query='美食')
+
+
 # 封装查询酒店函数
-def search_hotels(location, **kwargs):
+def search(**kwargs):
     # 定义请求 URL
     url = 'http://api.map.baidu.com/place/v2/search'
     # 定义搜索条件
-    radius = 5000  # 搜索半径
-    query = '酒店'  # 搜索关键词
-    tag = '星级酒店'  # 搜索类别
-    scope = 2  # 搜索范围，2 表示周边
+    radius = kwargs.pop('radius', 2000)  # 搜索半径
+    query = kwargs.pop('query', None)  # 搜索关键词
+    tag = kwargs.pop('tag', None)  # 搜索类别
+    scope = kwargs.pop('scope', 2)  # 搜索范围，2 表示周边
     output = 'json'
+    location = kwargs.pop('location', None)
 
     params = {
         'ak': api_key,
@@ -23,12 +32,13 @@ def search_hotels(location, **kwargs):
         'scope': scope,
         'output': output
     }
-
-    params.update(kwargs)
+    print(params)
     # 发送 HTTP 请求并解析结果
     response = requests.get(url, params=params)
 
     result = response.json()
+
+    print(result)
 
     # 处理查询结果
     if result['status'] == 0:

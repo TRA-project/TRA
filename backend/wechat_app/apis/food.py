@@ -4,7 +4,7 @@ from rest_framework.parsers import MultiPartParser, JSONParser, FormParser
 from rest_framework.response import Response
 
 from utility.models import Food, Image
-from utils import conversion
+from utils import conversion, baiduAPI
 from wechat_app.serializers import FoodSerializer
 
 
@@ -42,3 +42,7 @@ class FoodApis(viewsets.ModelViewSet):
     def deleteAll(self, request, *args, **kwargs):
         deleted, _ = Food.objects.all().delete()
         return Response({'message': f'{deleted} Food instances deleted.'}, status=status.HTTP_200_OK)
+
+    @action(methods=['GET'], detail=False, url_path='nearbyFoods')
+    def search_nearby_foods(self, request):
+        return Response(data=baiduAPI.search_nearby_foods(**request.GET.dict()))

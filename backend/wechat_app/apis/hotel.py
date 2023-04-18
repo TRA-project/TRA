@@ -26,4 +26,4 @@ class HotelApis(viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=False, url_path='nearbyHotels')
     def search_nearby_hotels(self, request):
-        return Response(data=baiduAPI.search_hotels(**request.GET.dict()))
+        return Response(data=baiduAPI.search_nearby_hotels(**request.GET.dict()))
