@@ -25,6 +25,10 @@ Component({
     confirmTargetUrl: {
       type: String,
       value: "/pages/sceneList/sceneList"
+    },
+    keyword: {
+      type: String,
+      value: ""
     }
   },
 
@@ -34,7 +38,7 @@ Component({
   data: {
     timer: null,
     delay: 500,
-    keyword: "",
+    //keyword: "", 改用properties中的keyword，同样可以用this.data.keyword获取
     searchRes: [],  // 搜索结果列表
     tmpRes: [
       {"name": "天空岛", "position": "提瓦特"},
@@ -71,7 +75,7 @@ Component({
       })
       console.log("currnet keyword:" + this.data.keyword)
       this.triggerEvent("syncinput", {value: this.data.keyword})
-      console.log("sync from son component:" + this.data.keyword)
+      console.log("son component call sync:" + this.data.keyword)
     },
 
     getSearchList() {
@@ -82,12 +86,14 @@ Component({
         return
       }
 
-      var url = utils.server_hostname + "/api/core/" + "sceneries/quicksearch/"
+      var url = utils.server_hostname + "/api/core/" + "sceneries/brief-search/"
+      var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
       wx.request({
         url: url,
         method: "GET",
         data: {
-          "keyword": this.data.keyword
+          "keyword": this.data.keyword,
+          "token-auth": token
         },
         header: {
 
@@ -108,7 +114,7 @@ Component({
     },
 
     onConfirm() {
-      this.setData
+      this.triggerEvent("syncconfirm", {value: this.data.keyword})
       wx.navigateTo({
         url: this.properties.confirmTargetUrl + "?keyword=" + this.data.keyword,
       })

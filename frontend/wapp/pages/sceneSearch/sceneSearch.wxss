@@ -9,6 +9,7 @@
 .trash-icon {
   width: 34rpx;
   height: 34rpx;
+  margin-right: 20rpx;
 }
 
 .history-box {
