@@ -1,0 +1,64 @@
+<view class="modals modals-bottom-dialog" hidden="{{hideModal}}" style="width:100%; height: 800rpx;">
+  <view class="modals-cancel" bindtap="hideModal"></view>
+  <view class="bottom-dialog-body bottom-pos" animation="{{animationData}}" style="height: 800rpx;">
+    <!--top-->
+    <view class="comment_top">
+      <view></view>
+      <view class="comment_num">{{comments}} 条评论</view>
+      <view bindtap="hideModal" style="height: 60rpx; width: 60rpx;">
+        <view class="comment_close">×</view>
+      </view>
+    </view>
+
+    <!--comment_list-->
+    <view class="comment_list">
+      <view class="comment_li" wx:for="{{comment_list}}" wx:key="index">
+        <view class="father_comment" id="{{item}}" bindtap="reply" bindlongpress="deleteReply">
+          <!--avatar-->
+          <image class="comment_li_img" id="{{comment_dict[item].owner.id}}" src="{{server_hostname}}/api/core/images/{{comment_dict[item].owner.icon}}/data/" catchtap="navigate2Replyer"></image>
+          <view class="comment_li_info">
+            <!--nickname-->
+            <view class="comment_li_name" id="{{comment_dict[item].owner.id}}" catchtap="navigate2Replyer">
+              {{comment_dict[item].owner.nickname}}
+            </view>
+            <!--content and time-->
+            <view class="comment_li_content">
+              {{comment_dict[item].content}}
+            </view>
+            <text class="comment_li_date">{{comment_dict[item].time}}</text>
+          </view>
+        </view>
+
+        <view class="reply" wx:for="{{comment_dict[item].reply_list}}" wx:for-item="reply_id" wx:key="index" bindtap='reply' id="{{reply_id}}" bindlongpress="deleteReply">
+          <!--avatar-->
+
+          <image class="reply_img" id="{{comment_dict[reply_id].owner.id}}" src="{{server_hostname}}/api/core/images/{{comment_dict[reply_id].owner.icon}}/data/" catchtap="navigate2Replyer"></image>
+
+
+          <view class="reply_info">
+            <!--username-->
+            <view class="reply_name" id="{{comment_dict[reply_id].owner.id}}" catchtap="navigate2Replyer">{{comment_dict[reply_id].owner.nickname}}</view>
+            <!--content-->
+            <text data-type="2" class="reply_content">回复 <text class="right_name">{{comment_dict[comment_dict[reply_id].reply].owner.nickname}}：</text>{{comment_dict[reply_id].content}}</text>
+            <!--time-->
+            <text class="reply_date">{{comment_dict[reply_id].time}}</text>
+          </view>
+        </view>
+
+        <view wx:if="{{comment_dict[item].next!=null}}" class="textBox" bindtap="moreReply" id="{{item}}">
+          <text>点击获取更多回复</text>
+        </view>
+      </view>
+
+      <view wx:if="{{next_comments!=null}}" class="textBox" bindtap="getComments">
+        <text>点击获取更多评论</text>
+      </view>
+    </view>
+
+    <!--comment_inputbox-->
+    <view class="comment_inputbox">
+      <textarea class="comment_input" maxlength="120" adjust-position auto-height="true" bindinput="commentInput" focus="{{focus}}" value="{{comment_content}}" placeholder="写下你的评论吧"></textarea>
+      <view class="comment_sendbtn" bindtap="sendComment" bindlongpress="clearReply">{{reply_nickname}}</view>
+    </view>
+  </view>
+</view>

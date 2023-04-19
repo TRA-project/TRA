@@ -1,10 +1,11 @@
-// pages/SceneryShow/SceneryShow.js
+// pages/sceneryShow/sceneryShow.js
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        // 以下是景点方面的数据
         curImage: 0,
         images: ["../../images/guozhibeiyuan.jpg", "../../images/logo.png"],
         name: "国家植物馆北园",
@@ -23,36 +24,111 @@ Page({
               "price": "2.5"
             }
           ],
-          // 需要对景点数据进行预处理，当长度超过某个值时，将其截断
-          "inner_spot": [
-            {
-              "name": "曹雪芹纪念馆",
-              "summary": "这是曹雪芹纪念馆"
-            },
-            {
-              "name": "卧佛寺",
-              "summary": "commodo tempor mollit veniam"
-            },
-            {
-              "name": "蜜蜂博物馆",
-              "summary": "aute consectetur commodo exercitation"
-            },
-            {
-              "name": "植物园温室",
-              "summary": "consequat exercitation est"
-            },
-            {
-              "name": "樱桃沟",
-              "summary": "reprehenderit"
-            }
-          ]
+        // 需要对景点数据进行预处理，当长度超过某个值时，将其截断
+        "inner_spot": [
+          {
+            "name": "曹雪芹纪念馆",
+            "summary": "这是曹雪芹纪念馆"
+          },
+          {
+            "name": "卧佛寺",
+            "summary": "commodo tempor mollit veniam"
+          },
+          {
+            "name": "蜜蜂博物馆",
+            "summary": "aute consectetur commodo exercitation"
+          },
+          {
+            "name": "植物园温室",
+            "summary": "consequat exercitation est"
+          },
+          {
+            "name": "樱桃沟",
+            "summary": "reprehenderit"
+          }
+        ],
+
+        
+        // 以下是弹窗部分的数据
+        showDialog: false,
+        editText: "",
+        dialogTitle: "",
+        dialogMode: "intro", // 标识当前弹窗编辑的类型
+
+        // 添加内部游览点的数据
+        add_elm: false,
+        editSpotName: "",
+        editSpotIntro: "",
+
+        hideComment: true,
     },
 
+    // 随着滑动顶部图片，自动更新图片所在的序号
     onSwiperChange(e) {
         console.log(e.detail.current);
         this.setData({
             curImage: e.detail.current
         })
+    },
+
+    onAddSpot(e) {
+      this.setData({
+        add_elm: !this.data.add_elm
+      })
+    },
+
+    onEditIntro(e) {
+      this.setData({
+        showDialog: true,
+        dialogTitle: "编辑景点介绍",
+        editText: this.data.intro,
+        dialogMode: "intro"
+      })
+    },
+
+    onEditTime(e) {
+      this.setData({
+        showDialog: true,
+        dialogTitle: "编辑开放时间",
+        editText: this.data.open_time,
+        dialogMode: "open_time"
+      })
+    },
+
+    onClose(e) {
+      this.setData({
+        showDialog: false,
+      })
+    },
+
+    onConfirm(e) {
+      this.setData({
+        showDialog: false,
+      })
+      console.log("confirm")
+    },
+
+    // 确认添加某个游览点
+    onConfirmSpot(e) {
+      this.setData({
+        editSpotName: "",
+        editSpotIntro: "",
+        add_elm: false
+      })
+    },
+
+    onExitSpot(e) {
+      this.setData({
+        editSpotName: "",
+        editSpotIntro: "",
+        add_elm: false
+      })
+    },
+
+    onComment(e) {
+      this.setData({
+        hideComment: false,
+      })
     },
 
     /**
