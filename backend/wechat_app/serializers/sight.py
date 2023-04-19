@@ -24,7 +24,7 @@ class SightDetailedSerializer(serializers.ModelSerializer):
             'price_set': {},
             'subsight_set': {}
         }
-
+        fields = '__all__'
 
 class SightSerializer(serializers.ModelSerializer):
     address = AddressSerializer(required=False, allow_null=True)
