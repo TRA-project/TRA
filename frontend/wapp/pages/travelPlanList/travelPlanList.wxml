@@ -1,0 +1,20 @@
+<!--pages/travelPlanList/travelPlanList.wxml-->
+
+<view class="travel-plan-list-title-container">
+  <text class="travel-plan-list-title">我的出行计划</text>
+</view>
+
+<view class="travel-plan-list-container">
+  <view class="travel-plan-list-item" wx:for="{{travelPlanList}}" wx:key="id">
+    <view class="travel-plan-item-name">
+      {{item.name}}
+    </view>
+    <view class="travel-plan-preview">
+      {{item.preview}}
+    </view>
+  </view>
+</view>
+
+<view class="travel-plan-list-footer">
+  <button class="travel-plan-add-button">+</button>
+</view>

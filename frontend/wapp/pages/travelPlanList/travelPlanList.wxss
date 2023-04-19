@@ -1,0 +1,27 @@
+/* pages/travelPlanList/travelPlanList.wxss */
+
+.travel-plan-list-title-container {
+  margin-top: 5rpx;
+  height: 80rpx;
+  box-shadow: 0rpx 6rpx 15rpx 2rpx rgba(177, 177, 177, 0.589);
+  text-align: center;
+}
+
+.travel-plan-list-title {
+  font-weight: bolder;
+  color: rgba(30, 144, 255, 1.0);
+  line-height: 80rpx;
+}
+
+.travel-plan-list-container {
+  margin-top: 10rpx;
+  padding: 15rpx;
+  background-color: rgba(196, 196, 196, 0.185);
+}
+
+.travel-plan-list-item {
+  height: 150rpx;
+  margin: 5rpx;
+  border-bottom: 2rpx solid rgba(212, 212, 212, 0.541);
+  box-shadow: 0rpx 3rpx 8rpx 2rpx rgba(177, 177, 177, 0.589);
+}
