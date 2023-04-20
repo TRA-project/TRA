@@ -7,6 +7,7 @@
 from rest_framework import serializers
 
 from utility.models.price import Price
+from backend import settings
 
 
 class PriceSerializer(serializers.ModelSerializer):

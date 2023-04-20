@@ -49,10 +49,8 @@ class ImageNameField(ImageField):
         super().__init__(**kwargs)
 
     def to_representation(self, value):
-        return _os.path.basename(value.name)[self.name_truncate:]
-
-    def to_internal_value(self, data):
-        return super().to_internal_value(data)
+        data = _os.path.basename(value.name)
+        return data[self.name_truncate:]
 
 
 class WritableMethodField(Field):

@@ -4,23 +4,24 @@ This file is for function definitions.
 import json
 import zipfile
 from io import BytesIO
-from rest_framework.exceptions import ParseError
 
 
-def get_list(data, name, errtext="require %s", errtype=None):
+def get_list(data, name, err_text="require %s", err_type=None):
     """
     To get a list from request data.
     """
+
     def get(pname):
         res = data.get(pname)
         if res:
             return [res]
         return []
+
     getlist = getattr(data, "getlist", get)
     values = getlist(name) + getlist(name + '[]')
     if not values:
-        if errtype:
-            raise errtype(errtext % (name))
+        if err_type:
+            raise err_type(err_text % (name))
         return []
     res = []
     for value in values:
@@ -39,6 +40,7 @@ def get_list(data, name, errtext="require %s", errtype=None):
         else:
             res.append(value)
     return res
+
 
 def get_bool(data, name):
     """
