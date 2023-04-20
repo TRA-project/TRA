@@ -12,3 +12,14 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         exclude = []
+
+
+class TestSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True)
+    time = serializers.DateTimeField(read_only=True)
+    description = serializers.CharField(read_only=True)
+    image = serializers.ImageField(read_only=True)
+
+    class Meta:
+        model = Image
+        exclude = []
