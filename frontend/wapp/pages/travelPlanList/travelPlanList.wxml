@@ -6,15 +6,31 @@
 
 <view class="travel-plan-list-container">
   <view class="travel-plan-list-item" wx:for="{{travelPlanList}}" wx:key="id">
-    <view class="travel-plan-item-name">
-      {{item.name}}
+    <image class="travel-plan-item-icon" src="/images/travel-plan-icon.png" />
+    <view class="travel-plan-item-text">
+      <view class="travel-plan-item-text-name">
+        {{item.name}}
+      </view>
+      <view class="travel-plan-item-text-preview">
+        {{item.preview}}
+      </view>
     </view>
-    <view class="travel-plan-preview">
-      {{item.preview}}
-    </view>
+    
   </view>
 </view>
 
 <view class="travel-plan-list-footer">
-  <button class="travel-plan-add-button">+</button>
+  <button class="travel-plan-add-button" bindtap="onPopupShow">+</button>
 </view>
+
+<van-popup show="{{ isShow }}" position="bottom" custom-style="height: 70%;" 
+  closeable bind:close="onClose">
+  <text class="travel-plan-form-title"> 生成您新的出行计划 </text>
+  <text class="travel-plan-form-desc"> 填写一些信息以便我们更好地为您定制计划 </text>
+  <form class="travel-plan-form" bindsubmit="formSubmit" bindreset="formReset">
+    <view class="form-section">
+      <text>目标地区：</text>
+      
+    </view>
+  </form>
+</van-popup>

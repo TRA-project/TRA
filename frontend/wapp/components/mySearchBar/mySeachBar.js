@@ -86,25 +86,27 @@ Component({
         return
       }
 
-      var url = utils.server_hostname + "/api/core/" + "sceneries/brief-search/"
+      var url = utils.server_hostname + "/api/core/" + "sights/brief_search/"
       var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
       wx.request({
         url: url,
         method: "GET",
         data: {
-          "keyword": this.data.keyword,
-          "token-auth": token
+          "keyword": this.data.keyword
         },
         header: {
-
+          "token-auth": token
         },
         success: (res) => { // 发送请求成功
-          console.log(res)
+          console.log("get searchList:", res)
           if (res.statusCode !== 200) {
             this.setData({
               searchRes: this.data.tmpRes
             })
-            console.log(this.data.searchRes)
+          } else {
+            this.setData({
+              searchRes: res.data
+            })
           }
         },
         fail: (res) => {  // 发送请求失败

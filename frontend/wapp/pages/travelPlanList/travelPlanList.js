@@ -25,27 +25,40 @@ Page({
         preview: "this is the plan3 preview",
       },
     ],
+
+    isShow: false,
+
+    minHour: 10,
+    maxHour: 20,
+    minDate: new Date().getTime(),
+    maxDate: new Date(2030, 10, 1).getTime(),
+    currentDate: new Date().getTime(),
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    var url = utils.server_hostname + "/api/core/" + "travelplans/"
+    var url = utils.server_hostname + "/api/core/" + "plan/"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
     wx.request({
       url: url,
       method: "GET",
       data: {
-        "token-auth": token
+        
       },
       header: {
-
+        "token-auth": token
       },
       success: (res) => {
+        console.log("plan receive: ", res)
         if (res.statusCode !== 200) {
           this.setData({
             travelPlanList: this.data.tmpTravelPlanList
+          })
+        } else {
+          this.setData({
+            travelPlanList: res.data
           })
         }
         console.log(this.data.travelPlanList)
@@ -67,9 +80,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    
   },
 
+  onPopupShow() {
+    this.setData({
+      isShow: true
+    })
+  },
+
+  onClose() {
+    this.setData({
+      isShow: false
+    })
+  },
+  
   /**
    * 生命周期函数--监听页面隐藏
    */

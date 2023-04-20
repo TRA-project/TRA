@@ -16,12 +16,67 @@
 .travel-plan-list-container {
   margin-top: 10rpx;
   padding: 15rpx;
-  background-color: rgba(196, 196, 196, 0.185);
+  /* background-color: rgba(196, 196, 196, 0.185); */
 }
 
 .travel-plan-list-item {
   height: 150rpx;
-  margin: 5rpx;
+  margin: 10rpx;
+  padding-left: 10rpx;
+  padding-top: 10rpx;
+  border-radius: 15rpx;
   border-bottom: 2rpx solid rgba(212, 212, 212, 0.541);
   box-shadow: 0rpx 3rpx 8rpx 2rpx rgba(177, 177, 177, 0.589);
+  display: flex;
+  align-items: center;
+}
+
+.travel-plan-item-icon {
+  width: 110rpx;
+  height: 110rpx;
+  padding: 15rpx;
+}
+
+.travel-plan-item-text {
+  line-height: 60rpx;
+  margin-left: 10rpx;
+}
+
+.travel-plan-item-text-name {
+  font-weight: bolder;
+  font-size: 32rpx;
+}
+
+.travel-plan-item-text-preview {
+  font-size: 28rpx;
+  color: rgb(124, 124, 124);
+}
+
+.travel-plan-list-footer {
+
+}
+
+.travel-plan-add-button {
+
+}
+
+.van-popup {
+  padding: 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.travel-plan-form-title {
+  width: 100%;
+  font-size: 36rpx;
+  font-weight: bolder;
+}
+
+.travel-plan-form-desc {
+  font-size: 28rpx;
+  color: rgb(124, 124, 124);
+}
+
+.travel-plan-form {
+
 }

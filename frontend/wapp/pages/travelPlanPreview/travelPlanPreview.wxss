@@ -33,7 +33,7 @@
 
 .tencent-map {
   width: 100%;
-  height: 850rpx;
+  height: 750rpx;
 }
 
 .travel-plans-display-container {

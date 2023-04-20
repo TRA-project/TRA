@@ -99,17 +99,16 @@ Page({
       keyword: options.keyword
     })
 
-    var url = utils.server_hostname + "/api/core/" + "sceneries"
+    var url = utils.server_hostname + "/api/core/" + "sights/search"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
     wx.request({
       url: url,
       method: "GET",
       data: {
-        "keyword": this.data.keyword,
-        "token-auth": token
+        "keyword": this.data.keyword
       },
       header: {
-
+        "token-auth": token
       },
       success: (res) => {
         console.log(res)

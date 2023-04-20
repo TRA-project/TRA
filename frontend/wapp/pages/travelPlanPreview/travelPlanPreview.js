@@ -20,7 +20,8 @@ Page({
     ],
 
     plansActive: 0,
-    travelPlansList: [
+    travelPlansList: [],
+    tmpTravelPlansList: [
       [
         {
           id: 1,
@@ -99,6 +100,35 @@ Page({
         console.log("latitude:" , this.data.mapLatitude)
         console.log("marker longitude:" , this.data.mapMarkers[0].longitude)
         console.log("marker latitude:" , this.data.mapMarkers[0].latitude)
+      }
+    })
+
+    var url = utils.server_hostname + "/api/core/" + "plan/new/"
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
+    wx.request({
+      url: url,
+      method: "GET",
+      data: {
+        "city": "北京市",
+        "token-auth": token
+      },
+      header: {
+
+      },
+      success: (res) => { // 发送请求成功
+        console.log("receive plan:", res)
+        if (res.statusCode !== 200) {
+          this.setData({
+            travelPlansList: this.data.tmpTravelPlansList
+          })
+        } else {
+          this.setData({
+            travelPlansList: res.data
+          })
+        }
+      },
+      fail: (res) => {  // 发送请求失败
+        console.log(res)
       }
     })
   },
