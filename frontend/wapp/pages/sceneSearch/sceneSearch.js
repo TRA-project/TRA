@@ -35,6 +35,10 @@ Page({
 
   },
 
+  confirmHistory() {
+    /* 填入向子组件的keyword填入history值，并触发子组件的confirm事件 */
+  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */

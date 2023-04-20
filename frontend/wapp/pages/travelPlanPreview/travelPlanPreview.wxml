@@ -1,0 +1,26 @@
+<!--pages/travelPlanPreview/travelPlanPreview.wxml-->
+
+<view class="travel-plan-title-container">
+  <text class="travel-plan-title"> 出行计划生成 </text>
+</view>
+
+<view class="custom-argument-display-container">
+  配置的参数
+</view>
+
+<view class="travel-plan-map-container">
+  <map class="tencent-map" longitude="{{mapLongitude}}" latitude="{{mapLatitude}}" 
+       markers="{{mapMarkers}}"></map>
+</view>
+
+<view class="travel-plans-display-container">
+  <van-tabs animated active="{{plansActive}}" bind:change="onTabChange" color="rgba(30,144,255,1.0)">
+    <van-tab wx:for="{{travelPlansList}}" wx:key="*this" title="方案{{index+1}}">
+      <my-movable-list tarList="{{item}}"></my-movable-list>
+    </van-tab>
+  </van-tabs>
+</view>
+
+<view class="travel-plan-footer-container">
+  <button class="travel-plan-submit-button" type="primary" hover-class="button-hover">确认方案</button>
+</view>

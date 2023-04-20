@@ -33,15 +33,11 @@
 前端的跨域请求原本是部署后的ip，先改回127.0.0.1了(`utils.js`和`vue.config.js`)
 
 
-## 原始代码梳理
-
-空
-
 ## 开发者协作约定
 
 1.保证仓库文件的换行符均为LF不混杂CRLF，不过只要大家git的配置中`core.autocrlf`为`true`或`input`就行（一般下载git时都是`true`），一般不用管（`git config --system --list`可查看）
 
-### 分支管理
+### 分支管理规范
 开发中分支为`dev`
 
 - 对于每个开发者：若开发者`xrb`需要完成功能`景点搜索`，则需从`dev`分支新开一个分支`dev-xrb_景点搜索`(`git checkout -b dev-xrb_景点搜索`)，然后在其上进行目标任务开发；当完成并经过基本测试后，通过pull request合并进`dev`分支。一般情况下，不随意修改别人的分支，如发现问题联系相关分支开发者。
@@ -52,7 +48,55 @@
 
 - 到某阶段稳定版本时，会将`dev`合并进入`master`；重要版本打上`tag`并`release`
 
+### 提交信息规范
+> 借鉴自软工杰
+
+#### 模板
+
+```jsx
+<type>(<scope>): <subject>
+
+<body>
+```
+
+- type 有下面几类
+  - `feat` 新功能
+  - `fix` 修补bug（在 `<body>` 里面加对应的 Issue ID）
+  - `test` 测试相关
+  - `style` 代码风格变化（不影响运行）
+  - `refactor` 重构（没有新增功能或修复 BUG）
+  - `perf` 性能优化
+  - `chore` 构建过程变动（包括构建工具/CI等）
+- scope（可选）：影响的模块
+- subject：主题（一句话简要描述）
+- body（可选）：详细描述，包括相关的 issue、bug 以及具体变动等，可以有多行
+
+#### 例子
+
+```bash
+[feat](账号模块): 增加微信登录验证
+```
+```bash
+[fix](管理员 UI): Safari 下界面适配
+
+1. xxx 元素 yyyy
+2. aaa 页面 bbbb
+
+Issue: #3
+```
+```bash
+[refactor](招聘信息接口): xxx 接口更新
+```
+```bash
+[style]: 格式规范更改，重新格式化
+```
+
+**请不要用 `fix #3` 之类的 message 关闭 Issue！请按照 BUG 提出与修复的描述用 Pull Request！**
+
+
 ### 问题交流
 在Issues中发起一个新的issue（具体auto assign的功能还没尝试清楚）；完成问题则关闭该issue
+
+bug的提出和修复也可通过issue
 
 可对代码进行评论（具体功能尚未尝试清楚）
