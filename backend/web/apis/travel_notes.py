@@ -98,7 +98,7 @@ class TravelNotesApis(viewsets.ModelViewSet):
                 if forbid:
                     forbid = forbid.first()
                     forbid.time = date.now()
-                    forbid.type = settings.MESSAGE_TYPE_TRAVEL_FORBIDDEN_CANCEL
+                    forbid.name = settings.MESSAGE_TYPE_TRAVEL_FORBIDDEN_CANCEL
                     obj.owner.unread_messages.remove(forbid)
                 else:
                     cancel = Message.objects.filter(target_users__id=obj.owner_id, related_travel_id=obj.id,
@@ -113,7 +113,7 @@ class TravelNotesApis(viewsets.ModelViewSet):
                 if cancel:
                     cancel = cancel.first()
                     cancel.time = date.now()
-                    cancel.type = settings.MESSAGE_TYPE_TRAVEL_FORBIDDEN
+                    cancel.name = settings.MESSAGE_TYPE_TRAVEL_FORBIDDEN
                     obj.owner.unread_messages.remove(cancel)
                 else:
                     forbid = Message.objects.filter(target_users__id=obj.owner_id, related_travel_id=obj.id,

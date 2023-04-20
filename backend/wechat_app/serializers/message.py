@@ -20,8 +20,8 @@ class MessageSerializer(serializers.ModelSerializer):
     description = serializers.SerializerMethodField('get_description')
 
     def get_description(self, obj):
-        return settings.MESSAGE_TYPES_DESCRIPTION.get(obj.type,
-            settings.MESSAGE_TYPES_DESCRIPTION[settings.MESSAGE_TYPES_DEFAULT])
+        return settings.MESSAGE_TYPES_DESCRIPTION.get(obj.name,
+                                                      settings.MESSAGE_TYPES_DESCRIPTION[settings.MESSAGE_TYPES_DEFAULT])
 
     class Meta:
         model = Message
