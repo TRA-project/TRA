@@ -4,10 +4,9 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "@vant/weapp": "^1.10.3",
+    "@vant/weapp": "^1.10.16",
     "miniprogram-sm-crypto": "^0.3.8"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
