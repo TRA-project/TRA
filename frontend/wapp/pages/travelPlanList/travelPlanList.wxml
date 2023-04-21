@@ -20,17 +20,81 @@
 </view>
 
 <view class="travel-plan-list-footer">
-  <button class="travel-plan-add-button" bindtap="onPopupShow">+</button>
+  <button class="travel-plan-add-button" bindtap="onPopupShow" hover-class="travel-plan-add-button-hover">
+    <text class="travel-plan-button-text">+</text>
+  </button>
 </view>
 
-<van-popup show="{{ isShow }}" position="bottom" custom-style="height: 70%;" 
-  closeable bind:close="onClose">
+<van-popup show="{{ showPopup }}" position="bottom" custom-style="height: 70%;" 
+  closeable bind:close="onPopupClose">
   <text class="travel-plan-form-title"> 生成您新的出行计划 </text>
   <text class="travel-plan-form-desc"> 填写一些信息以便我们更好地为您定制计划 </text>
   <form class="travel-plan-form" bindsubmit="formSubmit" bindreset="formReset">
     <view class="form-section">
-      <text>目标地区：</text>
+      <van-field
+        value="{{ areaFieldValue }}"
+        is-link
+        readonly
+        label="目标地区"
+        placeholder="请选择所在地区"
+        bind:tap="onAreaFieldClick"
+      />
+      <van-cascader
+        wx:if="{{ showCascader }}"
+        value="{{ areaCascaderValue }}"
+        options="{{ areaOptions }}"
+        closeable="{{false}}"
+        bind:finish="onCascaderFinish"
+      />
+
+      <van-field
+        label="体验期望"
+        clearable
+        model:value="{{ tagsValue }}"
+        placeholder="请输入关键词"
+      />
+
+      <van-field
+        label="预期开销"
+        type="number"
+        model:value="{{ costValue }}"
+        placeholder="请输入预算（单位：￥）"
+      />
+
+      <van-field
+        label="预期时长"
+        readonly is-link
+        model:value="{{ dateBeginFieldValue }}"
+        placeholder="请选择预期开始时间"
+        bindtap="onDateBeginPickerShow"
+      />
+      <van-datetime-picker
+        wx:if="{{ showDateBeginPicker }}"
+        value="{{ dateBeginPickerValue }}"
+        min-date="{{ minDate }}"
+        formatter="{{ timeFormatter }}"
+        bind:confirm="onDateBeginPickerConfirm"
+      />
+
+      <van-field
+        label=" "
+        readonly is-link
+        model:value="{{ dateEndFieldValue }}"
+        placeholder="请选择预期结束时间"
+        bindtap="onDateEndPickerShow"
+      />
+      <van-datetime-picker
+        wx:if="{{ showDateEndPicker }}"
+        value="{{ dateEndPickerValue }}"
+        min-date="{{ minDate }}"
+        formatter="{{ timeFormatter }}"
+        bind:confirm="onDateEndPickerConfirm"
+      />
       
+      <button class="travel-plan-gen-button" hover-class="travel-plan-gen-button-hover"
+        form-type="submit">
+        生成计划
+      </button>
     </view>
   </form>
 </van-popup>

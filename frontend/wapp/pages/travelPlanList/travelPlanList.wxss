@@ -53,11 +53,22 @@
 }
 
 .travel-plan-list-footer {
-
+  align-items: center;
 }
 
 .travel-plan-add-button {
+  width: 100rpx !important;
+  padding: 16rpx;
+  text-align: center;
+  border-radius: 30rpx !important;
+  background-color: rgba(66, 157, 243, 0.877);
+  color: white;
+  font-size: 40rpx;
+}
 
+.travel-plan-add-button-hover {
+  background-color: rgba(54, 127, 196, 0.877);
+  color: rgba(105, 105, 105, 0.925);
 }
 
 .van-popup {
@@ -73,10 +84,31 @@
 }
 
 .travel-plan-form-desc {
+  margin-top: 14rpx;
   font-size: 28rpx;
   color: rgb(124, 124, 124);
 }
 
 .travel-plan-form {
+  margin-top: 10rpx;
+  padding: 2rpx;
+}
 
+.van-cascader__header {
+  height: 0rpx !important; /* 不显示标题栏 */
+}
+
+.travel-plan-gen-button {
+  margin-top: 100rpx;
+  width: 200rpx !important;
+  padding: 20rpx 10rpx;
+  background-color: rgba(44, 141, 233, 0.849);
+  color: white;
+  /* position: sticky;
+  bottom: 40rpx; */
+}
+
+.travel-plan-gen-button-hover {
+  background-color: rgba(54, 127, 196, 0.877);
+  color: rgba(180, 180, 180, 0.925);
 }

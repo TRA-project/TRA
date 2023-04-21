@@ -1,6 +1,19 @@
 // pages/travelPlanList/travelPlanList.js
 const utils = require("../../utils/util.js");
 
+const areaOptions = [
+  {
+    text: '浙江省',
+    value: '330000',
+    children: [{ text: '杭州市', value: '330100' }],
+  },
+  {
+    text: '江苏省',
+    value: '320000',
+    children: [{ text: '南京市', value: '320100' }],
+  },
+];
+
 Page({
 
   /**
@@ -26,13 +39,49 @@ Page({
       },
     ],
 
-    isShow: false,
+    // 整个Popup栏
+    showPopup: false,
 
-    minHour: 10,
-    maxHour: 20,
+    // 地区选择
+    areaOptions,
+    areaFieldValue: "",
+    showCascader: false,
+    areaCascaderValue: "",
+
+    // 标签类型
+    tagValue: "",
+
+    // 预期开销
+    costValue: 0,
+
+    // 预期时间
+    minHour: 0,
+    maxHour: 24,
     minDate: new Date().getTime(),
     maxDate: new Date(2030, 10, 1).getTime(),
-    currentDate: new Date().getTime(),
+
+    dateBeginFieldValue: "",
+    dateEndFieldValue: "",
+    showDateBeginPicker: false,
+    showDateEndPicker: false,
+    dateBeginPickerValue: new Date().getTime(),
+    dateEndPickerValue: new Date().getTime(),
+    timeFormatter(type, value) {
+      switch (type) {
+        case "year":
+          return `${value}年`
+        case "month":
+          return `${value}月`
+        case "day":
+          return `${value}日`
+        case "hour":
+          return `${value}时`
+        case "minute":
+          return `${value}分`
+        default:
+          return value
+      }
+    },
   },
 
   /**
@@ -44,9 +93,7 @@ Page({
     wx.request({
       url: url,
       method: "GET",
-      data: {
-        
-      },
+      data: {},
       header: {
         "token-auth": token
       },
@@ -83,16 +130,76 @@ Page({
     
   },
 
+  // 添加新计划 Popup
   onPopupShow() {
     this.setData({
-      isShow: true
+      showPopup: true
     })
   },
 
-  onClose() {
+  onPopupClose() {
     this.setData({
-      isShow: false
+      showPopup: false
     })
+  },
+
+  // 目标地区选择 Cascader
+  onAreaFieldClick() {
+    this.setData({
+      showCascader: true
+    })
+  },
+
+  onCascaderFinish(event) {
+    const { selectedOptions, value } = event.detail;
+    console.log(selectedOptions)
+    const areaFieldValue = selectedOptions.map((option) => {
+      return option.text || option.name
+    }).join('/')
+    this.setData({
+      areaFieldValue,
+      areaCascaderValue: value,
+      showCascader: false
+    })
+  },
+
+  // 时间区间选择 DatePicker
+  onDateBeginPickerShow() {
+    this.setData({
+      showDateBeginPicker: true
+    })
+  },
+
+  onDateBeginPickerConfirm(event) {
+    var date = new Date(event.detail)
+    console.log(utils.formatTime(date))
+    
+    this.setData({
+      showDateBeginPicker: false,
+      dateBeginPickerValue: event.detail,
+      dateBeginFieldValue: utils.formatTime(date)
+    })
+  },
+
+  onDateEndPickerShow() {
+    this.setData({
+      showDateEndPicker: true
+    })
+  },
+
+  onDateEndPickerConfirm(event) {
+    var date = new Date(event.detail)
+    console.log(utils.formatTime(date))
+    
+    this.setData({
+      showDateEndPicker: false,
+      dateEndPickerValue: event.detail,
+      dateEndFieldValue: utils.formatTime(date)
+    })
+  },
+
+  formSubmit(event) {
+    console.log(event)
   },
   
   /**
