@@ -1,14 +1,8 @@
-<!-- 聊天界面 -->
-<view class="chat-container">
-  <!-- 聊天消息列表 -->
-  <scroll-view class="chat-list" scroll-y="true" scroll-into-view="{{toView}}">
-    <view wx:for="{{messages}}" wx:key="{{index}}">
-      <text class="chat-item {{item.isMe ? 'me' : ''}}">{{item.content}}</text>
-    </view>
-  </scroll-view>
-  <!-- 发送消息表单 -->
-  <form class="chat-form" bindsubmit="sendMessage">
-    <input type="text" name="content" placeholder="输入消息" bindinput="inputMessage" value="{{inputValue}}"/>
-    <button type="submit">发送</button>
-  </form>
-</view>
+<scroll-view class="chat-view" scroll-y="true" scroll-into-view="{{toView}}">
+  <block wx:for="{{chatContent}}" wx:key="index">
+    <view class="{{item.sender}}">{{item.message}}</view>
+  </block>
+</scroll-view>
+
+<input class="input" type="text" placeholder="请输入要发送的消息" bindinput="onInput" value="{{inputValue}}"/>
+<button class="send-button" bindtap="sendMessage">发送</button>
