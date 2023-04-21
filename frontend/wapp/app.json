@@ -45,7 +45,10 @@
     "pages/SceneryShow/SceneryShow",
     "pages/spotAdd/spotAdd",
     "pages/pathMapInside/pathMapInside",
-    "pages/pathPlanInside/pathPlanInside"
+    "pages/pathPlanInside/pathPlanInside",
+    "pages/travelButler/travelButler",
+    "pages/travelButlerHome/travelButlerHome",
+    "pages/travelButlerChat/travelButlerChat"
   ],
   "window": {
     "backgroundTextStyle": "light",

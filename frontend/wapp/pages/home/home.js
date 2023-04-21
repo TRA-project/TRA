@@ -64,6 +64,13 @@ Page({
       wx.navigateTo({
         url: '/pages/sceneSearch/sceneSearch',
       })
+    },
+
+    navigateToNewPage: function() {
+      wx.navigateTo({
+        url: '/pages/travelButlerHome/travelButlerHome',
+      })
     }
+    
 
 })
