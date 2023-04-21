@@ -45,7 +45,8 @@
     "pages/SceneryShow/SceneryShow",
     "pages/spotAdd/spotAdd",
     "pages/pathMapInside/pathMapInside",
-    "pages/pathPlanInside/pathPlanInside"
+    "pages/pathPlanInside/pathPlanInside",
+    "pages/spotModify/spotModify"
   ],
   "window": {
     "backgroundTextStyle": "light",
