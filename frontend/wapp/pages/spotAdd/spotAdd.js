@@ -1,17 +1,16 @@
 // pages/spotAdd/spotAdd.js
 Page({
-
     /**
      * 页面的初始数据
      */
-    onShareAppMessage() {
+     onShareAppMessage() {
         return {
           title: 'form',
           path: 'page/component/pages/form/form'
         }
-      },
+     },
     
-      data: {
+     data: {
         pickerHidden: true,
         chosen: '',
         imgs: [],
