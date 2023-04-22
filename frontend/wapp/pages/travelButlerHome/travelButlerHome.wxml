@@ -41,7 +41,7 @@
 <view class="card">
   <view class="content">
     <view class="title">{{titleTwo}}</view>
-    <view class="description">{{description[0]}}</view>
+    <view class="description" bindtap="navigateToSearch">{{description[0]}}</view>
     <view class="description">{{description[1]}}</view>
     <view class="description">{{description[2]}}</view>
     <!-- 这里设置几个可以点击的跳转框，“搜索景点” “景点路径规划”等 -->

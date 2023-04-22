@@ -34,6 +34,10 @@
   font-size: 28rpx;
   color: #666;
   margin-top: 10rpx;
+  border: 3rpx solid white;
+  background-color: white;
+  width: 200rpx;
+  border-radius: 20rpx;
 }
 
 .logo {

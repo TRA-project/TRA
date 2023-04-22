@@ -9,8 +9,8 @@ Page({
     titleThree: "热点广场 | 高人气景点",
     description : [
       "景点搜索",
-      "个性化路线定制",
-      "..."
+      "景点列表",
+      "个性化路线定制"
     ],
     imageOneUrls: [
       '../../images/ai-function-icon.png',
@@ -95,6 +95,12 @@ Page({
   navigateToNewPage: function() {
     wx.navigateTo({
       url: '/pages/travelButlerChat/travelButlerChat',
+    })
+  },
+
+  navigateToSearch: function() {
+    wx.navigateTo({
+      url: '/pages/SearchResult/SearchResult',
     })
   }
 })
