@@ -20,9 +20,11 @@ ROUTER.register(r'usersflight', UsersFlightApis)
 ROUTER.register(r'city', CityApis)
 ROUTER.register(r'province', ProvinceApis)
 ROUTER.register(r'travelcollection', TravelCollectionApis)
-ROUTER.register(r'sights', SightApis)
+ROUTER.register(r'sight', SightApis)
+ROUTER.register(r'plan', PlanApis)
 ROUTER.register(r'hotel', HotelApis)
 ROUTER.register(r'food', FoodApis)
+
 urlpatterns = [
     path('', include(ROUTER.urls)),
 ]
