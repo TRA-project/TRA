@@ -1,0 +1,76 @@
+/* components/hotelCard/hotelCard.wxss */
+.card {
+  width: 720rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.left-col {
+  display: block;
+  z-index: 0;
+}
+
+.right-col {
+  margin-left: 20rpx;
+  display: block;
+  width: 100%;
+  z-index: 0;
+}
+
+.left-col image {
+  width: 200rpx;
+  border-radius: 20rpx;
+  margin-left: 20rpx;
+  margin-top: 20rpx;
+}
+
+.right-col .name {
+  font-weight: 700;
+  font-size: 32rpx;
+}
+
+.right-col .tag {
+  background-color: #ECCC68;
+  border-radius: 8rpx;
+  display: inline-block;
+  padding: 5rpx;
+  padding-left: 8rpx;
+  padding-right: 8rpx;
+  font-size: 24rpx;
+  margin-right: 10rpx;
+}
+
+.remark {
+  color: #5352ED;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.comment {
+  margin-left: 20rpx;
+  font-size: 26rpx;
+  color: #000000;
+}
+
+.info-line {
+  display: flex;
+}
+
+.info-line .text {
+  font-size: 26rpx;
+  margin-left: 10rpx;
+}
+
+.facility {
+  color: #2F3542;
+}
+
+.checkbox {
+  position: absolute;
+  left: 10rpx;
+  top: 10rpx;
+  z-index: 100;
+}

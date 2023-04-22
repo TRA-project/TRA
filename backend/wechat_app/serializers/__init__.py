@@ -13,3 +13,6 @@ from .flight import FlightSerializer, FlightDetailedSerializer, CitySerializer, 
 from .schedule import ScheduleSerializer, ScheduleBriefSerializer, ScheduleItemSerializer
 from .users_flight import UsersFlightSerializer
 from .log import LogSerializer
+from .hotel import HotelSerializer
+from .food import FoodSerializer
+

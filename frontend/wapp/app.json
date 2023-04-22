@@ -75,6 +75,13 @@
     "van-field": "@vant/weapp/field/index",
     "van-dialog": "@vant/weapp/dialog/index",
     "comment-box": "/components/comment/comment",
-    "van-icon": "@vant/weapp/icon/index"
+    "hotelCard": "/components/hotelCard/hotelCard",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index",
+    "van-divider": "@vant/weapp/divider/index",
+    "van-checkbox": "@vant/weapp/checkbox/index",
+    "statisticBar": "/components/statisticBar/statisticBar",
+    "van-toast": "@vant/weapp/toast/index"
   }
 }
