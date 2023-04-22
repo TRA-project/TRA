@@ -19,7 +19,6 @@ page {
   font-size: 90%;
   float: left;
   background-color:rgb(204, 222, 255);
-  /*float: left;*/
   margin: 10px 10px 10px 20px;
   padding: 10px 10px 10px 20px;
   border-radius:7px;
@@ -40,3 +39,92 @@ page {
   padding-left: 10rpx;
   font-size: 35rpx;
 }
+
+
+/* 语音输入部分 */
+/* .yuyinWrap {
+    position: relative;
+    margin-top:300rpx;
+  }
+   
+  .yuyinCon {
+    border: 1px solid #ccc;
+    margin: 0 auto;
+    padding: 10rpx 10rpx 70rpx;
+  }
+   
+  .yuyin {
+    position: absolute;
+    bottom: 0;
+    left: 48rpx;
+    font-size: 36rpx;
+    color: #999;
+    padding-bottom: 10rpx;
+  }
+   
+  .yuyin icon.iconfont {
+    font-size: 34rpx;
+    padding: 0 17rpx 15rpx;
+    border-radius: 50%;
+    background: #73dbef;
+    margin-right: 14rpx;
+    color: #fff;
+  }
+   
+  .consultYuyin {
+    height: 100%;
+    width: 90%;
+  }
+   
+  .icon-jianpan1 {
+    position: absolute;
+    left: 10rpx;
+    bottom: 6px;
+    color: #606267;
+    font-size: 60rpx;
+  }
+   
+  .yuyinBtn {
+    width: 70%;
+    height: 70rpx;
+    position: absolute;
+    right: 112rpx;
+    bottom: 12rpx;
+    border: 1px solid #eee;
+    background: #fff;
+    color: #606267;
+    line-height: 62rpx;
+  }
+   
+  .yuyinBtnBg {
+    background: #eee;
+  }
+   
+  .yuyinBtn::after {
+    /* background: #fff; *//* color: #000; */
+    /* border-radius: 0;
+    border: none;
+  } */
+   
+  /* .startYuyinImage {
+    position: fixed;
+    top: 210rpx;
+    left: 50%;
+    width: 190rpx;
+    height: 240rpx;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20rpx;
+    color: #fff;
+    text-align: center;
+    margin-left: -95rpx;
+  }
+   
+  .startYuyinImage cover-image {
+    margin: 30rpx auto;
+    width: 100rpx;
+    height: 100rpx;
+  } */
+   
+  /* .startYuyinImage cover-view {
+    margin-top: 25rpx;
+  } */ 

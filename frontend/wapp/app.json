@@ -68,6 +68,7 @@
   },
   "usingComponents": {
     "van-cell": "./miniprogram/miniprogram_npm/@vant/weapp/cell",
-    "van-cell-group": "./miniprogram/miniprogram_npm/@vant/weapp/cell-group"
+    "van-cell-group": "./miniprogram/miniprogram_npm/@vant/weapp/cell-group",
+    "butler": "/components/butler/butler"
   }
 }

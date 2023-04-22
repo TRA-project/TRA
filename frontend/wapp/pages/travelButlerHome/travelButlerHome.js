@@ -1,6 +1,5 @@
 // pages/travelButlerHome/travelButlerHome.js
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -29,6 +28,8 @@ Page({
    */
   onLoad(options) {
 
+      
+
   },
 
   /**
@@ -38,8 +39,7 @@ Page({
     wx.request({
       url: url,
       data: {
-        x: '',
-        y: ''
+
       },
       header: {
         'content-type': 'application/json' // 默认值
@@ -97,6 +97,4 @@ Page({
       url: '/pages/travelButlerChat/travelButlerChat',
     })
   }
-  
-
 })

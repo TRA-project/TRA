@@ -50,4 +50,12 @@
 
 <view class = "divider"></view>
 
-<view class = "goChat" bindtap="navigateToNewPage">进入新界面</view>
+<view class = "goChat" bindtap="navigateToNewPage">旅行管家</view>
+
+<!-- pages/index/index.wxml -->
+
+
+
+<view class="container">
+  <butler></butler>
+</view>

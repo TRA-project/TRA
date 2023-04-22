@@ -8,3 +8,20 @@
 
 <input class="input" type="text" placeholder="请输入要发送的消息" bindinput="onInput" value="{{inputValue}}"/>
 <button class="send-button" bindtap="sendMessage">发送</button>
+
+<!-- 语音输入部分 -->
+<!-- <view class="yuyinWrap">
+  <textarea class='yuyinCon' placeholder='请输入内容' value='{{content}}'></textarea>
+  <!--  -->
+  <!-- <view class=''>
+    <button class="yuyinBtn {{recordState == true ? 'yuyinBtnBg':''}}" bindtouchstart="touchStart" bindtouchend="touchEnd">
+      <text wx:if="{{recordState == false}}">按住 说话</text>
+      <text wx:else>松开 结束</text>
+    </button>
+  </view>
+  开始语音 弹出语音图标表示正在录音 -->
+  <!-- <cover-view class="startYuyinImage" wx:if="{{recordState == true}}">
+    <cover-image src="../resource/image/yuyin-min.png"></cover-image>
+    <cover-view>开始语音</cover-view>
+  </cover-view>
+</view> --> 
