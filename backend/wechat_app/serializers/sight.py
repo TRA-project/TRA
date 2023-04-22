@@ -7,33 +7,44 @@
 from rest_framework import serializers
 
 from utility.models.sight import Sight
+from . import ImageSerializer
 from .address import AddressSerializer
 from .price import PriceSerializer
-from .subsight import SubsightSerializer
+from .inner_sight import InnerSightSerializer
 
 
 class SightDetailedSerializer(serializers.ModelSerializer):
     address = AddressSerializer(required=False, allow_null=True)
-    price_list = PriceSerializer(read_only=True, many=True)
-    subsight_list = SubsightSerializer(read_only=True, many=True)
+    prices = PriceSerializer(read_only=True, many=True)
+    inner_sights = InnerSightSerializer(read_only=True, many=True)
+    images = ImageSerializer(read_only=True, many=True)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        images = [d.get('image') for d in data.pop('images', None)]
+        data['images'] = images
+        return data
 
     class Meta:
         model = Sight
-        extra_kwargs = {
-            'price_list': {'min_value': 0, 'required': True},
-            'subsight_list': {'min_value': 0, 'required': True}
-        }
+        fields = '__all__'
 
 
 class SightSerializer(serializers.ModelSerializer):
-    address = AddressSerializer(required=False, allow_null=True)
+    prices = PriceSerializer(read_only=True, many=True)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        prices_data = [d.get('price') for d in data.pop('prices', None)]
+        data['price'] = min(prices_data, default=0)
+        return data
 
     class Meta:
         model = Sight
-        exclude = ['open_time', 'close_time', 'play_time']
+        exclude = ['open_time', 'close_time', 'images']
 
 
 class SightBriefSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sight
-        fields = ['id', 'name', 'hot', 'grade']
+        fields = ['id', 'name', 'hot']

@@ -3,6 +3,7 @@ logs/
 db.sqlite3
 utility/migrations/
 
+TEST/
 
 # python
 __pycache__
