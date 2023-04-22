@@ -1,4 +1,7 @@
 // components/comment/comment.js
+const utils = require("../../utils/util.js")
+const token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
+
 Component({
   /**
    * 组件的属性列表
@@ -7,6 +10,10 @@ Component({
     toHideModal: {
       type: Boolean,
       value: true,
+    },
+    sightId: {
+      type: Number,
+      value: 15,
     }
   },
 
@@ -40,6 +47,12 @@ Component({
         this.hideModal()
         console.log("toHideModel === true")
       }
+    }
+  },
+
+  lifetimes: {
+    attached() {
+      this.getComments()
     }
   },
 
@@ -92,6 +105,12 @@ Component({
       this.animation.translateY(0).step()
       this.setData({
         animationData: this.animation.export()//动画实例的export方法导出动画数据传递给组件的animation属性
+      })
+    },
+
+    commentInput: function(e) {
+      this.setData({
+        comment_content:e.detail.value
       })
     },
 
@@ -191,7 +210,7 @@ Component({
   
       var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
       wx.request({
-        url: utils.server_hostname + '/api/core/travels/' + that.data.travel.id + '/comments/',
+        url: utils.server_hostname + '/api/core/sights/' + that.data.sightId + '/comment/',
         method: 'POST',
         header: {
           'content-type': 'application/json',
@@ -254,7 +273,7 @@ Component({
       var that = this
       var url
       if (that.data.next_comments == "init") {
-        url = utils.server_hostname + '/api/core/travels/' + that.data.travel.id + '/comments/?direct=true'
+        url = utils.server_hostname + '/api/core/sights/' + that.data.sightId + '/comment/'
       } else {
         url = that.data.next_comments
       }
@@ -266,14 +285,16 @@ Component({
         method: 'GET',
         header: {
           'content-type': 'application/json',
+          'token-auth': token,
         },
         success: function(res) {
-          // console.log(res)
+          console.log(res)
           that.setData({
             next_comments: res.data.next
           })
   
           var list = res.data.results
+          that.triggerEvent("numComment", list.length)
   
           for (var i in list) {
             var item = list[i]

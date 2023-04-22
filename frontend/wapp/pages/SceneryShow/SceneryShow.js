@@ -1,3 +1,7 @@
+const util = require("../../utils/util");
+const token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
+import Toast from '@vant/weapp/toast/toast';
+
 // pages/sceneryShow/sceneryShow.js
 Page({
 
@@ -6,6 +10,7 @@ Page({
      */
     data: {
         // 以下是景点方面的数据
+        id: 0,
         curImage: 0,
         images: ["../../images/guozhibeiyuan.jpg", "../../images/logo.png"],
         name: "国家植物馆北园",
@@ -25,28 +30,29 @@ Page({
             }
           ],
         // 需要对景点数据进行预处理，当长度超过某个值时，将其截断
-        "inner_spot": [
+        inner_sights: [
           {
             "name": "曹雪芹纪念馆",
-            "summary": "这是曹雪芹纪念馆"
+            "desc": "这是曹雪芹纪念馆"
           },
           {
             "name": "卧佛寺",
-            "summary": "commodo tempor mollit veniam"
+            "desc": "commodo tempor mollit veniam"
           },
           {
             "name": "蜜蜂博物馆",
-            "summary": "aute consectetur commodo exercitation"
+            "desc": "aute consectetur commodo exercitation"
           },
           {
             "name": "植物园温室",
-            "summary": "consequat exercitation est"
+            "desc": "consequat exercitation est"
           },
           {
             "name": "樱桃沟",
-            "summary": "reprehenderit"
+            "desc": "reprehenderit"
           }
         ],
+        isCollect: false,
 
         
         // 以下是弹窗部分的数据
@@ -61,6 +67,7 @@ Page({
         editSpotIntro: "",
 
         hideComment: true,
+        numComment: 23,
     },
 
     // 随着滑动顶部图片，自动更新图片所在的序号
@@ -99,6 +106,7 @@ Page({
       this.setData({
         showDialog: false,
       })
+      Toast("编辑成功，待审核")
     },
 
     onConfirm(e) {
@@ -115,6 +123,7 @@ Page({
         editSpotIntro: "",
         add_elm: false
       })
+      Toast("添加成功，待审核")
     },
 
     onExitSpot(e) {
@@ -131,11 +140,84 @@ Page({
       })
     },
 
+    update_numComment(e) {
+      this.setData({
+        numComment: e.detail
+      })
+    },
+
+    onCollect(e) {
+      if (this.data.isCollect === false) {
+        wx.request({
+          url: util.server_hostname + "/api/core/users/collect_sight/",
+          method: "POST",
+          data: {
+            id: this.data.id,
+          },
+          header: {
+            "token-auth": token
+          },
+          success: res => {
+            if (res.data.error_code === 200) {
+              this.setData({
+                isCollect: true,
+              })
+            }
+          }
+        })
+      } else {
+        wx.request({
+          url: util.server_hostname + "/api/core/users/collect_sight/",
+          method: "DELETE",
+          data: {
+            id: this.data.id,
+          },
+          header: {
+            "token-auth": token
+          },
+          success: res => {
+            if (res.data.error_code === 200) {
+              this.setData({
+                isCollect: false,
+              })
+            }
+          }
+        })
+      }
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+      console.log("选项:", options);
+      let sightId = 15;
+      wx.request({
+        url: util.server_hostname + "/api/core/sights/" + sightId + "/",
+        header: {
+          'token-auth': token
+        },
+        success: (res) => {
+          console.log(res.data)
+          let data = res.data
+          this.setData({
+            id: data.id,
+            images: data.images,
+            name: data.name,
+            remark: data.grade,
+            intro: data.desc,
+            position: data.address.name,
+            distance: "3",
+            open_time: data.open_time,
+            price: data.prices,
+            inner_sights: data.inner_sights
+          })
+        },
+        fail: (err) => {
+          Toast.fail("加载失败");
+          console.log(`${err.errMsg}, ${err.errno}`)
+        }
+      })
     },
 
     /**

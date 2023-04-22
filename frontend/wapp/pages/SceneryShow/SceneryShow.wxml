@@ -52,7 +52,7 @@
             <view class="cardTitle">内部游览点</view>
             <image class="add" src="../../images/add.png" style="width: 48rpx; height: 48rpx; float: right;" bindtap="onAddSpot"></image>
         </view>
-        <view wx:for="{{inner_spot}}">
+        <view wx:for="{{inner_sights}}">
             <view class="divLineX2"></view>
             <view class="listelm">
                 <image src="../../images/flag.png"></image>
@@ -61,7 +61,7 @@
                         <text>{{item.name}}</text>
                     </view>
                     <view>
-                        <text>{{item.summary}}</text>
+                        <text>{{item.desc}}</text>
                     </view>
                 </view>
             </view>
@@ -96,7 +96,7 @@
     <!-- 空出下面工具栏的高度 -->
     <view style="height: 100rpx;"></view>
 
-    <bottomBar bind:comment="onComment"></bottomBar>
+    <bottomBar isCollect="{{isCollect}}" numComment="{{numComment}}"  bind:comment="onComment" bind:collect="onCollect"></bottomBar>
     
     <!-- <van-submit-bar
       price="{{ 3050 }}"
@@ -124,4 +124,5 @@
     </van-dialog>
 </view>
 
-<comment-box toHideModal="{{hideComment}}"></comment-box>
+<van-toast id="van-toast" />
+<comment-box toHideModal="{{hideComment}}" bind:numComment="update_numComment"></comment-box>
