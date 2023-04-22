@@ -40,6 +40,7 @@
 .travel-plan-item-text {
   line-height: 60rpx;
   margin-left: 10rpx;
+  max-width: 75%;
 }
 
 .travel-plan-item-text-name {
@@ -50,6 +51,9 @@
 .travel-plan-item-text-preview {
   font-size: 28rpx;
   color: rgb(124, 124, 124);
+  white-space: nowrap;  /* 不换行 */
+  overflow: hidden;     /* 超出部分隐藏 */
+  text-overflow: ellipsis;  /* 溢出元素省略号表示 */
 }
 
 .travel-plan-list-footer {

@@ -25,16 +25,19 @@ Page({
       {
         id: 1,
         name: "travel plan 1",  // 需要增加总体name以标识具体计划
+        sights: ["西山", "东山", "南山", "北山"],
         preview: "this is the plan1 preview",
       },
       {
         id: 2,
         name: "travel plan 2", 
+        sights: ["f1", "f2", "f3", "is", "ex", "m1", "m2", "wb"],
         preview: "this is the plan2 preview",
       },
       {
         id: 3,
         name: "travel plan 3", 
+        sights: ["提亚卡乌", " 姜齐城", "阿卡胡拉", "卡瓦莱利亚基", "小丘郡"],
         preview: "this is the plan3 preview",
       },
     ],
@@ -90,6 +93,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    // 请求travel plan 列表
     var url = utils.server_hostname + "/api/core/" + "plan/"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
     wx.request({
@@ -101,6 +105,7 @@ Page({
       },
       success: (res) => {
         console.log("plan receive: ", res)
+        // 获取内容填入travelPlanList(成功/失败)
         if (res.statusCode !== 200) {
           this.setData({
             travelPlanList: this.data.tmpTravelPlanList
@@ -111,11 +116,19 @@ Page({
           })
         }
         console.log(this.data.travelPlanList)
+        // 调整preview内容
+        this.data.travelPlanList.forEach((item, index) => {
+          this.setData({
+            ["travelPlanList[" + index + "].preview"]: item.sights.join("->")
+          })
+        })
+        console.log(this.data.travelPlanList)
       },
       fail: (res) => {
         console.log(res)
       }
     })
+
   },
 
   /**
