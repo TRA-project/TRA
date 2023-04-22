@@ -1,0 +1,21 @@
+<!--pages/travelPlanShow/travelPlanShow.wxml-->
+
+<view class="travel-plan-header-container">
+
+</view>
+
+<view class="travel-plan-map-container">
+  <map class="tencent-map" 
+    longitude="{{mapLongitude}}" latitude="{{mapLatitude}}" 
+    markers="{{mapMarkers}}" id="map" show-location></map>
+</view>
+
+<view class="travel-plan-display-container">
+  <van-steps
+    steps="{{ steps }}"
+    active="{{ stepActive }}"
+    direction="vertical"
+    active-color="rgba(30, 144, 255,1.0)" 
+    bind:click-step="onClickStep">
+  </van-steps>
+</view>

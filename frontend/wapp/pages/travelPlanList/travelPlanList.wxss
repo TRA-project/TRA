@@ -1,0 +1,142 @@
+/* pages/travelPlanList/travelPlanList.wxss */
+
+.travel-plan-list-title-container {
+  margin-top: 5rpx;
+  height: 80rpx;
+  box-shadow: 0rpx 6rpx 15rpx 2rpx rgba(177, 177, 177, 0.589);
+  text-align: center;
+}
+
+.travel-plan-list-title {
+  font-weight: bolder;
+  color: rgba(30, 144, 255, 1.0);
+  line-height: 80rpx;
+}
+
+.travel-plan-list-container {
+  margin-top: 10rpx;
+  padding: 15rpx;
+  /* background-color: rgba(196, 196, 196, 0.185); */
+}
+
+.travel-plan-placeholder {
+  min-height: 200rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(109, 109, 109, 0.589);
+}
+
+.travel-plan-list-item {
+  height: 150rpx;
+  width: 95% !important;
+  margin: 2.5% !important;
+  padding-left: 10rpx;
+  padding-top: 10rpx;
+  border-radius: 15rpx;
+  border-bottom: 2rpx solid rgba(212, 212, 212, 0.541);
+  box-shadow: 0rpx 3rpx 8rpx 2rpx rgba(177, 177, 177, 0.589);
+  display: flex;
+  align-items: center;
+}
+
+.travel-plan-item-icon {
+  width: 110rpx;
+  height: 110rpx;
+  padding: 15rpx;
+}
+
+.travel-plan-item-text {
+  text-align: start;
+  line-height: 60rpx;
+  margin-left: 10rpx;
+  max-width: 75%;
+}
+
+.travel-plan-item-text-name {
+  font-weight: bolder;
+  font-size: 32rpx;
+}
+
+.travel-plan-item-text-preview {
+  font-size: 28rpx;
+  color: rgb(124, 124, 124);
+  white-space: nowrap;  /* 不换行 */
+  overflow: hidden;     /* 超出部分隐藏 */
+  text-overflow: ellipsis;  /* 溢出元素省略号表示 */
+}
+
+.travel-plan-list-footer {
+  align-items: center;
+}
+
+.travel-plan-add-button {
+  width: 100rpx !important;
+  padding: 16rpx;
+  text-align: center;
+  border-radius: 30rpx !important;
+  background-color: rgba(66, 157, 243, 0.877);
+  color: white;
+  font-size: 40rpx;
+}
+
+.travel-plan-add-button-hover {
+  background-color: rgba(54, 127, 196, 0.877);
+  color: rgba(105, 105, 105, 0.925);
+}
+
+.van-popup {
+  padding: 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.travel-plan-form-title {
+  width: 100%;
+  font-size: 36rpx;
+  font-weight: bolder;
+}
+
+.travel-plan-form-desc {
+  margin-top: 14rpx;
+  font-size: 28rpx;
+  color: rgb(124, 124, 124);
+}
+
+.travel-plan-form {
+  margin-top: 10rpx;
+  padding: 2rpx;
+}
+
+.van-cascader__header {
+  height: 0rpx !important; /* 不显示标题栏 */
+}
+
+.travel-plan-gen-button {
+  margin-top: 100rpx;
+  width: 200rpx !important;
+  padding: 20rpx 10rpx;
+  background-color: rgba(44, 141, 233, 0.849);
+  color: white;
+  /* position: sticky;
+  bottom: 40rpx; */
+}
+
+.travel-plan-gen-button-hover {
+  background-color: rgba(54, 127, 196, 0.877);
+  color: rgba(180, 180, 180, 0.925);
+}
+
+.overlay-wrapper {
+  height: 750rpx;
+  display: flex;
+}
+
+.loading-block {
+  width: 50px;
+  height: 50px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

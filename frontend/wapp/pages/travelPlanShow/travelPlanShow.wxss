@@ -1,0 +1,18 @@
+/* pages/travelPlanShow/travelPlanShow.wxss */
+
+.travel-plan-header-container {
+
+}
+
+.travel-plan-map-container {
+
+}
+
+.tencent-map {
+  width: 100%;
+  height: 500rpx;
+}
+
+.travel-plan-display-container {
+  
+}

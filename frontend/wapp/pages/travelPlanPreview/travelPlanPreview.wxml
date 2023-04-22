@@ -1,11 +1,14 @@
 <!--pages/travelPlanPreview/travelPlanPreview.wxml-->
 
-<view class="travel-plan-title-container">
+<!-- <view class="travel-plan-title-container">
   <text class="travel-plan-title"> 出行计划生成 </text>
-</view>
+</view> -->
 
 <view class="custom-argument-display-container">
-  配置的参数
+  <view class="custom-arg-display-title">配置信息</view>
+  <view class="custom-arg-item" wx:for="{{customArg}}">
+    {{index}} : {{item}}
+  </view>
 </view>
 
 <view class="travel-plan-map-container">

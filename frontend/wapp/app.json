@@ -46,7 +46,9 @@
     "pages/sceneSearch/sceneSearch",
     "pages/travelPlanGen/travelPlanGen",
     "pages/travelPlanPreview/travelPlanPreview",
-    "pages/sceneList/sceneList"
+    "pages/sceneList/sceneList",
+    "pages/travelPlanList/travelPlanList",
+    "pages/travelPlanShow/travelPlanShow"
   ],
   "window": {
     "backgroundTextStyle": "light",
