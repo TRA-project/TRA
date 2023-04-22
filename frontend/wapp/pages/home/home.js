@@ -68,7 +68,7 @@ Page({
 
     navigateToTravelPlan() {
       wx.navigateTo({
-        url: '/pages/travelPlanGen/travelPlanGen',
+        url: '/pages/travelPlanList/travelPlanList',
       })
     }
 

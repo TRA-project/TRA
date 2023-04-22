@@ -11,6 +11,62 @@ def search_nearby_foods(**kwargs):
     return search(**kwargs, query='美食')
 
 
+def search_nearby_sights(**kwargs):
+    return search(**kwargs, query='景点')
+
+
+def search_sights(**kwargs):
+    url = 'https://api.map.baidu.com/place/v2/suggestion'
+    output = 'json'
+
+    query = kwargs.pop('query', None)
+    region = kwargs.pop('region', '北京')
+    city_limit = kwargs.pop('city_limit', 'true')
+
+    params = {
+        'ak': api_key,
+        'output': output,
+        'query': query,
+        'region': region,
+        'city_limit': city_limit
+
+    }
+    # 发送 HTTP 请求并解析结果
+    response = requests.get(url, params=params)
+
+    result = response.json()
+
+    # 处理查询结果
+    if result['status'] == 0:
+        return result['result']
+    else:
+        return '查询失败，错误代码：{code}'.format(code=result['status'])
+
+
+def search_details(**kwargs):
+    url = 'https://api.map.baidu.com/place/v2/detail'
+    output = 'json'
+    scope = '2'
+    uid = kwargs.pop('uid', None)
+
+    params = {
+        'ak': api_key,
+        'scope': scope,
+        'output': output,
+        'uid': uid
+    }
+    # 发送 HTTP 请求并解析结果
+    response = requests.get(url, params=params)
+
+    result = response.json()
+
+    # 处理查询结果
+    if result['status'] == 0:
+        return result['result']
+    else:
+        return '查询失败，错误代码：{code}'.format(code=result['status'])
+
+
 # 封装查询酒店函数
 def search(**kwargs):
     # 定义请求 URL
@@ -32,13 +88,11 @@ def search(**kwargs):
         'scope': scope,
         'output': output
     }
-    print(params)
+
     # 发送 HTTP 请求并解析结果
     response = requests.get(url, params=params)
 
     result = response.json()
-
-    print(result)
 
     # 处理查询结果
     if result['status'] == 0:
