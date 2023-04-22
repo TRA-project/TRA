@@ -37,7 +37,7 @@ class AppUser(models.Model):
     collection = models.ManyToManyField('TravelNotes', related_name='collectors')
     received_messages = models.ManyToManyField('Message', related_name='target_users')
     unread_messages = models.ManyToManyField('Message', related_name='unread_users')
-    collections_sight = models.ManyToManyField('Sight', related_name='sight_collectors')  # 景点收藏
+    collections_sight = models.ManyToManyField('Sight', related_name='sight_collectors', null=True)  # 景点收藏
 
     last_login_time = models.DateTimeField(default=date.now)
     cluster = models.PositiveIntegerField(default=0)
