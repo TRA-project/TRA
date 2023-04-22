@@ -19,6 +19,14 @@
   /* background-color: rgba(196, 196, 196, 0.185); */
 }
 
+.travel-plan-placeholder {
+  min-height: 200rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(109, 109, 109, 0.589);
+}
+
 .travel-plan-list-item {
   height: 150rpx;
   width: 95% !important;

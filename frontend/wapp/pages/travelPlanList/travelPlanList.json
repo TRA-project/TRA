@@ -6,5 +6,6 @@
     "van-field": "@vant/weapp/field/index",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-loading": "@vant/weapp/loading/index"
-  }
+  },
+  "navigationBarTitleText": "出行计划列表"
 }

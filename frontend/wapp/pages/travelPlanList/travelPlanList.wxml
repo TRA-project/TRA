@@ -5,6 +5,9 @@
 </view>
 
 <view class="travel-plan-list-container">
+  <view class="travel-plan-placeholder" wx:if="{{travelPlanList.length === 0}}">
+    还没有计划哦~
+  </view>
   <button class="travel-plan-list-item" bindtap="onTapListItem"
     wx:for="{{travelPlanList}}" wx:key="id" data-planid="{{item.id}}">
     <image class="travel-plan-item-icon" src="/images/travel-plan-icon.png" />
