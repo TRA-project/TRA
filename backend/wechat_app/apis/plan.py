@@ -16,7 +16,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin
 
-from wechat_app.serializers.sight import SightSerializer
+from wechat_app.serializers.sight import SightSerializer, SightPlanSerializer
 
 
 def calculate(list, tag):
@@ -99,14 +99,15 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin):
         # 还有哪些硬性条件？
         city = request.GET.get('city', '北京市')
         tag = request.GET.get('tag')
-        print(city)
         queryset = Sight.objects.order_by('hot')
-        serializer = SightSerializer(queryset, many=True)
+        serializer = SightPlanSerializer(queryset, many=True)
         all_list = []
         list = []
         # 硬性筛选
         for i in serializer.data:
-            if i.get('address').get('city') == city:
+            print(i)
+            name = i.get('address').get('name')
+            if city in name:
                 list.append(i)
         # 软筛选
         for i in range(3):

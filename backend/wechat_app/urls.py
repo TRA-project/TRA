@@ -24,7 +24,6 @@ ROUTER.register(r'sight', SightApis)
 ROUTER.register(r'plan', PlanApis)
 ROUTER.register(r'hotel', HotelApis)
 ROUTER.register(r'food', FoodApis)
-ROUTER.register(r'plan',PlanApis)
 
 urlpatterns = [
     path('', include(ROUTER.urls)),

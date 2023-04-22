@@ -41,10 +41,18 @@ class SightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sight
-        exclude = ['open_time', 'close_time', 'images']
+        exclude = ['open_time', 'images']
 
 
 class SightBriefSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sight
         fields = ['id', 'name', 'hot']
+
+
+class SightPlanSerializer(serializers.ModelSerializer):
+    address = AddressSerializer(read_only=True)
+
+    class Meta:
+        model = Sight
+        fields = '__all__'
