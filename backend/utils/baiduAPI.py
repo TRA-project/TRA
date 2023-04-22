@@ -67,3 +67,5 @@ def search_driving_route(origin, destination, waypoints):
 
     # return the driving route information as a dictionary
     return data
+
+
