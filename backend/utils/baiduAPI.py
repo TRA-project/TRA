@@ -11,6 +11,38 @@ def search_nearby_foods(**kwargs):
     return search(**kwargs, query='美食')
 
 
+def search_nearby_sights(**kwargs):
+    return search(**kwargs, query='景点')
+
+
+def search_sights(**kwargs):
+    url = 'https://api.map.baidu.com/place/v2/suggestion'
+    output = 'json'
+
+    query = kwargs.pop('query', None)
+    region = kwargs.pop('region', '北京')
+    city_limit = kwargs.pop('city_limit', 'true')
+
+    params = {
+        'ak': api_key,
+        'output': output,
+        'query': query,
+        'region': region,
+        'city_limit': city_limit
+
+    }
+    # 发送 HTTP 请求并解析结果
+    response = requests.get(url, params=params)
+
+    result = response.json()
+
+    # 处理查询结果
+    if result['status'] == 0:
+        return result['result']
+    else:
+        return '查询失败，错误代码：{code}'.format(code=result['status'])
+
+
 def search_details(**kwargs):
     url = 'https://api.map.baidu.com/place/v2/detail'
     output = 'json'
@@ -30,7 +62,7 @@ def search_details(**kwargs):
 
     # 处理查询结果
     if result['status'] == 0:
-        return result['results']
+        return result['result']
     else:
         return '查询失败，错误代码：{code}'.format(code=result['status'])
 
