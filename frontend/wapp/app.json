@@ -79,6 +79,7 @@
     "van-tabs": "@vant/weapp/tabs/index",
     "van-divider": "@vant/weapp/divider/index",
     "van-checkbox": "@vant/weapp/checkbox/index",
-    "statisticBar": "/components/statisticBar/statisticBar"
+    "statisticBar": "/components/statisticBar/statisticBar",
+    "van-toast": "@vant/weapp/toast/index"
   }
 }

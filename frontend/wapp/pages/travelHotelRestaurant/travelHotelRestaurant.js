@@ -1,4 +1,7 @@
 // pages/travelHotelRestaurant/travelHotelRestaurant.js
+const util = require("../../utils/util.js");
+const utils = require("../../utils/util.js");
+
 Page({
 
   /**
@@ -28,6 +31,19 @@ Page({
     // 使用示例
     const distance = GetDistance(39.923423, 116.368904, 39.922501, 116.387271);
     console.log(distance);
+  },
+
+  onSave() {
+    wx.requestSubscribeMessage({
+      tmplIds: [utils.plan_notification_id], // 向用户推送行程提醒消息
+      success: () => {
+        console.log("success")
+      }, 
+      fail: (res) => {
+        console.log(`failed: ${res.errCode}, ${res.errMsg}`)
+        console.log("template id:", utils.plan_notification_id)
+      }
+    })
   },
 
   /**

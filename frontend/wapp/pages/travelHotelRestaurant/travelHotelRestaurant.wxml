@@ -25,5 +25,5 @@
     </van-tab>
   </van-tabs>
   <view style="height: 120rpx;"></view>
-  <statisticBar></statisticBar>
+  <statisticBar bindclick="onSave"></statisticBar>
 </view>

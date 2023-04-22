@@ -6,6 +6,9 @@ const server_hostname = {
 }
 // 测试账号：test， 密码：12345678
 
+// 日程通知的订阅信息id
+const plan_notification_id = "enb7Qohri1KEzMV8pLafG0jCGC4oqf08uAKGc8yomnI";
+
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -84,6 +87,7 @@ function deepClone(obj) {
 }
 
 module.exports = {
+  plan_notification_id,
   noSecond,
   noZeroDate,
   getNowDateLine,
