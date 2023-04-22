@@ -49,7 +49,7 @@ def calculate(list, tag):
     return better_sight
 
 
-class PlanApis(GenericViewSet, CreateModelMixin,RetrieveModelMixin):
+class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin):
     flag = 0
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
@@ -72,12 +72,13 @@ class PlanApis(GenericViewSet, CreateModelMixin,RetrieveModelMixin):
     """
     在查询旅行计划时，传入用户和对应的序号，确定唯一的一个旅行计划，
     """
+
     def retrieve(self, request, *args, **kwargs):
         owner_id = permission.user_check(request)
         if owner_id <= 0:
             owner_id = 1
             # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
-        #缺少了安全性检验
+        # 缺少了安全性检验
         return super().retrieve(request, *args, **kwargs)
 
     def list(self, request, *args, **kwargs):
@@ -89,7 +90,6 @@ class PlanApis(GenericViewSet, CreateModelMixin,RetrieveModelMixin):
         serializer = PlanSerializer(queryset, many=True)
         return Response(serializer.data)
 
-
     @action(methods=['GET'], detail=False, url_path='new')
     def new(self, request):
 
@@ -97,7 +97,7 @@ class PlanApis(GenericViewSet, CreateModelMixin,RetrieveModelMixin):
         可以尝试先去查询地点对应的ID，再反向查询景点
         """
         # 还有哪些硬性条件？
-        city = request.GET.get('city','北京市')
+        city = request.GET.get('city', '北京市')
         tag = request.GET.get('tag')
         print(city)
         queryset = Sight.objects.order_by('hot')
@@ -126,8 +126,7 @@ class PlanApis(GenericViewSet, CreateModelMixin,RetrieveModelMixin):
         serializer.is_valid(raise_exception=True)
         plan = serializer.save()
         print(type(plan))
-        test = sights.replace('[', '').replace(']','').split(',')
-        print(test)
+        test = sights.replace('[', '').replace(']', '').split(',')
         for i in test:
             data = Sight.objects.get(id=eval(i))
             print(type(data))
