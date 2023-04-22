@@ -21,7 +21,9 @@ from .log import Log
 from .shielded_word import ShieldedWord
 from .read_record import ReadRecord
 from .sight import Sight
+from .plan import Plan
 from .inner_sight import InnerSight
 from .sight_type import SightType
 from .hotel import Hotel
 from .food import Food
+

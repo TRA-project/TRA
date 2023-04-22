@@ -39,6 +39,8 @@ class Error:
 
     TRAVEL_NO_CONTENT = 800
 
+    NO_PLAN = 900
+
 
 STATUS_CODE_MAP = {
     status.HTTP_400_BAD_REQUEST: Error.PARSE_ERROR,
