@@ -8,9 +8,8 @@ from wechat_app.serializers.sight import SightSerializer, SightDetailedSerialize
 
 
 class PlanSerializer(serializers.ModelSerializer):
-    # sight = SightDetailedSerializer(required=False)
-    # address = AddressSerializer(required=False, allow_null=True)
-    # city = serializers.CharField(required=False, allow_null=True)
+
+
     class Meta:
         model = Plan
         fields = '__all__'

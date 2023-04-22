@@ -8,8 +8,6 @@ from .sight import Sight
 
 class Plan(models.Model):
     owner = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='user_plan_name')
-    order = models.IntegerField('order')  # 一个旅行计划的次序，和pid共同构成主键
-    sight = models.ForeignKey(Sight, related_name="sight_name", null=True, on_delete=models.CASCADE)
+    name = models.CharField('plan_name',max_length=100,default='出行计划')
+    sights = models.ManyToManyField(to=Sight)
 
-    class Meta:
-        unique_together = ("owner", "order")
