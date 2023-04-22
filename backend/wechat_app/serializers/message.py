@@ -21,7 +21,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     def get_description(self, obj):
         return settings.MESSAGE_TYPES_DESCRIPTION.get(obj.type,
-            settings.MESSAGE_TYPES_DESCRIPTION[settings.MESSAGE_TYPES_DEFAULT])
+                                                      settings.MESSAGE_TYPES_DESCRIPTION[settings.MESSAGE_TYPES_DEFAULT])
 
     class Meta:
         model = Message

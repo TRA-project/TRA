@@ -50,8 +50,10 @@ urlpatterns = [
     path('api/token-refresh/', TokenRefreshView.as_view()),
     path('api/core/', include('wechat_app.urls')),
     path('api/admin/', include('web.urls')),
-    re_path(r'^%s(?P<path>.*)$' % re.escape(settings.MEDIA_URL.lstrip('/')), serve,
-            kwargs={'document_root': os.path.join(settings.MEDIA_ROOT, 'images')}),
+    # re_path(r'^%s(?P<path>.*)$' % re.escape(settings.MEDIA_URL.lstrip('/')), serve,
+    #         kwargs={'document_root': os.path.join(settings.MEDIA_ROOT, 'system')}),
+
+    re_path(r'media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}), # 增加这条
 ]
 
 if not settings.APP_SHOW_STATUS:

@@ -10,12 +10,12 @@ from utility.models.sight import Sight
 from utility.models.address import Address
 from .address import AddressSerializer
 from .price import PriceSerializer
-from .subsight import SubsightSerializer
+from .inner_sight import InnerSightSerializer
 
 
 class SightSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
-    subsight_set = SubsightSerializer(many=True, read_only=True)
+    subsight_set = InnerSightSerializer(many=True, read_only=True)
     price_set = PriceSerializer(many=True, read_only=True)
 
     def create(self, validated_data):

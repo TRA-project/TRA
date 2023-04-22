@@ -41,8 +41,11 @@
     "pages/newSchrelease/newSchrelease",
     "pages/newScheduleMore/newScheduleMore",
     "pages/schRelease/schRelease",
+    "pages/sceneryShow/sceneryShow",
+    "pages/travelHotelRestaurant/travelHotelRestaurant",
     "pages/sceneSearch/sceneSearch",
-    "pages/SceneryShow/SceneryShow",
+    "pages/travelPlanGen/travelPlanGen",
+    "pages/travelPlanPreview/travelPlanPreview",
     "pages/sceneList/sceneList"
   ],
   "window": {
@@ -63,6 +66,13 @@
   },
   "usingComponents": {
     "van-cell": "@vant/weapp/cell",
-    "van-cell-group": "@vant/weapp/cell-group"
+    "van-cell-group": "@vant/weapp/cell-group",
+    "van-submit-bar": "@vant/weapp/submit-bar/index",
+    "bottomBar": "/components/bottomBar/bottomBar",
+    "van-button": "@vant/weapp/button/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "comment-box": "/components/comment/comment",
+    "van-icon": "@vant/weapp/icon/index"
   }
 }

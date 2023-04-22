@@ -41,7 +41,7 @@ Page({
     },
   
     // 跳转到新页面
-    navigateToNewPage() {
+    navigateToFormerPage() {
       wx.navigateTo({
         url: '/pages/index/index',
       })
@@ -63,6 +63,12 @@ Page({
     onSearchBarTap() {
       wx.navigateTo({
         url: '/pages/sceneSearch/sceneSearch',
+      })
+    },
+
+    navigateToTravelPlan() {
+      wx.navigateTo({
+        url: '/pages/travelPlanGen/travelPlanGen',
       })
     }
 
