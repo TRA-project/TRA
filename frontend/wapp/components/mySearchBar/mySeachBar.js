@@ -120,6 +120,13 @@ Component({
       wx.navigateTo({
         url: this.properties.confirmTargetUrl + "?keyword=" + this.data.keyword,
       })
+    },
+
+    confirmSuggest(event) {
+      this.setData({
+        keyword: event.currentTarget.dataset.name
+      })
+      this.onConfirm()
     }
   },
 
