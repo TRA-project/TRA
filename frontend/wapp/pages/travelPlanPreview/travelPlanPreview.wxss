@@ -60,10 +60,6 @@
   z-index: 100;
 }
 
-.one-travel-plan-list {
-  
-}
-
 .travel-route-item {
   border-bottom: 2rpx solid rgba(144, 154, 156, 0.788);
   display: flex;

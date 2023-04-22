@@ -5,7 +5,8 @@
 </view>
 
 <view class="travel-plan-list-container">
-  <view class="travel-plan-list-item" wx:for="{{travelPlanList}}" wx:key="id">
+  <button class="travel-plan-list-item" bindtap="onTapListItem"
+    wx:for="{{travelPlanList}}" wx:key="id" data-planid="{{item.id}}">
     <image class="travel-plan-item-icon" src="/images/travel-plan-icon.png" />
     <view class="travel-plan-item-text">
       <view class="travel-plan-item-text-name">
@@ -15,8 +16,7 @@
         {{item.preview}}
       </view>
     </view>
-    
-  </view>
+  </button>
 </view>
 
 <view class="travel-plan-list-footer">

@@ -21,7 +21,8 @@
 
 .travel-plan-list-item {
   height: 150rpx;
-  margin: 10rpx;
+  width: 95% !important;
+  margin: 2.5% !important;
   padding-left: 10rpx;
   padding-top: 10rpx;
   border-radius: 15rpx;
@@ -38,6 +39,7 @@
 }
 
 .travel-plan-item-text {
+  text-align: start;
   line-height: 60rpx;
   margin-left: 10rpx;
   max-width: 75%;

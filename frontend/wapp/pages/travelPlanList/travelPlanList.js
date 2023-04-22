@@ -12,6 +12,11 @@ const areaOptions = [
     value: '320000',
     children: [{ text: '南京市', value: '320100' }],
   },
+  {
+    text: '北京市',
+    value: '310000',
+    children: [{ text: '北京市', value: '310100'}],
+  },
 ];
 
 Page({
@@ -145,6 +150,14 @@ Page({
     
   },
 
+  onTapListItem(event) {
+    var planId = event.currentTarget.dataset.planid
+    console.log("tap plan id:", planId)
+    wx.navigateTo({
+      url: "/pages/travelPlanShow/travelPlanShow?planid=" + planId,
+    })
+  },
+
   // 添加新计划 Popup
   onPopupShow() {
     this.setData({
@@ -214,11 +227,6 @@ Page({
   },
 
   formSubmit(event) {
-    console.log(this.data.areaFieldValue)
-    console.log(this.data.tagsValue)
-    console.log(this.data.costValue)
-    console.log(this.data.dateBeginPickerValue)
-    console.log(this.data.dateEndPickerValue)
     var formData = {
       area: this.data.areaFieldValue,
       tag: this.data.tagsValue,
