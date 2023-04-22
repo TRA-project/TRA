@@ -15,7 +15,6 @@ class Sight(models.Model):
     hot = models.FloatField(default=0.0)
     grade = models.FloatField(default=5.0)
     open_time = models.CharField(null=True, max_length=128)
-    close_time = models.CharField(null=True, max_length=128)
     playtime = models.FloatField(null=True)
     tags = models.ManyToManyField('Tag', related_name='sights')
     images = models.ManyToManyField('Image', related_name='sights')
