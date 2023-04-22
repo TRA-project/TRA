@@ -2,7 +2,7 @@
 
 <!-- 搜索框 -->
 <view class="search-box">
-  <my-search-bar bind:syncinput="onSyncInput"></my-search-bar>
+  <my-search-bar bind:syncinput="onSyncInput" confirmTargetUrl="/pages/sceneList/sceneList"></my-search-bar>
 </view>
 
 <!-- 历史记录 -->
@@ -13,7 +13,7 @@
   </view>
   <view class="history-list">
     <view wx:for="{{historyList}}" wx:key="unique">
-      <view class="history-item">{{ item }}</view>
+      <view class="history-item" bindtap="confirmHistory">{{ item }}</view>
     </view>
   </view>
 </view>

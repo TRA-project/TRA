@@ -14,5 +14,6 @@ from .travel_collection import TravelCollectionApis
 from .tag import TagApis
 from .companion import CompanionFilterBackend
 from .sight import SightApis
+from .plan import PlanApis
 from .hotel import HotelApis
 from .food import FoodApis

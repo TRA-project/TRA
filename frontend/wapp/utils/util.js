@@ -1,3 +1,11 @@
+const server_hostname = {
+  //url: "http://114.116.194.214"
+  // url:"http://114.116.53.144"
+  url:"http://10.128.55.86:8000"
+  // url: "http://8.130.65.210:80"
+}
+// 测试账号：test， 密码：12345678
+
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -5,7 +13,6 @@ const formatTime = date => {
   const hour = date.getHours()
   const minute = date.getMinutes()
   const second = date.getSeconds()
-
   return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
 }
 const getNowDate = date => {
@@ -60,25 +67,22 @@ const noSecond = string => {
   const temp = string.split(/:/)
   return temp[0] + ':' + temp[1]
 }
-const server_hostname = {
-  //url: "http://114.116.194.214"
-  // url:"http://114.116.53.144"
-  // url:"http://10.128.55.86:8000"
-  url: "http://8.130.65.210:80"
-}
-// 测试账号：test， 密码：12345678
-const timeLag =string=>{
+const timeLag = string => {
   const before = string.substring(0,10)
   const end = string.substring(25,35)
   let b = new Date(before)
   let a = new Date(end)
   let day = parseInt((a.getTime() - b.getTime()) / (1000*60*60*24))
   return day
-
 }
 const flightImage = string => {
   return server_hostname.url + '/media/flight/' + string
 }
+
+function deepClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 module.exports = {
   noSecond,
   noZeroDate,
@@ -93,6 +97,8 @@ module.exports = {
   ChineseWeek,
   server_hostname: server_hostname.url,
   formatDate,
+  deepClone,
+
   server_imagename: server_hostname.url + '/media',
   subkey: 'UMABZ-NKAKX-ILH4J-TFRB2-5EVZV-PWBIJ',
 

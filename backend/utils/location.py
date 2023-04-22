@@ -92,4 +92,3 @@ def encode_addr(addr, lon, lat):
         Position.objects.create(id=adcode_province, name=province_dict['name'],
                                 longitude=province_dict['longitude'], latitude=province_dict['latitude'])
     return n, p, c, d, s, sn, adcode_province, adcode_city, adcode_district
-

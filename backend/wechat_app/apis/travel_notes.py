@@ -22,10 +22,6 @@ from django.core.files.uploadedfile import UploadedFile
 
 from utils.AI.NLP import my_model
 
-
-# TODO
-
-
 class TravelFilterBackend(filters.QueryFilterBackend):
     filter_fields = [
         ("owner", "owner_id", "exact"),
@@ -227,7 +223,8 @@ class TravelApis(viewsets.ModelViewSet):
         tags = data['tag'].split(' ')
         data['tag'] = []
         for tag in tags:
-            if tag == '': continue
+            if tag == '':
+                continue
             try:
                 Tag.objects.all().get(name=tag)
             except Exception:
@@ -282,24 +279,31 @@ class TravelApis(viewsets.ModelViewSet):
 
     @action(methods=['POST', 'DELETE'], detail=True, url_path='image')
     def image(self, request, *args, **kwargs):
+        """
+        添加图片，注意url需要detail形式，例如/api/core/travels/8/image/
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
         if request.method == 'DELETE':
             return self.image_delete(request, *args, **kwargs)
         return self.image_upload(request, *args, **kwargs)
 
     def image_upload(self, request, *args, **kwargs):
         obj = self.get_object()
-        imgfile = request.data.get('image', None)
-        if imgfile is None or not isinstance(imgfile, UploadedFile):
+        img_file = request.data.get('image', None)
+        if img_file is None or not isinstance(img_file, UploadedFile):
             return error_response(status.HTTP_400_BAD_REQUEST, 'Invalid image.', status=status.HTTP_400_BAD_REQUEST)
         desc = request.data.get('description', '')
-        image = Image.objects.create(image=imgfile, description=desc)
+        image = Image.objects.create(image=img_file, description=desc)
         obj.images.add(image)
         return response({'id': image.id})
 
     def image_delete(self, request, *args, **kwargs):
         obj = self.get_object()
-        imgid = conversion.get_list(request.data, 'id')
-        images = obj.images.filter(id__in=imgid)
+        img_id = conversion.get_list(request.data, 'id')
+        images = obj.images.filter(id__in=img_id)
         images.delete()
         return response()
 
