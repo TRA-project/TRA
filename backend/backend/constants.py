@@ -392,7 +392,8 @@ MAX_PRICE_TYPE_LEN = 32
 SIGHT_TYPE_CHOICE = [
         (1, '亲子出行'),
         (2, '休闲娱乐'),
-        (3, '人文景观')
+        (3, '人文景观'),
+        (4, '全部景点')
     ]
 
 # travel_tag_query
