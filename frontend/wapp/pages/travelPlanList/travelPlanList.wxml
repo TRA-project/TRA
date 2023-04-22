@@ -98,3 +98,11 @@
     </view>
   </form>
 </van-popup>
+
+<!-- <van-overlay show="{{ showOverlay }}" bind:click="onClickHide" style="height: 1000rpx;">
+  <view class="overlap-wrapper">
+    <view class="loading-block" catch:tap="noop">
+      <van-loading class="loading-icon" type="spinner" color="#1989fa" />
+    </view>
+  </view>
+</van-overlay> -->

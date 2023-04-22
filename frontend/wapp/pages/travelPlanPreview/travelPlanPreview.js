@@ -1,12 +1,22 @@
 // pages/travelPlanPreview/travelPlanPreview.js
 const utils = require("../../utils/util.js");
 
+const keyMap = {
+  "area": "地区",
+  "tag" : "关键词",
+  "cost": "预期开销",
+  "timeStart": "开始时间",
+  "timeEnd": "结束时间"
+}
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    customArg: {},
+
     mapLongitude: 116.46,
     mapLatitude: 39.92,
     mapMarkers: [
@@ -85,6 +95,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    // 配置参数显示
+    const eventChannel = this.getOpenerEventChannel()
+    eventChannel.on("travelPlan", data => {
+      console.log("eventChannel:", data)
+      var transData = Object.keys(data.arg).reduce((newData, key) => {
+        let newKey = keyMap[key] || key
+        if (key === "timeStart" || key === "timeEnd") {
+          newData[newKey] = utils.formatTime(new Date(data.arg[key]))
+        } else {
+          newData[newKey] = data.arg[key]
+        }
+        return newData
+      }, {})
+      this.setData({
+        customArg: transData
+      })
+    })
+    console.log(this.data.customArg)
+
+    // 地图相关
     console.log("preview on load")
     var markerLo = "mapMarkers[0].longitude"
     var markerLa = "mapMarkers[0].latitude"

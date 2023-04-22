@@ -49,7 +49,7 @@ Page({
     areaCascaderValue: "",
 
     // 标签类型
-    tagValue: "",
+    tagsValue: "",
 
     // 预期开销
     costValue: 0,
@@ -82,6 +82,8 @@ Page({
           return value
       }
     },
+
+    showOverlay: true,
   },
 
   /**
@@ -199,7 +201,76 @@ Page({
   },
 
   formSubmit(event) {
-    console.log(event)
+    console.log(this.data.areaFieldValue)
+    console.log(this.data.tagsValue)
+    console.log(this.data.costValue)
+    console.log(this.data.dateBeginPickerValue)
+    console.log(this.data.dateEndPickerValue)
+    var formData = {
+      area: this.data.areaFieldValue,
+      tag: this.data.tagsValue,
+      cost: this.data.costValue,
+      timeStart: this.data.dateBeginPickerValue,
+      timeEnd: this.data.dateEndPickerValue,
+    }
+
+    // 过滤空输入
+    if (this.data.areaFieldValue === "") {
+      wx.showToast({
+        title: "目标地区不能为空",
+        icon: "none",
+      })
+      return
+    }
+
+    // 进入加载状态
+    wx.showLoading({
+      title: "加载中",
+    })
+
+    // 发送请求
+    var url = utils.server_hostname + "/api/core/" + "plan/new/"
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
+    wx.request({
+      url: url,
+      method: "GET",
+      data: formData,
+      header: {
+        "token-auth": token
+      },
+      success: (res) => {
+        wx.hideLoading()
+        if (res.statusCode !== 200) {
+          wx.showToast({
+            title: "生成失败",
+            icon: "error"
+          })
+          // 姑且先跳转过去
+          wx.navigateTo({
+            url: "/pages/travelPlanPreview/travelPlanPreview?status=false",
+            success: (navRes) => {
+              navRes.eventChannel.emit("travelPlan", {
+                arg: formData,
+              })
+            }
+          })
+        } else {
+          wx.navigateTo({
+            url: "/pages/travelPlanPreview/travelPlanPreview?status=true",
+            success: (navRes) => {
+              // 传递配置参数arg、请求回来的travelPlan数据
+              navRes.eventChannel.emit("travelPlan", {
+                arg: formData,
+                data: res.data
+              })
+            }
+          })
+        }
+      },
+      fail: (err) => {
+        console.log("post new plan argument failed:", err)
+      }
+    })
   },
   
   /**
