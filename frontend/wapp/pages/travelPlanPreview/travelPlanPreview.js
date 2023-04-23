@@ -99,6 +99,7 @@ Page({
     const eventChannel = this.getOpenerEventChannel()
     eventChannel.on("travelPlan", data => {
       console.log("eventChannel:", data)
+      // 处理配置信息
       var transData = Object.keys(data.arg).reduce((newData, key) => {
         let newKey = keyMap[key] || key
         if (key === "timeStart" || key === "timeEnd") {
@@ -111,6 +112,18 @@ Page({
       this.setData({
         customArg: transData
       })
+      // 处理生成travel plan
+      if (options.status === "false") {
+        console.log("return travel plan:failed")
+        this.setData({
+          travelPlansList: this.data.tmpTravelPlansList
+        })
+      } else {
+        console.log("return travel plan:success")
+        this.setData({
+          travelPlansList: data.data
+        })
+      }
     })
     console.log(this.data.customArg)
 
@@ -133,34 +146,6 @@ Page({
       }
     })
 
-    var url = utils.server_hostname + "/api/core/" + "plan/new/"
-    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
-    wx.request({
-      url: url,
-      method: "GET",
-      data: {
-        "city": "北京市",
-        "token-auth": token
-      },
-      header: {
-
-      },
-      success: (res) => { // 发送请求成功
-        console.log("receive plan:", res)
-        if (res.statusCode !== 200) {
-          this.setData({
-            travelPlansList: this.data.tmpTravelPlansList
-          })
-        } else {
-          this.setData({
-            travelPlansList: res.data
-          })
-        }
-      },
-      fail: (res) => {  // 发送请求失败
-        console.log(res)
-      }
-    })
   },
 
   /**

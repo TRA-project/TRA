@@ -228,7 +228,7 @@ Page({
 
   formSubmit(event) {
     var formData = {
-      area: this.data.areaFieldValue,
+      city: this.data.areaFieldValue.split('/')[1],
       tag: this.data.tagsValue,
       cost: this.data.costValue,
       timeStart: this.data.dateBeginPickerValue,
