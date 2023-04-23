@@ -151,10 +151,6 @@ Page({
     wx.navigateBack()
   },
 
-  addScenery() {
-    console.log("add scenery")
-  },
-
   showSceneryDetail(e) {
     console.log("show scenery: ", e)
     var scenery_id = e.currentTarget.dataset.id
@@ -193,6 +189,13 @@ Page({
     console.log("change type to", this.data.typeValue)
     var that = this // 使用自定义函数时得用
     that.selectSceneryFromTag()
+  },
+
+  addScenery() {
+    console.log("tap")
+    wx.navigateTo({
+      url: '/pages/spotAdd/spotAdd',
+    })
   },
 
   /**
