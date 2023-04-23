@@ -1,8 +1,9 @@
 <!--pages/travelPlanPreview/travelPlanPreview.wxml-->
 
-<!-- <view class="travel-plan-title-container">
-  <text class="travel-plan-title"> 出行计划生成 </text>
-</view> -->
+<view class="travel-plan-title-container">
+  <input class="travel-plan-title" placeholder="定制新计划名" 
+    model:value="{{planName}}" />
+</view>
 
 <view class="custom-argument-display-container">
   <view class="custom-arg-display-title">配置信息</view>
@@ -25,5 +26,5 @@
 </view>
 
 <view class="travel-plan-footer-container">
-  <button class="travel-plan-submit-button" type="primary" hover-class="button-hover">确认方案</button>
+  <button class="travel-plan-submit-button" type="primary" hover-class="button-hover" bindtap="onConfirmPlan">确认方案</button>
 </view>

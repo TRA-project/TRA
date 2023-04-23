@@ -46,7 +46,7 @@ Page({
       {
         id: 2,
         name: "西边山脉",
-        desc: "艾恩格朗特55层，吞食水晶的魔龙出没",
+        desc: "艾恩格朗特55层，吞食水晶的魔龙出没，占位符占位符占位符占位符占位符占位符占位符占位符占位符占位符",
         tags: ["亲子出行", "锻造材料"],
         type: 1,
         time: "8h",
@@ -175,7 +175,8 @@ Page({
     var newSceneryShowList = []
     for (var index in this.data.sceneryTotalList) {
       var scene = this.data.sceneryTotalList[index]
-      if (scene.type === this.data.typeValue) { 
+      // 所给的types数组中包含当前typeValue的值，则选入
+      if (scene.types.indexOf(this.data.typeValue) > -1) { 
         newSceneryShowList.push(scene)
       }
     }
