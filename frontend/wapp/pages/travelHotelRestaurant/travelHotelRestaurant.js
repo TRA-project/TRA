@@ -44,6 +44,9 @@ Page({
         console.log("template id:", utils.plan_notification_id)
       }
     })
+    wx.reLaunch({
+      url: "/pages/home/home",
+    })
   },
 
   /**

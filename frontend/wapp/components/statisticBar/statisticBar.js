@@ -6,7 +6,11 @@ Component({
     num: {
       type: Number,
       value: 3,
-    }
+    },
+    btnName: {
+      type: String,
+      value: "返回"
+    },
   },
 
   /**
