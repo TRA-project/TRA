@@ -66,15 +66,15 @@ Page({
       })
     },
 
-<<<<<<< HEAD
     navigateToTravelPlan() {
       wx.navigateTo({
-        url: '/pages/travelPlanList/travelPlanList',
-=======
+        url: '/pages/travelPlanList/travelPlanList'
+      })
+    },
+
     navigateToNewPage: function() {
       wx.navigateTo({
         url: '/pages/travelButlerHome/travelButlerHome',
->>>>>>> dev-wy_travel_butler
       })
     }
     

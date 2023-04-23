@@ -73,19 +73,9 @@ const noSecond = string => {
   const temp = string.split(/:/)
   return temp[0] + ':' + temp[1]
 }
-<<<<<<< HEAD
-const timeLag = string => {
-=======
-const server_hostname = {
-  // url: "http://114.116.194.214"
-  // url: "http://114.116.53.144"
-  // url: "http://10.128.55.86:8000"
-  // url: "http://8.130.65.210:80"
-  url: "http://116.63.12.111:80"
-}
+
 // 测试账号：test， 密码：12345678
 const timeLag =string=>{
->>>>>>> dev-wy_travel_butler
   const before = string.substring(0,10)
   const end = string.substring(25,35)
   let b = new Date(before)

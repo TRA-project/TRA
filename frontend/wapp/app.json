@@ -41,7 +41,6 @@
     "pages/newSchrelease/newSchrelease",
     "pages/newScheduleMore/newScheduleMore",
     "pages/schRelease/schRelease",
-<<<<<<< HEAD
     "pages/sceneryShow/sceneryShow",
     "pages/travelHotelRestaurant/travelHotelRestaurant",
     "pages/sceneSearch/sceneSearch",
@@ -49,56 +48,51 @@
     "pages/travelPlanPreview/travelPlanPreview",
     "pages/sceneList/sceneList",
     "pages/travelPlanList/travelPlanList",
-    "pages/travelPlanShow/travelPlanShow"
-=======
-    "pages/sceneSearch/sceneSearch", 
-    "pages/SceneryShow/SceneryShow",
+    "pages/travelPlanShow/travelPlanShow",
     "pages/spotAdd/spotAdd",
     "pages/pathMapInside/pathMapInside",
     "pages/pathPlanInside/pathPlanInside",
     "pages/travelButler/travelButler",
     "pages/travelButlerHome/travelButlerHome",
     "pages/travelButlerChat/travelButlerChat"
->>>>>>> dev-wy_travel_butler
   ],
+
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "游迹",
     "navigationBarTextStyle": "black"
   },
+
   "style": "v2",
   "sitemapLocation": "sitemap.json",
   "useExtendedLib": {
     "weui": true
   },
+
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
+  
   "usingComponents": {
-<<<<<<< HEAD
-    "van-cell": "@vant/weapp/cell",
-    "van-cell-group": "@vant/weapp/cell-group",
-    "van-submit-bar": "@vant/weapp/submit-bar/index",
+    "van-cell": "/miniprogram/miniprogram_npm/@vant/weapp/cell",
+    "van-cell-group": "/miniprogram/miniprogram_npm/@vant/weapp/cell-group",
+    "van-submit-bar": "/miniprogram/miniprogram_npm/@vant/weapp/submit-bar/index",
     "bottomBar": "/components/bottomBar/bottomBar",
-    "van-button": "@vant/weapp/button/index",
-    "van-field": "@vant/weapp/field/index",
-    "van-dialog": "@vant/weapp/dialog/index",
+    "van-button": "/miniprogram/miniprogram_npm/@vant/weapp/button/index",
+    "van-field": "/miniprogram/miniprogram_npm/@vant/weapp/field/index",
+    "van-dialog": "/miniprogram/miniprogram_npm/@vant/weapp/dialog/index",
     "comment-box": "/components/comment/comment",
     "hotelCard": "/components/hotelCard/hotelCard",
-    "van-icon": "@vant/weapp/icon/index",
-    "van-tab": "@vant/weapp/tab/index",
-    "van-tabs": "@vant/weapp/tabs/index",
-    "van-divider": "@vant/weapp/divider/index",
-    "van-checkbox": "@vant/weapp/checkbox/index",
+    "van-icon": "/miniprogram/miniprogram_npm/@vant/weapp/icon/index",
+    "van-tab": "/miniprogram/miniprogram_npm/@vant/weapp/tab/index",
+    "van-tabs": "/miniprogram/miniprogram_npm/@vant/weapp/tabs/index",
+    "van-divider": "/miniprogram/miniprogram_npm/@vant/weapp/divider/index",
+    "van-checkbox": "/miniprogram/miniprogram_npm/@vant/weapp/checkbox/index",
     "statisticBar": "/components/statisticBar/statisticBar",
-    "van-toast": "@vant/weapp/toast/index"
-=======
-    "van-cell": "./miniprogram/miniprogram_npm/@vant/weapp/cell",
-    "van-cell-group": "./miniprogram/miniprogram_npm/@vant/weapp/cell-group",
+    "van-toast": "/miniprogram/miniprogram_npm/@vant/weapp/toast/index",
     "butler": "/components/butler/butler"
->>>>>>> dev-wy_travel_butler
   }
 }

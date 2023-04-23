@@ -28,8 +28,6 @@ Page({
    */
   onLoad(options) {
 
-      
-
   },
 
   /**
@@ -37,7 +35,7 @@ Page({
    */
   onReady() {
     wx.request({
-      url: url,
+      url: '',
       data: {
 
       },
@@ -56,7 +54,6 @@ Page({
   onShow() {
 
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

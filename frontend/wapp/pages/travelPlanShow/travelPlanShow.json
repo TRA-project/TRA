@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "van-steps": "@vant/weapp/steps/index"
+    "van-steps": "/miniprogram/miniprogram_npm/@vant/weapp/steps/index"
   }
 }
