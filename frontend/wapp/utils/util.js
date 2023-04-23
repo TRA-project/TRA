@@ -73,7 +73,9 @@ const noSecond = string => {
   const temp = string.split(/:/)
   return temp[0] + ':' + temp[1]
 }
-const timeLag = string => {
+
+// 测试账号：test， 密码：12345678
+const timeLag =string=>{
   const before = string.substring(0,10)
   const end = string.substring(25,35)
   let b = new Date(before)
@@ -331,3 +333,11 @@ module.exports = {
     })
   }
 }
+
+// An highlighted block
+const addSelectToArray = function (list) {
+    list.forEach(v=>{
+      v.select = false
+    })
+}
+ 
