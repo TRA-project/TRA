@@ -9,6 +9,14 @@ const monitor = require('./agent/tingyun-mp-agent.js');
   })
   
 App({
+  globalData: {
+    userInfo: null,
+    sysInfo: null,
+    windowW:null,
+    windowH:null,
+    show:false
+  },
+
   onLaunch() {
     //获取show
     var that = this
@@ -30,17 +38,45 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    // 登录
+    that.getUserInfo()
+    that.getSysInfo()
+  },
+
+  // 获取用户信息
+  getUserInfo(cb) {
+    var that = this
     wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      success: () => {
+        wx.getUserInfo({
+          success: (res) => {
+            that.globalData.userInfo = res.userInfo
+            console.log(res.userInfo);
+            typeof cb == "function" && cb(that.globalData.userInfo)
+          }
+        })
       }
     })
   },
-  globalData: {
-    userInfo: null,
-    show:false
-  },
+
+  // 获取手机信息
+  getSysInfo() {
+    var that = this
+    wx.getSystemInfo({
+      success: (res) => {
+        console.log("[model]", res.model)
+        console.log("[pixelRatio]", res.pixelRatio)
+        console.log("[windowWidth]", res.windowWidth)
+        console.log("[windowHeight]", res.windowHeight)
+        console.log("[language]", res.language)
+        console.log("[version]", res.version)
+        console.log("[platform]", res.platform)
+        //设置变量值
+        that.globalData.sysInfo = res;
+        that.globalData.windowW = res.windowWidth;
+        that.globalData.windowH = res.windowHeight;
+      }
+    })
+  }
 
   // onShareAppMessage: function () {
   //   return {

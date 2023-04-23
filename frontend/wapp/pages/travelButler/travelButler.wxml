@@ -1,0 +1,42 @@
+<!-- 可全局移动的可点击组件 -->
+<movable-area class="movable-area">
+  <view bindtap = "openChat">
+    <movable-view class="movable-view" direction="all" x = "{{movableX}}" y = "{{movableY}}">
+      <image class="add-icon" src="../../images/keli.png"></image>
+    </movable-view>
+  </view>
+</movable-area>
+
+<!-- 添加一个弹窗，默认为隐藏状态 -->
+<view class = "chat-popup" hidden = "{{!showChatPopup}}">
+  <view class = "chat-title">出行管家</view>
+  <view class = "divider"></view>
+  <scroll-view class = "chat-list">
+
+    <view class="bubbleBox" wx:for="{{msgList}}">
+    <!-- 左侧的聊天气泡尖角 -->
+    <view class="triangle-top-left">
+      <view class="triangle-top-left2"></view>
+    </view>
+    <!-- 聊天气泡 -->
+    <view class="bkbubble-left">
+      <rich-text nodes="{{item.content}}" />
+      <view style="margin-top: 20rpx;" wx:for="{{item.imgList}}" wx:for-item="imgItem">
+      </view>
+    </view>
+  </view>
+
+  </scroll-view>
+  <view class = "divider"></view>
+  <view class = "chat-input">
+    <view class="audio-input" bindtap = "startRecord">
+      <image class="audio-in" src="../../images/audio_button.png"></image>
+    </view>
+    <input class = "input-box" placeholder = "请输入"></input>
+    <button class = "send-btn" style="width:100rpx;height: 65rpx;">发送</button>
+  </view>
+</view>
+
+<!-- 添加一个蒙层，可以点击关掉弹窗 -->
+<view class = "mask" hidden = "{{!showMask}}" catchtap = "closeChat"></view>
+ 

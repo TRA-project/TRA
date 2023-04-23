@@ -1,5 +1,5 @@
 
-<view class="container" style="opacity: {{opacity}};" bindtouchmove="navigateToNewPage">
+<view class="container" style="opacity: {{opacity}};" bindtouchmove="navigateToFormerPage">
 
   <view class="logo-view">
     <image class="logo-img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
@@ -12,17 +12,17 @@
   </view>
 
   <view class="function-area">
-    <view class="function-box">
+    <view class="function-box" bindtap="navigateToTravelPlan">
       <view class="function-item">
         <image class="function-icon" src="/images/plan-function-icon.jpg"></image>
       </view>
       <view class="function-name">出行计划</view>
     </view>
     <view class="function-box">
-      <view class="function-item">
+      <view class="function-item" bindtap="navigateToNewPage">
         <image class="function-icon" src="/images/ai-function-icon.png"></image>
       </view>
-      <view class="function-name">AI管家</view>
+      <view class="function-name" bindtap="navigateToNewPage">AI管家</view>
     </view>
   </view>
 

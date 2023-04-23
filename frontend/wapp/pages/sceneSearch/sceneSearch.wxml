@@ -2,18 +2,21 @@
 
 <!-- 搜索框 -->
 <view class="search-box">
-  <my-search-bar bind:syncinput="onSyncInput"></my-search-bar>
+  <my-search-bar class="scene-search-bar"
+    confirmTargetUrl="/pages/sceneList/sceneList" keyword="{{myInput}}"
+    bind:syncinput="onSyncInput" bind:syncconfirm="onSyncConfirm"></my-search-bar>
 </view>
 
 <!-- 历史记录 -->
 <view class="history-box" wx:if="{{myInput === ''}}">
   <view class="history-title">
     <text> 历史记录 </text>
-    <image class="trash-icon" src="/images/trashbin.png"></image>
+    <image class="trash-icon" src="/images/trashbin.png" bindtap="deleteHistory"></image>
   </view>
   <view class="history-list">
-    <view wx:for="{{historyList}}" wx:key="unique">
-      <view class="history-item">{{ item }}</view>
+    <view class="history-item" bindtap="confirmHistory" 
+      wx:for="{{historyList}}" wx:key="unique" data-name="{{item}}">
+      {{ item }}
     </view>
   </view>
 </view>
@@ -24,7 +27,7 @@
     <text> 猜你喜欢 </text>
   </view>
   <view class="preference-list">
-    <view class="preference-item" wx:for="{{preferenceList}}" wx:key="unique">
+    <view class="preference-item" wx:for="{{preferenceList}}" wx:key="unique" data-name="{{item.name}}" bindtap="confirmPreference">
       <image src="/images/locate.png" class="locate-icon" />
       <view class="scenery-info"> 
         <view class="scenery-name"> {{item.name}} </view>

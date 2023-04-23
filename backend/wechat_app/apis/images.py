@@ -44,6 +44,9 @@ class ImageApis(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin,
         data = imgfile.read()
         return HttpResponse(data, content_type=ctype)
 
+    
+    
+
 @receiver(pre_delete, sender=Image)
 def image_delete(sender, instance:Image, **kwargs):
     instance.image.delete(False)

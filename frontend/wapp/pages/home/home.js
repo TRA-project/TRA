@@ -41,7 +41,7 @@ Page({
     },
   
     // 跳转到新页面
-    navigateToNewPage() {
+    navigateToFormerPage() {
       wx.navigateTo({
         url: '/pages/index/index',
       })
@@ -64,6 +64,18 @@ Page({
       wx.navigateTo({
         url: '/pages/sceneSearch/sceneSearch',
       })
+    },
+    navigateToTravelPlan() {
+      wx.navigateTo({
+        url: '/pages/travelPlanList/travelPlanList'
+      })
+    },
+
+    navigateToNewPage: function() {
+      wx.navigateTo({
+        url: '/pages/travelButlerChat/travelButlerChat',
+      })
     }
+    
 
 })

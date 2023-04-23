@@ -41,11 +41,21 @@
     "pages/newSchrelease/newSchrelease",
     "pages/newScheduleMore/newScheduleMore",
     "pages/schRelease/schRelease",
-    "pages/sceneSearch/sceneSearch", 
+    "pages/sceneryShow/sceneryShow",
+    "pages/travelHotelRestaurant/travelHotelRestaurant",
+    "pages/sceneSearch/sceneSearch",
+    "pages/travelPlanGen/travelPlanGen",
+    "pages/travelPlanPreview/travelPlanPreview",
+    "pages/sceneList/sceneList",
+    "pages/travelPlanList/travelPlanList",
+    "pages/travelPlanShow/travelPlanShow",
     "pages/SceneryShow/SceneryShow",
     "pages/spotAdd/spotAdd",
     "pages/pathMapInside/pathMapInside",
-    "pages/pathPlanInside/pathPlanInside"
+    "pages/pathPlanInside/pathPlanInside",
+    "pages/travelButler/travelButler",
+    "pages/travelButlerHome/travelButlerHome",
+    "pages/travelButlerChat/travelButlerChat"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -65,6 +75,20 @@
   },
   "usingComponents": {
     "van-cell": "@vant/weapp/cell",
-    "van-cell-group": "@vant/weapp/cell-group"
+    "van-cell-group": "@vant/weapp/cell-group",
+    "van-submit-bar": "@vant/weapp/submit-bar/index",
+    "bottomBar": "/components/bottomBar/bottomBar",
+    "van-button": "@vant/weapp/button/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "comment-box": "/components/comment/comment",
+    "hotelCard": "/components/hotelCard/hotelCard",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index",
+    "van-divider": "@vant/weapp/divider/index",
+    "van-checkbox": "@vant/weapp/checkbox/index",
+    "statisticBar": "/components/statisticBar/statisticBar",
+    "van-toast": "@vant/weapp/toast/index"
   }
 }

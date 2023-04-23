@@ -2,7 +2,8 @@ media/
 logs/
 db.sqlite3
 utility/migrations/
-
+data/
+TEST/
 
 # python
 __pycache__

@@ -11,7 +11,7 @@ Page({
       {"name": "量子之海", "position": "？？？"},
       {"name": "托尔巴纳", "position": "艾恩格朗特"},
       {"name": "来生","position": "沃森-歌舞伎区"},
-    ]
+    ],
   },
 
   /**
@@ -33,6 +33,58 @@ Page({
    */
   onShow() {
 
+  },
+
+  // 同步子组件input内容
+  onSyncInput(event) {
+    console.log("father page: syncInput")
+    this.setData({
+      myInput: event.detail.value
+    })
+  },
+
+  // 同步子组件触发bindConfirm，将keyword加入历史记录
+  onSyncConfirm(event) {
+    console.log("father page: receive Confirm from")
+    var refreshHistoryList = this.data.historyList
+    var lastKeyword = event.detail.value
+    for (var i = 0; i < refreshHistoryList.length; ++i) {
+      if (refreshHistoryList[i] === lastKeyword) {
+        refreshHistoryList.splice(i, 1)
+        break
+      }
+    }
+    refreshHistoryList.unshift(lastKeyword)
+    this.setData({
+      historyList: refreshHistoryList
+    })
+    console.log(refreshHistoryList)
+  },
+  
+  /* 填入向子组件的keyword填入history值，并触发子组件的confirm事件 */
+  confirmHistory(event) {  
+    console.log(event)
+    this.setData({
+      myInput: event.currentTarget.dataset.name
+    })
+    var mySearchBar = this.selectComponent(".scene-search-bar")
+    mySearchBar.getSearchList()
+  },
+
+  deleteHistory() {
+    console.log("delete history")
+    this.setData({
+      historyList: []
+    })
+  },
+
+  confirmPreference(event) {
+    this.setData({
+      myInput: event.currentTarget.dataset.name
+    })
+    var mySearchBar = this.selectComponent(".scene-search-bar")
+    mySearchBar.getSearchList()
+    mySearchBar.onConfirm()
   },
 
   /**
@@ -70,11 +122,4 @@ Page({
 
   },
 
-  // 同步子组件input内容
-  onSyncInput(event) {
-    console.log("syncInput from father page")
-    this.setData({
-      myInput: event.detail.value
-    })
-  }
 })

@@ -1,0 +1,27 @@
+<!--components/hotelCard/hotelCard.wxml-->
+<view class="card" bindtap="onFlip">
+  <view class="left-col">
+    <image src="/images/rujia.jpg" mode="aspectFill" style="width: 200rpx; height: 376rpx; display: inline-block; box-sizing: border-box"></image>
+  </view>
+  <view class="right-col">
+    <text class="name">{{name}}</text>
+    <view>
+      <view class="tag" wx:for="{{taglist}}" wx:key="{{index}}">{{item}}</view>
+    </view>
+    <view>
+      <text class="remark">{{remark}} 非常棒</text>
+      <text class="comment">{{num_comment}} 条评价</text>
+    </view>
+    <view class="info-line">
+      <van-icon name="location" color="#70a1ff"/>
+      <view class="text">{{position}}</view>
+    </view>
+    <view class="info-line">
+      <van-icon name="label" color="#ffa502"></van-icon>
+      <view class="text facility">{{hotel_facility}}</view>
+    </view>
+  </view>
+  <view class="checkbox">
+    <van-checkbox value="{{ checked }}" bind:change="onChange"></van-checkbox>
+  </view>
+</view>

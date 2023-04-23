@@ -1,0 +1,19 @@
+<!--components/bottomBar/bottomBar.wxml-->
+<view class="bar">
+  <view>
+    <van-button round type="info" 
+      size="normal"
+      custom-style="width: 300rpx; font-size: 32rpx;">路线规划</van-button>
+  </view>
+  <view class="right-box">
+    <view class="icon-text" bindtap="onCollect">
+      <image src="{{collectBtnImage}}" style="width: 44rpx; height: 44rpx;"></image>
+      <view class="text">收藏</view>
+    </view>
+    <view class="icon-text" bindtap="onComment">
+      <image src="/images/chat.png" style="width: 40rpx; height: 40rpx;"></image>
+      <view class="text" style="margin-top: 15rpx;">{{numComment}}</view>
+    </view>
+  </view>
+  
+</view>

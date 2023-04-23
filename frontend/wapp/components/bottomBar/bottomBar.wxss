@@ -1,0 +1,37 @@
+/* components/bottomBar/bottomBar.wxss */
+.bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 97%;
+  z-index: 100;
+  background-color: white;
+  user-select: none;
+  padding: 10rpx;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.right-box {
+  display: flex;
+  width: 200rpx;
+  justify-content: space-around;
+}
+
+.icon-text {
+  width: 150rpx;
+}
+
+.text {
+  line-height: 24rpx;
+  font-size: 32rpx;
+  text-align: center;
+}
+
+.icon-text image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10rpx;
+}

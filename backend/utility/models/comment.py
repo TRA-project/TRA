@@ -22,3 +22,4 @@ class Comment(models.Model):
 
     master = models.ForeignKey('TravelNotes', related_name='comments', null=True, default=None, on_delete=models.CASCADE)
     companion_master = models.ForeignKey('Companion', related_name='comments', null=True, default=None, on_delete=models.CASCADE)
+    sight_master = models.ForeignKey('Sight', related_name='comments', null=True, default=None, on_delete=models.CASCADE)

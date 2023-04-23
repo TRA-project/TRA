@@ -1,3 +1,17 @@
+const server_hostname = {
+  //url: "http://114.116.194.214"
+  // url:"http://114.116.53.144"
+  // url:"http://10.128.54.139:8000"  // zyc   10.193.185.225:8000
+  // url:"http://10.192.137.194:8000"  // sy
+  // url: "http://10.128.55.86:8000" // xrb
+  url: "http://116.63.12.111:80"
+  // url: "http://8.130.65.210:80"
+}
+// 测试账号：test， 密码：12345678
+
+// 日程通知的订阅信息id
+const plan_notification_id = "enb7Qohri1KEzMV8pLafG0jCGC4oqf08uAKGc8yomnI";
+
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -5,7 +19,6 @@ const formatTime = date => {
   const hour = date.getHours()
   const minute = date.getMinutes()
   const second = date.getSeconds()
-
   return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
 }
 const getNowDate = date => {
@@ -29,6 +42,7 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : `0${n}`
 }
+
 const formatDate = string => {
   const temp = string.split(/:|-|T/)
   return temp[0] + '-' + temp[1] + '-' + temp[2]
@@ -60,14 +74,7 @@ const noSecond = string => {
   const temp = string.split(/:/)
   return temp[0] + ':' + temp[1]
 }
-const server_hostname = {
-  //url: "http://114.116.194.214"
-  // url:"http://114.116.53.144"
-  // url:"http://10.128.55.86:8000"
-  // url: "http://8.130.65.210:80"
-  // url: "http://116.63.12.111:80"
-  url: "http://tratu1.2022martu1.cn"
-}
+
 // 测试账号：test， 密码：12345678
 const timeLag =string=>{
   const before = string.substring(0,10)
@@ -76,12 +83,18 @@ const timeLag =string=>{
   let a = new Date(end)
   let day = parseInt((a.getTime() - b.getTime()) / (1000*60*60*24))
   return day
-
 }
+
 const flightImage = string => {
   return server_hostname.url + '/media/flight/' + string
 }
+
+function deepClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 module.exports = {
+  plan_notification_id,
   noSecond,
   noZeroDate,
   getNowDateLine,
@@ -95,6 +108,8 @@ module.exports = {
   ChineseWeek,
   server_hostname: server_hostname.url,
   formatDate,
+  deepClone,
+
   server_imagename: server_hostname.url + '/media',
   subkey: 'UMABZ-NKAKX-ILH4J-TFRB2-5EVZV-PWBIJ',
 

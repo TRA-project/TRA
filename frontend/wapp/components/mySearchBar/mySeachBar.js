@@ -14,12 +14,21 @@ Component({
     // 背景颜色
     bgcolor: {
       type: String,
-      value: "rgb(4, 138, 201);"
+      value: "rgba(30, 144, 255, 1.0);"
     },
     // 圆角尺寸
     radius: {
       type: Number,
       value: 36
+    },
+    // confirm跳转页面
+    confirmTargetUrl: {
+      type: String,
+      value: "/pages/sceneList/sceneList"
+    },
+    keyword: {
+      type: String,
+      value: ""
     }
   },
 
@@ -29,7 +38,7 @@ Component({
   data: {
     timer: null,
     delay: 500,
-    keyword: "",
+    //keyword: "", 改用properties中的keyword，同样可以用this.data.keyword获取
     searchRes: [],  // 搜索结果列表
     tmpRes: [
       {"name": "天空岛", "position": "提瓦特"},
@@ -58,6 +67,17 @@ Component({
       }, this.data.delay) // 还得这么用data的值
     },
 
+    deleteInput() {
+      console.log("delete input keyword")
+      this.setData({
+        keyword: "",
+        searchRes: []
+      })
+      console.log("currnet keyword:" + this.data.keyword)
+      this.triggerEvent("syncinput", {value: this.data.keyword})
+      console.log("son component call sync:" + this.data.keyword)
+    },
+
     getSearchList() {
       if (this.data.keyword === "") {
         this.setData({
@@ -66,7 +86,8 @@ Component({
         return
       }
 
-      var url = utils.server_hostname + "/api/core/sceneries/quicksearch/"
+      var url = utils.server_hostname + "/api/core/" + "sights/brief_search/"
+      var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
       wx.request({
         url: url,
         method: "GET",
@@ -74,20 +95,30 @@ Component({
           "keyword": this.data.keyword
         },
         header: {
-
+          "token-auth": token
         },
         success: (res) => { // 发送请求成功
-          console.log(res)
+          console.log("get searchList:", res)
           if (res.statusCode !== 200) {
             this.setData({
               searchRes: this.data.tmpRes
             })
-            console.log(this.data.searchRes)
+          } else {
+            this.setData({
+              searchRes: res.data
+            })
           }
         },
         fail: (res) => {  // 发送请求失败
           console.log(res)
         }
+      })
+    },
+
+    onConfirm() {
+      this.triggerEvent("syncconfirm", {value: this.data.keyword})
+      wx.navigateTo({
+        url: this.properties.confirmTargetUrl + "?keyword=" + this.data.keyword,
       })
     }
   },
