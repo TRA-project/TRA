@@ -1,0 +1,11 @@
+{
+  "usingComponents": {},
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    },
+    "scope.record": {
+      "desc": "用于录制语音消息"
+    }
+  }
+}

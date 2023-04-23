@@ -43,6 +43,7 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : `0${n}`
 }
+
 const formatDate = string => {
   const temp = string.split(/:|-|T/)
   return temp[0] + '-' + temp[1] + '-' + temp[2]
@@ -74,7 +75,9 @@ const noSecond = string => {
   const temp = string.split(/:/)
   return temp[0] + ':' + temp[1]
 }
-const timeLag = string => {
+
+// 测试账号：test， 密码：12345678
+const timeLag =string=>{
   const before = string.substring(0,10)
   const end = string.substring(25,35)
   let b = new Date(before)
@@ -82,6 +85,7 @@ const timeLag = string => {
   let day = parseInt((a.getTime() - b.getTime()) / (1000*60*60*24))
   return day
 }
+
 const flightImage = string => {
   return server_hostname.url + '/media/flight/' + string
 }
@@ -333,3 +337,11 @@ module.exports = {
     })
   }
 }
+
+// An highlighted block
+const addSelectToArray = function (list) {
+    list.forEach(v=>{
+      v.select = false
+    })
+}
+ 

@@ -65,10 +65,16 @@ Page({
         url: '/pages/sceneSearch/sceneSearch',
       })
     },
-
+    
     navigateToTravelPlan() {
       wx.navigateTo({
-        url: '/pages/travelPlanList/travelPlanList',
+        url: '/pages/travelPlanList/travelPlanList'
+      })
+    },
+
+    navigateToNewPage: function() {
+      wx.navigateTo({
+        url: '/pages/travelButlerChat/travelButlerChat',
       })
     }
 
