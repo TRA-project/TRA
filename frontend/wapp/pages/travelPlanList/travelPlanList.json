@@ -1,11 +1,11 @@
 {
   "usingComponents": {
-    "van-popup": "/miniprogram/miniprogram_npm/@vant/weapp/popup/index",
-    "van-datetime-picker": "/miniprogram/miniprogram_npm/@vant/weapp/datetime-picker/index",
-    "van-cascader": "/miniprogram/miniprogram_npm/@vant/weapp/cascader/index",
-    "van-field": "/miniprogram/miniprogram_npm/@vant/weapp/field/index",
-    "van-overlay": "/miniprogram/miniprogram_npm/@vant/weapp/overlay/index",
-    "van-loading": "/miniprogram/miniprogram_npm/@vant/weapp/loading/index"
+    "van-popup": "@vant/weapp/popup/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-cascader": "@vant/weapp/cascader/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-overlay": "@vant/weapp/overlay/index",
+    "van-loading": "@vant/weapp/loading/index"
   },
   "navigationBarTitleText": "出行计划列表"
 }

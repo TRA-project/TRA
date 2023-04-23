@@ -74,7 +74,7 @@ Page({
 
     navigateToNewPage: function() {
       wx.navigateTo({
-        url: '/pages/travelButlerHome/travelButlerHome',
+        url: '/pages/travelButlerChat/travelButlerChat',
       })
     }
     
