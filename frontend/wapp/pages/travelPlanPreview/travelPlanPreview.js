@@ -16,6 +16,7 @@ Page({
    */
   data: {
     customArg: {},
+    planName: "计划",
 
     mapLongitude: 116.46,
     mapLatitude: 39.92,
@@ -72,22 +73,6 @@ Page({
           image: "scenery-preview.png"
         },
       ],
-    ],
-
-    stepsActive: 0,
-    steps: [
-      {
-        text: '行程1',
-        desc: '描述信息',
-      },
-      {
-        text: '行程2',
-        desc: '描述信息',
-      },
-      {
-        text: '行程3',
-        desc: '描述信息',
-      },
     ],
   },
 
@@ -172,6 +157,44 @@ Page({
   onStepClick(event) {
     this.setData({
       stepsActive: event.detail
+    })
+  },
+
+  onConfirmPlan(event) {
+    // 生成formData
+    var spotList = []
+    var selectPlan = this.data.travelPlansList[this.data.plansActive]
+    selectPlan.forEach((item) => {
+      spotList.push(item.id)
+    });
+    console.log("confirm spot ids:", spotList)
+    var formData = {
+      name: this.data.planName,
+      sights: spotList,
+    }
+    console.log("confirm formData:", formData)
+
+    // 发送请求
+    var url = utils.server_hostname + "/api/core/" + "plan/"
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
+    wx.request({
+      url: url,
+      method: "POST",
+      data: formData,
+      header: {
+        // 发送formdata格式
+        "content-type": "application/x-www-form-urlencoded",
+        "token-auth": token,
+      },
+      success: (res) => {
+        console.log("create plan success")
+        wx.navigateTo({
+          url: "/pages/travelHotelRestaurant/travelHotelRestaurant?planid="+ res.data.id,
+        })
+      },
+      fail: (err) => {
+        console.log(err)
+      }
     })
   },
 
