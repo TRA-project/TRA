@@ -11,7 +11,7 @@ const server_hostname = {
 
 // 日程通知的订阅信息id
 const plan_notification_id = "enb7Qohri1KEzMV8pLafG0jCGC4oqf08uAKGc8yomnI";
-const baiduMapAk = "GMnoYcHpQDt0MQEyVRTCp9Vz"; // "4n9FbMFLfdU77lVEEtWBoFk7E3oRIEQx";
+const baiduMapAk = "oHF2ZD7VtDWqGW4fsPiPbDCxU6fGU84E"; // "4n9FbMFLfdU77lVEEtWBoFk7E3oRIEQx";
 
 const formatTime = date => {
   const year = date.getFullYear()
