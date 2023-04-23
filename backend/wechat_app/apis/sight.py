@@ -10,7 +10,7 @@ from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin
 from rest_framework.viewsets import GenericViewSet
 
 from backend import settings
-from utility.models import Comment, Message
+from utility.models import Comment, Message, AppUser
 from utility.models.sight import Sight
 from utils import permission, conversion
 from utils.api_tools import save_log
@@ -92,3 +92,13 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
         if request.method == 'POST':
             return self.comment_create(request, *args, **kwargs)
         return self.comment_retrieve(request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        user_id = permission.user_check(request)
+        user = AppUser.objects.filter(id=user_id).first()
+        collected = user.collections_sight.contains(instance)
+        data = dict(serializer.data)
+        data['collected'] = collected
+        return Response(data)
