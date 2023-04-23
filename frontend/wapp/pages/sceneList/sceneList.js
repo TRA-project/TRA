@@ -99,7 +99,8 @@ Page({
       keyword: options.keyword
     })
 
-    var url = utils.server_hostname + "/api/core/" + "sceneries"
+    var url = utils.server_hostname + "/api/core/" + "sights/search"
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
     wx.request({
       url: url,
       method: "GET",
@@ -107,7 +108,7 @@ Page({
         "keyword": this.data.keyword
       },
       header: {
-
+        "token-auth": token
       },
       success: (res) => {
         console.log(res)
@@ -159,7 +160,7 @@ Page({
     var scenery_id = e.currentTarget.dataset.id
     console.log("show scenery id: ", scenery_id)
     wx.navigateTo({
-      url: "/pages/SceneryShow/SceneryShow?scenery_id=" + scenery_id,
+      url: "/pages/sceneryShow/sceneryShow?scenery_id=" + scenery_id,
     })
   },
 
