@@ -124,7 +124,7 @@ Page({
         // 调整preview内容
         this.data.travelPlanList.forEach((item, index) => {
           this.setData({
-            ["travelPlanList[" + index + "].preview"]: item.sights.join("->")
+            ["travelPlanList[" + index + "].preview"]: item.sights_name.join("->")
           })
         })
         console.log(this.data.travelPlanList)
@@ -228,7 +228,7 @@ Page({
 
   formSubmit(event) {
     var formData = {
-      area: this.data.areaFieldValue,
+      city: this.data.areaFieldValue.split('/')[1],
       tag: this.data.tagsValue,
       cost: this.data.costValue,
       timeStart: this.data.dateBeginPickerValue,

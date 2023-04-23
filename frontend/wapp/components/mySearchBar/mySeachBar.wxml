@@ -14,7 +14,8 @@
 
 <!-- 搜索建议列表 -->
 <view class="suggest-list">
-  <view class="suggest-item" wx:for="{{searchRes}}" wx:key="unique">
+  <view class="suggest-item" wx:for="{{searchRes}}" wx:key="unique" 
+    data-name="{{item.name}}" bindtap="confirmSuggest">
     <image src="/images/locate.png" class="locate-icon" />
     <view class="scenery-info"> 
       <view class="scenery-name"> {{item.name}} </view>

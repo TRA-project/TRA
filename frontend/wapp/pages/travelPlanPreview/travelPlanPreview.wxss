@@ -1,18 +1,20 @@
 /* pages/travelPlanPreview/travelPlanPreview.wxss */
 
 .travel-plan-title-container {
-  text-align: center;
   height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: sticky; /* 吸顶 */
   top: 0;
-  z-index: 99;
+  z-index: 100;
   background-color: white;
-  
 }
 
 .travel-plan-title {
   font-size: 36rpx;
   font-weight: bolder;
+  text-align: center;
 }
 
 .custom-argument-display-container {
