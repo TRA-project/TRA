@@ -110,6 +110,7 @@ Page({
           travelPlansList: data.data
         })
       }
+      console.log("travelPlan:", this.data.travelPlansList)
     })
     console.log(this.data.customArg)
 

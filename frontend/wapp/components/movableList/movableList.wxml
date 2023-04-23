@@ -3,14 +3,16 @@
 <movable-area class="movable-list-container" 
   style="height: {{tarList.length * (itemHeight + itemMarginTop) + itemMarginTop}}rpx;">
   <movable-view 
-    class="movable-list-item-view" wx:for="{{tarList}}" wx:key="unique"
+    class="movable-list-item-view" 
     style="height: {{itemHeight}}rpx; margin-top: {{itemMarginTop}}rpx; z-index: {{index == moveId ? 12 : 11}};"
+    wx:for="{{tarList}}" wx:key="unique"
     direction="vertical" disabled="{{moveDisabled}}" 
-    bindlongpress="onLongPress" bindchange="onMoving" bindtouchend="onTouchEnd"
+    bindtap="onTabViewScene"
+    bindlongpress="onLongPress" bindchange="onMoving" bindtouchend="onTouchEnd" 
     y="{{item.y}}rpx" data-moveid="{{index}}"
   > 
       
-      <van-swipe-cell class="swipe-cell-container" left-width="36">  <!-- 单位还是px -->
+      <van-swipe-cell class="swipe-cell-container" left-width="72" >  <!-- 单位还是px -->
         <view class="button-container" slot="left">
           <button class="delete-item-button" type="warn" bindtap="deleteListItem" data-id="{{index}}">
             删除
@@ -23,7 +25,7 @@
               {{item.name}}
             </view>
             <view class="movable-item-text-desc">
-              {{item.position}}
+              {{item.address.name}}
             </view>
           </view>
           <van-icon class="movable-item-text-icon" name="wap-nav" size="40rpx"/>
