@@ -77,7 +77,7 @@
   },
   
   "usingComponents": {
-    "van-cell": "@vant/weapp/cell",
+    "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group",
     "van-submit-bar": "@vant/weapp/submit-bar/index",
     "bottomBar": "/components/bottomBar/bottomBar",
