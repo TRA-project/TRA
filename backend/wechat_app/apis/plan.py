@@ -1,7 +1,9 @@
 import collections
 import json
 import random
+import time
 
+from utils.baiduAPI import *
 from numpy import size
 from rest_framework import status
 from utility.models import Plan, Sight
@@ -21,31 +23,27 @@ from wechat_app.serializers.sight import SightSerializer, SightPlanSerializer
 
 def calculate(list, tag):
     hot_random = random.random()
+    grade_random = random.random()
     distance_random = random.random()
-    tag_random = random.random()
-    # list为传入的符合硬性条件的数据
-    # 在合适的区间随机生成参数
-    # 考虑评分，距离，标签三个条件
+    #tag_random = random.random()
     n = size(list)
-    print(n)
     dict = {}
     seq = 0
     for i in list:
         # num = hot_random * i.get('hot') + tag_random * (i.get('tag') == tag) + distance_random
-        num = hot_random * i.get('hot')
+        num = hot_random * i.get('hot')+grade_random*i.get('grade')
         dict[seq] = num
         seq = seq + 1
-
     sys = sorted(dict.items(), key=lambda d: d[1], reverse=False)[0:10]
     better_sight = []
     for i, j in sys:
-        print(i)
         better_sight.append(list[i])
     """
     计算每个list的值，之后排序，选择合适的
     """
     # 再对better进行乱序处理或者结合时间安排处理
     # return random.shuffle(better_sight)
+    random.shuffle(better_sight)
     return better_sight
 
 
@@ -76,16 +74,14 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin):
     def retrieve(self, request, *args, **kwargs):
         owner_id = permission.user_check(request)
         if owner_id <= 0:
-            owner_id = 1
-            # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
         # 缺少了安全性检验
         return super().retrieve(request, *args, **kwargs)
 
     def list(self, request, *args, **kwargs):
         owner_id = permission.user_check(request)
         if owner_id <= 0:
-            owner_id = 1
-            # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
         queryset = Plan.objects.filter(owner=owner_id)
         serializer = PlanSerializer(queryset, many=True)
         return Response(serializer.data)
@@ -99,13 +95,13 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin):
         # 还有哪些硬性条件？
         city = request.GET.get('city', '北京市')
         tag = request.GET.get('tag')
-        queryset = Sight.objects.order_by('hot')
+
+        queryset = Sight.objects.all()
         serializer = SightPlanSerializer(queryset, many=True)
         all_list = []
         list = []
         # 硬性筛选
         for i in serializer.data:
-            print(i)
             name = i.get('address').get('name')
             if city in name:
                 list.append(i)
@@ -120,16 +116,12 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin):
         owner_id = permission.user_check(request)
         if owner_id <= 0:
             owner_id = 1
-        data = {}
-        data['owner'] = owner_id
-        data['name'] = name
+        data = {'owner': owner_id, 'name': name}
         serializer = PlanSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         plan = serializer.save()
-        print(type(plan))
         test = sights.replace('[', '').replace(']', '').split(',')
         for i in test:
             data = Sight.objects.get(id=eval(i))
-            print(type(data))
             plan.sights.add(data)
         return error_response(Error.SUCCESS, status=status.HTTP_201_CREATED)
