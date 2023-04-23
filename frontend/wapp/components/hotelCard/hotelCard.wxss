@@ -21,10 +21,13 @@
 }
 
 .left-col image {
-  width: 200rpx;
   border-radius: 20rpx;
   margin-left: 20rpx;
   margin-top: 20rpx;
+  width: 200rpx;
+  height: 300rpx;
+  display: inline-block;
+  box-sizing: border-box;
 }
 
 .right-col .name {
@@ -32,15 +35,33 @@
   font-size: 32rpx;
 }
 
+.line2rd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tags {
+  padding: 0;
+  display: flex;
+}
+
 .right-col .tag {
   background-color: #ECCC68;
   border-radius: 8rpx;
-  display: inline-block;
+  /* display: inline-block; */
   padding: 5rpx;
   padding-left: 8rpx;
   padding-right: 8rpx;
   font-size: 24rpx;
   margin-right: 10rpx;
+  margin-top: 0;
+}
+
+.right-col .distance {
+  margin-right: 10rpx;
+  font-size: 30rpx;
+  line-height: 30rpx;
 }
 
 .remark {

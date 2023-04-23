@@ -1,6 +1,5 @@
 <view style="width:100%;height:100%;background-color: rgb(245,245,245);background-size: cover;">
     <view style="overflow-x:hidden;width:100%;overflow-y: scroll;background-color: rgb(245,245,245);" class="page">
-
         <view class="searchbox_notificaionbox">
             <view class="searchbox">
                 <view class="search_icon">
@@ -20,7 +19,7 @@
                 <view class="notification_icon">
                     <image src="{{server_imagename}}/notification.png" mode='widthFix' class="notification_icon_pic">
                     </image>
-                    <mp-badge wx:if="{{notification}}" class="badge" />
+                    <!-- <mp-badge wx:if="{{notification}}" class="badge" /> -->
                 </view>
             </view>
         </view>
