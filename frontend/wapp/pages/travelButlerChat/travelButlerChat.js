@@ -42,7 +42,7 @@ Page({
       message: inputValue,
       sender: 'user'
     });
-
+//&nbsp;
     // wx.showLoading({
     //   title: '加载中',
     // });
