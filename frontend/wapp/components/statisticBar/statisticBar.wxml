@@ -5,6 +5,6 @@
   <view>
     <van-button round type="info" 
       size="normal"
-      custom-style="width: 300rpx; font-size: 32rpx;" bindtap="onClick">保存旅行计划</van-button>
+      custom-style="width: 300rpx; font-size: 32rpx;" bindtap="onClick">保存到旅行计划</van-button>
   </view>
 </view>
