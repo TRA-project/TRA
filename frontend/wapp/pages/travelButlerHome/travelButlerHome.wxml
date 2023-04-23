@@ -1,0 +1,61 @@
+<!--pages/travelButlerHome/travelButlerHome.wxml-->
+<view class="card">
+  <view class="content">
+    <view class="title">{{titleOne}}</view>
+    <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{1000}}">
+      <swiper-item>
+        <image src="{{imageOneUrls[0]}}" mode="aspectFill"></image>
+      </swiper-item>
+      <swiper-item>
+        <image src="{{imageOneUrls[1]}}" mode="aspectFill"></image>
+      </swiper-item>
+      <swiper-item>
+        <image src="{{imageOneUrls[2]}}" mode="aspectFill"></image>
+      </swiper-item>
+    </swiper>
+    <!-- 这里设一个轮播图，展示收藏的景点的图片，点击跳转到对应的景点信息展示界面 -->
+  </view>
+</view>
+
+<view class = "divider"></view>
+
+<view class="card">
+  <view class="content">
+    <view class="title">{{titleThree}}</view>
+    <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{1000}}">
+      <swiper-item>
+        <image src="{{imageTwoUrls[0]}}" mode="aspectFill"></image>
+      </swiper-item>
+      <swiper-item>
+        <image src="{{imageTwoUrls[1]}}" mode="aspectFill"></image>
+      </swiper-item>
+      <swiper-item>
+        <image src="{{imageTwoUrls[2]}}" mode="aspectFill"></image>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>
+
+<view class = "divider"></view>
+
+<view class="card">
+  <view class="content">
+    <view class="title">{{titleTwo}}</view>
+    <view class="description" bindtap="navigateToSearch">{{description[0]}}</view>
+    <view class="description">{{description[1]}}</view>
+    <view class="description">{{description[2]}}</view>
+    <!-- 这里设置几个可以点击的跳转框，“搜索景点” “景点路径规划”等 -->
+  </view>
+</view>
+
+<view class = "divider"></view>
+
+<view class = "goChat" bindtap="navigateToNewPage">旅行管家</view>
+
+<!-- pages/index/index.wxml -->
+
+
+
+<view class="container">
+  <butler></butler>
+</view>

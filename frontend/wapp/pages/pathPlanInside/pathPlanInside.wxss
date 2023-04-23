@@ -1,0 +1,203 @@
+/* pages/destination/destination.wxss */
+page{
+    font-weight: bold;
+  }
+  /*顶部*/
+  
+  .top {
+    position: relative;
+    height: 300rpx;
+    font-weight: bold;
+  }
+    /*底图*/
+  .top .img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -2;
+    width: 100%;
+    height: 300rpx;
+  }
+  
+  .top .img image {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /*位置*/
+  .top .pos {
+    position: relative;
+    padding-top: 42rpx;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30rpx;
+    color: #2f3542;
+    text-align: center;
+    z-index: 1;
+  }
+  
+  /*搜索*/
+  .top .search {
+    position: relative;
+    width: 100%;
+    padding: 0 40rpx;
+    box-sizing: border-box;
+    margin: 0 auto;
+    height: 65rpx;
+  }
+  
+  .top .search input {
+    margin-top: 46rpx;
+    border-radius: 32px;
+    background: #a4b0be;
+    width: 100%;
+    height: 65rpx;
+    padding: 10rpx 24rpx;
+    box-sizing: border-box;
+  }
+  
+  .placeholderClass {
+    color: #2f3542;
+    font-size: 24rpx;
+  }
+  
+  /*公共头部*/
+  .hot-view, .hot-city {
+    padding: 0 40rpx;
+    padding-top: 28rpx;
+  }
+  
+  .hot .title {
+    height: 34rpx;
+    display: flex;
+    align-items: center;
+    padding: 0 10rpx;
+    box-sizing: border-box;
+    font-size: 30rpx;
+    color: #2f3542;
+    font-weight: bold;
+  }
+  
+  .hot .title text {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+  
+  .hot .title text:first-child, .hot .title text:last-child {
+    height: 1px;
+    background: #2f3542;
+  }
+  
+  .img-box, .city-box {
+    overflow: hidden;
+  }
+  
+  /*景区内玩乐项目*/
+  
+  .img-box {
+    margin-top: 0rpx;
+    padding-bottom: 20rpx;
+  }
+  
+  .img-box .img {
+    position: relative;
+    width: 328rpx;
+    height: 100rpx;
+    border-radius: 10px;
+    float: left;
+  }
+  
+  .img-box .img:nth-of-type(n) {
+    margin-left: 14rpx;
+  }
+  
+  .img-box .img:nth-of-type(n+3) {
+    margin-top: 0rpx;
+  }
+  
+  .img-box image {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .img-box text {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-left: 0rpx;
+    box-sizing: border-box;
+    height: 48rpx;
+    line-height: 48rpx;
+    background: #a4b0be;
+    color:#a4b0be;
+    font-size: 25rpx;
+  }
+  
+  .divider {
+    width: 100%;
+    height: 18rpx;
+    background: #f1f2f6;
+  }
+  
+  /*已选择项目*/
+  
+  .city-box {
+    margin-top: 55rpx;
+    padding-bottom: 56rpx;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .city-box .city {
+    width: 154rpx;
+    height: 70rpx;
+    border: 1px solid #efe8dd;
+    text-align: center;
+    line-height: 70rpx;
+    border-radius: 80px;
+    color: #bbb4af;
+    font-size: 26rpx;
+  }
+  
+  .city-box .city:nth-of-type(n+4) {
+    margin-top: 18rpx;
+  }
+
+  .allitem{
+    display: block;
+    padding-left: 0rpx;
+    line-height: 48rpx;
+    background: #ffffff;
+    color:grey;
+    font-size: 28rpx;
+  }
+
+  .selectitem{
+    display: block;
+    line-height: 50rpx;
+    color:grey;
+    font-size: 28rpx;
+    margin-top: 55rpx;
+    border: 0.5px solid #2f3542;
+    border-radius: 80px;
+    padding-left: 50rpx;
+    padding-right: 50rpx;
+  }
+
+  .block{
+      padding-top: 50rpx;
+  }
+
+  /* button按钮设置 */
+    .button{
+        font-size: 30rpx;
+        color: #2f3542;
+    }
+    .select{
+    color: #2f3542;
+    }

@@ -1,0 +1,48 @@
+<!--pages/PathPlan/PathPlan.wxml-->
+<view class="top">
+  <view class="img">
+    <image src="/images/NationalBotanicalGarden.png"></image>
+  </view>
+  <view class="pos">
+    <text>国家植物园</text>
+  </view>
+  <view class="search">
+    <input type="text" placeholder="搜索景区内玩乐项目" placeholder-class="placeholderClass" />
+    <text class="icon"></text>
+  </view>
+</view>
+
+<view class="divider"></view>
+
+<view class="hot-view hot">
+  <view class="title">
+    <text></text>
+    <text>景区内玩乐项目</text>
+    <text></text>
+  </view>
+
+  <view class="allitem"style="margin: 20rpx 10rpx;">
+    <view wx:for='{{list}}'  wx:for-item='item'  wx:key='index' class="row" >
+       <view class="{{item.select?'select':''}}" data-index='{{index}}' bindtap="selectFruitClick">{{item.name}}</view>
+    </view> 
+  </view>
+</view>
+
+<view class="divider"></view>
+
+<view class="hot-city hot">
+        <view class="title">
+            <text></text>
+            <text>已选择项目</text>
+            <text></text>
+        </view>
+    </view>
+
+<view class="selectitem">{{selectedIdList}}</view>
+
+<view class="block"></view>
+
+<button type ="default" bindtap="goToPathMapInside">
+    <view class="button">开始规划路线</view>
+</button>
+
