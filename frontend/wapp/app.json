@@ -41,7 +41,6 @@
     "pages/newSchrelease/newSchrelease",
     "pages/newScheduleMore/newScheduleMore",
     "pages/schRelease/schRelease",
-<<<<<<< HEAD
     "pages/sceneryShow/sceneryShow",
     "pages/travelHotelRestaurant/travelHotelRestaurant",
     "pages/sceneSearch/sceneSearch",
@@ -49,36 +48,35 @@
     "pages/travelPlanPreview/travelPlanPreview",
     "pages/sceneList/sceneList",
     "pages/travelPlanList/travelPlanList",
-    "pages/travelPlanShow/travelPlanShow"
-=======
-    "pages/sceneSearch/sceneSearch", 
-    "pages/SceneryShow/SceneryShow",
+    "pages/travelPlanShow/travelPlanShow",
     "pages/spotAdd/spotAdd",
     "pages/pathMapInside/pathMapInside",
     "pages/pathPlanInside/pathPlanInside",
     "pages/travelButler/travelButler",
     "pages/travelButlerHome/travelButlerHome",
     "pages/travelButlerChat/travelButlerChat"
->>>>>>> dev-wy_travel_butler
   ],
+
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "游迹",
     "navigationBarTextStyle": "black"
   },
+
   "style": "v2",
   "sitemapLocation": "sitemap.json",
   "useExtendedLib": {
     "weui": true
   },
+
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
+  
   "usingComponents": {
-<<<<<<< HEAD
     "van-cell": "@vant/weapp/cell",
     "van-cell-group": "@vant/weapp/cell-group",
     "van-submit-bar": "@vant/weapp/submit-bar/index",
@@ -94,11 +92,7 @@
     "van-divider": "@vant/weapp/divider/index",
     "van-checkbox": "@vant/weapp/checkbox/index",
     "statisticBar": "/components/statisticBar/statisticBar",
-    "van-toast": "@vant/weapp/toast/index"
-=======
-    "van-cell": "./miniprogram/miniprogram_npm/@vant/weapp/cell",
-    "van-cell-group": "./miniprogram/miniprogram_npm/@vant/weapp/cell-group",
+    "van-toast": "@vant/weapp/toast/index",
     "butler": "/components/butler/butler"
->>>>>>> dev-wy_travel_butler
   }
 }
