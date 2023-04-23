@@ -3,7 +3,6 @@
 .searchbox_notificaionbox{
     display: flex;
     justify-self: center;
-   
     height: 100rpx;
     width: 92%;
     margin-left: 4%;

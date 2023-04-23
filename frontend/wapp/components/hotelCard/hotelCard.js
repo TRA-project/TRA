@@ -1,3 +1,5 @@
+const util = require("../../utils/util")
+
 // components/hotelCard/hotelCard.js
 Component({
   /**
@@ -8,34 +10,61 @@ Component({
       type: String,
       value: "速8酒店(北京朝阳门地铁站店)"
     },
-    tags: {
-      // 标签支持列表渲染，以分号区隔
-      type: String,
-      value: "经济型;有WIFI"
-    },
-    remark: {
+    distance: {
       type: Number,
-      value: 4.7
+      value: 20
     },
-    num_comment: {
-      type: Number,
-      value: 29
-    },
-    position: {
+    uid: {
       type: String,
-      value: "北京市东城区新中街68号聚龙花园8号商务楼紧邻工人体育馆距三里屯酒吧街500米"
+      value: "613b4d2293d21e50220262e0"
     },
-    hotel_facility: {
+    address: {
       type: String,
-      value: "房间内高速上网 客房WIFI 书桌 多种规格电源插座 遮光窗帘 手动窗帘 床具:鸭绒被 空调 沙发"
+      value: "北京市东城区新中街68号聚龙花园8号商务楼紧邻工人体育馆距三里屯酒吧街500米",
+    },
+    type: {
+      type: String,
+      value: "hotel"
     }
   },
 
   lifetimes: {
     attached() {
-      this.setData({
-        taglist: this.properties.tags.split(";")
+      let that = this
+      wx.request({
+        url: "https://api.map.baidu.com/place/v2/detail",
+        method: "GET",
+        data: {
+          uid: that.data.uid,
+          ak: util.baiduMapAk,
+          output: "json",
+          scope: 2,
+          photo_show: false
+        },
+        success(res) {
+          let data = res.data.result;
+          console.log(data)
+          
+          // 获得餐馆的服务描述语，不超过100词
+          let service = "老牌子;味道不错;回头客;位置优越;服务热情;人气旺;交通便利;"
+          if (data.detail_info.featured_service && data.detail_info.featured_service.length !== 0) {
+            service = Array(data.detail_info.featured_service).join(" ")
+          } else if (data.detail_info.content_tag) {
+            service = data.detail_info.content_tag;
+          }
+          service = (service.length > 100) ? service.substr(0, 70) + "..." : service;
+
+          that.setData({
+            taglist: data.detail_info.tag.split(";"),
+            remark: data.detail_info.overall_rating,
+            level: that.getLevel(data.detail_info.overall_rating),
+            num_comment: data.detail_info.comment_num,
+            facility: that.data.type === "hotel" ? 
+                      data.detail_info.inner_facility : service,
+          })
+        }
       })
+
       // console.log(this.data.taglist)
     }
   },
@@ -46,6 +75,11 @@ Component({
   data: {
     checked: false,
     taglist: [],
+    tags:  "经济型;有WIFI",
+    remark: 4.7,
+    level: "非常棒",
+    num_comment: 29,
+    facility: "房间内高速上网 客房WIFI 书桌 多种规格电源插座 遮光窗帘 手动窗帘 床具:鸭绒被 空调 沙发"
   },
 
   /**
@@ -63,6 +97,16 @@ Component({
         checked: !this.data.checked
       })
       this.triggerEvent("change", this.data.checked)
+    },
+    getLevel(remark) {
+      remark = Number(remark)
+      if (remark > 4.0) {
+        return "非常棒"
+      } else if (remark > 3.0) {
+        return "较好"
+      } else {
+        return "一般"
+      }
     }
   }
 })
