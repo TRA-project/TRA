@@ -4,7 +4,7 @@ const server_hostname = {
   // url:"http://10.128.54.139:8000"  // zyc   10.193.185.225:8000
   // url:"http://10.192.137.194:8000"  // sy
   // url: "http://10.128.55.86:8000" // xrb
-  url: "http://116.63.12.111:80"
+  url: "https://tratu1.2022martu1.cn"
   // url: "http://8.130.65.210:80"
 }
 // 测试账号：test， 密码：12345678
