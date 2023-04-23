@@ -3,6 +3,7 @@ const utils = require("../../utils/util.js");
 
 const keyMap = {
   "area": "地区",
+  "city": "地区",
   "tag" : "关键词",
   "cost": "预期开销",
   "timeStart": "开始时间",

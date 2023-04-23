@@ -124,7 +124,7 @@ Page({
         // 调整preview内容
         this.data.travelPlanList.forEach((item, index) => {
           this.setData({
-            ["travelPlanList[" + index + "].preview"]: item.sights.join("->")
+            ["travelPlanList[" + index + "].preview"]: item.sights_name.join("->")
           })
         })
         console.log(this.data.travelPlanList)

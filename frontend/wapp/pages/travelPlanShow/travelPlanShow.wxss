@@ -1,7 +1,16 @@
 /* pages/travelPlanShow/travelPlanShow.wxss */
 
 .travel-plan-header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80rpx;
+  background-color: rgb(30, 143, 255);
+}
 
+.travel-plan-title {
+  font-weight: bolder;
+  color: white;
 }
 
 .travel-plan-map-container {
@@ -15,4 +24,13 @@
 
 .travel-plan-display-container {
   
+}
+
+.travel-plan-footer-container {
+  margin-top: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.travel-plan-delete-button {
+  color: red;
 }
