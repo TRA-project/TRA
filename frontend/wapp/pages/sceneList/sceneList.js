@@ -175,7 +175,8 @@ Page({
     var newSceneryShowList = []
     for (var index in this.data.sceneryTotalList) {
       var scene = this.data.sceneryTotalList[index]
-      if (scene.type === this.data.typeValue) { 
+      // 所给的types数组中包含当前typeValue的值，则选入
+      if (scene.types.indexOf(this.data.typeValue) > -1) { 
         newSceneryShowList.push(scene)
       }
     }

@@ -191,7 +191,7 @@ Page({
      */
     onLoad(options) {
       console.log("选项:", options);
-      let sightId = 15;
+      let sightId = options.scenery_id;
       wx.request({
         url: util.server_hostname + "/api/core/sights/" + sightId + "/",
         header: {
