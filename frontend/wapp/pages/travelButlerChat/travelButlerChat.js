@@ -5,13 +5,15 @@
 // //获取全局唯一的语音识别管理器recordRecoManager
 // const manager = plugin.getRecordRecognitionManager();
 
+const { server_hostname } = require("../../utils/util");
+
 Page({
   data: {
     inputValue: '',  // 输入的内容
-    chat_id: '0',
+    chat_id: '',
     outputValue: '', // ai输出的内容 
     chatContent: [], 
-    toView: '',  // 每次都滚动到最底部
+    toView: ''  // 每次都滚动到最底部
     // //语音
     // recordState: false, //录音状态
     // content:''//内容
@@ -27,13 +29,13 @@ Page({
       inputValue: event.detail.value,
     //   content:e.detail.value
     });
+    // console.log(this.data.inputValue)
   },
 
   sendMessage: function() {   // 点击发送按钮发送消息
-    var inputValue = this.data.inputValue;
     var outputValue = this.data.outputValue;
+    var inputValue = this.data.inputValue;
     var chatContent = this.data.chatContent;
-    var chat_id = this.data.chat_id + 1;
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
     
     chatContent.push({
@@ -41,32 +43,57 @@ Page({
       sender: 'user'
     });
 
+    // wx.showLoading({
+    //   title: '加载中',
+    // });
+    var formData = {
+      chat_id: this.data.chat_id,
+      current_time: new Date().getTime(),
+      position: "",
+      query: inputValue
+    }
+    console.log(formData)
+
+    var that = this
     wx.request({
       url: "http://8.130.65.210/chat",
       method: 'POST',
-      data: {
-          chat_id: chat_id,
-          current_time: new Date().getTime,
-          position: '中国北京航空航天大学',
-          query: inputValue
-      },
+      data: formData,
       header: {
         'content-type': 'application/json',
         "token-auth": token
       },
       success(res){
-        console.log(res.data)
-        outputValue = res.data.content
+        if(res.statusCode == 200) {
+          console.log("get reponse:", res.data)
+          that.setData({
+            chat_id: res.data.chat_id
+          })
+          outputValue = res.data.content,
+          console.log("outputValue:",outputValue)
+          chatContent.push({
+            message: outputValue,
+            sender: 'ai'
+          })
+          that.setData({
+            chatContent: chatContent
+          })
+        } else {
+          that.setData({
+            outputValue: "error"
+          })
+          chatContent.push({
+            message: outputValue,
+            sender: 'ai'
+          })
+        }
       },
       fail(err){
         console.log(err)
-        outputValue = 'sorry'
-      },
-    });
-
-    chatContent.push({
-      message: outputValue,
-      sender: 'ai'
+        that.setData({
+          outputValue : 'sorry'
+        })
+      }
     });
 
     this.setData({   // 更新数据
@@ -74,7 +101,29 @@ Page({
       inputValue: '',
       toView: 'chat-view-' + (chatContent.length - 1)
     });
+  },
+
+  onUnload(){
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
+    // console.log("unload")
+    wx.request({
+      url: 'http://8.130.65.210/del_chat',
+      method: 'POST',
+      data: {
+        chat_id: this.data.chat_id
+      },
+      header: {
+        'content-type': 'application/json',
+        "token-auth": token
+      },
+      success(res) {
+        this.setData({
+          chat_id: ''
+        })
+      }
+    })
   }
+
 
 //   //识别语音 -- 初始化
 //   initRecord: function () {
