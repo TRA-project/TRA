@@ -1,22 +1,22 @@
 // pages/spotAdd/spotAdd.js
 Page({
+      data: {
+        pickerHidden: true,
+        chosen: '',
+        imgs: [],   // 景点图片
+        spots: [],  // 景点游览点
+        count: 3
+      },
 
     /**
      * 页面的初始数据
      */
     onShareAppMessage() {
-        return {
-          title: 'form',
-          path: 'page/component/pages/form/form'
-        }
-      },
-    
-      data: {
-        pickerHidden: true,
-        chosen: '',
-        imgs: [],
-        count: 3
-      },
+      return {
+        title: 'form',
+        path: 'page/component/pages/form/form'
+      }
+   },
 
       bindUpload: function (e) {
         switch (this.data.imgs.length) {
@@ -118,8 +118,16 @@ Page({
         })
       },
     
+      onclick(e) {
+        wx.showToast({ // 显示Toast
+          title: '已向管理员发送',
+          icon: 'success',
+          duration: 1500
+        })
+      },
+
       formSubmit(e) {
-        console.log('form发生了submit事件，携带数据为：', e.detail.value)
+        console.log('form发生了submit事件，携带数据为：', e.detail.value) // console.log 用于在console窗口输出信息
       },
     
       formReset(e) {
@@ -184,5 +192,4 @@ Page({
 
     }
 
-    
 })

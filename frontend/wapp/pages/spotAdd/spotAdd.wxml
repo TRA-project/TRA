@@ -1,14 +1,17 @@
 <!--pages/spotAdd/spotAdd.wxml-->
+<!--一些遗留bug：上传图片删除的图标显示不出来，但是是有作用的-->
 <form catchsubmit="formSubmit" catchreset="formReset">
     <view class = "divider"></view>
+    
     <view class="page-section">
         <view class="page-section-title">景点名称</view>
             <view class="weui-cell__bd" style="margin: 30rpx 0" >
-            <input class="weui-input" name="input" placeholder="请输入新增景点名称" />
+              <input class="weui-input" name="input" placeholder="请输入新增景点名称" />
             </view>
     </view>
 
     <view class = "divider"></view>
+
     <view class="img-wrap">
         <view class="txt">上传景点图片</view>
         <view class="imglist">
@@ -25,6 +28,7 @@
     </view>
 
     <view class = "divider"></view>
+    
     <view class="page-section">
         <view class="page-section-title">景点地址</view>
         <view class="weui-cell__bd" style="margin: 30rpx 0" >
@@ -33,24 +37,27 @@
     </view>
 
     <view class = "divider"></view>
+    
     <view class="page-section">
-        <view class="page-section-title">票价</view>
+        <view class="page-section-title">票价/元</view>
             <view class="weui-cell__bd" style="margin: 30rpx 0" >
             <input class="weui-input" name="input" placeholder="请输入新增景点票价" />
             </view>
     </view>
 
     <view class = "divider"></view>
+    
     <view class="page-section">
         <view class="page-section-title">添加游览点</view>
             <view class="weui-cell__bd" style="margin: 30rpx 0" >
-            <input class="weui-input" name="input" placeholder="请输入新增景点游览点" />
+            <input class="weui-input" name="input" placeholder="请输入新增景点游览点"/>
             </view>
     </view>
 
     <view class = "divider"></view>
+    
     <view class="btn-area">
-        <button style="margin: 30rpx 0" type="primary" formType="submit">上传</button>
+        <button style="margin: 30rpx 0" type="primary" formType="submit" bindtap = "onclick">上传</button>
         <button style="margin: 30rpx 0" formType="reset">清空所有内容</button>
     </view>
 </form>

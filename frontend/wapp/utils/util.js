@@ -42,6 +42,7 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : `0${n}`
 }
+
 const formatDate = string => {
   const temp = string.split(/:|-|T/)
   return temp[0] + '-' + temp[1] + '-' + temp[2]
@@ -83,6 +84,7 @@ const timeLag =string=>{
   let day = parseInt((a.getTime() - b.getTime()) / (1000*60*60*24))
   return day
 }
+
 const flightImage = string => {
   return server_hostname.url + '/media/flight/' + string
 }
