@@ -196,8 +196,16 @@ Page({
         "token-auth": token
       },
       success: (res) => {
-        wx.redirectTo({
-          url: "/pages/travelPlanList/travelPlanList",
+        // wx.redirectTo({
+        //   url: "/pages/travelPlanList/travelPlanList",
+        // })
+        wx.navigateBack({
+          success: () => {
+            let currentPage = getCurrentPages();
+            wx.redirectTo({
+              url: "/" + currPages[currPages.length - 1].route,
+            })
+          }
         })
       },
       fail: (err) => {
