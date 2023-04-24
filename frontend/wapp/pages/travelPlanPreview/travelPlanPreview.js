@@ -30,6 +30,7 @@ Page({
         latitude: 39.92,
       }
     ],
+    mapPoints: [],
 
     plansActive: 0,
     travelPlansList: [],
@@ -85,6 +86,7 @@ Page({
     const eventChannel = this.getOpenerEventChannel()
     eventChannel.on("travelPlan", data => {
       console.log("eventChannel:", data)
+
       // 处理配置信息
       var transData = Object.keys(data.arg).reduce((newData, key) => {
         let newKey = keyMap[key] || key
@@ -98,6 +100,7 @@ Page({
       this.setData({
         customArg: transData
       })
+
       // 处理生成travel plan
       if (options.status === "false") {
         console.log("return travel plan:failed")
@@ -110,6 +113,7 @@ Page({
           travelPlansList: data.data
         })
       }
+      console.log("travelPlan:", this.data.travelPlansList)
     })
     console.log(this.data.customArg)
 
@@ -132,6 +136,7 @@ Page({
       }
     })
 
+    this.upgradeMarkers()
   },
 
   /**
@@ -153,6 +158,7 @@ Page({
       title: `切换到方案 ${event.detail.name + 1 }`,
       icon: 'none',
     });
+    this.upgradeMarkers()
   },
 
   onStepClick(event) {
@@ -196,6 +202,36 @@ Page({
       fail: (err) => {
         console.log(err)
       }
+    })
+  },
+
+  upgradeMarkers() {
+    let mapContext = wx.createMapContext("preview-map", this)
+
+    // 利用travel plan添加markers和points
+    this.data.travelPlansList[this.data.plansActive].forEach((item, index) => {
+      // 添加markers
+      var markerItem = {
+        iconPath: "/images/locate-marker.png",
+        width: "40rpx",
+        height: "60rpx",
+        longitude: item.address.longitude,
+        latitude: item.address.latitude,
+      }
+      // 添加points
+      var pointItem = {
+        longitude: item.address.longitude,
+        latitude: item.address.latitude,
+      }
+      this.setData({
+        ["mapMarkers[" + index + "]"]: markerItem,
+        ["mapPoints[" + index + "]"]: pointItem,
+      })
+    })
+
+    mapContext.includePoints({
+      padding: [40,],
+      points: this.data.mapPoints
     })
   },
 

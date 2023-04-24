@@ -13,7 +13,7 @@
 </view>
 
 <view class="travel-plan-map-container">
-  <map class="tencent-map" longitude="{{mapLongitude}}" latitude="{{mapLatitude}}" 
+  <map class="tencent-map" longitude="{{mapLongitude}}" latitude="{{mapLatitude}}" id="preview-map" show-location
        markers="{{mapMarkers}}"></map>
 </view>
 
