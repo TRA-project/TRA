@@ -14,8 +14,8 @@ const areaOptions = [
   },
   {
     text: '北京市',
-    value: '310000',
-    children: [{ text: '北京市', value: '310100'}],
+    value: '110000',
+    children: [{ text: '北京市', value: '110100'}],
   },
 ];
 
@@ -98,41 +98,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    // // 请求travel plan 列表
-    // var url = utils.server_hostname + "/api/core/" + "plan/"
-    // var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
-    // wx.request({
-    //   url: url,
-    //   method: "GET",
-    //   data: {},
-    //   header: {
-    //     "token-auth": token
-    //   },
-    //   success: (res) => {
-    //     console.log("plan receive: ", res)
-    //     // 获取内容填入travelPlanList(成功/失败)
-    //     if (res.statusCode !== 200) {
-    //       this.setData({
-    //         travelPlanList: this.data.tmpTravelPlanList
-    //       })
-    //     } else {
-    //       this.setData({
-    //         travelPlanList: res.data
-    //       })
-    //     }
-    //     console.log(this.data.travelPlanList)
-    //     // 调整preview内容
-    //     this.data.travelPlanList.forEach((item, index) => {
-    //       this.setData({
-    //         ["travelPlanList[" + index + "].preview"]: item.sights_name.join("->")
-    //       })
-    //     })
-    //     console.log(this.data.travelPlanList)
-    //   },
-    //   fail: (res) => {
-    //     console.log(res)
-    //   }
-    // })
 
   },
 
