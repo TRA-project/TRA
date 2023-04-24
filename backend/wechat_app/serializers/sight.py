@@ -32,16 +32,20 @@ class SightDetailedSerializer(serializers.ModelSerializer):
 
 class SightSerializer(serializers.ModelSerializer):
     prices = PriceSerializer(read_only=True, many=True)
+    images = ImageSerializer(read_only=True, many=True)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
         prices_data = [d.get('price') for d in data.pop('prices', None)]
         data['price'] = min(prices_data, default=0)
+        images = data.pop('images', None)
+        cover = images[0] if images else None
+        data['cover'] = cover.get('image') if cover else None
         return data
 
     class Meta:
         model = Sight
-        exclude = ['open_time', 'images']
+        exclude = ['open_time']
 
 
 class SightBriefSerializer(serializers.ModelSerializer):
