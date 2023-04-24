@@ -7,6 +7,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    planNo: {
+      type: Number,
+      value: 0,
+    },
     tarList: {
       type: Array,
       value: [],
@@ -27,8 +31,8 @@ Component({
   data: {
     moveDisabled: true,
     statusLongpress: false,  /* 是否在longpress状态，用于在touchend中过滤短按结束的情况 */
-    moveId: 0,
-    endY: 0,
+    moveId: 0, /* 当前移动的代码 */
+    endY: 0,  
 
     // 检测手势
     touchStartX: 0,
@@ -49,6 +53,11 @@ Component({
         tarList: tarListWithPosition
       })
       //console.log("draw list:", JSON.stringify(this.properties.tarList))
+      // 同步到父页面
+      this.triggerEvent("synctarlistchange", {
+        listNo: this.properties.planNo, 
+        newList: this.data.tarList
+      })
     },
 
     activateMovable() {
@@ -65,15 +74,22 @@ Component({
       console.log("movable deactivate")
     },
 
+    onTouchStart(event) {
+      console.log("[touch start]")
+      console.log(event)
+      // 记录初始位置
+      this.setData({
+        touchStartX: event.changedTouches[0].pageX,
+        touchStartY: event.changedTouches[0].pageY,
+      })
+    },
+
     onLongPress(event) {
       console.log("[longpress]")
       console.log(event)
 
       this.activateMovable()
-      const {
-        currentTarget: {dataset}
-      } = event 
-      // 不用details.y，因为此时的y来自press的坐标，不来自我们需要的item左上角的坐标
+      const {currentTarget: {dataset}} = event // 新型写法，初始化dataset 
       const newEndY = this.properties.tarList[dataset.moveid].y
       // 但仍需要将endY改为对应item中的y（因为touchEnd还会被触发）
       this.setData({
@@ -93,16 +109,6 @@ Component({
       this.setData({
         moveId: dataset.moveid,
         endY: globalUtil.px2rpx(detail.y)
-      })
-    },
-
-    onTouchStart(event) {
-      console.log("[touch start]")
-      console.log(event)
-      // 记录初始位置
-      this.setData({
-        touchStartX: event.changedTouches[0].pageX,
-        touchStartY: event.changedTouches[0].pageY,
       })
     },
 
@@ -157,7 +163,7 @@ Component({
     endMoveAndReorderList() {
       var newList = this.properties.tarList // 其实感觉没必要深拷贝
       console.log("change endY to", this.data.endY)
-      newList[this.data.moveId].y = this.data.endY
+      newList[this.data.moveId].y = this.data.endY // 修改移动项的y值
       newList.sort((a, b) => {return a.y - b.y})
       //console.log("after sorting:", JSON.stringify(newList)) 
       this.setData({
