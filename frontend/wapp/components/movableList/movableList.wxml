@@ -14,7 +14,9 @@
       
       <van-swipe-cell class="swipe-cell-container" left-width="36" >  <!-- 单位还是px -->
         <view class="button-container" slot="left">
-          <button class="delete-item-button" type="warn" bindtap="deleteListItem" data-id="{{index}}">
+          <button class="delete-item-button" type="warn" 
+            catchtouchstart="nop" catchlongpress="nop" catchtouchend="deleteListItem" 
+            data-id="{{index}}">
             删除
           </button>
         </view>

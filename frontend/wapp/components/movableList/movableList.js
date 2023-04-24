@@ -173,6 +173,10 @@ Component({
       //console.log("cur tarList:", JSON.stringify(this.data.tarList))
       this.drawList()
       this.deactiveMovable()
+    },
+
+    nop(event) {
+      console.log("catch event:", event)
     }
   },
 
