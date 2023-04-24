@@ -101,3 +101,10 @@
 .self-price-class {
   padding-top: 10rpx;
 }
+
+.scenery-list-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600rpx;
+}

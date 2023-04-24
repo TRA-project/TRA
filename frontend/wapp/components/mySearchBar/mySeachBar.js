@@ -37,7 +37,7 @@ Component({
    */
   data: {
     timer: null,
-    delay: 500,
+    delay: 300,
     //keyword: "", 改用properties中的keyword，同样可以用this.data.keyword获取
     searchRes: [],  // 搜索结果列表
     tmpRes: [
@@ -116,10 +116,12 @@ Component({
     },
 
     onConfirm() {
-      this.triggerEvent("syncconfirm", {value: this.data.keyword})
-      wx.navigateTo({
-        url: this.properties.confirmTargetUrl + "?keyword=" + this.data.keyword,
-      })
+      this.timer = setTimeout(() => {
+        this.triggerEvent("syncconfirm", {value: this.data.keyword})
+        wx.navigateTo({
+          url: this.properties.confirmTargetUrl + "?keyword=" + this.data.keyword,
+        })
+      }, this.data.delay)
     },
 
     confirmSuggest(event) {

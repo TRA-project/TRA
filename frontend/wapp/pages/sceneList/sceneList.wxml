@@ -34,6 +34,9 @@
         </view>
       </van-card>
     </view>
+    <view class="scenery-list-placeholder" wx:if="{{sceneryShowList.length === 0}}">
+      <image src="/images/null-placeholder.jpg" style="height: 300rpx; width: 365rpx;"></image>
+    </view>
   </view>
 </view>
 
