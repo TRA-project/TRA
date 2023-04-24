@@ -7,8 +7,8 @@
     style="height: {{itemHeight}}rpx; margin-top: {{itemMarginTop}}rpx; z-index: {{index == moveId ? 12 : 11}};"
     wx:for="{{tarList}}" wx:key="unique"
     direction="vertical" disabled="{{moveDisabled}}" 
-    bindtap="onTabViewScene"
-    bindlongpress="onLongPress" bindchange="onMoving" bindtouchend="onTouchEnd" 
+    bindlongpress="onLongPress" bindchange="onMoving" 
+    bindtouchstart="onTouchStart" bindtouchend="onTouchEnd" 
     y="{{item.y}}rpx" data-moveid="{{index}}"
   > 
       
