@@ -4,7 +4,9 @@ const utils = require("../../utils/util.js");
 Page({
     data: {
       server_imagename: utils.server_imagename,
-      isNavigate: false,
+      
+      //touchStartX: 0,
+      touchStartY: 0,
     },
 
     /**
@@ -42,30 +44,39 @@ Page({
     },
   
     // 跳转到新页面
-    navigateToFormerPage() {
+    onTouchStart(event) {
+      console.log("[touch start]", event)
       this.setData({
-        isNavigate: true
+        // touchStartX: event.changedTouches[0].pageX,
+        touchStartY: event.changedTouches[0].pageY,
       })
     },
 
-    onTouchEnd(e) {
-      if (this.data.isNavigate === false) return
-      wx.navigateTo({
-        url: '/pages/index/index',
-      })
-  
-      // 原页面淡出
-      this.setData({
-        opacity: 0,
-      })
-  
-      // 等待0.5秒，将原页面隐藏
-      setTimeout(() => {
+    onTouchEnd(event) {
+      console.log("[touch end]", event)
+      // const touchEndX = event.changedTouches[0].pageX
+      const touchEndY = event.changedTouches[0].pageY
+
+      console.log("touchStartY:", this.data.touchStartY)
+      console.log("touchEndY:", touchEndY)
+      if (this.data.touchStartY - touchEndY > 100) {
+        console.log("go to page/index/index")
+        wx.navigateTo({
+          url: '/pages/index/index',
+        })
+        // 原页面淡出
         this.setData({
           opacity: 0,
-          hidden: true,
         })
-      }, 500)
+      
+        // 等待0.5秒，将原页面隐藏
+        setTimeout(() => {
+          this.setData({
+            opacity: 0,
+            hidden: true,
+          })
+        }, 500)
+      }
     },
 
     onSearchBarTap() {
