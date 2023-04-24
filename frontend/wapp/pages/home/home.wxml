@@ -1,5 +1,5 @@
 
-<view class="container" style="opacity: {{opacity}};" bindtouchmove="navigateToFormerPage">
+<view class="container" style="opacity: {{opacity}};" bindtouchmove="navigateToFormerPage" bindtouchend="onTouchEnd">
 
   <view class="logo-view">
     <image class="logo-img" src="{{server_imagename}}/logo.png" mode="aspectFit"></image>
