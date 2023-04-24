@@ -12,7 +12,7 @@
     y="{{item.y}}rpx" data-moveid="{{index}}"
   > 
       
-      <van-swipe-cell class="swipe-cell-container" left-width="72" >  <!-- 单位还是px -->
+      <van-swipe-cell class="swipe-cell-container" left-width="36" >  <!-- 单位还是px -->
         <view class="button-container" slot="left">
           <button class="delete-item-button" type="warn" bindtap="deleteListItem" data-id="{{index}}">
             删除
