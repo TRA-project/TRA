@@ -7,14 +7,16 @@
     style="height: {{itemHeight}}rpx; margin-top: {{itemMarginTop}}rpx; z-index: {{index == moveId ? 12 : 11}};"
     wx:for="{{tarList}}" wx:key="unique"
     direction="vertical" disabled="{{moveDisabled}}" 
-    bindtap="onTabViewScene"
-    bindlongpress="onLongPress" bindchange="onMoving" bindtouchend="onTouchEnd" 
+    bindlongpress="onLongPress" bindchange="onMoving" 
+    bindtouchstart="onTouchStart" bindtouchend="onTouchEnd" 
     y="{{item.y}}rpx" data-moveid="{{index}}"
   > 
       
-      <van-swipe-cell class="swipe-cell-container" left-width="72" >  <!-- 单位还是px -->
+      <van-swipe-cell class="swipe-cell-container" left-width="36" >  <!-- 单位还是px -->
         <view class="button-container" slot="left">
-          <button class="delete-item-button" type="warn" bindtap="deleteListItem" data-id="{{index}}">
+          <button class="delete-item-button" type="warn" 
+            catchtouchstart="nop" catchlongpress="nop" catchtouchend="deleteListItem" 
+            data-id="{{index}}">
             删除
           </button>
         </view>
