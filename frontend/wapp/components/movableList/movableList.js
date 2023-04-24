@@ -44,7 +44,7 @@ Component({
       this.setData({
         tarList: tarListWithPosition
       })
-      console.log("draw list:", JSON.stringify(this.properties.tarList))
+      //console.log("draw list:", JSON.stringify(this.properties.tarList))
     },
 
     activateMovable(event) {
@@ -96,7 +96,8 @@ Component({
     onTouchEnd(event) {
       console.log("[touch end]")
       if (!this.data.statusLongpress) { // 过滤非长按结束的情况
-        console.log("not after longpress, change nothing\n")
+        console.log("not after longpress, it's a tab -- view spot\n")
+        this.onTabViewScene(event)
         return
       }
       // 确定为长按结束的情况
@@ -104,21 +105,21 @@ Component({
       console.log("change endY to", this.data.endY)
       newList[this.data.moveId].y = this.data.endY
       newList.sort((a, b) => {return a.y - b.y})
-      console.log("after sorting:", JSON.stringify(newList)) 
+      //console.log("after sorting:", JSON.stringify(newList)) 
       // 这里list的y值不对劲的原因是浅拷贝，导致之后的drawList修改也会影响newList
       // console.log打印obj时，其实仅传入地址，所以缩略图时运行时的（对的），打开折叠所见值是当下的（错的）
       this.setData({
         tarList: newList, // 这里是浅拷贝（也可能不是，因为没引子组件）
         statusLongpress: false
       })
-      console.log("cur tarList:", JSON.stringify(this.data.tarList))
+      //console.log("cur tarList:", JSON.stringify(this.data.tarList))
       this.drawList()
       this.deactiveMovable()
-      console.log("\n")
+      //console.log("\n")
     },
 
     deleteListItem(event) {
-      console.log(event)
+      console.log("deleteItem:", event)
       var newList = this.properties.tarList
       var delIdx = event.currentTarget.dataset.id
       newList.splice(delIdx, 1)
@@ -126,6 +127,16 @@ Component({
         tarList: newList
       })
       this.drawList()
+    },
+    
+    // 权益之计，组件耦合度太太太高了
+    onTabViewScene(event) {
+      console.log("tabView:", event)
+      var idx = event.currentTarget.dataset.moveid
+      var planId = this.data.tarList[idx].id
+      wx.navigateTo({
+        url: "/pages/sceneryShow/sceneryShow?scenery_id=" + planId,
+      })
     }
   },
 

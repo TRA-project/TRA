@@ -3,8 +3,9 @@
     <text style="font-size: 36rpx;">已选 {{num}} 个</text>
   </view>
   <view>
-    <van-button round type="info" 
-      size="normal"
-      custom-style="width: 300rpx; font-size: 32rpx;" bindtap="onClick">保存旅行计划</van-button>
+    <van-button round type="info" size="normal"
+      custom-style="width: 300rpx; font-size: 32rpx;" bindtap="onClick">
+      {{btnName}}
+    </van-button>
   </view>
 </view>

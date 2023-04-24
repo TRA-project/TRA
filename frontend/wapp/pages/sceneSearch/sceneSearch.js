@@ -1,11 +1,14 @@
 // pages/sceneSearch/sceneSearch.js
+
+var app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    historyList: ["ad", "南山", "北京"],
+    historyList: [],
     myInput: "",
     preferenceList: [
       {"name": "量子之海", "position": "？？？"},
@@ -18,7 +21,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    // 从全局load历史记录 （权宜之计，应该向后端请求）
+    this.setData({
+      historyList: app.globalData.historyList
+    })
   },
 
   /**
@@ -58,10 +64,11 @@ Page({
     this.setData({
       historyList: refreshHistoryList
     })
-    console.log(refreshHistoryList)
+    // 同步到全局
+    app.globalData.historyList = this.data.historyList
   },
   
-  /* 填入向子组件的keyword填入history值，并触发子组件的confirm事件 */
+  /* 填入向子组件的keyword填入history值，不触发confirm */
   confirmHistory(event) {  
     console.log(event)
     this.setData({
@@ -76,8 +83,11 @@ Page({
     this.setData({
       historyList: []
     })
+    // 同步到全局
+    app.globalData.historyList = this.data.historyList
   },
 
+  /* 填入向子组件的keyword填入preference值，并触发confirm */
   confirmPreference(event) {
     this.setData({
       myInput: event.currentTarget.dataset.name

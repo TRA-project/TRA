@@ -1,12 +1,15 @@
 <!--components/hotelCard/hotelCard.wxml-->
 <view class="card" bindtap="onFlip">
   <view class="left-col">
-    <image src="/images/rujia.jpg" mode="aspectFill" style="width: 200rpx; height: 376rpx; display: inline-block; box-sizing: border-box"></image>
+    <image src="/images/rujia.jpg" mode="aspectFill"></image>
   </view>
   <view class="right-col">
     <text class="name">{{name}}</text>
-    <view>
-      <view class="tag" wx:for="{{taglist}}" wx:key="{{index}}">{{item}}</view>
+    <view class="line2rd">
+      <view class="tags">
+        <view class="tag" wx:for="{{taglist}}" wx:key="{{index}}">{{item}}</view>
+      </view>
+      <text class="distance">距您 {{distance}} km</text>
     </view>
     <view>
       <text class="remark">{{remark}} 非常棒</text>
@@ -14,11 +17,11 @@
     </view>
     <view class="info-line">
       <van-icon name="location" color="#70a1ff"/>
-      <view class="text">{{position}}</view>
+      <view class="text">{{address}}</view>
     </view>
     <view class="info-line">
       <van-icon name="label" color="#ffa502"></van-icon>
-      <view class="text facility">{{hotel_facility}}</view>
+      <view class="text facility">{{facility}}</view>
     </view>
   </view>
   <view class="checkbox">

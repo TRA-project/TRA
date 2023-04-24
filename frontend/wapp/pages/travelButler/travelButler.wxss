@@ -1,0 +1,123 @@
+.movable-area{
+  pointer-events:none;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.movable-view{ 
+  pointer-events:auto;
+  height: 100px;
+  width: 100px;
+  background:white;
+}
+
+.add-icon{
+  position: fixed;
+  width:inherit;
+  height:inherit;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.chat-popup {
+  position: fixed;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 600rpx;
+  height: 800rpx;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(88, 88, 88, 0.5);
+}
+
+.chat-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin-top: 15rpx;
+  margin-bottom: 1rpx;
+}
+
+.divider {
+  width: 100%;
+  height: 5rpx;
+  background: #f1f2f6;
+}
+
+.chat-list {
+  flex: 1;
+  overflow-y: scroll;
+  height: 80%;
+  /* 聊天记录列表样式 */
+}
+
+.chat-input{
+  display: flex;
+  padding-top: 10rpx;
+}
+
+.audio-in{
+  position: fixed;
+  width: 65rpx;
+  height: 65rpx;
+}
+
+.input-box {
+  flex: 1;
+  margin-left: 40px;
+  border: 1px solid #ccc;
+  padding: 4px;
+  width:  350rpx;
+  margin-right: 10rpx;
+}
+
+.send-btn {
+  display: block;
+  background-color: #1e90ff;
+  color: #fff;
+  padding: 4px;
+  font-size: 16px;
+}
+
+.bubbleBox {
+  display: flex;
+  padding: 30rpx;
+}
+
+.triangle-top-left {
+  position: relative;
+  border-top: 15rpx solid #06A56F;
+  border-left: 15rpx solid transparent;
+  margin-top: 40rpx;
+  margin-left: 10rpx;
+}
+
+.triangle-top-left2 {
+  top: -12rpx;
+  left: -4rpx;
+  position: absolute;
+  border-top: 15rpx solid #ffffff;
+  border-left: 15rpx solid transparent;
+}
+
+.bkbubble-left {
+  text-align: justify;
+  width: 75%;
+  padding: 16rpx;
+  border-radius: 14rpx;
+  border: 6rpx solid #1e90ff;
+  line-height: 46rpx;
+}

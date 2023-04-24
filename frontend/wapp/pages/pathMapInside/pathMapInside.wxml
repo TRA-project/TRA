@@ -1,0 +1,49 @@
+<view class="map-view">
+    <map class="map" longitude="116.209714" latitude="40.001403" scale="16.5" polyline="{{poly}}"> 
+    </map>
+</view>
+
+<view class="container-head flex-row">
+    <scroll-view scroll-x class="container-head-sc" scroll-left="{{sleft}}" scroll-with-animation="true">
+      <view class="item {{currentTab == index ?'active':''}}" data-current="{{index}}" catchtap="handleTabChange" wx:key="list" wx:for="{{list}}" wx:for-index="index">
+        路线-{{index+1}} 
+      </view>
+    </scroll-view>
+</view>
+  
+<swiper current="{{currentTab}}" bindchange="handleSwiperChange" class="container-swiper">
+    <swiper-item class="flex-column j_c" wx:for="{{list}}" wx:key='index'>
+      <scroll-view scroll-y class="container-swiper-sc">
+        <view class="flex-wrap flex-row items">
+          <block wx:for="{{item}}" wx:key="index">
+            <!-- <image src="https://i.postimg.cc/mgsKJGLw/susu1.jpg" mode="aspectFill" class="item-img" /> -->
+            
+
+
+            <!-- 拖拽条目 -->
+            <view class="container">
+        <movable-area class="item_box" style="width: {{boxWeight}}rpx;height: {{boxHeight}}rpx">
+            <movable-view class="item {{selectId === item.id?'item_show':'item_hide'}}" wx:for="{{healthItem}}" x="{{item.x}}rpx" y="{{item.y}}rpx" direction="all" bindchange="touchMove" bindtouchend="touchend" data-index="{{item.index}}" data-id="{{item.id}}" bindtouchstart="unlockItem">
+            <view class="item_name">{{item.name}}</view>
+            </movable-view>
+        </movable-area>
+
+        <view class="item_box layer_box" style="width: {{boxWeight}}rpx;height: {{boxHeight}}rpx">
+            <view class="item layer_item {{selectId == item.id?'item_hide':''}}" wx:for="{{layerItem}}" style="left: {{item.x}}rpx;top: {{item.y}}rpx">
+            <view class="item_name">{{item.name}}</view>
+            </view>
+        </view>
+        </view>
+
+
+
+
+
+          </block>
+        </view>
+      </scroll-view>
+    </swiper-item>
+</swiper>
+
+
+ 

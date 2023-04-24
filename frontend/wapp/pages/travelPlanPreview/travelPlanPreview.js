@@ -3,6 +3,7 @@ const utils = require("../../utils/util.js");
 
 const keyMap = {
   "area": "地区",
+  "city": "地区",
   "tag" : "关键词",
   "cost": "预期开销",
   "timeStart": "开始时间",
@@ -16,6 +17,7 @@ Page({
    */
   data: {
     customArg: {},
+    planName: "计划",
 
     mapLongitude: 116.46,
     mapLatitude: 39.92,
@@ -28,6 +30,7 @@ Page({
         latitude: 39.92,
       }
     ],
+    mapPoints: [],
 
     plansActive: 0,
     travelPlansList: [],
@@ -73,22 +76,6 @@ Page({
         },
       ],
     ],
-
-    stepsActive: 0,
-    steps: [
-      {
-        text: '行程1',
-        desc: '描述信息',
-      },
-      {
-        text: '行程2',
-        desc: '描述信息',
-      },
-      {
-        text: '行程3',
-        desc: '描述信息',
-      },
-    ],
   },
 
   /**
@@ -99,6 +86,8 @@ Page({
     const eventChannel = this.getOpenerEventChannel()
     eventChannel.on("travelPlan", data => {
       console.log("eventChannel:", data)
+
+      // 处理配置信息
       var transData = Object.keys(data.arg).reduce((newData, key) => {
         let newKey = keyMap[key] || key
         if (key === "timeStart" || key === "timeEnd") {
@@ -111,6 +100,20 @@ Page({
       this.setData({
         customArg: transData
       })
+
+      // 处理生成travel plan
+      if (options.status === "false") {
+        console.log("return travel plan:failed")
+        this.setData({
+          travelPlansList: this.data.tmpTravelPlansList
+        })
+      } else {
+        console.log("return travel plan:success")
+        this.setData({
+          travelPlansList: data.data
+        })
+      }
+      console.log("travelPlan:", this.data.travelPlansList)
     })
     console.log(this.data.customArg)
 
@@ -130,37 +133,10 @@ Page({
         console.log("latitude:" , this.data.mapLatitude)
         console.log("marker longitude:" , this.data.mapMarkers[0].longitude)
         console.log("marker latitude:" , this.data.mapMarkers[0].latitude)
+        this.upgradeMarkers()
       }
     })
 
-    var url = utils.server_hostname + "/api/core/" + "plan/new/"
-    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
-    wx.request({
-      url: url,
-      method: "GET",
-      data: {
-        "city": "北京市",
-        "token-auth": token
-      },
-      header: {
-
-      },
-      success: (res) => { // 发送请求成功
-        console.log("receive plan:", res)
-        if (res.statusCode !== 200) {
-          this.setData({
-            travelPlansList: this.data.tmpTravelPlansList
-          })
-        } else {
-          this.setData({
-            travelPlansList: res.data
-          })
-        }
-      },
-      fail: (res) => {  // 发送请求失败
-        console.log(res)
-      }
-    })
   },
 
   /**
@@ -182,11 +158,80 @@ Page({
       title: `切换到方案 ${event.detail.name + 1 }`,
       icon: 'none',
     });
+    this.upgradeMarkers()
   },
 
   onStepClick(event) {
     this.setData({
       stepsActive: event.detail
+    })
+  },
+
+  onConfirmPlan(event) {
+    // 生成formData
+    var spotList = []
+    var selectPlan = this.data.travelPlansList[this.data.plansActive]
+    selectPlan.forEach((item) => {
+      spotList.push(item.id)
+    });
+    console.log("confirm spot ids:", spotList)
+    var formData = {
+      name: this.data.planName,
+      sights: spotList,
+    }
+    console.log("confirm formData:", formData)
+
+    // 发送请求
+    var url = utils.server_hostname + "/api/core/" + "plan/"
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
+    wx.request({
+      url: url,
+      method: "POST",
+      data: formData,
+      header: {
+        // 发送formdata格式
+        "content-type": "application/x-www-form-urlencoded",
+        "token-auth": token,
+      },
+      success: (res) => {
+        console.log("create plan success")
+        wx.navigateTo({
+          url: "/pages/travelHotelRestaurant/travelHotelRestaurant?planid="+ res.data.id,
+        })
+      },
+      fail: (err) => {
+        console.log(err)
+      }
+    })
+  },
+
+  upgradeMarkers() {
+    let mapContext = wx.createMapContext("preview-map", this)
+
+    // 利用travel plan添加markers和points
+    this.data.travelPlansList[this.data.plansActive].forEach((item, index) => {
+      // 添加markers
+      var markerItem = {
+        iconPath: "/images/locate-marker.png",
+        width: "40rpx",
+        height: "60rpx",
+        longitude: item.address.longitude,
+        latitude: item.address.latitude,
+      }
+      // 添加points
+      var pointItem = {
+        longitude: item.address.longitude,
+        latitude: item.address.latitude,
+      }
+      this.setData({
+        ["mapMarkers[" + index + "]"]: markerItem,
+        ["mapPoints[" + index + "]"]: pointItem,
+      })
+    })
+
+    mapContext.includePoints({
+      padding: [40,],
+      points: this.data.mapPoints
     })
   },
 

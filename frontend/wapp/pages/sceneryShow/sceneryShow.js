@@ -1,6 +1,6 @@
 const util = require("../../utils/util");
 const token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
-import Toast from '@vant/weapp/toast/toast';
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast.js';
 
 // pages/sceneryShow/sceneryShow.js
 Page({
@@ -123,7 +123,7 @@ Page({
         editSpotIntro: "",
         add_elm: false
       })
-      Toast("添加成功，待审核")
+      Toast("推荐游览点成功，待审核")
     },
 
     onExitSpot(e) {
@@ -191,7 +191,7 @@ Page({
      */
     onLoad(options) {
       console.log("选项:", options);
-      let sightId = 15;
+      let sightId = options.scenery_id;
       wx.request({
         url: util.server_hostname + "/api/core/sights/" + sightId + "/",
         header: {
@@ -210,7 +210,8 @@ Page({
             distance: "3",
             open_time: data.open_time,
             price: data.prices,
-            inner_sights: data.inner_sights
+            inner_sights: data.inner_sights,
+            isCollect: data.collected
           })
         },
         fail: (err) => {

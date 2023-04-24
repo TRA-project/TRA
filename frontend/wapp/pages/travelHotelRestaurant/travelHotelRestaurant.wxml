@@ -14,16 +14,30 @@
   </van-divider>
   <van-tabs active="{{ active }}" bind:change="onChange" type="card">
     <van-tab title="酒店" title-style="font-size: 36rpx;" class="cards">
-      <view class="hotel-card" wx:for="12345" wx:key="i">
-        <hotelCard></hotelCard>
+      <view class="hotel-card">
+        <hotelCard 
+          wx:for="{{hotels}}" data-name="{{item.name}}" bindchange="onSelect"
+          name="{{item.name}}"
+          address="{{item.address}}"
+          distance="{{item.distance}}"
+          type="hotel"
+          uid="{{item.uid}}"
+          ></hotelCard>
       </view>
     </van-tab>
     <van-tab title="美食" title-style="font-size: 36rpx;" class="cards">
-      <view class="hotel-card" wx:for="12345" wx:key="i">
-        <hotelCard></hotelCard>
+      <view class="hotel-card">
+        <hotelCard 
+          wx:for="{{restaurants}}" data-name="{{item.name}}" bindchange="onSelect"
+          name="{{item.name}}"
+          address="{{item.address}}"
+          distance="{{item.distance}}"
+          type="restaurant"
+          uid="{{item.uid}}"
+          ></hotelCard>
       </view>
     </van-tab>
   </van-tabs>
   <view style="height: 120rpx;"></view>
-  <statisticBar bindclick="onSave"></statisticBar>
+  <statisticBar num="{{numSelected}}" bindclick="onSave"></statisticBar>
 </view>

@@ -15,4 +15,5 @@ from .users_flight import UsersFlightSerializer
 from .log import LogSerializer
 from .hotel import HotelSerializer
 from .food import FoodSerializer
+from .plan import PlanSerializer
 

@@ -19,10 +19,10 @@
       <view class="function-name">出行计划</view>
     </view>
     <view class="function-box">
-      <view class="function-item">
+      <view class="function-item" bindtap="navigateToNewPage">
         <image class="function-icon" src="/images/ai-function-icon.png"></image>
       </view>
-      <view class="function-name">AI管家</view>
+      <view class="function-name" bindtap="navigateToNewPage">AI管家</view>
     </view>
   </view>
 

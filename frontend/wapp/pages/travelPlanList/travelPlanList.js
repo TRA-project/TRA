@@ -14,8 +14,8 @@ const areaOptions = [
   },
   {
     text: '北京市',
-    value: '310000',
-    children: [{ text: '北京市', value: '310100'}],
+    value: '110000',
+    children: [{ text: '北京市', value: '110100'}],
   },
 ];
 
@@ -98,6 +98,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
     // 请求travel plan 列表
     var url = utils.server_hostname + "/api/core/" + "plan/"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
@@ -124,7 +138,7 @@ Page({
         // 调整preview内容
         this.data.travelPlanList.forEach((item, index) => {
           this.setData({
-            ["travelPlanList[" + index + "].preview"]: item.sights.join("->")
+            ["travelPlanList[" + index + "].preview"]: item.sights_name.join("->")
           })
         })
         console.log(this.data.travelPlanList)
@@ -133,21 +147,6 @@ Page({
         console.log(res)
       }
     })
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-    
   },
 
   onTapListItem(event) {
@@ -228,7 +227,7 @@ Page({
 
   formSubmit(event) {
     var formData = {
-      area: this.data.areaFieldValue,
+      city: this.data.areaFieldValue.split('/')[1],
       tag: this.data.tagsValue,
       cost: this.data.costValue,
       timeStart: this.data.dateBeginPickerValue,
