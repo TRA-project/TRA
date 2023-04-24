@@ -158,6 +158,11 @@ Page({
       title: `切换到方案 ${event.detail.name + 1 }`,
       icon: 'none',
     });
+    console.log(event.detail)
+    // 更新plansActive
+    this.setData({
+      plansActive: event.detail.name
+    })
     this.upgradeMarkers()
   },
 
@@ -171,6 +176,7 @@ Page({
     // 生成formData
     var spotList = []
     var selectPlan = this.data.travelPlansList[this.data.plansActive]
+    console.log("select no:", this.data.plansActive)
     console.log("select plan:", selectPlan)
     selectPlan.forEach((item) => {
       spotList.push(item.id)
