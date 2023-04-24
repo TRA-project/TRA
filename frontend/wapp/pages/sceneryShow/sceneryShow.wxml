@@ -125,4 +125,4 @@
 </view>
 
 <van-toast id="van-toast" />
-<comment-box toHideModal="{{hideComment}}" bind:numComment="update_numComment"></comment-box>
+<comment-box toHideModal="{{hideComment}}" sightId="{{id}}" bind:numComment="update_numComment"></comment-box>
