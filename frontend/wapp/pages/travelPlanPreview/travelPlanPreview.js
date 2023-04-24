@@ -133,10 +133,10 @@ Page({
         console.log("latitude:" , this.data.mapLatitude)
         console.log("marker longitude:" , this.data.mapMarkers[0].longitude)
         console.log("marker latitude:" , this.data.mapMarkers[0].latitude)
+        this.upgradeMarkers()
       }
     })
 
-    this.upgradeMarkers()
   },
 
   /**
