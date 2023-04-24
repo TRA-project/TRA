@@ -3,7 +3,8 @@ const utils = require("../../utils/util.js");
 
 Page({
     data: {
-      server_imagename: utils.server_imagename
+      server_imagename: utils.server_imagename,
+      isNavigate: false,
     },
 
     /**
@@ -42,6 +43,13 @@ Page({
   
     // 跳转到新页面
     navigateToFormerPage() {
+      this.setData({
+        isNavigate: true
+      })
+    },
+
+    onTouchEnd(e) {
+      if (this.data.isNavigate === false) return
       wx.navigateTo({
         url: '/pages/index/index',
       })
