@@ -210,7 +210,8 @@ Page({
             distance: "3",
             open_time: data.open_time,
             price: data.prices,
-            inner_sights: data.inner_sights
+            inner_sights: data.inner_sights,
+            isCollect: data.collected
           })
         },
         fail: (err) => {

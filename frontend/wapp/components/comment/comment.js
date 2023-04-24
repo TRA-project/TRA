@@ -294,7 +294,11 @@ Component({
           })
   
           var list = res.data.results
-          that.triggerEvent("numComment", list.length)
+          if (list) {
+            that.triggerEvent("numComment", list.length)
+          } else {
+            that.triggerEvent("numComment", 0)
+          }
   
           for (var i in list) {
             var item = list[i]
