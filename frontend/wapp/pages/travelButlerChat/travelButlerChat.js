@@ -1,10 +1,3 @@
-// // pages/travelButlerChat/travelButlerChat.js
-// const app = getApp();
-// //引入插件：微信同声传译
-// const plugin = requirePlugin('WechatSI');
-// //获取全局唯一的语音识别管理器recordRecoManager
-// const manager = plugin.getRecordRecognitionManager();
-
 const util = require("../../utils/util");
 const { server_hostname } = require("../../utils/util");
 
@@ -13,24 +6,59 @@ Page({
     inputValue: '',  // 输入的内容
     chat_id: '',
     outputValue: '', // ai输出的内容 
-    chatContent: [], 
-    toView: ''  // 每次都滚动到最底部
-    // //语音
-    // recordState: false, //录音状态
-    // content:''//内容
+    chatContent: [],
+    toView: '',
+    query1: '附近有哪些好玩的',
+    query2: '推荐一些附近的美食',
+    query3: '当下季节适合去哪'
   },
 
-//   onLoad: function (options) {
-//     //识别语音
-//     this.initRecord();
-//   },
+  onLoad: function () {
+    // 加载页面时获取聊天记录的最后一条消息元素
+    this.getLastMessageElementAndScrollToBottom();
+  },
+  
+  onShow: function () {
+    // 页面显示时获取聊天记录的最后一条消息元素
+    this.getLastMessageElementAndScrollToBottom();
+  },
+  
+  // 获取聊天记录的最后一条消息元素并滚动到该元素位置
+  getLastMessageElementAndScrollToBottom: function () {
+    const lastMsgEl = document.querySelector('.chat-view:last-child');
+    if (lastMsgEl) {
+      wx.pageScrollTo({
+        scrollTop: lastMsgEl.offsetTop,
+        duration: 0
+      });
+    }
+  },
 
   onInput: function(event) {   // 输入之后将输入值更新到inputValue里
     this.setData({
       inputValue: event.detail.value,
-    //   content:e.detail.value
     });
-    // console.log(this.data.inputValue)
+  },
+
+  query1: function() {
+    this.setData ({
+      inputValue: '附近有哪些好玩的'
+    })
+    this.sendMessage();
+  },
+
+  query2: function() {
+    this.setData({
+      inputValue: '推荐一些附近的美食'
+    })
+    this.sendMessage();
+  },
+
+  query3: function() {
+    this.setData ({
+      inputValue: '当下季节适合去哪'
+    })
+    this.sendMessage();
   },
 
   sendMessage: function() {   // 点击发送按钮发送消息
@@ -43,17 +71,21 @@ Page({
       message: inputValue,
       sender: 'user'
     });
-//&nbsp;
-    // wx.showLoading({
-    //   title: '加载中',
-    // });
+
     var formData = {
       chat_id: this.data.chat_id,
       current_time: new Date().getTime(),
       position: "",
       query: inputValue
     }
+
     console.log(formData)
+
+    wx.showLoading({
+      title: '作答中...'
+      // customClass: 'custom-loading'
+    })
+    
 
     var that = this
     wx.request({
@@ -66,6 +98,7 @@ Page({
       },
       success(res){
         if(res.statusCode == 200) {
+          wx.hideLoading();
           console.log("get reponse:", res.data)
           that.setData({
             chat_id: res.data.chat_id
@@ -80,6 +113,7 @@ Page({
             chatContent: chatContent
           })
         } else {
+          wx.hideLoading();
           that.setData({
             outputValue: "error"
           })
@@ -100,7 +134,7 @@ Page({
     this.setData({   // 更新数据
       chatContent: chatContent,
       inputValue: '',
-      toView: 'chat-view-' + (chatContent.length - 1)
+      toView: 'chatContent-' + (chatContent.length - 1)
     });
   },
 
@@ -124,61 +158,4 @@ Page({
       }
     })
   }
-
-
-//   //识别语音 -- 初始化
-//   initRecord: function () {
-//     const that = this;
-//     // 有新的识别内容返回，则会调用此事件
-//     manager.onRecognize = function (res) {
-//       console.log(res)
-//     }
-//     // 正常开始录音识别时会调用此事件
-//     manager.onStart = function (res) {
-//       console.log("成功开始录音识别", res)
-//     }
-//     // 识别错误事件
-//     manager.onError = function (res) {
-//       console.error("error msg", res)
-//     }
-//     //识别结束事件
-//     manager.onStop = function (res) {
-//       console.log('..............结束录音')
-//       console.log('录音临时文件地址 -->' + res.tempFilePath); 
-//       console.log('录音总时长 -->' + res.duration + 'ms'); 
-//       console.log('文件大小 --> ' + res.fileSize + 'B');
-//       console.log('语音内容 --> ' + res.result);
-//       if (res.result == '') {
-//         wx.showModal({
-//           title: '提示',
-//           content: '听不清楚，请重新说一遍！',
-//           showCancel: false,
-//           success: function (res) {}
-//         })
-//         return;
-//       }
-//       var text = that.data.content + res.result;
-//       that.setData({
-//         content: text
-//       })
-//     }
-//   },
-//   //语音  --按住说话
-//   touchStart: function (e) {
-//     this.setData({
-//       recordState: true  //录音状态
-//     })
-//     // 语音开始识别
-//     manager.start({
-//       lang: 'zh_CN',// 识别的语言，目前支持zh_CN en_US zh_HK sichuanhua
-//     })
-//   },
-//   //语音  --松开结束
-//   touchEnd: function (e) {
-//     this.setData({
-//       recordState: false
-//     })
-//     // 语音结束识别
-//     manager.stop();
-//   }
 })
