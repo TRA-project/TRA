@@ -31,7 +31,7 @@ Page({
   getHotels() {
     let that = this
     wx.request({
-      url: "http://api.map.baidu.com/place/v2/search",
+      url: "https://api.map.baidu.com/place/v2/search",
       method: "GET",
       data: {
         location: `${that.data.latitude},${that.data.longitude}`,
@@ -57,7 +57,7 @@ Page({
   getRestaurants() {
     let that = this
     wx.request({
-      url: "http://api.map.baidu.com/place/v2/search",
+      url: "https://api.map.baidu.com/place/v2/search",
       method: "GET",
       data: {
         location: `${that.data.latitude},${that.data.longitude}`,
@@ -123,6 +123,9 @@ Page({
         console.log(`failed: ${res.errCode}, ${res.errMsg}`)
         console.log("template id:", utils.plan_notification_id)
       }
+    })
+    wx.reLaunch({
+      url: "/pages/home/home",
     })
   },
 

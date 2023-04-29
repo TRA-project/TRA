@@ -1,5 +1,4 @@
 <!--pages/spotAdd/spotAdd.wxml-->
-<!--一些遗留bug：上传图片删除的图标显示不出来，但是是有作用的-->
 <form catchsubmit="formSubmit" catchreset="formReset">
     <view class = "divider"></view>
     

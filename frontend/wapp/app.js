@@ -14,7 +14,8 @@ App({
     sysInfo: null,
     windowW:null,
     windowH:null,
-    show:false
+    show:false,
+    historyList: [],
   },
 
   onLaunch() {

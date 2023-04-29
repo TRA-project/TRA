@@ -88,10 +88,23 @@
 }
 
 .self-desc-class {
-  margin-top: 7rpx;
+  margin-top: 5rpx;
+  margin-bottom: 5rpx;
   height: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 2; /* 行数 */
+    -webkit-box-orient: vertical;
 }
 
 .self-price-class {
-  padding-top: 5rpx;
+  padding-top: 10rpx;
+}
+
+.scenery-list-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600rpx;
 }

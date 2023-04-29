@@ -2,8 +2,6 @@
 
 const utils = require("../../utils/util")
 
-
-
 Page({
   /**
    * 页面的初始数据
@@ -22,6 +20,8 @@ Page({
     ],
     mapPoints: [],
 
+    travelPlanId: 0,
+    travelPlanName: "旅行计划x",
     travelPlan: [],
     tmpTravelPlan: [
       {
@@ -92,6 +92,9 @@ Page({
    */
   onLoad(options) {
     const planId = options.planid // 获取出行计划id
+    this.setData({
+      travelPlanId: planId
+    })
 
     let mapContext = wx.createMapContext("map", this)
 
@@ -108,13 +111,15 @@ Page({
         "token-auth": token
       },
       success: (res) => {
+        console.log("get response plan:", res.data)
         if (res.statusCode !== 200) { // 获取失败
           this.setData({
             travelPlan: this.data.tmpTravelPlan
           })
-        } else {
+        } else { // 获取成功
           this.setData({
-            travelPlan: res.data
+            travelPlan: res.data.sights_detail,
+            travelPlanName: res.data.name
           })
         }
         // 处理获取到的出行计划信息
@@ -122,7 +127,7 @@ Page({
           // 添加steps
           var stepItem = {
             text: item.name,
-            desc: utils.formatTime(new Date(item.time))
+            desc: utils.formatTime(new Date())
           }
           // 添加markers
           var markerItem = {
@@ -148,12 +153,12 @@ Page({
         
         console.log(this.data.mapPoints)
         mapContext.includePoints({
-          padding: [50, 50, 50, 50],
+          padding: [40, 40, 40, 40],
           points: this.data.mapPoints
         })
       },
       fail: (err) => {
-
+        console.log(err)
       }
     })
   },
@@ -175,6 +180,37 @@ Page({
   onClickStep(event) {
     this.setData({
       stepActive: event.detail
+    })
+  },
+
+  onTapDelete() {
+    var url = utils.server_hostname + "/api/core/" + "plan/" + this.data.travelPlanId + "/"
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
+    wx.request({
+      url: url,
+      method: "DELETE",
+      data: {
+        
+      },
+      header: {
+        "token-auth": token
+      },
+      success: (res) => {
+        // wx.redirectTo({
+        //   url: "/pages/travelPlanList/travelPlanList",
+        // })
+        wx.navigateBack({
+          success: () => {
+            let currPages = getCurrentPages();
+            wx.redirectTo({
+              url: "/" + currPages[currPages.length - 1].route,
+            })
+          }
+        })
+      },
+      fail: (err) => {
+        console.log("delete send error:", err)
+      }
     })
   },
 

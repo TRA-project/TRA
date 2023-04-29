@@ -5,6 +5,7 @@
 // //获取全局唯一的语音识别管理器recordRecoManager
 // const manager = plugin.getRecordRecognitionManager();
 
+const util = require("../../utils/util");
 const { server_hostname } = require("../../utils/util");
 
 Page({
@@ -42,7 +43,7 @@ Page({
       message: inputValue,
       sender: 'user'
     });
-
+//&nbsp;
     // wx.showLoading({
     //   title: '加载中',
     // });
@@ -56,7 +57,7 @@ Page({
 
     var that = this
     wx.request({
-      url: "http://8.130.65.210/chat",
+      url: util.server_hostname + "/chat",
       method: 'POST',
       data: formData,
       header: {
@@ -107,7 +108,7 @@ Page({
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
     // console.log("unload")
     wx.request({
-      url: 'http://8.130.65.210/del_chat',
+      url: util.server_hostname + '/del_chat',
       method: 'POST',
       data: {
         chat_id: this.data.chat_id
