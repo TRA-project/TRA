@@ -127,18 +127,44 @@ Page({
       this.setData({
         showDialog: false,
       })
-      // TODO: 请求更改desc or open_time
-      Toast("编辑成功，待审核")
+      let data
+      if (this.dialogMode === "intro") {
+        data = {"desc": this.data.editText}
+      } else {
+        data = {"desc": this.data.open_time}
+      }
+      wx.request({
+        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/edit",
+        method: "POST",
+        data: data,
+        success(res) {
+          Toast("编辑成功，待审核")
+        },
+        fail(res) {
+          Toast.fail(`提交修改失败！${res}`)
+        }
+      })
     },
 
     // 确认添加某个游览点
     onConfirmSpot(e) {
+      let data = [{name: this.data.editSpotName, desc: this.data.editSpotIntro}]
       this.setData({
         editSpotName: "",
         editSpotIntro: "",
         add_elm: false
       })
-      Toast("推荐游览点成功，待审核")
+      wx.request({
+        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/edit",
+        method: "POST",
+        data: data,
+        success(res) {
+          Toast("推荐游览点成功，待审核")
+        },
+        fail(res) {
+          Toast.fail(`提交修改失败！${res}`)
+        }
+      })
     },
 
     onExitSpot(e) {
