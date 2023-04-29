@@ -65,10 +65,15 @@ Page({
         add_elm: false,
         editSpotName: "",
         editSpotIntro: "",
-
+        
+        // 评论相关的数据
         hideComment: true,
         numComment: 23,
         focusAddElm: false,
+
+        // 用户当前的位置
+        latitude: "",
+        longitude: ""
     },
 
     // 随着滑动顶部图片，自动更新图片所在的序号
@@ -116,14 +121,14 @@ Page({
       this.setData({
         showDialog: false,
       })
-      Toast("编辑成功，待审核")
     },
 
     onConfirm(e) {
       this.setData({
         showDialog: false,
       })
-      console.log("confirm")
+      // TODO: 请求更改desc or open_time
+      Toast("编辑成功，待审核")
     },
 
     // 确认添加某个游览点
@@ -196,12 +201,33 @@ Page({
       }
     },
 
+    getLoc (callback) {
+      let that = this
+      wx.getLocation({
+        type: 'wgs84',
+        isHighAccuracy: true,
+        success (res) {
+          that.setData({
+            latitude: res.latitude,
+            longitude: res.longitude
+          })
+          callback()
+        },
+        fail (res) {
+          console.log(`获取位置信息失败：${res}`)
+        }
+      })
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
       console.log("选项:", options);
       let sightId = options.scenery_id;
+      this.setData({
+        id: sightId
+      })
       wx.request({
         url: util.server_hostname + "/api/core/sights/" + sightId + "/",
         header: {
@@ -210,6 +236,12 @@ Page({
         success: (res) => {
           console.log(res.data)
           let data = res.data
+          this.getLoc(() => {
+            let dist = util.GetDistance(data.address.latitude, data.address.longitude, this.data.latitude, this.data.longitude)
+            this.setData({
+              distance: Number(dist).toFixed(2)
+            })
+          })
           this.setData({
             id: data.id,
             images: data.images,
@@ -217,7 +249,6 @@ Page({
             remark: data.grade,
             intro: data.desc,
             position: data.address.name,
-            distance: "3",
             open_time: data.open_time,
             price: data.prices,
             inner_sights: data.inner_sights,

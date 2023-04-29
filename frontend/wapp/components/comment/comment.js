@@ -51,7 +51,7 @@ Component({
   },
 
   lifetimes: {
-    attached() {
+    ready() { // 等待主页面onLoad完毕之后再加载评论
       this.getComments()
     }
   },

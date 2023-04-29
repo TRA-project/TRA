@@ -22,7 +22,7 @@
         <view class="bottom">
             <view class="leftColumn">
                 <view>{{position}}</view>
-                <view class="dist">距您{{distance}}公里</view>
+                <view class="dist">距您 {{distance}} 公里</view>
             </view>
             <view class="rightColumn">
                 <image src="../../images/map.png" style="width: 64rpx; height: 64rpx;"></image>
