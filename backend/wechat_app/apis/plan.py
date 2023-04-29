@@ -3,21 +3,20 @@ import json
 import random
 import time
 
+from utility.models.plan_item import PlanItem
 from utils.baiduAPI import *
 from numpy import size
 from rest_framework import status
 from utility.models import Plan, Sight
 from utils import permission
-from utils.response import error_response, Error
 from wechat_app.serializers.plan import PlanSerializer
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.response import Response
 from utility.models.plan import Plan
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, DestroyModelMixin
 
+from wechat_app.serializers.plan_item import PlanItemSerializer
 from wechat_app.serializers.sight import SightSerializer, SightPlanSerializer
 
 
@@ -31,11 +30,14 @@ def calculate(list, tag):
     seq = 0
     for i in list:
         # num = hot_random * i.get('hot') + tag_random * (i.get('tag') == tag) + distance_random
-        num = hot_random * i.get('hot') + grade_random * i.get('grade')
+        print(i.get('hot'), i.get('grade'))
+        num = hot_random * i.get('hot') / 200 + grade_random * i.get('grade') / 5 + random.random() / 2
         dict[seq] = num
         seq = seq + 1
-    sys = sorted(dict.items(), key=lambda d: d[1], reverse=False)[0:5]
+    sys = sorted(dict.items(), key=lambda d: d[1], reverse=True)[0:5]
+    print(sys)
     better_sight = []
+
     for i, j in sys:
         better_sight.append(list[i])
     """
@@ -43,30 +45,15 @@ def calculate(list, tag):
     """
     # 再对better进行乱序处理或者结合时间安排处理
     # return random.shuffle(better_sight)
+    return better_sight
     random.shuffle(better_sight)
     return better_sight
 
 
 class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyModelMixin):
-    flag = 0
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
-
     # lookup_field = "id"
-    def get_serializer_class(self):
-        if self.flag == 0:
-            return PlanSerializer
-        else:
-            return SightSerializer
-
-    def get_queryset(self):
-        keyword = self.request.query_params.get('location')
-        if self.flag == 0:
-            return Plan.objects.all()
-        elif keyword:
-            return Sight.objects.filter()
-        else:
-            return Sight.objects.all()
 
     """
     在查询旅行计划时，传入用户和对应的序号，确定唯一的一个旅行计划，
@@ -78,18 +65,14 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
             owner_id = 1
             # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
 
-        # 缺少了安全性检验
-        plan = Plan.objects.get(id=kwargs.get('pk'))
+        """安全性检验
+        plan = Plan.objects.get(id)
         serializer = PlanSerializer(instance=plan)
-        list = serializer.data.get('sights')
-        sights_detail = []
-        for i in list:
-            sight = Sight.objects.get(id=i)
-            sight_serializer = SightPlanSerializer(instance=sight)
-            sights_detail.append(sight_serializer.data)
-        dict = serializer.data
-        dict['sights_detail'] = sights_detail
-        return Response(dict)
+        plan_id = serializer.data.get('id')"""
+
+        plan_items = PlanItem.objects.filter(plan_id=kwargs.get('pk'))
+        serializer = PlanItemSerializer(plan_items, many=True)
+        return Response(serializer.data)
 
     def list(self, request, *args, **kwargs):
         owner_id = permission.user_check(request)
@@ -151,9 +134,15 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         serializer.is_valid(raise_exception=True)
         plan = serializer.save()
         test = sights.replace('[', '').replace(']', '').split(',')
+        plan_id = serializer.data.get('id')
         for i in test:
-            data = Sight.objects.get(id=eval(i))
-            plan.sights.add(data)
+            plan_item = {}
+            plan_item['plan_id'] = plan_id
+            plan_item['sight_id'] = eval(i)
+            plan_item['type']
+            serializer = PlanItemSerializer(data=plan_item)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
         return Response(PlanSerializer(plan).data)
 
     def destroy(self, request, *args, **kwargs):
