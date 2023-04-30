@@ -11,6 +11,7 @@ const server_hostname = {
 
 // 日程通知的订阅信息id
 const plan_notification_id = "enb7Qohri1KEzMV8pLafG0jCGC4oqf08uAKGc8yomnI";
+const txMapApiKey = "2OUBZ-ZCMWI-VGDGR-U4DFT-S5L2T-Y2FMG";
 const baiduMapAk = "oHF2ZD7VtDWqGW4fsPiPbDCxU6fGU84E"; // "4n9FbMFLfdU77lVEEtWBoFk7E3oRIEQx";
 
 const formatTime = date => {

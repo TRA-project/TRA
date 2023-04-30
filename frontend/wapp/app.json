@@ -54,28 +54,25 @@
     "pages/pathPlanInside/pathPlanInside",
     "pages/travelButler/travelButler",
     "pages/travelButlerHome/travelButlerHome",
-    "pages/travelButlerChat/travelButlerChat"
+    "pages/travelButlerChat/travelButlerChat",
+    "pages/sceneryMap/sceneryMap"
   ],
-
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "游迹",
     "navigationBarTextStyle": "black"
   },
-
   "style": "v2",
   "sitemapLocation": "sitemap.json",
   "useExtendedLib": {
     "weui": true
   },
-
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
-  
   "usingComponents": {
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group",

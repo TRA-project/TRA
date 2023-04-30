@@ -18,6 +18,8 @@ Page({
         intro: "国家植物园包括南园（中国科学院植物研究所）和北园（北京市植物园）两个园区。南园建有15个特色专类园，拥有展览温室、康熙御碑等人文景观和菩提树等国礼植物，有亚洲最大的植物标本馆、中国古植物馆等 ...",
         position: "海淀区香山路",
         distance: "3",
+        lat: "0",
+        lng: "0",
         open_time: "3月16号~11月15号 9：00到18：00",
         "price": [
             {
@@ -73,7 +75,9 @@ Page({
 
         // 用户当前的位置
         latitude: "",
-        longitude: ""
+        longitude: "",
+
+        loading: true,
     },
 
     // 随着滑动顶部图片，自动更新图片所在的序号
@@ -82,6 +86,20 @@ Page({
         this.setData({
             curImage: e.detail.current
         })
+    },
+
+    navigate2map() {
+      if (this.data.lat !== "0") {
+        // 景点位置
+        wx.navigateTo({
+          url: '/pages/sceneryMap/sceneryMap?lat=' + this.data.lat + "&lng=" + this.data.lng,
+        })
+      } else {
+        // 当前位置
+        wx.navigateTo({
+          url: '/pages/sceneryMap/sceneryMap?lat=' + this.data.latitude + "&lng=" + this.data.longitude,
+        })
+      }
     },
 
     onAddSpot(e) {
@@ -261,25 +279,34 @@ Page({
         },
         success: (res) => {
           console.log(res.data)
-          let data = res.data
-          this.getLoc(() => {
-            let dist = util.GetDistance(data.address.latitude, data.address.longitude, this.data.latitude, this.data.longitude)
-            this.setData({
-              distance: Number(dist).toFixed(2)
+          if (res.statusCode === 200) {
+            let data = res.data
+            this.getLoc(() => {
+              let dist = util.GetDistance(data.address.latitude, data.address.longitude, this.data.latitude, this.data.longitude)
+              this.setData({
+                distance: Number(dist).toFixed(2)
+              })
             })
-          })
-          this.setData({
-            id: data.id,
-            images: data.images,
-            name: data.name,
-            remark: data.grade,
-            intro: data.desc,
-            position: data.address.name,
-            open_time: data.open_time,
-            price: data.prices,
-            inner_sights: data.inner_sights,
-            isCollect: data.collected
-          })
+            this.setData({
+              id: data.id,
+              images: data.images,
+              name: data.name,
+              remark: data.grade,
+              intro: data.desc,
+              position: data.address.name,
+              lat: data.address.latitude,
+              lng: data.address.longitude,
+              open_time: data.open_time,
+              price: data.prices,
+              inner_sights: data.inner_sights,
+              isCollect: data.collected,
+
+              loading: false
+            })
+          } else {
+            Toast.fail("加载失败");
+            console.log(`load err: res = ${res}`)
+          }
         },
         fail: (err) => {
           Toast.fail("加载失败");
