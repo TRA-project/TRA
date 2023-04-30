@@ -21,7 +21,7 @@
 </view>
 
 <view class = "input-wrapper">
-  <input class="input" type="text" name="input" placeholder="请输入要发送的消息" bindinput="onInput" value="{{inputValue}}" bindconfirm="sendMessage" disabled="{{inputDisabled}}"/>
+  <input class="input" type="text" name="input" placeholder="请输入要发送的消息" bindinput="onInput" value="{{inputValue}}" bindconfirm="sendMessage"/>
   <image class = "image" src = '../../images/audio_button.png'></image>
 </view>
 

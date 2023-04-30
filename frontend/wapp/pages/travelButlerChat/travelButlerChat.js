@@ -13,27 +13,6 @@ Page({
     query3: '当下季节适合去哪'
   },
 
-  onLoad: function () {
-    // 加载页面时获取聊天记录的最后一条消息元素
-    this.getLastMessageElementAndScrollToBottom();
-  },
-  
-  onShow: function () {
-    // 页面显示时获取聊天记录的最后一条消息元素
-    this.getLastMessageElementAndScrollToBottom();
-  },
-  
-  // 获取聊天记录的最后一条消息元素并滚动到该元素位置
-  getLastMessageElementAndScrollToBottom: function () {
-    const lastMsgEl = document.querySelector('.chat-view:last-child');
-    if (lastMsgEl) {
-      wx.pageScrollTo({
-        scrollTop: lastMsgEl.offsetTop,
-        duration: 0
-      });
-    }
-  },
-
   onInput: function(event) {   // 输入之后将输入值更新到inputValue里
     this.setData({
       inputValue: event.detail.value,
