@@ -63,12 +63,24 @@
 .movable-item-text-title {
   font-weight: bolder;
   font-size: 34rpx;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 1; /* 行数 */
+    -webkit-box-orient: vertical;
 }
 
 .movable-item-text-desc {
   margin-top: 10rpx;
   font-size: 26rpx;
   color: rgba(87, 96, 111,1.0);
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 2; /* 行数 */
+    -webkit-box-orient: vertical;
 }
 
 .movable-item-text-icon {

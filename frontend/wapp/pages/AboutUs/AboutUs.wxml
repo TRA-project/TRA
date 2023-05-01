@@ -22,18 +22,18 @@
                     </view>
                     
                     <view class = 'info_title'>开发团队</view>
-                    <view class = 'info_content'>北航 2022软件工程</view>
-                    <view class = 'info_content'>SCH-FR-1 小组</view>
+                    <view class = 'info_content'>北航 2023软件工程</view>
+                    <view class = 'info_content'>TRA-TU-1 小组</view>
 
                     <view class = 'info_sub_title'>后端</view>
-                    <view class = 'info_content'>凌鑫 李云栋</view>
-                    <view class = 'info_sub_title'>管理端</view>
-                    <view class = 'info_content'>李雨航</view>
+                    <view class = 'info_content'>苏阳 赵雨晨 马曦迪</view>
+                    <view class = 'info_sub_title'>AI研发</view>
+                    <view class = 'info_content'>苏阳</view>
                     <view class = 'info_sub_title'>微信小程序</view>
-                    <view class = 'info_content' style= "margin-bottom:50rpx">陈雨鸥 吴昊天 周华盛 李雨航</view>
+                    <view class = 'info_content' style= "margin-bottom:50rpx">张仁鹏 夏瑞斌 魏祎</view>
 
                     <view class = 'info_title'>说明</view>
-                    <view class = 'info_content'style = "font-size:30rpx">若想关闭调试模式，进入小程序在调式模式开启的情况下，点击下方关闭按钮即可</view>
+                    <view class = 'info_content'style = "font-size:30rpx">若想关闭调试模式，进入小程序在调试模式开启的情况下，点击下方关闭按钮即可</view>
                     <button type="primary" style = "position:relative;z-index:10;font-weight:bolder;font-size:36rpx;margin-bottom:30rpx" bindtap = "closeDebug">关闭调试模式</button>
 
                     
@@ -46,10 +46,10 @@
 
                         <view class = 'info_title'>免责声明</view>
                         <view class = 'info_content' style="margin:0rpx;font-size:30rpx">
-                            用户在Tripal中发布的游记以及评论信息仅表明用户其个人的立场和观点，并不代表本开发小组的立场和观点。
+                            用户在"游迹平台"中发布的游记以及评论信息仅表明用户其个人的立场和观点，并不代表本开发小组的立场和观点。
                         </view>
                         <view class = 'info_content' style="margin:0rpx;font-size:30rpx">
-                            作为信息的发布者，每位用户需自觉自行对所发表的内容负责，因发表内容所引发的一切纠纷及其他事件，由该内容的发表者承担全部法律责任及连带责任，SCH-FR-1小组不承担任何法律及连带责任。
+                            作为信息的发布者，每位用户需自觉自行对所发表的内容负责，因发表内容所引发的一切纠纷及其他事件，由该内容的发表者承担全部法律责任及连带责任，TRA-TU-1小组不承担任何法律及连带责任。
                         </view>
                         <view class = 'info_content' style="margin:0rpx;font-size:30rpx">
                             网络不是法外之地，希望所有用户注意文明用语，遵守相应的法律和道德规范。
@@ -65,8 +65,8 @@
                     <view style = "margin-bottom:100rpx"> </view>
                     <view class = "tail_info">
                         <view class = "tail_title">祝您旅途愉快~</view>
-                        <view class = "tail_title">北航 1906 SCH-FR-1</view>
-                        <view class = "tail_title">19373490@buaa.edu.cn</view>
+                        <view class = "tail_title">北航 2006 TRA-TU-1</view>
+                        <view class = "tail_title">20373649@buaa.edu.cn</view>
                     </view>
                 </view>
                     

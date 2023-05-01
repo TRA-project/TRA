@@ -68,6 +68,7 @@ Page({
 
         hideComment: true,
         numComment: 23,
+        focusAddElm: false,
     },
 
     // 随着滑动顶部图片，自动更新图片所在的序号
@@ -82,6 +83,15 @@ Page({
       this.setData({
         add_elm: !this.data.add_elm
       })
+      if (this.data.add_elm) {
+        wx.pageScrollTo({
+          selector: ".newelm",
+          duration: 300,
+        })
+        this.setData({
+          focusAddElm: true,
+        })
+      }
     },
 
     onEditIntro(e) {
@@ -210,7 +220,8 @@ Page({
             distance: "3",
             open_time: data.open_time,
             price: data.prices,
-            inner_sights: data.inner_sights
+            inner_sights: data.inner_sights,
+            isCollect: data.collected
           })
         },
         fail: (err) => {

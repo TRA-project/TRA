@@ -72,7 +72,7 @@
               <image src="/images/flag.png" style="vertical-align: top; margin-top: 20rpx;"></image>
               <view class="info">
                   <view>
-                      <input value="{{editSpotName}}" placeholder="输入游览点名称"/>
+                      <input value="{{editSpotName}}" focus="{{focusAddElm}}" placeholder="输入游览点名称"/>
                   </view>
                   <view style="margin-top: 10rpx;">
                     <van-cell-group>
@@ -125,4 +125,4 @@
 </view>
 
 <van-toast id="van-toast" />
-<comment-box toHideModal="{{hideComment}}" bind:numComment="update_numComment"></comment-box>
+<comment-box toHideModal="{{hideComment}}" sightId="{{id}}" bind:numComment="update_numComment"></comment-box>

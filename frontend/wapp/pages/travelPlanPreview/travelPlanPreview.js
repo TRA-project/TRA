@@ -30,6 +30,7 @@ Page({
         latitude: 39.92,
       }
     ],
+    mapPoints: [],
 
     plansActive: 0,
     travelPlansList: [],
@@ -85,6 +86,7 @@ Page({
     const eventChannel = this.getOpenerEventChannel()
     eventChannel.on("travelPlan", data => {
       console.log("eventChannel:", data)
+
       // 处理配置信息
       var transData = Object.keys(data.arg).reduce((newData, key) => {
         let newKey = keyMap[key] || key
@@ -98,6 +100,7 @@ Page({
       this.setData({
         customArg: transData
       })
+
       // 处理生成travel plan
       if (options.status === "false") {
         console.log("return travel plan:failed")
@@ -110,6 +113,7 @@ Page({
           travelPlansList: data.data
         })
       }
+      console.log("travelPlan:", this.data.travelPlansList)
     })
     console.log(this.data.customArg)
 
@@ -129,6 +133,7 @@ Page({
         console.log("latitude:" , this.data.mapLatitude)
         console.log("marker longitude:" , this.data.mapMarkers[0].longitude)
         console.log("marker latitude:" , this.data.mapMarkers[0].latitude)
+        this.upgradeMarkers()
       }
     })
 
@@ -153,6 +158,12 @@ Page({
       title: `切换到方案 ${event.detail.name + 1 }`,
       icon: 'none',
     });
+    console.log(event.detail)
+    // 更新plansActive
+    this.setData({
+      plansActive: event.detail.name
+    })
+    this.upgradeMarkers()
   },
 
   onStepClick(event) {
@@ -165,6 +176,8 @@ Page({
     // 生成formData
     var spotList = []
     var selectPlan = this.data.travelPlansList[this.data.plansActive]
+    console.log("select no:", this.data.plansActive)
+    console.log("select plan:", selectPlan)
     selectPlan.forEach((item) => {
       spotList.push(item.id)
     });
@@ -197,6 +210,48 @@ Page({
         console.log(err)
       }
     })
+  },
+
+  upgradeMarkers() {
+    console.log("update markers and points")
+    let mapContext = wx.createMapContext("preview-map", this)
+
+    // 利用travel plan添加markers和points
+    this.data.travelPlansList[this.data.plansActive].forEach((item, index) => {
+      // 添加markers
+      var markerItem = {
+        iconPath: "/images/locate-marker.png",
+        width: "40rpx",
+        height: "60rpx",
+        longitude: item.address.longitude,
+        latitude: item.address.latitude,
+      }
+      // 添加points
+      var pointItem = {
+        longitude: item.address.longitude,
+        latitude: item.address.latitude,
+      }
+      this.setData({
+        ["mapMarkers[" + index + "]"]: markerItem,
+        ["mapPoints[" + index + "]"]: pointItem,
+      })
+    })
+
+    mapContext.includePoints({
+      padding: [40,],
+      points: this.data.mapPoints
+    })
+  },
+
+  onSyncTarListChange(event) {
+    console.log("father page: receive new tarList")
+    console.log(event)
+    var tarPlanNo = event.detail.listNo
+    this.setData({
+      ["travelPlansList[" + tarPlanNo + "]"]: event.detail.newList
+    })
+
+    console.log("after sync, travelPlansList:", this.data.travelPlansList)
   },
 
   /**
