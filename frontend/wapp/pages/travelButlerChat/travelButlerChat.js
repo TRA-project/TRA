@@ -16,7 +16,10 @@ Page({
     imageUrl: '../../images/up.png',
     showMask: true,
     height: '400',
-    marginTop: '400'
+    marginTop: '400',
+    latitude: '',   // 当前位置的纬度
+    longitude: '', // 当前位置的精度
+    address: ''
   },
 
   toggleCard: function(){
@@ -51,34 +54,44 @@ Page({
     })
   },
 
-  getLocation: function(){
-    wx.getLocation({
-      type: 'wgs84',
-      success: function(res) {
-        var latitude = res.latitude;
-        var longitude = res.longitude;
-        wx.request({
-          url: 'https://api.map.baidu.com/reverse_geocoding/v3/',
-          data: {
-            ak: 'Your Baidu Map API Key',
-            location: latitude + ',' + longitude,
-            output: 'json',
-            coordtype: 'wgs84ll',
-            pois: 0
-          },
-          success: function(res) {
-            console.log(res.data.result.formatted_address);
-          },
-          fail: function(res) {
-            console.log('逆地址解析失败', res);
-          }
-        })
-      },
-      fail: function(res) {
-        console.log('获取位置失败', res);
-      }
-    })
-  },  
+  getLocation: function (callback){
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
+     let that = this
+     wx.getLocation({
+       type: 'wgs84',  // GPS坐标
+       isHighAccuracy: true,   // 高精度
+       success (res) {
+         that.setData({
+           latitude: res.latitude,   // 纬度
+           longitude: res.longitude  // 经度
+         })
+          wx.request({
+            url:'https://apis.map.qq.com/ws/geocoder/v1/?location='+ res.latitude + ',' + res.longitude + '&key=BLPBZ-OJ5KW-FIYR3-3U5PS-HENY2-TAFOT',
+            method: 'GET',
+            data: {
+              location: res.latitude + ',' + res.longitude,
+              key: 'BLPBZ-OJ5KW-FIYR3-3U5PS-HENY2-TAFOT'
+            },
+            header: {
+              'content-type': 'application/json',
+              "token-auth": token
+            },
+            success(res){
+                console.log(res.data)
+                that.setData({
+                  address: res.data.address
+                })
+            },
+            fail(res){
+                console.log(res.data)
+            }
+          })
+         },
+       fail (res) {
+         console.log(`获取位置信息失败：${res}`)
+       }
+      })
+  },
 
   onInput: function(event) {   // 输入之后将输入值更新到inputValue里
     this.setData({
@@ -110,6 +123,7 @@ Page({
   sendMessage: function() {   // 点击发送按钮发送消息
     var outputValue = this.data.outputValue;
     var inputValue = this.data.inputValue;
+    var address = this.data.address;
     var chatContent = this.data.chatContent;
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
     
@@ -119,12 +133,13 @@ Page({
     });
 
     console.log(new Date().getTime());
-    console.log(this.getLocation());
+
+    this.getLocation()
 
     var formData = {
       chat_id: this.data.chat_id,
       current_time: new Date().getTime(),
-      position: this.getLocation(),
+      position: address,
       query: inputValue
     }
 
@@ -135,7 +150,6 @@ Page({
       // customClass: 'custom-loading'
     })
     
-
     var that = this
     wx.request({
       url: util.server_hostname + "/chat",
@@ -159,12 +173,12 @@ Page({
             sender: 'ai'
           })
           that.setData({
-            chatContent: chatContent
+            chatContent: chatContent,
           })
         } else {
           wx.hideLoading();
           that.setData({
-            outputValue: "error"
+            outputValue: "error",
           })
           chatContent.push({
             message: outputValue,
@@ -179,7 +193,6 @@ Page({
         })
       }
     });
-
     this.setData({   // 更新数据
       chatContent: chatContent,
       inputValue: '',
@@ -189,6 +202,7 @@ Page({
 
   onUnload(){
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
+
     // console.log("unload")
     wx.request({
       url: util.server_hostname + '/del_chat',
