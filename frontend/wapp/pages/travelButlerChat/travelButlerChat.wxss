@@ -10,29 +10,42 @@ page {
   left: 10rpx;
   top: 10rpx;
   right: 10rpx;
-  height: 370rpx;
   background-color: #fff;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  z-index: 99;
+  z-index: 1000;
+  /* z-index: 99; */
+}
+
+.card-head{
+  display: flex;
+  align-items: center;  /* 垂直居中 */
+  justify-content: space-between; /* 子元素间距相等 */
+  border-bottom: 1px solid #ddd;
 }
 
 .card-header {
   font-size: 16px;
   font-weight: bold;
   padding: 20rpx;
-  border-bottom: 1px solid #ddd;
+}
+
+.arrow{
+  height: 35rpx;
+  width: 35rpx;
+  padding-right: 20rpx;
 }
 
 .card-body {
   padding-left: 20rpx;
   padding-top: 10rpx;
+  padding-bottom: 10rpx;
   font-size: 14px;
   color: grey;
 }
 
 .card-query-wrapper{
-  padding-top: 10rpx;
+  padding-bottom: 15rpx;
   padding-left: 190rpx;
   padding-right: 190rpx;
   text-align: center;
@@ -73,7 +86,6 @@ page {
 .scroll{
   flex:1;
   overflow: scroll;
-  padding-top: 400rpx;
   padding-bottom: 20rpx;
   padding-right: 5rpx;
   padding-left: 5rpx;
@@ -104,4 +116,14 @@ page {
   transform: translateY(-50%);
   width: 35px;
   height: 35px;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 999;
 }

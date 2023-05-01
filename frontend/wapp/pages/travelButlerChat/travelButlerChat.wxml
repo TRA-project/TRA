@@ -1,19 +1,24 @@
 <view class="card">
-  <view class="card-header">很高兴见到你！准备好迎接一场完美旅行了吗？</view>
-  <view class="card-body">也许你想了解以下问题</view>
-  <view class="card-query-wrapper">
-    <view class="card-query" bindtap="query1">{{query1}}</view>
+  <view class="card-head">
+    <view class="card-header">很高兴见到你！你想问些什么？</view>
+    <image class="arrow" bindtap="toggleCard" src="{{imageUrl}}"></image>
   </view>
-  <view class="card-query-wrapper">
-    <view class="card-query" bindtap="query2">{{query2}}</view>
-  </view>
-  <view class="card-query-wrapper">
-    <view class="card-query" bindtap="query3">{{query3}}</view>
+  <view class="card-content" hidden="{{hidden}}" animation="{{animation}}">
+    <view class="card-body">也许你想了解以下问题</view>
+    <view class="card-query-wrapper">
+      <view class="card-query" bindtap="query1">{{query1}}</view>
+    </view>
+    <view class="card-query-wrapper">
+      <view class="card-query" bindtap="query2">{{query2}}</view>
+    </view>
+    <view class="card-query-wrapper">
+      <view class="card-query" bindtap="query3">{{query3}}</view>
+    </view>
   </view>
 </view>
 
-<view class = "scroll">
-  <scroll-view class="chat-view" scroll-y="true" style="height: 300px;" scroll-to-View="{{toView}}"> 
+<view class = "scroll" style="height: {{height}}rpx;">
+  <scroll-view class="chat-view" scroll-y="true" scroll-to-View="{{toView}}" scroll-with-animation="true" enable-back-to-top="true" style="margin-top: {{marginTop}}rpx;"> 
     <block wx:for="{{chatContent}}" wx:key="index">
       <view class="{{item.sender}}">{{item.message}}</view>
     </block>
@@ -25,4 +30,5 @@
   <image class = "image" src = '../../images/audio_button.png'></image>
 </view>
 
-<!-- <button class="send-button" bindtap="sendMessage">发送</button> -->
+<!-- 添加一个蒙层，可以点击关掉弹窗 -->
+<view class = "mask" hidden = "{{!showMask}}" catchtap = "toggleCard"></view>

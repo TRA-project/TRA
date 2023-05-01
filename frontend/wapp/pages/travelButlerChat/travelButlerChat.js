@@ -10,8 +10,75 @@ Page({
     toView: '',
     query1: '附近有哪些好玩的',
     query2: '推荐一些附近的美食',
-    query3: '当下季节适合去哪'
+    query3: '当下季节适合去哪',
+    hidden: false,
+    animation: {}, // 初始动画为空
+    imageUrl: '../../images/up.png',
+    showMask: true,
+    height: '400',
+    marginTop: '400'
   },
+
+  toggleCard: function(){
+    var that = this;
+    var hidden = !that.data.hidden;  // 切换卡片状态
+    var showMask = !that.data.showMask; // 关闭蒙层
+    var animation = wx.createAnimation({
+      duration: 300,
+      timingFunction: 'ease-out'
+    })
+    if(hidden){
+      // 隐藏卡片
+      animation.height(0).opacity(0).step();
+      var imageUrl = '../../images/down.png';
+      var height =  '130';
+      var marginTop = '130';
+    }else {
+      // 显示卡片
+      animation.height('auto').opacity(1).step();
+      var imageUrl = '../../images/up.png'
+      var height =  '400';
+      var marginTop = '400';
+    }
+    // 更新卡片状态和动画
+    that.setData({
+      hidden: hidden,
+      animation: animation.export(),
+      imageUrl: imageUrl,
+      showMask: showMask,
+      height : height,
+      marginTop : marginTop
+    })
+  },
+
+  getLocation: function(){
+    wx.getLocation({
+      type: 'wgs84',
+      success: function(res) {
+        var latitude = res.latitude;
+        var longitude = res.longitude;
+        wx.request({
+          url: 'https://api.map.baidu.com/reverse_geocoding/v3/',
+          data: {
+            ak: 'Your Baidu Map API Key',
+            location: latitude + ',' + longitude,
+            output: 'json',
+            coordtype: 'wgs84ll',
+            pois: 0
+          },
+          success: function(res) {
+            console.log(res.data.result.formatted_address);
+          },
+          fail: function(res) {
+            console.log('逆地址解析失败', res);
+          }
+        })
+      },
+      fail: function(res) {
+        console.log('获取位置失败', res);
+      }
+    })
+  },  
 
   onInput: function(event) {   // 输入之后将输入值更新到inputValue里
     this.setData({
@@ -51,10 +118,13 @@ Page({
       sender: 'user'
     });
 
+    console.log(new Date().getTime());
+    console.log(this.getLocation());
+
     var formData = {
       chat_id: this.data.chat_id,
       current_time: new Date().getTime(),
-      position: "",
+      position: this.getLocation(),
       query: inputValue
     }
 
