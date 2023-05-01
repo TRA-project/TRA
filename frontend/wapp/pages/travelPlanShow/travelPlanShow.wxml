@@ -7,9 +7,24 @@
 </view>
 
 <view class="travel-plan-map-container">
-  <map class="tencent-map" 
+  <map class="tencent-map" id="map"
     longitude="{{mapLongitude}}" latitude="{{mapLatitude}}" 
-    markers="{{mapMarkers}}" id="map" show-location></map>
+    markers="{{mapMarkers}}" show-location
+    bindtap="onMapTap"
+    bindmarkertap="onMarkerTap"
+    bindcallouttap="onCalloutTap">
+    <cover-view slot="callout">
+      <cover-view class="map-callout-bubble" wx:for="{{mapMarkers}}" marker-id="{{item.id}}">
+        <cover-view class="callout-bubble-title">
+          {{item.name}}
+        </cover-view>
+        <cover-view class="callout-bubble-desc">
+          {{item.desc}}
+        </cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-image class="map-tool-button" src="/images/relocate.png" bindtap="onRelocateTap" />
+  </map>
 </view>
 
 <view class="travel-plan-display-container">
