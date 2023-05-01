@@ -25,6 +25,19 @@ class SightDetailedSerializer(serializers.ModelSerializer):
         data['images'] = images
         return data
 
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
+
+    def to_internal_value(self, data):
+        inner_sights = data.get('inner_sights')
+        for inner_sight in inner_sights:
+            inner_sight['sight_id'] = self.instance.id
+            serializer = InnerSightSerializer(data=inner_sight)
+            if serializer.is_valid():
+                serializer.save()
+
+        return super().to_internal_value(data)
+
     class Meta:
         model = Sight
         fields = '__all__'

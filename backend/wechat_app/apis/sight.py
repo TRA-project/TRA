@@ -6,7 +6,7 @@
 # @Comment :
 from django.http import QueryDict
 from rest_framework.decorators import action
-from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin
+from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 
 from backend import settings
@@ -19,7 +19,7 @@ from ..serializers import CommentSerializer
 from ..serializers.sight import SightSerializer, SightBriefSerializer, SightDetailedSerializer
 
 
-class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
+class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin):
     queryset = Sight.objects.all()
     serializer_class = SightDetailedSerializer
 
