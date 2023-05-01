@@ -16,7 +16,8 @@
     <cover-view slot="callout">
       <cover-view class="map-callout-bubble" wx:for="{{mapMarkers}}" marker-id="{{item.id}}">
         <cover-view class="callout-bubble-title">
-          {{item.name}}
+          <cover-view class="callout-bubble-title-text">{{item.name}}</cover-view>
+          <cover-image class="callout-bubble-title-jmp-button" src="/images/jump-curv.png" />
         </cover-view>
         <cover-view class="callout-bubble-desc">
           {{item.desc}}

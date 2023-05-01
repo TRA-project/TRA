@@ -150,9 +150,11 @@ Page({
             },
             /* 自定义自用字段 */
             name: item.name,
-            desc: item.desc,
+            desc: item.desc.length > 24 ? item.desc.slice(0, 23) + "..." : item.desc,
             active: false,  // 记录是否被点击激活
+            scene_id: item.id
           }
+          console.log(item.desc.length)
           // 添加points
           var pointItem = {
             longitude: item.address.longitude,
@@ -248,21 +250,28 @@ Page({
 
   onMarkerTap(event) {
     console.log("marker tapped", event)
-    var markerIdx = event.detail.markerId
+    this.handleMarkerActivate(event.detail.markerId)
+  },
 
-    // 先deactivate的marker
-    this.deactivateAllMarkers() 
-    
-    // 再activate被点击的marker 
-    this.activateMarker(markerIdx)
+  onCalloutTap(event) {
+    console.log("callout tapped", event)
+    var tarMarkerIdx = event.detail.markerId
+    var tarSceneId = this.data.mapMarkers[tarMarkerIdx].scene_id
+    wx.navigateTo({
+      url: "/pages/sceneryShow/sceneryShow?scenery_id=" + tarSceneId,
+    })
+  },
 
-    // 定位到该marker
-    mapContext.moveToLocation({
-      longitude: this.data.mapMarkers[markerIdx].longitude,
-      latitude: this.data.mapMarkers[markerIdx].latitude,
-      success: (res) => {
-        console.log("mapContext.moveToLocation success")
-      }
+  activateMarker(markerIdx) {
+    var tarMarker = "mapMarkers[" + markerIdx + "]"
+    this.setData({
+      [tarMarker + ".iconPath"]: activeIcon.iconPath,
+      [tarMarker + ".width"]: activeIcon.width,
+      [tarMarker + ".height"]: activeIcon.height,
+      [tarMarker + ".customCallout.display"]: "ALWAYS",
+      [tarMarker + ".active"]: true,
+      // 设置状态：以触发markertap
+      markerTap: true,
     })
   },
 
@@ -280,23 +289,6 @@ Page({
       success: (res) => {
         console.log("mapContext.moveToLocation success")
       }
-    })
-  },
-
-  onCalloutTap(event) {
-    console.log("callout tapped")
-  },
-
-  activateMarker(markerIdx) {
-    var tarMarker = "mapMarkers[" + markerIdx + "]"
-    this.setData({
-      [tarMarker + ".iconPath"]: activeIcon.iconPath,
-      [tarMarker + ".width"]: activeIcon.width,
-      [tarMarker + ".height"]: activeIcon.height,
-      [tarMarker + ".customCallout.display"]: "ALWAYS",
-      [tarMarker + ".active"]: true,
-      // 设置状态：以触发markertap
-      markerTap: true,
     })
   },
 

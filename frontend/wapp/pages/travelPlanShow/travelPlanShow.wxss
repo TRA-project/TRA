@@ -54,12 +54,26 @@
 }
 
 .callout-bubble-title {
+  
+  padding: 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.callout-bubble-title-text {
   font-weight: bolder;
+  width: 80%;
   /* 文字溢出处理 */
   white-space: nowrap;  /* 不换行 */
   overflow: hidden;     /* 超出部分隐藏 */
   text-overflow: ellipsis;  /* 溢出元素省略号表示 */
-  padding: 10rpx;
+}
+
+.callout-bubble-title-jmp-button {
+  width: 30rpx;
+  height: 30rpx;
+  padding-right: 15rpx;
 }
 
 .callout-bubble-desc {
