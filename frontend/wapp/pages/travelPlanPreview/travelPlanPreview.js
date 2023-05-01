@@ -158,6 +158,11 @@ Page({
       title: `切换到方案 ${event.detail.name + 1 }`,
       icon: 'none',
     });
+    console.log(event.detail)
+    // 更新plansActive
+    this.setData({
+      plansActive: event.detail.name
+    })
     this.upgradeMarkers()
   },
 
@@ -171,6 +176,8 @@ Page({
     // 生成formData
     var spotList = []
     var selectPlan = this.data.travelPlansList[this.data.plansActive]
+    console.log("select no:", this.data.plansActive)
+    console.log("select plan:", selectPlan)
     selectPlan.forEach((item) => {
       spotList.push(item.id)
     });
@@ -206,6 +213,7 @@ Page({
   },
 
   upgradeMarkers() {
+    console.log("update markers and points")
     let mapContext = wx.createMapContext("preview-map", this)
 
     // 利用travel plan添加markers和points
@@ -233,6 +241,17 @@ Page({
       padding: [40,],
       points: this.data.mapPoints
     })
+  },
+
+  onSyncTarListChange(event) {
+    console.log("father page: receive new tarList")
+    console.log(event)
+    var tarPlanNo = event.detail.listNo
+    this.setData({
+      ["travelPlansList[" + tarPlanNo + "]"]: event.detail.newList
+    })
+
+    console.log("after sync, travelPlansList:", this.data.travelPlansList)
   },
 
   /**

@@ -201,7 +201,7 @@ Page({
         // })
         wx.navigateBack({
           success: () => {
-            let currentPage = getCurrentPages();
+            let currPages = getCurrentPages();
             wx.redirectTo({
               url: "/" + currPages[currPages.length - 1].route,
             })

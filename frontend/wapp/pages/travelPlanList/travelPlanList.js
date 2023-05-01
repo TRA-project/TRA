@@ -134,7 +134,8 @@ Page({
             travelPlanList: res.data
           })
         }
-        console.log(this.data.travelPlanList)
+        console.log(JSON.stringify(this.data.travelPlanList))
+
         // 调整preview内容
         this.data.travelPlanList.forEach((item, index) => {
           this.setData({
