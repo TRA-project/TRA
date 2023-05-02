@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    server_imagename: utils.server_hostname,
     keyword: "all",
 
     optionType: [

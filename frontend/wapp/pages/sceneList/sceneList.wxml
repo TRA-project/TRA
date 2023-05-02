@@ -21,16 +21,18 @@
 <view class="scenery-list-container">
   <view class="scenery-list">
     <view class="scenery-card" wx:for="{{sceneryShowList}}" wx:key="id">
-      <van-card thumb="/images/guozhibeiyuan.jpg" 
+      <van-card
         bindtap="showSceneryDetail" data-id="{{item.id}}"
         desc="{{item.desc}}" title="{{item.name}}" price="{{item.price}}" 
         custom-class="self-custom-class"
-        thumb-class="self-thumb-class"
         title-class="self-title-class"
         desc-class="self-desc-class"
         price-class="self-price-class">
         <view slot="tags">
           预计时长：{{item.time}}
+        </view>
+        <view class="self-thumb-class" slot="thumb">
+          <image class="scene-card-image" src="{{server_imagename+item.cover}}" />
         </view>
       </van-card>
     </view>
