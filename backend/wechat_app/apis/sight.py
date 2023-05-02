@@ -23,7 +23,6 @@ from ..serializers.sight import (
 )
 from ..serializers.images import ImageSerializer
 
-
 class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin):
     queryset = Sight.objects.all()
     serializer_class = SightDetailedSerializer
@@ -111,9 +110,6 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateMode
     @action(methods=['POST'], detail=True, url_path='upload_image')
     def upload_image(self, request, *args, **kwargs):
         instance: Sight = self.get_object()
-        image_ser = ImageSerializer(data=request.data)
-        image = None
-        if image_ser.is_valid():
-            image = image_ser.save()
-        instance.images.create(image=image.id)
-        return Response(image_ser.data)
+        data = instance.images.create(image=request.data.get('image'))
+        image_ser = ImageSerializer(data)
+        return Response(image_ser.data, status=status.HTTP_201_CREATED)
