@@ -17,7 +17,10 @@ Page({
    */
   data: {
     customArg: {},
-    planName: "计划",
+    planName: "",
+    titleLength: 0,
+    titleFontSize: 36,
+    titleBlurred: true,
 
     mapLongitude: 116.46,
     mapLatitude: 39.92,
@@ -153,6 +156,25 @@ Page({
 
   },
 
+  onTitleInput(event) {
+    console.log("title input:", event.detail.value)
+    this.setData({
+      titleLength: event.detail.value.length
+    })
+  },
+
+  onTitleFocus() {
+    this.setData({
+      titleBlurred: false
+    })
+  },
+
+  onTitleBlur() {
+    this.setData({
+      titleBlurred: true
+    })
+  },
+
   onTabChange(event) {
     wx.showToast({
       title: `切换到方案 ${event.detail.name + 1 }`,
@@ -173,6 +195,14 @@ Page({
   },
 
   onConfirmPlan(event) {
+    // 过滤计划名为空的行为
+    if (this.data.planName == "") {
+      wx.showToast({
+        title: "请命名该计划\r\n计划名不能为空",
+        icon: "none",
+      })
+      return
+    }
     // 生成formData
     var spotList = []
     var selectPlan = this.data.travelPlansList[this.data.plansActive]
