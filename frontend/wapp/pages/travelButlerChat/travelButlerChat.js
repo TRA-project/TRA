@@ -17,9 +17,16 @@ Page({
     showMask: true,
     height: '400',
     marginTop: '400',
+    scrollHeight: '700',
     latitude: '',   // 当前位置的纬度
     longitude: '', // 当前位置的精度
     address: ''
+  },
+
+  OnReady: function(){
+    this.setData({
+      toView: 'chatContent-' + this.data.chatContent.length
+    })
   },
 
   toggleCard: function(){
@@ -36,12 +43,14 @@ Page({
       var imageUrl = '../../images/down.png';
       var height =  '130';
       var marginTop = '130';
+      var scrollHeight = '970'
     }else {
       // 显示卡片
       animation.height('auto').opacity(1).step();
       var imageUrl = '../../images/up.png'
       var height =  '400';
       var marginTop = '400';
+      var scrollHeight = '700'
     }
     // 更新卡片状态和动画
     that.setData({
@@ -50,7 +59,8 @@ Page({
       imageUrl: imageUrl,
       showMask: showMask,
       height : height,
-      marginTop : marginTop
+      marginTop : marginTop,
+      scrollHeight: scrollHeight
     })
   },
 
@@ -127,12 +137,23 @@ Page({
     var chatContent = this.data.chatContent;
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
     
+    console.log(chatContent.length)
+
     chatContent.push({
+      id: 'chatContent-' + (chatContent.length + 1),
       message: inputValue,
       sender: 'user'
     });
 
-    console.log(new Date().getTime());
+    console.log(chatContent.length)
+
+    this.setData({   // 更新数据
+      chatContent: chatContent,
+      inputValue: '',
+      toView: 'chatContent-' + chatContent.length
+    });
+
+    console.log(this.data.toView)
 
     this.getLocation()
 
@@ -169,34 +190,44 @@ Page({
           outputValue = res.data.content,
           console.log("outputValue:",outputValue)
           chatContent.push({
+            id: 'chatContent-' + (chatContent.length + 1),
             message: outputValue,
             sender: 'ai'
           })
           that.setData({
             chatContent: chatContent,
+            toView: 'chatContent-' + chatContent.length
           })
         } else {
           wx.hideLoading();
-          that.setData({
-            outputValue: "error",
-          })
           chatContent.push({
-            message: outputValue,
+            id: 'chatContent-' + (chatContent.length + 1),
+            message: "sorry",
             sender: 'ai'
+          })
+          that.setData({
+            chatContent: chatContent,
+            toView: 'chatContent-' + chatContent.length
           })
         }
       },
       fail(err){
         console.log(err)
+        chatContent.push({
+          id: 'chatContent-' + (chatContent.length + 1),
+          message: "error",
+          sender: 'ai'
+        })
         that.setData({
-          outputValue : 'sorry'
+          chatContent: chatContent,
+          toView: 'chatContent-' + chatContent.length
         })
       }
     });
     this.setData({   // 更新数据
       chatContent: chatContent,
       inputValue: '',
-      toView: 'chatContent-' + (chatContent.length - 1)
+      toView: 'chatContent-' + chatContent.length
     });
   },
 

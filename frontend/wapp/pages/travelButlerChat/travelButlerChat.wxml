@@ -18,9 +18,9 @@
 </view>
 
 <view class = "scroll" style="height: {{height}}rpx;">
-  <scroll-view class="chat-view" scroll-y="true" scroll-to-View="{{toView}}" scroll-with-animation="true" enable-back-to-top="true" style="margin-top: {{marginTop}}rpx;"> 
-    <block wx:for="{{chatContent}}" wx:for-index="index" id="chatContent-{{index}}">
-      <view class="{{item.sender}}">{{item.message}}</view>
+  <scroll-view class="chat-view" scroll-y="true" scroll-into-view="{{toView}}" scroll-with-animation="true" enable-back-to-top="true" style="margin-top: {{marginTop}}rpx; height: {{scrollHeight}}rpx"> 
+    <block wx:for="{{chatContent}}" wx:key="{{item.id}}">
+      <view class="{{item.sender}}" id="{{item.id}}">{{item.message}}</view>
     </block>
   </scroll-view>
 </view>
