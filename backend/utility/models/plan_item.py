@@ -14,3 +14,4 @@ class PlanItem(models.Model):
     start_time = models.DateTimeField('start_time', null=True)
     end_time = models.DateTimeField('end_time', null=True)
     type = models.IntegerField('type', default=1, choices=((1, '景点'), (2, '交通'), (3, '住宿'), (4, "餐饮")))
+    desc = models.TextField(null=True)

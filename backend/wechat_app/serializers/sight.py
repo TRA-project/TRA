@@ -56,7 +56,15 @@ class SightBriefSerializer(serializers.ModelSerializer):
 
 class SightPlanSerializer(serializers.ModelSerializer):
     address = AddressSerializer(read_only=True)
+    images = ImageSerializer(read_only=True, many=True)
 
     class Meta:
         model = Sight
         fields = '__all__'
+
+    def to_representation(self, value):
+        data = super().to_representation(value)
+        images = data.pop('images', None)
+        cover = images[0] if images else None
+        data['cover'] = cover.get('image') if cover else None
+        return data

@@ -4,7 +4,16 @@ from wechat_app.serializers.sight import SightPlanSerializer
 
 
 class PlanItemSerializer(serializers.ModelSerializer):
-    sight = SightPlanSerializer(read_only=True)
+    class Meta:
+        model = PlanItem
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return super().create(validated_data)
+
+
+class PlanItemDetailSerializer(serializers.ModelSerializer):
+    sight_id = SightPlanSerializer(read_only=True)
 
     class Meta:
         model = PlanItem
