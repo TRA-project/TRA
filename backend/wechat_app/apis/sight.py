@@ -16,7 +16,12 @@ from utils import permission, conversion
 from utils.api_tools import save_log
 from utils.response import *
 from ..serializers import CommentSerializer
-from ..serializers.sight import SightSerializer, SightBriefSerializer, SightDetailedSerializer
+from ..serializers.sight import (
+    SightSerializer,
+    SightBriefSerializer,
+    SightDetailedSerializer
+)
+from ..serializers.images import ImageSerializer
 
 
 class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin):
@@ -102,3 +107,13 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateMode
         data = dict(serializer.data)
         data['collected'] = collected
         return Response(data)
+
+    @action(methods=['POST'], detail=True, url_path='upload_image')
+    def upload_image(self, request, *args, **kwargs):
+        instance: Sight = self.get_object()
+        image_ser = ImageSerializer(data=request.data)
+        image = None
+        if image_ser.is_valid():
+            image = image_ser.save()
+        instance.images.create(image=image.id)
+        return Response(image_ser.data)
