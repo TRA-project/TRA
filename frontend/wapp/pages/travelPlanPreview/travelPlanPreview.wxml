@@ -27,7 +27,7 @@
 
 <view class="travel-plans-display-container">
   <van-tabs animated active="{{plansActive}}" bind:change="onTabChange" color="rgba(30,144,255,1.0)">
-    <van-tab wx:for="{{travelPlansList}}" wx:key="*this" title="方案{{index+1}}">
+    <van-tab wx:for="{{travelPlansList}}" wx:key="unique" title="方案{{index+1}}">
       <my-movable-list planNo="{{index}}" tarList="{{item}}" 
         bind:synctarlistchange="onSyncTarListChange">
       </my-movable-list>

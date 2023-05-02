@@ -45,13 +45,13 @@ Component({
   methods: {
     drawList() {
       // 初始化位置；根据序列重新分配y的位置
-      const tarListWithPosition = this.properties.tarList.map((item, index) => {
-        item.y = (this.properties.itemMarginTop + this.properties.itemHeight) * index
-        return item
+      this.properties.tarList.map((item, index) => {
+        var newY = (this.properties.itemMarginTop + this.properties.itemHeight) * index
+        this.setData({
+          ["tarList[" + index + "].y"]: newY
+        })
       })
-      this.setData({
-        tarList: tarListWithPosition
-      })
+
       //console.log("draw list:", JSON.stringify(this.properties.tarList))
       // 同步到父页面
       this.triggerEvent("synctarlistchange", {

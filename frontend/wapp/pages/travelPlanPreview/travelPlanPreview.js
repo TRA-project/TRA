@@ -198,7 +198,7 @@ Page({
     // 过滤计划名为空的行为
     if (this.data.planName == "") {
       wx.showToast({
-        title: "请命名该计划\r\n计划名不能为空",
+        title: "请命名该计划,计划名不能为空",
         icon: "none",
       })
       return
@@ -280,7 +280,6 @@ Page({
     this.setData({
       ["travelPlansList[" + tarPlanNo + "]"]: event.detail.newList
     })
-
     console.log("after sync, travelPlansList:", this.data.travelPlansList)
   },
 
