@@ -72,3 +72,31 @@
     align-items: center;
     justify-content: center;
 }
+
+.weui-cell__bd{
+  display: flex;
+}
+
+.list-item{
+  display: flex;
+  padding-left: 25rpx;
+  padding-right: 25rpx;
+  padding-bottom: 10rpx;
+}
+
+.border{
+  display: flex;
+  border: 1px solid #747d8c;
+  border-radius: 20rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  background-color:#f1f2f6;
+}
+
+.delete-btn{
+  font-weight: bold;
+  font-size: 30rpx;
+  color: #57606f;
+  padding-left: 30rpx;
+  padding-right: 10rpx;
+}

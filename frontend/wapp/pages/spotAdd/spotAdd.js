@@ -3,10 +3,48 @@ Page({
       data: {
         pickerHidden: true,
         chosen: '',
+        name: '',   // 景点名称
+        address: '',  // 景点地址
+        ticket: '',   // 景点票价
+        time: '', // 景点开放时间 
         imgs: [],   // 景点图片
-        spots: [],  // 景点游览点
-        count: 3
+        count: 3,
+        littleSpot: '',
+        myList: [] // 景点游览点
       },
+
+      onInput: function(event) {
+        // console.log(event.detail.value)
+        this.setData({
+          littleSpot: event.detail.value
+        });
+        // console.log(this.data.littleSpot);
+      },
+
+      addLittleSpot:function(event) {
+        var newItem = this.data.littleSpot;
+        var myList = this.data.myList;
+        if(newItem){
+          myList.push(newItem);
+        }
+        this.setData({
+          myList: myList,
+          littleSpot: ''
+        })
+        // console.log(this.data.myList)
+      },
+
+      deleteItem: function(e) {
+        var index = e.currentTarget.dataset.index;
+        var newList = this.data.myList;
+        newList.splice(index, 1);
+        this.setData({
+          myList: newList
+        });
+        // console.log(this.data.myList)
+      },
+
+
 
     /**
      * 页面的初始数据

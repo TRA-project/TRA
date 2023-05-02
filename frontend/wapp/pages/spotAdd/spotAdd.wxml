@@ -45,12 +45,30 @@
     </view>
 
     <view class = "divider"></view>
+
+    <view class="page-section">
+        <view class="page-section-title">开放时间</view>
+            <view class="weui-cell__bd" style="margin: 30rpx 0" >
+            <input class="weui-input" name="input" placeholder="请输入新增景点开放时间" />
+            </view>
+    </view>
+
+    <view class = "divider"></view>
     
     <view class="page-section">
         <view class="page-section-title">添加游览点</view>
-            <view class="weui-cell__bd" style="margin: 30rpx 0" >
-            <input class="weui-input" name="input" placeholder="请输入新增景点游览点"/>
+          <view class="weui-cell__bd" style="margin: 30rpx 0" >
+            <input class="weui-input" name="input" placeholder="请输入新增景点游览点" value="{{littleSpot}}" bindinput="onInput" bindconfirm="addLittleSpot"/>
+          </view>
+          <view wx:for="{{myList}}" wx:key="index">
+            <view class="list-item">
+              <view class="border">
+                <view class="little-spot">{{item}}</view>
+                <text class="delete-btn" data-index="{{index}}" bindtap="deleteItem">x</text>
+              </view>
             </view>
+          
+          </view> 
     </view>
 
     <view class = "divider"></view>

@@ -26,11 +26,12 @@ Page({
 //   },
 
   onInput: function(event) {   // 输入之后将输入值更新到inputValue里
+    console.log(event.detail.value)
     this.setData({
       inputValue: event.detail.value,
     //   content:e.detail.value
     });
-    // console.log(this.data.inputValue)
+    console.log(this.data.inputValue)
   },
 
   sendMessage: function() {   // 点击发送按钮发送消息
