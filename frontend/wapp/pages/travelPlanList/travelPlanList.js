@@ -1,23 +1,8 @@
 // pages/travelPlanList/travelPlanList.js
 const utils = require("../../utils/util.js");
+const addressInfo = require("./addr_for_cascader")
 
-const areaOptions = [
-  {
-    text: '浙江省',
-    value: '330000',
-    children: [{ text: '杭州市', value: '330100' }],
-  },
-  {
-    text: '江苏省',
-    value: '320000',
-    children: [{ text: '南京市', value: '320100' }],
-  },
-  {
-    text: '北京市',
-    value: '110000',
-    children: [{ text: '北京市', value: '110100'}],
-  },
-];
+const areaOptions = addressInfo.areaOptions
 
 Page({
 
@@ -56,11 +41,8 @@ Page({
     showCascader: false,
     areaCascaderValue: "",
 
-    // 标签类型
-    tagsValue: "",
-
-    // 预期开销
-    costValue: 0,
+    // 预期体验
+    expectValue: "",
 
     // 预期时间
     minHour: 0,
@@ -229,8 +211,7 @@ Page({
   formSubmit(event) {
     var formData = {
       city: this.data.areaFieldValue.split('/')[1],
-      tag: this.data.tagsValue,
-      cost: this.data.costValue,
+      tag: this.data.expectValue,
       timeStart: this.data.dateBeginPickerValue,
       timeEnd: this.data.dateEndPickerValue,
     }
