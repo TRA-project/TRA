@@ -1,10 +1,3 @@
-// // pages/travelButlerChat/travelButlerChat.js
-// const app = getApp();
-// //引入插件：微信同声传译
-// const plugin = requirePlugin('WechatSI');
-// //获取全局唯一的语音识别管理器recordRecoManager
-// const manager = plugin.getRecordRecognitionManager();
-
 const util = require("../../utils/util");
 const { server_hostname } = require("../../utils/util");
 
@@ -13,29 +6,124 @@ Page({
     inputValue: '',  // 输入的内容
     chat_id: '',
     outputValue: '', // ai输出的内容 
-    chatContent: [], 
-    toView: ''  // 每次都滚动到最底部
-    // //语音
-    // recordState: false, //录音状态
-    // content:''//内容
+    chatContent: [],
+    toView: '',
+    query1: '附近有哪些好玩的',
+    query2: '推荐一些附近的美食',
+    query3: '当下季节适合去哪',
+    hidden: false,
+    animation: {}, // 初始动画为空
+    imageUrl: '../../images/up.png',
+    showMask: true,
+    height: '400',
+    marginTop: '400',
+    latitude: '',   // 当前位置的纬度
+    longitude: '', // 当前位置的精度
+    address: ''
   },
 
-//   onLoad: function (options) {
-//     //识别语音
-//     this.initRecord();
-//   },
+  toggleCard: function(){
+    var that = this;
+    var hidden = !that.data.hidden;  // 切换卡片状态
+    var showMask = !that.data.showMask; // 关闭蒙层
+    var animation = wx.createAnimation({
+      duration: 300,
+      timingFunction: 'ease-out'
+    })
+    if(hidden){
+      // 隐藏卡片
+      animation.height(0).opacity(0).step();
+      var imageUrl = '../../images/down.png';
+      var height =  '130';
+      var marginTop = '130';
+    }else {
+      // 显示卡片
+      animation.height('auto').opacity(1).step();
+      var imageUrl = '../../images/up.png'
+      var height =  '400';
+      var marginTop = '400';
+    }
+    // 更新卡片状态和动画
+    that.setData({
+      hidden: hidden,
+      animation: animation.export(),
+      imageUrl: imageUrl,
+      showMask: showMask,
+      height : height,
+      marginTop : marginTop
+    })
+  },
+
+  getLocation: function (callback){
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
+     let that = this
+     wx.getLocation({
+       type: 'wgs84',  // GPS坐标
+       isHighAccuracy: true,   // 高精度
+       success (res) {
+         that.setData({
+           latitude: res.latitude,   // 纬度
+           longitude: res.longitude  // 经度
+         })
+          wx.request({
+            url:'https://apis.map.qq.com/ws/geocoder/v1/?location='+ res.latitude + ',' + res.longitude + '&key=BLPBZ-OJ5KW-FIYR3-3U5PS-HENY2-TAFOT',
+            method: 'GET',
+            data: {
+              location: res.latitude + ',' + res.longitude,
+              key: 'BLPBZ-OJ5KW-FIYR3-3U5PS-HENY2-TAFOT'
+            },
+            header: {
+              'content-type': 'application/json',
+              "token-auth": token
+            },
+            success(res){
+                console.log(res.data)
+                that.setData({
+                  address: res.data.address
+                })
+            },
+            fail(res){
+                console.log(res.data)
+            }
+          })
+         },
+       fail (res) {
+         console.log(`获取位置信息失败：${res}`)
+       }
+      })
+  },
 
   onInput: function(event) {   // 输入之后将输入值更新到inputValue里
     this.setData({
       inputValue: event.detail.value,
-    //   content:e.detail.value
     });
-    // console.log(this.data.inputValue)
+  },
+
+  query1: function() {
+    this.setData ({
+      inputValue: '附近有哪些好玩的'
+    })
+    this.sendMessage();
+  },
+
+  query2: function() {
+    this.setData({
+      inputValue: '推荐一些附近的美食'
+    })
+    this.sendMessage();
+  },
+
+  query3: function() {
+    this.setData ({
+      inputValue: '当下季节适合去哪'
+    })
+    this.sendMessage();
   },
 
   sendMessage: function() {   // 点击发送按钮发送消息
     var outputValue = this.data.outputValue;
     var inputValue = this.data.inputValue;
+    var address = this.data.address;
     var chatContent = this.data.chatContent;
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
     
@@ -43,18 +131,25 @@ Page({
       message: inputValue,
       sender: 'user'
     });
-//&nbsp;
-    // wx.showLoading({
-    //   title: '加载中',
-    // });
+
+    console.log(new Date().getTime());
+
+    this.getLocation()
+
     var formData = {
       chat_id: this.data.chat_id,
       current_time: new Date().getTime(),
-      position: "",
+      position: address,
       query: inputValue
     }
+
     console.log(formData)
 
+    wx.showLoading({
+      title: '作答中...'
+      // customClass: 'custom-loading'
+    })
+    
     var that = this
     wx.request({
       url: util.server_hostname + "/chat",
@@ -66,6 +161,7 @@ Page({
       },
       success(res){
         if(res.statusCode == 200) {
+          wx.hideLoading();
           console.log("get reponse:", res.data)
           that.setData({
             chat_id: res.data.chat_id
@@ -77,11 +173,12 @@ Page({
             sender: 'ai'
           })
           that.setData({
-            chatContent: chatContent
+            chatContent: chatContent,
           })
         } else {
+          wx.hideLoading();
           that.setData({
-            outputValue: "error"
+            outputValue: "error",
           })
           chatContent.push({
             message: outputValue,
@@ -96,16 +193,16 @@ Page({
         })
       }
     });
-
     this.setData({   // 更新数据
       chatContent: chatContent,
       inputValue: '',
-      toView: 'chat-view-' + (chatContent.length - 1)
+      toView: 'chatContent-' + (chatContent.length - 1)
     });
   },
 
   onUnload(){
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
+
     // console.log("unload")
     wx.request({
       url: util.server_hostname + '/del_chat',
@@ -124,61 +221,4 @@ Page({
       }
     })
   }
-
-
-//   //识别语音 -- 初始化
-//   initRecord: function () {
-//     const that = this;
-//     // 有新的识别内容返回，则会调用此事件
-//     manager.onRecognize = function (res) {
-//       console.log(res)
-//     }
-//     // 正常开始录音识别时会调用此事件
-//     manager.onStart = function (res) {
-//       console.log("成功开始录音识别", res)
-//     }
-//     // 识别错误事件
-//     manager.onError = function (res) {
-//       console.error("error msg", res)
-//     }
-//     //识别结束事件
-//     manager.onStop = function (res) {
-//       console.log('..............结束录音')
-//       console.log('录音临时文件地址 -->' + res.tempFilePath); 
-//       console.log('录音总时长 -->' + res.duration + 'ms'); 
-//       console.log('文件大小 --> ' + res.fileSize + 'B');
-//       console.log('语音内容 --> ' + res.result);
-//       if (res.result == '') {
-//         wx.showModal({
-//           title: '提示',
-//           content: '听不清楚，请重新说一遍！',
-//           showCancel: false,
-//           success: function (res) {}
-//         })
-//         return;
-//       }
-//       var text = that.data.content + res.result;
-//       that.setData({
-//         content: text
-//       })
-//     }
-//   },
-//   //语音  --按住说话
-//   touchStart: function (e) {
-//     this.setData({
-//       recordState: true  //录音状态
-//     })
-//     // 语音开始识别
-//     manager.start({
-//       lang: 'zh_CN',// 识别的语言，目前支持zh_CN en_US zh_HK sichuanhua
-//     })
-//   },
-//   //语音  --松开结束
-//   touchEnd: function (e) {
-//     this.setData({
-//       recordState: false
-//     })
-//     // 语音结束识别
-//     manager.stop();
-//   }
 })

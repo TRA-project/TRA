@@ -57,6 +57,10 @@
     "pages/travelButlerChat/travelButlerChat"
   ],
 
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -75,7 +79,7 @@
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
-  
+
   "usingComponents": {
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group",
