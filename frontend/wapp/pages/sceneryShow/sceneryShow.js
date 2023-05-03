@@ -1,5 +1,4 @@
 const util = require("../../utils/util");
-const token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast.js';
 
 // pages/sceneryShow/sceneryShow.js
@@ -78,6 +77,7 @@ Page({
         longitude: "",
 
         loading: true,
+        token: "notoken",
     },
 
     // 随着滑动顶部图片，自动更新图片所在的序号
@@ -214,7 +214,7 @@ Page({
             id: this.data.id,
           },
           header: {
-            "token-auth": token
+            "token-auth": this.data.token
           },
           success: res => {
             if (res.data.error_code === 200) {
@@ -232,7 +232,7 @@ Page({
             id: this.data.id,
           },
           header: {
-            "token-auth": token
+            "token-auth": this.data.token
           },
           success: res => {
             if (res.data.error_code === 200) {
@@ -268,14 +268,17 @@ Page({
      */
     onLoad(options) {
       console.log("选项:", options);
+
+      let token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
       let sightId = options.scenery_id;
       this.setData({
-        id: sightId
+        id: sightId,
+        token: token
       })
       wx.request({
         url: util.server_hostname + "/api/core/sights/" + sightId + "/",
         header: {
-          'token-auth': token
+          'token-auth': this.data.token
         },
         success: (res) => {
           console.log(res.data)
