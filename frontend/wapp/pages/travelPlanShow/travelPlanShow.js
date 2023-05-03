@@ -247,10 +247,7 @@ Page({
         // })
         wx.navigateBack({
           success: () => {
-            let currPages = getCurrentPages();
-            wx.redirectTo({
-              url: "/" + currPages[currPages.length - 1].route,
-            })
+            wx.navigateBack()
           }
         })
       },

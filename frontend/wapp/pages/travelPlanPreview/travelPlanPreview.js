@@ -10,6 +10,8 @@ const keyMap = {
   "timeEnd": "结束时间"
 }
 
+let mapContext
+
 Page({
 
   /**
@@ -153,7 +155,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    mapContext = wx.createMapContext("preview-map", this)
   },
 
   onTitleInput(event) {
@@ -244,7 +246,6 @@ Page({
 
   upgradeMarkers() {
     console.log("update markers and points")
-    let mapContext = wx.createMapContext("preview-map", this)
 
     // 利用travel plan添加markers和points
     this.data.travelPlansList[this.data.plansActive].forEach((item, index) => {
@@ -277,9 +278,12 @@ Page({
     console.log("father page: receive new tarList")
     console.log(event)
     var tarPlanNo = event.detail.listNo
+    // 同步travelPlan
     this.setData({
       ["travelPlansList[" + tarPlanNo + "]"]: event.detail.newList
     })
+    // 同步Points
+    this.upgradeMarkers()
     console.log("after sync, travelPlansList:", this.data.travelPlansList)
   },
 
