@@ -10,11 +10,14 @@
   <map class="tencent-map" id="map"
     longitude="{{mapLongitude}}" latitude="{{mapLatitude}}" 
     markers="{{mapMarkers}}" show-location
+    polyline="{{mapPolylines}}"
     bindtap="onMapTap"
     bindmarkertap="onMarkerTap"
     bindcallouttap="onCalloutTap">
     <cover-view slot="callout">
-      <cover-view class="map-callout-bubble" wx:for="{{mapMarkers}}" marker-id="{{item.id}}">
+      <cover-view class="map-callout-bubble" 
+        wx:for="{{mapMarkers}}" wx:key="unique"
+        marker-id="{{item.id}}">
         <cover-view class="callout-bubble-title">
           <cover-view class="callout-bubble-title-text">{{item.name}}</cover-view>
           <cover-image class="callout-bubble-title-jmp-button" src="/images/jump-curv.png" />

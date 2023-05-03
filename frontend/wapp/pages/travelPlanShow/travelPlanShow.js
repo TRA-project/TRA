@@ -33,6 +33,18 @@ Page({
       },
     ],
     mapPoints: [],
+    mapPolyLines: [
+      {
+        points: [
+          {longitude: 116.46, latitude:39.92},
+          {longitude: 116.45, latitude:39.91},
+        ],
+        color: "#00ff00", // green
+        width: 6,
+        borderColor: "#11ff11",
+        borderWidth: 2,
+      },
+    ],
     markerTap: false,  // 用来过滤markertap时连带触发的maptap
 
     travelPlanId: 0,
@@ -40,7 +52,7 @@ Page({
     travelPlan: [],
     tmpTravelPlan: [
       {
-        id: "1",
+        id: 1,
         name: "景点1",
         desc: "景点介绍1",
         address: {
@@ -51,7 +63,7 @@ Page({
         time: new Date().getTime(),
       },
       {
-        id: "2",
+        id: 2,
         name: "景点2",
         desc: "景点介绍2",
         address: {
@@ -62,7 +74,7 @@ Page({
         time: new Date().getTime(),
       },
       {
-        id: "3",
+        id: 3,
         name: "景点3",
         desc: "景点介绍3",
         address: {
@@ -160,14 +172,26 @@ Page({
             longitude: item.address.longitude,
             latitude: item.address.latitude,
           }
-          console.log(stepItem)
-          console.log(markerItem)
+
           this.setData({
             ["steps[" + index + "]"]: stepItem,
             ["mapMarkers[" + index + "]"]: markerItem,
             ["mapPoints[" + index + "]"]: pointItem,
           })
         })
+
+        // 添加polyline
+        var initPolyLines = [{
+          points: this.data.mapPoints,
+          color: "#00ff00", // green
+          width: 6,
+          borderColor: "#11ff11",
+          borderWidth: 2,
+        }]
+        this.setData({
+          mapPolyLines: initPolyLines
+        })
+        console.log("mapPolyLine:", this.data.mapPolyLine)
         
         console.log(this.data.mapPoints)
         mapContext.includePoints({
