@@ -57,6 +57,11 @@
     "pages/travelButlerChat/travelButlerChat",
     "pages/sceneryMap/sceneryMap"
   ],
+
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

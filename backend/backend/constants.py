@@ -382,7 +382,7 @@ MAX_SHIELDED_WORDS_LEN = 24
 # sight
 MAX_SIGHT_NAME_LEN = 32
 
-# subsight
+# inner_sight
 MAX_SUBSIGHT_NAME_LEN = 16
 
 # price
@@ -395,6 +395,14 @@ SIGHT_TYPE_CHOICE = [
         (3, '人文景观'),
         (4, '全部景点')
     ]
+
+# feedback
+FEEDBACK_TYPE = [
+    (0, '一般反馈'),
+    (1, '景点添加'),
+    (2, '景点修改')
+]
+
 
 # travel_tag_query
 TAG_QUERY_ORDER_BY_TIME_UP = 0
