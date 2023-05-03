@@ -167,7 +167,7 @@ Page({
           }
 
           // 非成功状态码，其他登录错误
-          if (data.data.statusCode !== 200) {
+          if (data.data.error_code !== 200) {
             console.log("登录失败:", data.data)
             wx.showToast({
               title: "登录失败，状态码" + data.data.statusCode,
