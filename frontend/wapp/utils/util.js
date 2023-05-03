@@ -1,11 +1,12 @@
 const server_hostname = {
   //url: "http://114.116.194.214"
   // url:"http://114.116.53.144"
-  // url:"http://10.128.54.139:8000"  // zyc   10.193.185.225:8000
-  // url:"http://10.192.137.194:8000"  // sy
-  // url: "http://10.128.55.86:8000" // xrb
-  url: "https://tratu1.2022martu1.cn"
-  // url: "http://8.130.65.210:80"
+  // url:"http://10.128.54.139:8000"   // zyc ethernet  
+  // url: "http://10.193.185.225:8000" // zyc wifi
+  // url:"http://10.192.137.194:8000"  // sy wifi
+  // url: "http://10.128.55.86:8000"   // xrb ethernet
+  url: "https://tratu1.2022martu1.cn"  // huaweiyun
+  // url: "http://8.130.65.210:80"     // aliyun
 }
 // 测试账号：test， 密码：12345678
 
