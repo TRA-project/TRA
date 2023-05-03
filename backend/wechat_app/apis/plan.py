@@ -1,4 +1,5 @@
 import collections
+import copy
 import json
 import random
 import time
@@ -13,6 +14,7 @@ from numpy import size
 from rest_framework import status
 from utility.models import Plan, Sight
 from utils import permission
+from wechat_app.serializers import ScheduleSerializer, ScheduleItemSerializer
 from wechat_app.serializers.plan import PlanSerializer
 from utility.models.plan import Plan
 from rest_framework.viewsets import GenericViewSet
@@ -41,11 +43,10 @@ def test(a, b):
 
 
 def calculate(list, tag, start_time, end_time, type):
-    hot_random = random.uniform(0.5,1) + type[0]
-    grade_random = random.uniform(0.5,1) + type[1]
+    hot_random = random.uniform(0.5, 1) + type[0]
+    grade_random = random.uniform(0.5, 1) + type[1]
     # distance_random = random.uniform(0.5,1)
-    tag_random = random.uniform(0.5,1) + type[2]
-    print(hot_random,grade_random,tag_random)
+    tag_random = random.uniform(0.5, 1) + type[2]
     embedder = SentenceModel()
     corpus_embedding = embedder.encode([tag])[0]
     n = size(list)
@@ -60,34 +61,66 @@ def calculate(list, tag, start_time, end_time, type):
     sys = sorted(dict.items(), key=lambda d: d[1], reverse=True)[0:8]
     better_sight = []
     for i, j in sys:
-        better_sight.append(list[i])
+
+        dict = copy.deepcopy(list[i])
+        dict.pop('embedding')
+        better_sight.append(dict)
     return better_sight
 
 
-def new_plan_item(param, time, persistent):
-    dict = {}
-    dict['name'] = '交通'
+def new_plan_item(plan_id, i, name, time, persistent):
+    data = {}
+    data['plan_id'] = plan_id
+    data['sight_id'] = i.get('id')
+    data['name'] = name
     # 放入前端所需要的字段
-    dict['start_time'] = time
+    data['start_time'] = time
     time = time + persistent
-    dict['end_time'] = time
-    return dict
+    data['end_time'] = time
+    serializer = PlanItemSerializer(data=data)
+    serializer.is_valid(raise_exception=True)
+    plan = serializer.save()
+    return data
 
 
-def manage(initial_plan, start_time, end_time):
-    time = start_time + datetime.timedelta(hours=8)
+def manage(plan_id, test, start_time, end_time, get_up_time, sleep_time):
+    time = start_time + datetime.timedelta(hours=get_up_time)
     list = []
     last = None
-    for i in initial_plan:
+    for i in test:
+        sight = Sight.objects.get(id=i)
+        i = SightPlanSerializer(sight).data
+
         if last is not None:
-            list.append(new_plan_item('交通', time, datetime.timedelta(hours=1)))
-        if time.hour > 20 or time.hour + i.get('playtime') > 20:
+            new_item = new_plan_item(plan_id, last, '交通', time, datetime.timedelta(hours=1))
+            list.append(new_item)
+        if time.hour > sleep_time or time.hour + i.get('playtime') > sleep_time:
             persistent = datetime.timedelta(days=1) - datetime.timedelta(hours=time.hour)
             persistent += datetime.timedelta(hours=8)
-            list.append(new_plan_item('休息', time, persistent))
-        list.append(new_plan_item(i.get('name'), time, datetime.timedelta(hours=i.get('playtime'))))
+            new_item = new_plan_item(plan_id, last, '休息', time, persistent)
+            list.append(new_item)
+        new_item = new_plan_item(plan_id, i, i.get('name'), time, datetime.timedelta(hours=i.get('playtime')))
+        list.append(new_item)
         last = i
     return list
+
+
+def create_schedule(owner_id, name, list):
+    data = {'owner': owner_id, 'title': name, 'date': '2023-05-02'}
+    serializer = ScheduleSerializer(data=data)
+    serializer.is_valid(raise_exception=True)
+    schedule = serializer.save()
+    schedule_id = serializer.data.get('id')
+    for i in list:
+        schedule_item = {}
+        schedule_item['start_time'] = '00:20'#i.get('start_time')
+        schedule_item['end_time'] = '0:40'#i.get('end_time')
+        schedule_item['schedule'] = schedule_id
+        schedule_item['content'] = i.get('name')
+        itemSerializer = ScheduleItemSerializer(data=schedule_item)
+        itemSerializer.is_valid(raise_exception=True)
+        itemSerializer.save()
+    return serializer.data
 
 
 class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyModelMixin):
@@ -156,13 +189,18 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         for i in range(3):
             type = [0, 0, 0]
             type[i - 1] = 1
-            print(type)
             initial_plan = calculate(list, tag, start_time, end_time, type)
             all_list.append(initial_plan)
         return Response(all_list)
 
     def create(self, request, *args, **kwargs):
         sights = request.POST.get('sights')
+        start_time_str = request.POST.get('start_time', '23.4.29')
+        start_time = datetime.datetime.strptime(start_time_str, '%y.%m.%d')
+        end_time_str = request.POST.get('end_time', '23.5.1')
+        end_time = datetime.datetime.strptime(end_time_str, '%y.%m.%d')
+        get_up_time = eval(request.POST.get('get_up_time', '8'))
+        sleep_time = eval(request.POST.get('sleep_time', '20'))
         try:
             name = request.POST.get('name')
         except:
@@ -171,21 +209,16 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         if owner_id <= 0:
             owner_id = 1
             # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+
         data = {'owner': owner_id, 'name': name}
         serializer = PlanSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         plan = serializer.save()
-        test = sights.replace('[', '').replace(']', '').split(',')
+        sights = sights.replace('[', '').replace(']', '').split(',')
         plan_id = serializer.data.get('id')
+        list = manage(plan_id, sights, start_time, end_time, get_up_time, sleep_time)
 
-        for i in test:
-            plan_item = {}
-            plan_item['plan_id'] = plan_id
-            plan_item['sight_id'] = eval(i)
-
-            serializer = PlanItemSerializer(data=plan_item)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
+        create_schedule(owner_id, name, list)
         return Response(PlanSerializer(plan).data)
 
     def destroy(self, request, *args, **kwargs):

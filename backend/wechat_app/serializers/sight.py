@@ -8,7 +8,7 @@ from rest_framework import serializers
 
 from utility.models.sight import Sight
 from . import ImageSerializer
-from .address import AddressSerializer
+from .address import AddressSerializer, AddressPlanSerializer
 from .price import PriceSerializer
 from .inner_sight import InnerSightSerializer
 
@@ -64,7 +64,7 @@ class SightBriefSerializer(serializers.ModelSerializer):
 
 
 class SightPlanSerializer(serializers.ModelSerializer):
-    address = AddressSerializer(read_only=True)
+    address = AddressPlanSerializer(read_only=True)
     images = ImageSerializer(read_only=True, many=True)
 
     class Meta:
