@@ -166,6 +166,17 @@ Page({
             return
           }
 
+          // 非成功状态码，其他登录错误
+          if (data.data.statusCode !== 200) {
+            console.log("登录失败:", data.data)
+            wx.showToast({
+              title: "登录失败，状态码" + data.data.statusCode,
+              icon: "none",
+              duration: 2000
+            })
+            return
+          }
+
           // 登录成功，跳转到个人页面（将用户登陆token存储在缓存中）
           wx.setStorageSync('token', data.data.data.token)
           wx.setStorageSync('id', data.data.data.id)
