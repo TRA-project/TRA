@@ -1,0 +1,28 @@
+<!--pages/sceneryMap/sceneryMap.wxml-->
+<view class="app">
+  <map
+    class="map"
+    id="map"
+    latitude="{{location.latitude}}"
+    longitude="{{location.longitude}}"
+    setting="{{setting}}"
+    enable-3D="true"
+    markers="{{mapMarkers}}"
+  ></map>
+
+  <!-- 很遗憾，腾讯不对个人用户开放路线规划服务 -->
+  <!-- <view class="feature-content border-bottom">
+    <view class="feature-txt">
+      <view
+        bindtap="onSelectMode"
+        class="{{modeIndex === index ? 'active feature-txt-item' : 'feature-txt-item'}}"
+        data-index="{{index}}"
+        wx:for="{{modes}}"
+        wx:key="index">
+        {{item}}
+      </view>
+    </view>
+    需要改为块级元素，否则组件内部有padding，很难跟同行的其他元素对齐
+    <van-button type="primary" customStyle="width: 150rpx; font-size: 32rpx;" block bindtap="onNavigate">导航</van-button>
+  </view> -->
+</view>

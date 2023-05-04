@@ -3,7 +3,7 @@
   <view>
     <van-button round type="info" 
       size="normal"
-      custom-style="width: 300rpx; font-size: 32rpx;">路线规划</van-button>
+      custom-style="width: 300rpx; font-size: 32rpx;">内部路线规划</van-button>
   </view>
   <view class="right-box">
     <view class="icon-text" bindtap="onCollect">

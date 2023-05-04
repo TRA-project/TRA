@@ -13,10 +13,10 @@ Page({
         love_city: '成都',
         travel_num: 12,
         images: {
-            cities_num: utils.server_imagename + '/History/cities_num.jpg',
-            love_city: utils.server_imagename + '/History/love_city.jpg',
-            love_people: utils.server_imagename + '/History/love_people.jpg',
-            travel_num: utils.server_imagename + '/History/travel_num.jpg',
+            cities_num: '/images/cities_num.png',
+            love_city: '/images/love_city.png',
+            love_people: '/images/love_people.png',
+            travel_num: '/images/travel_num.png',
         }
 
     },
