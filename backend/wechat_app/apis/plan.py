@@ -61,21 +61,19 @@ def calculate(list, tag, start_time, end_time, type):
     sys = sorted(dict.items(), key=lambda d: d[1], reverse=True)[0:8]
     better_sight = []
     for i, j in sys:
-
         dict = copy.deepcopy(list[i])
         dict.pop('embedding')
         better_sight.append(dict)
     return better_sight
 
 
-def new_plan_item(plan_id, i, name, time, persistent):
+def new_plan_item(plan_id, i, name, temp, time):
     data = {}
     data['plan_id'] = plan_id
     data['sight_id'] = i.get('id')
     data['name'] = name
     # 放入前端所需要的字段
-    data['start_time'] = time
-    time = time + persistent
+    data['start_time'] = temp
     data['end_time'] = time
     serializer = PlanItemSerializer(data=data)
     serializer.is_valid(raise_exception=True)
@@ -92,14 +90,20 @@ def manage(plan_id, test, start_time, end_time, get_up_time, sleep_time):
         i = SightPlanSerializer(sight).data
 
         if last is not None:
-            new_item = new_plan_item(plan_id, last, '交通', time, datetime.timedelta(hours=1))
+            temp = time
+            time += datetime.timedelta(hours=1)
+            new_item = new_plan_item(plan_id, last, '交通', temp, time)
             list.append(new_item)
         if time.hour > sleep_time or time.hour + i.get('playtime') > sleep_time:
+            temp = time
             persistent = datetime.timedelta(days=1) - datetime.timedelta(hours=time.hour)
             persistent += datetime.timedelta(hours=8)
-            new_item = new_plan_item(plan_id, last, '休息', time, persistent)
+            time += persistent
+            new_item = new_plan_item(plan_id, last, '休息', temp, time)
             list.append(new_item)
-        new_item = new_plan_item(plan_id, i, i.get('name'), time, datetime.timedelta(hours=i.get('playtime')))
+        temp = time
+        time += datetime.timedelta(hours=i.get('playtime'))
+        new_item = new_plan_item(plan_id, i, i.get('name'), temp, time)
         list.append(new_item)
         last = i
     return list
@@ -113,8 +117,8 @@ def create_schedule(owner_id, name, list):
     schedule_id = serializer.data.get('id')
     for i in list:
         schedule_item = {}
-        schedule_item['start_time'] = '00:20'#i.get('start_time')
-        schedule_item['end_time'] = '0:40'#i.get('end_time')
+        schedule_item['start_time'] = '00:20'  # i.get('start_time')
+        schedule_item['end_time'] = '0:40'  # i.get('end_time')
         schedule_item['schedule'] = schedule_id
         schedule_item['content'] = i.get('name')
         itemSerializer = ScheduleItemSerializer(data=schedule_item)
@@ -191,6 +195,7 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
             type[i - 1] = 1
             initial_plan = calculate(list, tag, start_time, end_time, type)
             all_list.append(initial_plan)
+            #all_list.append(manage(38, initial_plan, start_time, end_time, 8, 20))
         return Response(all_list)
 
     def create(self, request, *args, **kwargs):
