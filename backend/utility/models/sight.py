@@ -19,3 +19,4 @@ class Sight(models.Model):
     tags = models.ManyToManyField('Tag', related_name='sights', null=True)
     images = models.ManyToManyField('Image', related_name='sights', null=True)
     types = models.ManyToManyField('SightType', related_name='sights', null=True)
+    embedding = models.TextField('embedding', null=True)
