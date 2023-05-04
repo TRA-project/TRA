@@ -1,4 +1,5 @@
 <!--pages/sceneryShow/sceneryShow.wxml-->
+<van-skeleton title row="20" avatar loading="{{loading}}">
 <swiper class="pic" bindchange="onSwiperChange">
     <swiper-item wx:for="{{images}}">
         <image src="{{item}}"></image>
@@ -22,9 +23,9 @@
         <view class="bottom">
             <view class="leftColumn">
                 <view>{{position}}</view>
-                <view class="dist">距您{{distance}}公里</view>
+                <view class="dist">距您 {{distance}} 公里</view>
             </view>
-            <view class="rightColumn">
+            <view class="rightColumn" bindtap="navigate2map">
                 <image src="../../images/map.png" style="width: 64rpx; height: 64rpx;"></image>
                 <text style="line-height: 64rpx;">地图</text>
             </view>
@@ -124,5 +125,7 @@
     </van-dialog>
 </view>
 
-<van-toast id="van-toast" />
 <comment-box toHideModal="{{hideComment}}" sightId="{{id}}" bind:numComment="update_numComment"></comment-box>
+</van-skeleton>
+
+<van-toast id="van-toast" />
