@@ -17,6 +17,7 @@ from utils.api_tools import save_log
 from utils.response import *
 from ..serializers import CommentSerializer
 from ..serializers.sight import SightSerializer, SightBriefSerializer, SightDetailedSerializer
+import numpy as np
 
 
 class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
@@ -102,3 +103,37 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
         data = dict(serializer.data)
         data['collected'] = collected
         return Response(data)
+
+    @action(methods=['GET'], detail=False, url_path='recommend')
+    def recommend(self, request, *args, **kwargs):
+        user_id = request.GET.get('user_id')
+        num = request.GET.get('num', 10)
+
+        user = AppUser.objects.get(id=user_id)
+
+        user_collections = user.collections_sight.all()
+        user_sights_embeddings = np.array([i.embedding for i in user_collections])
+
+        all_sights = Sight.objects.all()
+        all_sights_embeddings = np.array([i.embedding for i in all_sights])
+
+        user_pref_embedding = np.mean(user_sights_embeddings, axis=0)
+
+        cosine_similarities = np.dot(user_pref_embedding, all_sights_embeddings.T) / (
+                np.linalg.norm(user_pref_embedding) * np.linalg.norm(all_sights_embeddings, axis=1))
+
+        top_n_idx = np.argsort(cosine_similarities)[::-1].tolist()
+
+        user_collection_ids = [i.id for i in user_collections]
+
+        ret = []
+        for idx in top_n_idx:
+            sight = all_sights[idx]
+            if len(ret) > num:
+                break
+            if sight.id in user_collection_ids:
+                continue
+            ret.append(sight)
+
+        serializer = SightBriefSerializer(instance=ret, many=True)
+        return Response(serializer.data)

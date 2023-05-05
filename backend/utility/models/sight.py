@@ -6,6 +6,8 @@
 # @Comment :
 from django.db import models
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import JSONField
 
 
 class Sight(models.Model):
@@ -19,3 +21,4 @@ class Sight(models.Model):
     tags = models.ManyToManyField('Tag', related_name='sights')
     images = models.ManyToManyField('Image', related_name='sights')
     types = models.ManyToManyField('SightType', related_name='sights')
+    embedding = JSONField(null=True)
