@@ -96,7 +96,7 @@
     <!-- 空出下面工具栏的高度 -->
     <view style="height: 100rpx;"></view>
 
-    <bottomBar isCollect="{{isCollect}}" numComment="{{numComment}}"  bind:comment="onComment" bind:collect="onCollect"></bottomBar>
+    <bottomBar isCollect="{{isCollect}}" numComment="{{numComment}}"  bind:comment="onComment" bind:collect="onCollect" style="width: 0rpx; height: -44rpx; display: block; box-sizing: border-box"></bottomBar>
     
     <!-- <van-submit-bar
       price="{{ 3050 }}"

@@ -54,7 +54,8 @@
     "pages/pathPlanInside/pathPlanInside",
     "pages/travelButler/travelButler",
     "pages/travelButlerHome/travelButlerHome",
-    "pages/travelButlerChat/travelButlerChat"
+    "pages/travelButlerChat/travelButlerChat",
+    "pages/travelPlanInside/travelPlanInside"
   ],
 
   "requiredPrivateInfos": [
