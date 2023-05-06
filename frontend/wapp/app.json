@@ -55,11 +55,8 @@
     "pages/travelButler/travelButler",
     "pages/travelButlerHome/travelButlerHome",
     "pages/travelButlerChat/travelButlerChat",
-<<<<<<< HEAD
-    "pages/travelPlanInside/travelPlanInside"
-=======
     "pages/sceneryMap/sceneryMap"
->>>>>>> 1e50374a2196788b111d046c2d4530923e5b82fb
+
   ],
 
   "requiredPrivateInfos": [
