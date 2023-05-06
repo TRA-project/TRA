@@ -173,7 +173,6 @@ MESSAGE_TYPE_COMPANION_FORBIDDEN_CANCEL = 23
 MESSAGE_TYPE_SCHEDULE_NOTIFY = 40
 MESSAGE_TYPE_FLIGHT_NOTIFY = 41
 
-
 MESSAGE_UNIQUE = {
     MESSAGE_TYPE_LIKE_TRAVEL,
     MESSAGE_TYPE_LIKE_COMMENT,
@@ -390,14 +389,17 @@ MAX_PRICE_TYPE_LEN = 32
 
 # sight type
 SIGHT_TYPE_CHOICE = [
-        (1, '亲子出行'),
-        (2, '休闲娱乐'),
-        (3, '人文景观'),
-        (4, '全部景点')
-    ]
+    (1, '亲子出行'),
+    (2, '休闲娱乐'),
+    (3, '人文景观'),
+    (4, '全部景点')
+]
 
 # travel_tag_query
 TAG_QUERY_ORDER_BY_TIME_UP = 0
 TAG_QUERY_ORDER_BY_TIME_DOWN = 1
 TAG_QUERY_ORDER_BY_REC = 2
 TAG_QUERY_ORDER_BY_DEFAULT = TAG_QUERY_ORDER_BY_REC
+
+
+TAGS = pd.read_csv(BASE_DIR + '/tag.csv', encoding='GBK')

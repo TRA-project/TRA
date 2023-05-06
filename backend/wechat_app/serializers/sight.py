@@ -45,7 +45,7 @@ class SightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sight
-        exclude = ['open_time']
+        exclude = ['open_time', 'embedding']
 
 
 class SightBriefSerializer(serializers.ModelSerializer):

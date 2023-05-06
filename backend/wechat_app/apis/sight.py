@@ -4,6 +4,10 @@
 # @File    : sight.py
 # @Software: PyCharm 
 # @Comment :
+import csv
+import os
+
+from django.db.models import Q
 from django.http import QueryDict
 from rest_framework.decorators import action
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin
@@ -112,6 +116,9 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
         user = AppUser.objects.get(id=user_id)
 
         user_collections = user.collections_sight.all()
+        if len(user_collections) == 0:
+            return self.recommend_by_hot(self, request, *args, **kwargs)
+
         user_sights_embeddings = np.array([i.embedding for i in user_collections])
 
         all_sights = Sight.objects.all()
@@ -135,5 +142,22 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
                 continue
             ret.append(sight)
 
-        serializer = SightBriefSerializer(instance=ret, many=True)
+        serializer = SightSerializer(instance=ret, many=True)
         return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False, url_path='recommend_by_tag')
+    def recommend_by_tag(self, request, *args, **kwargs):
+        tag_name = request.GET.get('tag')
+        sights = Sight.objects.filter(Q(tags__name__icontains=tag_name)).order_by('-hot')[:10]
+        serializer = SightSerializer(instance=sights, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False, url_path='recommend_by_hot')
+    def recommend_by_hot(self, request, *args, **kwargs):
+        sights = Sight.objects.order_by('-hot')[:10]
+        serializer = SightSerializer(instance=sights, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False, url_path='tags')
+    def tags_retrieve(self, request, *args, **kwargs):
+        return Response(settings.TAGS)
