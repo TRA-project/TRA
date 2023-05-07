@@ -1,15 +1,17 @@
 /* pages/sceneList/sceneList.wxss */
 
-.search-container {
+.search-bar-container {
+  position: sticky; /* 吸顶效果 */
+  top: 0rpx;
+  z-index: 99;
+}
+
+.search-bar {
   height: 100rpx;
   background-color: rgba(30, 144, 255, 1.0);
   display: flex;
   align-items: center;
   padding: 0 20rpx;
-
-  position: sticky; /* 吸顶效果 */
-  top: 0rpx;
-  z-index: 99;
 }
 
 .search-box {
@@ -35,7 +37,7 @@
   align-items: center;
   vertical-align: center;
   justify-content: space-between;
-  background-color: rgba(160, 204, 252, 0.26);
+  background-color: rgba(145, 188, 235, 0.26);
 
   position: sticky; /* 吸顶效果 */
   top: 100rpx;
@@ -44,11 +46,12 @@
 
 .drop-down-menu {
   width: 83%;
-  margin-right: 0rpx;
+  margin: 10rpx;
 }
 
 .add-scenery-button {
   width: 12%;
+  display: flex;
   align-items: center;
   vertical-align: center;
   margin: 10rpx;
@@ -57,6 +60,11 @@
 .add-scenery-icon {
   width: 90rpx;
   height: 90rpx;
+}
+
+.scenery-list-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .scenery-list {
@@ -69,6 +77,17 @@
   width: 100%;
 }
 
+.reselect-former-scene-card {
+  background-color: rgb(172, 211, 255) !important;
+  margin: 10rpx;
+  filter: drop-shadow(4rpx 4rpx 3rpx rgb(160, 160, 160));
+  border-radius: 30rpx;
+  /* 吸顶 */
+  position: sticky;
+  top: 0;
+}
+
+/* van-card根节点样式 */
 .self-custom-class {
   border-bottom-style: solid;
   border-bottom-width: 3rpx;
@@ -106,6 +125,17 @@
 
 .self-price-class {
   padding-top: 10rpx;
+}
+
+.self-footer-class {
+  /* margin-top: -60rpx; */
+  position: absolute;
+  right: 20rpx;
+  bottom: 25rpx;
+}
+
+.scene-card-checkbox {
+  /* border-radius: 30rpx !important; */
 }
 
 .scenery-list-placeholder {

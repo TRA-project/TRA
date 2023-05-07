@@ -14,21 +14,27 @@ Component({
     // 背景颜色
     bgcolor: {
       type: String,
-      value: "rgba(30, 144, 255, 1.0);"
+      value: "rgba(30, 144, 255, 1.0)"
     },
     // 圆角尺寸
     radius: {
       type: Number,
       value: 36
     },
-    // confirm跳转页面
-    confirmTargetUrl: {
-      type: String,
-      value: "/pages/sceneList/sceneList"
-    },
+    // keyword
     keyword: {
       type: String,
       value: ""
+    },
+    // 是否显示建议列表
+    showsuggest: {
+      type: Boolean,
+      value: true
+    },
+    // 初始是否默认获取焦点focus
+    autofocus: {
+      type: Boolean,
+      value: false,
     }
   },
 
@@ -39,6 +45,7 @@ Component({
     timer: null,
     delay: 300,
     //keyword: "", 改用properties中的keyword，同样可以用this.data.keyword获取
+
     searchRes: [],  // 搜索结果列表
     tmpRes: [
       {"name": "天空岛", "position": "提瓦特"},
@@ -59,9 +66,10 @@ Component({
         this.setData({
           keyword: event.detail.value,
         })
-        this.getSearchList()
+        this.getSuggestList()
         console.log(this.data.keyword)
         
+        /* 同步子组件的输入到外界 */
         this.triggerEvent("syncinput", {value: this.data.keyword})
         console.log("sync from son component:" + this.data.keyword)
       }, this.data.delay) // 还得这么用data的值
@@ -78,7 +86,7 @@ Component({
       console.log("son component call sync:" + this.data.keyword)
     },
 
-    getSearchList() {
+    getSuggestList() {
       if (this.data.keyword === "") {
         this.setData({
           searchRes: []
@@ -118,9 +126,6 @@ Component({
     onConfirm() {
       this.timer = setTimeout(() => {
         this.triggerEvent("syncconfirm", {value: this.data.keyword})
-        wx.navigateTo({
-          url: this.properties.confirmTargetUrl + "?keyword=" + this.data.keyword,
-        })
       }, this.data.delay)
     },
 
@@ -129,7 +134,19 @@ Component({
         keyword: event.currentTarget.dataset.name
       })
       this.onConfirm()
-    }
+    },
+
+    onBlur() {
+      console.log("searchBar blurred")
+      /* 是否需要有所反应呢，涉及到用户体验了 */
+    },
+
+    onFocus() {
+      console.log("searchBar focused")
+      /* 同步子组件的输入到外界 */
+      this.triggerEvent("syncinput", {value: this.data.keyword})
+      console.log("sync from son component:" + this.data.keyword)
+    },
   },
 
   /**

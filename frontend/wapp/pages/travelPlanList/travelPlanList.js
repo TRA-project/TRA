@@ -270,6 +270,11 @@ Page({
         }
       },
       fail: (err) => {
+        wx.hideLoading()
+        wx.showToast({
+          title: "wx.request fail",
+          icon: "error"
+        })
         console.log("post new plan argument failed:", err)
       }
     })

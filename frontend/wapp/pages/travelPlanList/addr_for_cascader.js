@@ -6,7 +6,7 @@ const areaOptions = [
     "value": "110000",
     "children": [
       {
-        "text": "北京城区",
+        "text": "北京市",
         "value": "110100"
       }
     ]

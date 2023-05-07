@@ -154,9 +154,12 @@ Component({
     viewSceneDetail(event) {
       console.log("tabView:", event)
       var idx = event.currentTarget.dataset.moveid
-      var planId = this.data.tarList[idx].id
+      // 点击的Scene参数
+      var sceneName = event.currentTarget.dataset.movename
+      var sceneId = this.data.tarList[idx].id
+      var args = "?keyword=" + sceneName + "&usage=reselect"
       wx.navigateTo({
-        url: "/pages/sceneryShow/sceneryShow?scenery_id=" + planId,
+        url: "/pages/sceneList/sceneList" + args,
       })
     },
 

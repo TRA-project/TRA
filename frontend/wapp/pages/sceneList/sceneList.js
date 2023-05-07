@@ -9,6 +9,7 @@ Page({
   data: {
     server_imagename: utils.server_hostname,
     keyword: "all",
+    usage: "search",
 
     optionType: [
       { text: '全部类型', value: 0 },
@@ -88,25 +89,37 @@ Page({
         price: 20,
         image: "preview.png",
       },
-    ]
+    ],
+
+    // reselect 专用
+    formerScenery: {},
+    sceneryChecked: true,
+    myInput: "",
+    showSearchRes: true, // 重用searchBar阶段: “搜索建议列表”与“搜索结果”的展示互斥
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log("get:", options.keyword)
+    console.log("sceneList get:", options)
     this.setData({
-      keyword: options.keyword
+      keyword: options.keyword,
+      usage: options.usage,
     })
 
+    this.getSceneryList(this.data.keyword, true)
+  },
+
+  getSceneryList(keyword, initFormer) {
+    console.log("GET: sceneryList ? keyword =", keyword)
     var url = utils.server_hostname + "/api/core/" + "sights/search"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
     wx.request({
       url: url,
       method: "GET",
       data: {
-        "keyword": this.data.keyword
+        "keyword": keyword
       },
       header: {
         "token-auth": token
@@ -122,6 +135,19 @@ Page({
             sceneryTotalList: res.data
           })
         }
+
+        /* init formerScenery: reselect */
+        if (initFormer == true) {
+          this.setData({
+            formerScenery: this.data.sceneryTotalList[0],
+            myInput: keyword,
+          })
+          if (this.data.usage === "reselect") {
+            this.initCheckbox()
+          }
+        }
+
+        /* 选择显示的列表 */
         this.setData({
           sceneryShowList: this.data.sceneryTotalList
         })
@@ -131,6 +157,20 @@ Page({
         console.log("请求景点列表失败")
         console.log(res)
       },
+    })  
+  },
+
+  initCheckbox() {
+    this.setData({
+      ["formerScenery.checked"]: true,
+    })
+    this.data.sceneryTotalList.forEach((item, index) => {
+      if (item.id === this.data.formerScenery.id) {
+        this.setData({
+          ["sceneryTotalList[" + index + "].checked"]: true,
+        })
+        console.log("checked", item)
+      }
     })
   },
 
@@ -148,8 +188,16 @@ Page({
     
   },
 
-  returnBackToSearch() {
-    wx.navigateBack()
+  onSearchBarTap() {
+    // 该页面由sceneSearch而来
+    if (this.data.usage === "search") {
+      console.log("for search: back")
+      //wx.navigateBack()
+    }
+    // 该页面由travelPlanPreview而来
+    if (this.data.usage === "reselect") {
+      console.log("for reselect: search")
+    }
   },
 
   showSceneryDetail(e) {
@@ -196,6 +244,51 @@ Page({
     console.log("tap")
     wx.navigateTo({
       url: '/pages/spotAdd/spotAdd',
+    })
+  },
+
+  onCheckboxChange(event) {
+    console.log("checkbox changed, value:", event.detail.value)
+    
+    const values = event.detail.value
+    // 另一种改Array的方式
+    const sceneryShowList  = this.data.sceneryShowList  
+    for (var i = 0; i < items.length; ++i) {
+      items[i].checked = false
+      for (var j = 0; j < values.length; ++j) {
+        if (items[i].id === values[j]) {
+          items[i].checked = true
+          break
+        }
+      }
+    }
+    this.setData({
+      sceneryShowList
+    })
+    
+  },
+
+  onCheckboxTap() {
+    console.log("tap checkbox")
+    this.setData({
+      sceneryChecked: !this.data.sceneryChecked
+    })
+    console.log(this.data.sceneryChecked)
+  },
+
+  onSyncInput(event) {
+    this.setData({
+      myInput: event.detail.value,
+      showSearchRes: false,
+    })
+    console.log("father page syncInput:", this.data.myInput)
+  },
+
+  onSyncConfirm(event) {
+    console.log("father page receive Confirm")
+    this.getSceneryList(this.data.myInput, false)
+    this.setData({
+      showSearchRes: true,
     })
   },
 
