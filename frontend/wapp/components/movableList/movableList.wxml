@@ -21,7 +21,7 @@
           </button>
         </view>
         <view class="movable-item" style="height: {{itemHeight}}rpx;">
-          <image class="movable-item-thumb" src="/images/guozhibeiyuan.jpg" />
+          <image class="movable-item-thumb" src="{{server_imagename + item.cover}}" />
           <view class="movable-item-text">
             <view class="movable-item-text-title">
               {{item.name}}

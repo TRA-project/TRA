@@ -29,6 +29,8 @@ Component({
    * 组件的初始数据
    */
   data: {
+    server_imagename: utils.server_hostname,
+
     moveDisabled: true,
     statusLongpress: false,  /* 是否在longpress状态，用于在touchend中过滤短按结束的情况 */
     moveId: 0, /* 当前移动的代码 */
