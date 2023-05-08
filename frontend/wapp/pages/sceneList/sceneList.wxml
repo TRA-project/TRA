@@ -62,17 +62,26 @@
     <checkbox-group bindchange="onCheckboxChange">
       <view class="scenery-card" wx:for="{{sceneryShowList}}" wx:key="id">
         <van-card
-          bindtap="showSceneryDetail" data-id="{{item.id}}"
-          desc="{{item.desc}}" title="{{item.name}}" price="{{item.price}}" 
+          data-id="{{item.id}}"
+          price="{{item.price}}" 
           custom-class="self-custom-class"
-          title-class="self-title-class"
-          desc-class="self-desc-class"
           price-class="self-price-class">
+          <view class="self-title-class" slot="title"
+            bindtap="showSceneryDetail"
+            data-id="{{item.id}}">
+            {{item.name}}
+          </view>
+          <view class="self-desc-class" slot="desc"
+            bindtap="showSceneryDetail"
+            data-id="{{item.id}}">
+            {{item.desc}}
+          </view>
+          <view class="self-thumb-class" slot="thumb"
+            bindtap="showSceneryDetail">
+            <image class="scene-card-image" src="{{server_imagename+item.cover}}" />
+          </view>
           <view slot="tags">
             预计时长：{{item.time}}
-          </view>
-          <view class="self-thumb-class" slot="thumb">
-            <image class="scene-card-image" src="{{server_imagename+item.cover}}" />
           </view>
           <view class="self-footer-class" slot="footer"
             wx:if="{{usage === 'reselect'}}">

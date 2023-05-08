@@ -142,9 +142,9 @@ Page({
             formerScenery: this.data.sceneryTotalList[0],
             myInput: keyword,
           })
-          if (this.data.usage === "reselect") {
-            this.initCheckbox()
-          }
+        }
+        if (this.data.usage === "reselect") {
+          this.initCheckbox()
         }
 
         /* 选择显示的列表 */

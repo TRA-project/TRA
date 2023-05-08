@@ -109,13 +109,17 @@
 
 .self-title-class {
   font-size: 30rpx;
+  font-weight: bolder;
   height: 30%;
 }
 
 .self-desc-class {
   margin-top: 5rpx;
   margin-bottom: 5rpx;
-  height: 50%;
+  
+  font-size: 24rpx;
+  line-height: 40rpx;
+  height: 80rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
