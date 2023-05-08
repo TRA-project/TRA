@@ -13,13 +13,13 @@ Page({
         user_icon:'',
         username: '',
         images: {
-            myzone: utils.server_imagename + '/RealMyzone/date.jpg',
-            history: utils.server_imagename + '/RealMyzone/travel.jpg',
-            likes: utils.server_imagename + '/RealMyzone/love.jpg',
-            flight: utils.server_imagename + '/RealMyzone/plane1.jpg',
-            collection: utils.server_imagename + '/RealMyzone/books.png',
-            foot: utils.server_imagename + '/RealMyzone/list.jpg',
-            settings: utils.server_imagename + '/RealMyzone/setting.jpg'
+            myzone: '/images/myzone.png',
+            history: '/images/history.png',
+            likes: '/images/thumbup.png',
+            flight: '/images/flight.png',
+            collection: '/images/collection.png',
+            foot: '/images/foot.png',
+            settings: '/images/setting.png'
         },
         nickname: '',
         cities: 0,

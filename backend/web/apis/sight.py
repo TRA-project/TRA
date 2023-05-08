@@ -14,7 +14,3 @@ from ..serializers.sight import SightSerializer
 class SightApis(ModelViewSet):
     queryset = Sight.objects.all()
     serializer_class = SightSerializer
-
-    @action(detail=False, methods=['post'], url_path='add_image')
-    def add_image(self, request, *args, **kwargs):
-        pass

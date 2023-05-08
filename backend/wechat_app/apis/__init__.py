@@ -5,7 +5,7 @@ from .position import PositionApis
 from .message import MessageApis
 from .companion import CompanionApis
 from .images import ImageApis
-from .feedback import AdminMessageApis
+from .feedback import FeedbackApis
 from .advertisement import AdvertisementApis
 from .flight import FlightApis, CityApis, ProvinceApis
 from .schedule import ScheduleApis, ScheduleItemApis
