@@ -1,0 +1,39 @@
+/* pages/travelHotelRestaurant/travelHotelRestaurant.wxss */
+.page_wrapper {
+  background-color: #F6F7F9;
+  min-height: 1200rpx;
+}
+
+.img_wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20rpx;
+}
+
+.checkedIcon {
+  display: inline-block;
+}
+
+.title {
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: 700;
+  display: inline-block;
+  margin-left: 10rpx;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+}
+
+.hotel-card {
+  margin-top: 20rpx;
+}
