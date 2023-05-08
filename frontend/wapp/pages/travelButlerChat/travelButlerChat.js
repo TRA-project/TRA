@@ -251,5 +251,11 @@ Page({
         })
       }
     })
+  },
+
+  goWeather: function() {
+    wx.navigateTo({
+      url: '../weather/weather'
+    })
   }
 })

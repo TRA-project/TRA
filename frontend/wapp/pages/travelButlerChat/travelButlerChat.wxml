@@ -1,6 +1,7 @@
 <view class="card">
   <view class="card-head">
     <view class="card-header">很高兴见到你！你想问些什么？</view>
+    <image class="weather" bindtap="goWeather" src="../../images/weather.png"></image>
     <image class="arrow" bindtap="toggleCard" src="{{imageUrl}}"></image>
   </view>
   <view class="card-content" hidden="{{hidden}}" animation="{{animation}}">
