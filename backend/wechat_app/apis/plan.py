@@ -2,11 +2,13 @@ import collections
 import copy
 import json
 import random
+import string
 import time
 import datetime
+from math import inf
 
 import numpy as np
-import torch
+
 
 from utility.models.plan_item import PlanItem
 from utils.baiduAPI import *
@@ -24,7 +26,10 @@ from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, DestroyM
 
 from wechat_app.serializers.plan_item import PlanItemSerializer, PlanItemDetailSerializer
 from wechat_app.serializers.sight import SightSerializer, SightPlanSerializer
-from text2vec import Word2Vec, cos_sim, semantic_search, SentenceModel
+from text2vec import Word2Vec,SentenceModel
+
+
+embedder = SentenceModel()
 
 
 def compute_emb(model, sentences):
@@ -36,18 +41,33 @@ def compute_emb(model, sentences):
 def test(a, b):
     c = (eval(b))
     d = a - c
+
     num = 0
-    for i in d:
-        num += i * i
-    return 784 - num
+    return 784 - (d * d).sum()
+
+
+def position(point, list):
+    # point为起始点，list为景点列表
+    new_list = []
+    target_point = point
+    distance = inf
+    for i in list:
+        temp_distance = (i.get('longitude') - target_point.get('longitude')) \
+                        * (i.get('longitude') - target_point.get('longitude')) \
+                        + (i.get('latitude') - target_point.get('latitude')) \
+                        * (i.get('latitude') - target_point.get('latitude'))
+
+    return new_list
 
 
 def calculate(list, tag, start_time, end_time, type):
     hot_random = random.uniform(0.5, 1) + type[0]
     grade_random = random.uniform(0.5, 1) + type[1]
     # distance_random = random.uniform(0.5,1)
+    # 我们有这样的一个假设，即对于一个综合评分很高的景点，较远的地点是可以容忍的，但是对于一个相对较差的景点，则过远的距离是不好的
+    # 所以地点的评分是距离，热度，评价的三元函数
     tag_random = random.uniform(0.5, 1) + type[2]
-    embedder = SentenceModel()
+    #embedder = SentenceModel()
     corpus_embedding = embedder.encode([tag])[0]
     n = size(list)
     dict = {}
@@ -81,11 +101,12 @@ def new_plan_item(plan_id, i, name, temp, time):
     return data
 
 
-def manage(plan_id, test, start_time, end_time, get_up_time, sleep_time):
+def manage(plan_id, sight_list, start_time, end_time, get_up_time, sleep_time):
     time = start_time + datetime.timedelta(hours=get_up_time)
     list = []
     last = None
-    for i in test:
+    print(sight_list)
+    for i in sight_list:
         sight = Sight.objects.get(id=i)
         i = SightPlanSerializer(sight).data
 
@@ -117,8 +138,11 @@ def create_schedule(owner_id, name, list):
     schedule_id = serializer.data.get('id')
     for i in list:
         schedule_item = {}
-        schedule_item['start_time'] = '00:20'  # i.get('start_time')
-        schedule_item['end_time'] = '0:40'  # i.get('end_time')
+        print()
+        schedule_item['start_time'] = "{hour}:{minute}".format(hour=i.get('start_time').hour,
+                                                               minute=i.get('start_time').minute)
+        schedule_item['end_time'] = "{hour}:{minute}".format(hour=i.get('end_time').hour,
+                                                             minute=i.get('end_time').minute)
         schedule_item['schedule'] = schedule_id
         schedule_item['content'] = i.get('name')
         itemSerializer = ScheduleItemSerializer(data=schedule_item)
@@ -195,11 +219,10 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
             type[i - 1] = 1
             initial_plan = calculate(list, tag, start_time, end_time, type)
             all_list.append(initial_plan)
-            #all_list.append(manage(38, initial_plan, start_time, end_time, 8, 20))
         return Response(all_list)
 
     def create(self, request, *args, **kwargs):
-        sights = request.POST.get('sights')
+        sights = request.POST.getlist('sights')
         start_time_str = request.POST.get('start_time', '23.4.29')
         start_time = datetime.datetime.strptime(start_time_str, '%y.%m.%d')
         end_time_str = request.POST.get('end_time', '23.5.1')
@@ -219,10 +242,9 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         serializer = PlanSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         plan = serializer.save()
-        sights = sights.replace('[', '').replace(']', '').split(',')
         plan_id = serializer.data.get('id')
         list = manage(plan_id, sights, start_time, end_time, get_up_time, sleep_time)
-
+        print(list)
         create_schedule(owner_id, name, list)
         return Response(PlanSerializer(plan).data)
 
