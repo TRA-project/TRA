@@ -17,6 +17,11 @@
   text-align: center;
 }
 
+.travel-plan-title-modifiable-note {
+  height: 40rpx;
+  width: 40rpx;
+}
+
 .custom-argument-display-container {
   width: 90%;
   min-height: 100rpx;
