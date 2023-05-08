@@ -55,7 +55,6 @@
     "pages/travelButler/travelButler",
     "pages/travelButlerHome/travelButlerHome",
     "pages/travelButlerChat/travelButlerChat",
-    "pages/travelPlanInside/travelPlanInside",
     "pages/sceneryMap/sceneryMap",
     "pages/weather/weather"
   ],
