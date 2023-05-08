@@ -150,17 +150,18 @@ Component({
       this.drawList()
     },
     
-    // 权益之计，组件耦合度太太太高了
+    // 查看 + reselect
     viewSceneDetail(event) {
-      console.log("tabView:", event)
-      var idx = event.currentTarget.dataset.moveid
-      // 点击的Scene参数
-      var sceneName = event.currentTarget.dataset.movename
-      var sceneId = this.data.tarList[idx].id
-      var args = "?keyword=" + sceneName + "&usage=reselect"
-      wx.navigateTo({
-        url: "/pages/sceneList/sceneList" + args,
+      console.log("tabView and reselect:", event)
+      var idx = event.currentTarget.dataset.moveid          // 在tarList中的index
+      var sceneName = event.currentTarget.dataset.movename  // scenery name
+      var sceneId = this.data.tarList[idx].id               // scenery id
+      this.triggerEvent("syncreselect", {
+        sceneId  : sceneId,
+        sceneName: sceneName,
+        sceneIdx : idx
       })
+      
     },
 
     endMoveAndReorderList() {

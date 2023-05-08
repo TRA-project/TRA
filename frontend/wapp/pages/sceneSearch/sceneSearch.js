@@ -70,7 +70,7 @@ Page({
     app.globalData.historyList = this.data.historyList
 
     /* 处理confirm操作（应由父组件完成） */
-    var myArgs = "?keyword=" + this.data.myInput + "&usage=reselect"
+    var myArgs = "?keyword=" + this.data.myInput + "&usage=search"
     wx.navigateTo({
       url: "/pages/sceneList/sceneList" + myArgs, 
     })

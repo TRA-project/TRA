@@ -81,6 +81,11 @@ Page({
         },
       ],
     ],
+
+    afterReselect: false,
+    formerSceneryIdx: -1,
+    formerSceneryId : 0,
+    reselectSceneries: [],
   },
 
   /**
@@ -138,6 +143,8 @@ Page({
         console.log("latitude:" , this.data.mapLatitude)
         console.log("marker longitude:" , this.data.mapMarkers[0].longitude)
         console.log("marker latitude:" , this.data.mapMarkers[0].latitude)
+
+        mapContext = wx.createMapContext("preview-map", this)
         this.upgradeMarkers()
       }
     })
@@ -156,6 +163,11 @@ Page({
    */
   onShow() {
     mapContext = wx.createMapContext("preview-map", this)
+    if (this.data.afterReselect) {
+      console.log("reselect sceneries:", this.data.reselectSceneries)
+      
+      this.data.afterReselect = false
+    }
   },
 
   onTitleInput(event) {
@@ -285,6 +297,23 @@ Page({
     // 同步Points
     this.upgradeMarkers()
     console.log("after sync, travelPlansList:", this.data.travelPlansList)
+  },
+
+  onSyncReselect(event) {
+    console.log("father page: receive command reselect")
+    console.log(event)
+    
+    // 记录被点击的景点 formerScenery 信息
+    this.setData({
+      formerSceneryId : event.detail.sceneId,
+      formerSceneryIdx: event.detail.sceneIdx,
+    })
+    
+    // 跳转复用sceneList
+    var args = "?keyword=" + event.detail.sceneName + "&usage=reselect"
+      wx.navigateTo({
+        url: "/pages/sceneList/sceneList" + args,
+      })
   },
 
   /**

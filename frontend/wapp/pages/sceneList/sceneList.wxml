@@ -52,7 +52,7 @@
       <checkbox class="scene-card-checkbox" 
         value="{{ formerScenery.id }}" 
         checked="{{ formerScenery.checked }}"
-        catchtap="onCheckboxTap">
+        catchtap="onFormerSceneryCheckboxTap">
       </checkbox>
     </view>
   </van-card>
@@ -99,3 +99,20 @@
   </view>
 </view>
 
+<view class="scenery-reselect-confirm-container" 
+  wx:if="{{usage === 'reselect' && showSearchRes}}">
+  <button class="return-back-button"
+    style="visibility:hidden">
+    占位而已
+  </button>
+  <button class="reselect-confirm-button"
+    hover-class="reselect-confirm-button-hover"
+    bindtap="onTapConfirm">
+    确认替换
+  </button>
+  <button class="return-back-button"
+    hover-class="return-back-button-hover"
+    bindtap="onTapReturn">
+    <image class="return-back-button-img" src="/images/returnback.png"></image>
+  </button>
+</view>

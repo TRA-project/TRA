@@ -93,9 +93,10 @@ Page({
 
     // reselect 专用
     formerScenery: {},
-    sceneryChecked: true,
     myInput: "",
     showSearchRes: true, // 重用searchBar阶段: “搜索建议列表”与“搜索结果”的展示互斥
+    selectedIds: [],
+    selectedSceneries: [],
   },
 
   /**
@@ -142,7 +143,22 @@ Page({
             formerScenery: this.data.sceneryTotalList[0],
             myInput: keyword,
           })
+          // 初始默认选中former
+          var selected = [this.data.formerScenery.id]
+          this.setData({
+            selectedIds: selected
+          })
+        } else {
+          // 重新尝试建立浅拷贝关系,若无则不用
+          this.data.sceneryTotalList.forEach((item, index) => {
+            if (item.id === this.data.formerScenery.id) {
+              this.setData({
+                formerScenery: item
+              })
+            }
+          })
         }
+        /* 每次重新获取完列表，需要initCheckbox */
         if (this.data.usage === "reselect") {
           this.initCheckbox()
         }
@@ -161,17 +177,58 @@ Page({
   },
 
   initCheckbox() {
-    this.setData({
-      ["formerScenery.checked"]: true,
-    })
+    console.log(this.data.selectedIds)
     this.data.sceneryTotalList.forEach((item, index) => {
-      if (item.id === this.data.formerScenery.id) {
-        this.setData({
-          ["sceneryTotalList[" + index + "].checked"]: true,
-        })
-        console.log("checked", item)
+      for (var selectid of this.data.selectedIds) {
+        if (item.id === selectid) {
+          this.setData({
+            ["sceneryTotalList[" + index + "].checked"]: true,
+          })
+          break
+        }
       }
     })
+    // 浅拷贝同步到视图层（逻辑层已经改变）
+    this.setData({
+      formerScenery: this.data.formerScenery
+    })
+  },
+
+  // Promise包装,便于后续多个异步请求的最终同步
+  getScenery(sceneryId) {
+    var promise = new Promise((resolve, reject) => {
+      console.log("GET: scenery / <scenery_id> =", sceneryId)
+      var url = utils.server_hostname + "/api/core/" + "sights/" + sceneryId + "/"
+      var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
+      wx.request({
+        url: url,
+        method: "GET",
+        header: {
+          "token-auth": token
+        },
+        success: (res) => {
+          console.log(res)
+          var scene = res.data
+          var item = {
+            address: {
+              name: scene.address.name,
+              latitude: scene.address.latitude,
+              longitude: scene.address.longitude
+            },
+            cover: scene.images[0].substr(utils.server_hostname.length),
+            desc: scene.desc,
+            id: scene.id,
+            name: scene.name,
+          }
+          resolve(item)
+        },
+        fail: (err) => {
+          console.log(err)
+          reject("request " + sceneryId + " failed")
+        }
+      })
+    })
+    return promise
   },
 
   /**
@@ -248,32 +305,82 @@ Page({
   },
 
   onCheckboxChange(event) {
-    console.log("checkbox changed, value:", event.detail.value)
-    
-    const values = event.detail.value
+    console.log("checkbox changed, value:")
+    const values = event.detail.value.map(Number)
+
+    /* 同时选中超过上限, 禁止操作 */
+    if (values.length > 3) {
+      wx.showToast({
+        title: "最多连续选3处",
+        icon: "none"
+      })
+      // 同步视图层
+      this.setData({
+        sceneryShowList: this.data.sceneryShowList
+      })
+      console.log(this.data.selectedIds)
+      return 
+    }
+
+    /* 允许操作 */
+    this.setData({
+      selectedIds: values
+    })
+    console.log(this.data.selectedIds)
     // 另一种改Array的方式
-    const sceneryShowList  = this.data.sceneryShowList  
-    for (var i = 0; i < items.length; ++i) {
+    const items  = this.data.sceneryShowList  
+    for (var i in items) {
       items[i].checked = false
-      for (var j = 0; j < values.length; ++j) {
-        if (items[i].id === values[j]) {
+      for (var value of values) {
+        if (items[i].id == value) {
           items[i].checked = true
           break
         }
       }
     }
+    // 同步到视图层
     this.setData({
-      sceneryShowList
+      items,
+      formerScenery: this.data.formerScenery,
     })
-    
   },
 
-  onCheckboxTap() {
-    console.log("tap checkbox")
+  onFormerSceneryCheckboxTap() {
+    console.log("tap former scenery checkbox, value:")
+
+    if (this.data.formerScenery.checked !== true) {
+      // 说明此举将加入selectedIds, 需要判断是否超过上限
+      if (this.data.selectedIds.length >= 3) {
+        wx.showToast({
+          title: "最多连续选3处",
+          icon: "none"
+        })
+        // 同步到视图层
+        this.setData({
+          formerScenery: this.data.formerScenery
+        })
+        return
+      }
+    }
+
+    this.data.formerScenery.checked = !this.data.formerScenery.checked
+    // selectedIds 更新
+    if (this.data.formerScenery.checked === true) {
+      // 说明之前为false, 不在selectedIds中，添上
+      this.data.selectedIds.push(this.data.formerScenery.id)
+    } else {
+      // 说明之前未true, 在selectedIds中，去除
+      this.data.selectedIds.splice(
+        this.data.selectedIds.indexOf(this.data.formerScenery.id), 1
+      )
+    }
+    // 同步到视图层
     this.setData({
-      sceneryChecked: !this.data.sceneryChecked
+      selectedIds: this.data.selectedIds,
+      formerScenery: this.data.formerScenery,
+      sceneryShowList: this.data.sceneryShowList,
     })
-    console.log(this.data.sceneryChecked)
+    console.log(this.data.selectedIds)
   },
 
   onSyncInput(event) {
@@ -292,18 +399,46 @@ Page({
     })
   },
 
+  onTapConfirm() {
+    var pages = getCurrentPages();
+    var prevPage = pages[pages.length - 2]
+    
+    // 获取所选内容对应的景点详情
+    // var that = this
+    let promiseArr = []
+    this.data.selectedIds.forEach(item => {
+      promiseArr.push(this.getScenery(item))
+    })
+    Promise.all(promiseArr).then(items => {
+      console.log("Promise all:", items)
+      prevPage.setData({
+        reselectSceneries: items,
+        afterReselect: true,
+      })
+      wx.navigateBack()
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+
+  onTapReturn() {
+    wx.navigateBack()
+  },
+
+
+
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-
+    console.log("sceneList hide")
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
+    console.log("sceneList unload")
   },
 
   /**

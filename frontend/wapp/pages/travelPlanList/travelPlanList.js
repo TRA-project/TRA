@@ -260,6 +260,7 @@ Page({
           wx.navigateTo({
             url: "/pages/travelPlanPreview/travelPlanPreview?status=true",
             success: (navRes) => {
+              console.log(navRes)
               // 传递配置参数arg、请求回来的travelPlan数据
               navRes.eventChannel.emit("travelPlan", {
                 arg: formData,
