@@ -120,9 +120,6 @@ Page({
     wx.request({
       url: url,
       method: "GET",
-      data: {
-
-      },
       header: {
         "token-auth": token
       },
