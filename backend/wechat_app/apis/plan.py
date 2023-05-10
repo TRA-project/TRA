@@ -9,7 +9,6 @@ from math import inf
 
 import numpy as np
 
-
 from utility.models.plan_item import PlanItem
 from utils.baiduAPI import *
 from numpy import size
@@ -26,8 +25,7 @@ from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, DestroyM
 
 from wechat_app.serializers.plan_item import PlanItemSerializer, PlanItemDetailSerializer
 from wechat_app.serializers.sight import SightSerializer, SightPlanSerializer
-from text2vec import Word2Vec,SentenceModel
-
+from text2vec import Word2Vec, SentenceModel
 
 embedder = SentenceModel()
 
@@ -50,13 +48,19 @@ def position(point, list):
     # point为起始点，list为景点列表
     new_list = []
     target_point = point
-    distance = inf
-    for i in list:
-        temp_distance = (i.get('longitude') - target_point.get('longitude')) \
-                        * (i.get('longitude') - target_point.get('longitude')) \
-                        + (i.get('latitude') - target_point.get('latitude')) \
-                        * (i.get('latitude') - target_point.get('latitude'))
-
+    while size(new_list) < size(list):
+        min_sight = list[0]
+        min_distance = inf
+        for i in list:
+            temp_distance = (i.get('longitude') - target_point.get('longitude')) \
+                            * (i.get('longitude') - target_point.get('longitude')) \
+                            + (i.get('latitude') - target_point.get('latitude')) \
+                            * (i.get('latitude') - target_point.get('latitude'))
+            if temp_distance < min_distance and i not in new_list:
+                min_distance = temp_distance
+                min_sight = i
+        new_list.append(min_sight)
+        target_point = min_sight
     return new_list
 
 
@@ -67,7 +71,7 @@ def calculate(list, tag, start_time, end_time, type):
     # 我们有这样的一个假设，即对于一个综合评分很高的景点，较远的地点是可以容忍的，但是对于一个相对较差的景点，则过远的距离是不好的
     # 所以地点的评分是距离，热度，评价的三元函数
     tag_random = random.uniform(0.5, 1) + type[2]
-    #embedder = SentenceModel()
+    # embedder = SentenceModel()
     corpus_embedding = embedder.encode([tag])[0]
     n = size(list)
     dict = {}
@@ -95,6 +99,12 @@ def new_plan_item(plan_id, i, name, temp, time):
     # 放入前端所需要的字段
     data['start_time'] = temp
     data['end_time'] = time
+    if name is '交通':
+        data['type'] = 2
+    elif name is '住宿':
+        data['type'] = 3
+    else:
+        data['type'] = 1
     serializer = PlanItemSerializer(data=data)
     serializer.is_valid(raise_exception=True)
     plan = serializer.save()
@@ -105,9 +115,8 @@ def manage(plan_id, sight_list, start_time, end_time, get_up_time, sleep_time):
     time = start_time + datetime.timedelta(hours=get_up_time)
     list = []
     last = None
-    print(sight_list)
-    for i in sight_list:
-        sight = Sight.objects.get(id=i)
+    for sight_id in sight_list:
+        sight = Sight.objects.get(id=eval(sight_id))
         i = SightPlanSerializer(sight).data
 
         if last is not None:
@@ -120,7 +129,7 @@ def manage(plan_id, sight_list, start_time, end_time, get_up_time, sleep_time):
             persistent = datetime.timedelta(days=1) - datetime.timedelta(hours=time.hour)
             persistent += datetime.timedelta(hours=8)
             time += persistent
-            new_item = new_plan_item(plan_id, last, '休息', temp, time)
+            new_item = new_plan_item(plan_id, last, '住宿', temp, time)
             list.append(new_item)
         temp = time
         time += datetime.timedelta(hours=i.get('playtime'))
@@ -138,13 +147,14 @@ def create_schedule(owner_id, name, list):
     schedule_id = serializer.data.get('id')
     for i in list:
         schedule_item = {}
-        print()
         schedule_item['start_time'] = "{hour}:{minute}".format(hour=i.get('start_time').hour,
                                                                minute=i.get('start_time').minute)
         schedule_item['end_time'] = "{hour}:{minute}".format(hour=i.get('end_time').hour,
                                                              minute=i.get('end_time').minute)
         schedule_item['schedule'] = schedule_id
         schedule_item['content'] = i.get('name')
+        if name != '交通' and name != '休息':
+            data['if_alarm'] = 1
         itemSerializer = ScheduleItemSerializer(data=schedule_item)
         itemSerializer.is_valid(raise_exception=True)
         itemSerializer.save()
@@ -186,6 +196,8 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
             item_serializer = PlanItemSerializer(list, many=True)
             sights_name = []
             for j in item_serializer.data:
+                if j.get('type') != 1:
+                    continue
                 sight_id = j.get('sight_id')
                 sight = Sight.objects.get(id=sight_id)
                 sight_serializer = SightPlanSerializer(sight)
@@ -222,7 +234,8 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         return Response(all_list)
 
     def create(self, request, *args, **kwargs):
-        sights = request.POST.getlist('sights')
+        sights = request.POST.get('sights')
+        sights = sights.split(',')
         start_time_str = request.POST.get('start_time', '23.4.29')
         start_time = datetime.datetime.strptime(start_time_str, '%y.%m.%d')
         end_time_str = request.POST.get('end_time', '23.5.1')
@@ -244,7 +257,6 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         plan = serializer.save()
         plan_id = serializer.data.get('id')
         list = manage(plan_id, sights, start_time, end_time, get_up_time, sleep_time)
-        print(list)
         create_schedule(owner_id, name, list)
         return Response(PlanSerializer(plan).data)
 
