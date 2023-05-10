@@ -242,14 +242,8 @@ Page({
         "token-auth": token
       },
       success: (res) => {
-        // wx.redirectTo({
-        //   url: "/pages/travelPlanList/travelPlanList",
-        // })
-        wx.navigateBack({
-          success: () => {
-            wx.navigateBack()
-          }
-        })
+        console.log("delete success")
+        wx.navigateBack()
       },
       fail: (err) => {
         console.log("delete send error:", err)
