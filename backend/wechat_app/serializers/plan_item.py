@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from utility.models.plan_item import PlanItem
-from wechat_app.serializers.sight import SightPlanSerializer
+from wechat_app.serializers.sight import SightPlanSerializer, SightPlanShowSerializer
 
 
 class PlanItemSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class PlanItemSerializer(serializers.ModelSerializer):
 
 
 class PlanItemDetailSerializer(serializers.ModelSerializer):
-    sight_id = SightPlanSerializer(read_only=True)
+    sight_id = SightPlanShowSerializer(read_only=True)
 
     class Meta:
         model = PlanItem

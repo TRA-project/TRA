@@ -77,3 +77,18 @@ class SightPlanSerializer(serializers.ModelSerializer):
         cover = images[0] if images else None
         data['cover'] = cover.get('image') if cover else None
         return data
+
+class SightPlanShowSerializer(serializers.ModelSerializer):
+    address = AddressPlanSerializer(read_only=True)
+    images = ImageSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Sight
+        exclude = ['embedding']
+
+    def to_representation(self, value):
+        data = super().to_representation(value)
+        images = data.pop('images', None)
+        cover = images[0] if images else None
+        data['cover'] = cover.get('image') if cover else None
+        return data

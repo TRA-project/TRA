@@ -99,6 +99,12 @@ def new_plan_item(plan_id, i, name, temp, time):
     # 放入前端所需要的字段
     data['start_time'] = temp
     data['end_time'] = time
+    if name is '交通':
+        data['type'] = 2
+    elif name is '住宿':
+        data['type'] = 3
+    else:
+        data['type'] = 1
     serializer = PlanItemSerializer(data=data)
     serializer.is_valid(raise_exception=True)
     plan = serializer.save()
@@ -123,7 +129,7 @@ def manage(plan_id, sight_list, start_time, end_time, get_up_time, sleep_time):
             persistent = datetime.timedelta(days=1) - datetime.timedelta(hours=time.hour)
             persistent += datetime.timedelta(hours=8)
             time += persistent
-            new_item = new_plan_item(plan_id, last, '休息', temp, time)
+            new_item = new_plan_item(plan_id, last, '住宿', temp, time)
             list.append(new_item)
         temp = time
         time += datetime.timedelta(hours=i.get('playtime'))
@@ -190,6 +196,8 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
             item_serializer = PlanItemSerializer(list, many=True)
             sights_name = []
             for j in item_serializer.data:
+                if j.get('type') != 1:
+                    continue
                 sight_id = j.get('sight_id')
                 sight = Sight.objects.get(id=sight_id)
                 sight_serializer = SightPlanSerializer(sight)
