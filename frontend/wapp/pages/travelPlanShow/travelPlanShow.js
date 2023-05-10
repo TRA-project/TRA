@@ -2,6 +2,20 @@
 
 const utils = require("../../utils/util")
 
+const activeIcon = {
+  iconPath: "/images/locate-marker-focus-double.png",
+  width: "49.5rpx",
+  height: "144rpx",
+}
+
+const normalIcon = {
+  iconPath: "/images/locate-marker-double.png",
+  width: "42rpx",
+  height: "120rpx",
+}
+
+let mapContext
+
 Page({
   /**
    * 页面的初始数据
@@ -11,21 +25,34 @@ Page({
     mapLatitude: 39.92,
     mapMarkers: [
       {
-        iconPath: "/images/locate-marker.png",
-        width: "40rpx",
-        height: "60rpx",
+        iconPath: "/images/locate-marker-double.png",
+        width: "42rpx",
+        height: "120rpx",
         longitude: 116.46,
         latitude: 39.92,
       },
     ],
     mapPoints: [],
+    mapPolyLines: [
+      {
+        points: [
+          {longitude: 116.46, latitude:39.92},
+          {longitude: 116.45, latitude:39.91},
+        ],
+        color: "#00ff00", // green
+        width: 6,
+        borderColor: "#11ff11",
+        borderWidth: 2,
+      },
+    ],
+    markerTap: false,  // 用来过滤markertap时连带触发的maptap
 
     travelPlanId: 0,
     travelPlanName: "旅行计划x",
     travelPlan: [],
     tmpTravelPlan: [
       {
-        id: "1",
+        id: 1,
         name: "景点1",
         desc: "景点介绍1",
         address: {
@@ -36,7 +63,7 @@ Page({
         time: new Date().getTime(),
       },
       {
-        id: "2",
+        id: 2,
         name: "景点2",
         desc: "景点介绍2",
         address: {
@@ -47,24 +74,13 @@ Page({
         time: new Date().getTime(),
       },
       {
-        id: "3",
+        id: 3,
         name: "景点3",
         desc: "景点介绍3",
         address: {
           positon: '景点位置信息3',
           longitude: 116.50,
           latitude: 39.91,
-        },
-        time: new Date().getTime(),
-      },
-      {
-        id: "4",
-        name: "景点4",
-        desc: "景点介绍4",
-        address: {
-          positon: '景点位置信息4',
-          longitude: 116.46,
-          latitude: 39.99,
         },
         time: new Date().getTime(),
       },
@@ -96,7 +112,7 @@ Page({
       travelPlanId: planId
     })
 
-    let mapContext = wx.createMapContext("map", this)
+    mapContext = wx.createMapContext("map", this)
 
     // 请求该出行计划
     var url = utils.server_hostname + "/api/core/" + "plan/" + planId + "/"
@@ -122,6 +138,7 @@ Page({
             travelPlanName: res.data.name
           })
         }
+        console.log("plan info:", this.data.travelPlan)
         // 处理获取到的出行计划信息
         this.data.travelPlan.forEach((item, index) => {
           // 添加steps
@@ -131,25 +148,50 @@ Page({
           }
           // 添加markers
           var markerItem = {
-            iconPath: "/images/locate-marker.png",
-            width: "40rpx",
-            height: "60rpx",
+            id: index,
+            iconPath: normalIcon.iconPath,
+            width: normalIcon.width,
+            height: normalIcon.height,
             longitude: item.address.longitude,
             latitude: item.address.latitude,
+            customCallout: {
+              anchorX: "50rpx",  // 单位是px
+              anchorY: "300rpx",
+              display: "BYCLICK",
+              content: "test",
+            },
+            /* 自定义自用字段 */
+            name: item.name,
+            desc: item.desc.length > 24 ? item.desc.slice(0, 23) + "..." : item.desc,
+            active: false,  // 记录是否被点击激活
+            scene_id: item.id
           }
+          console.log(item.desc.length)
           // 添加points
           var pointItem = {
             longitude: item.address.longitude,
             latitude: item.address.latitude,
           }
-          console.log(stepItem)
-          console.log(markerItem)
+
           this.setData({
             ["steps[" + index + "]"]: stepItem,
             ["mapMarkers[" + index + "]"]: markerItem,
             ["mapPoints[" + index + "]"]: pointItem,
           })
         })
+
+        // 添加polyline
+        var initPolyLines = [{
+          points: this.data.mapPoints,
+          color: "#00ff00", // green
+          width: 6,
+          borderColor: "#11ff11",
+          borderWidth: 2,
+        }]
+        this.setData({
+          mapPolyLines: initPolyLines
+        })
+        console.log("mapPolyLine:", this.data.mapPolyLine)
         
         console.log(this.data.mapPoints)
         mapContext.includePoints({
@@ -181,6 +223,10 @@ Page({
     this.setData({
       stepActive: event.detail
     })
+    console.log("stepActive:", this.data.stepActive)
+
+    // 激活相应marker
+    this.handleMarkerActivate(this.data.stepActive)
   },
 
   onTapDelete() {
@@ -201,16 +247,93 @@ Page({
         // })
         wx.navigateBack({
           success: () => {
-            let currPages = getCurrentPages();
-            wx.redirectTo({
-              url: "/" + currPages[currPages.length - 1].route,
-            })
+            wx.navigateBack()
           }
         })
       },
       fail: (err) => {
         console.log("delete send error:", err)
       }
+    })
+  },
+
+  onMapTap(event) {
+    if (this.data.markerTap == true) {
+      // 过滤markertap事件
+      this.setData({
+        markerTap: false
+      })
+      return
+    }
+    console.log("map tapped", event)
+    this.deactivateAllMarkers()
+  },
+
+  onMarkerTap(event) {
+    console.log("marker tapped", event)
+    this.handleMarkerActivate(event.detail.markerId)
+  },
+
+  onCalloutTap(event) {
+    console.log("callout tapped", event)
+    var tarMarkerIdx = event.detail.markerId
+    var tarSceneId = this.data.mapMarkers[tarMarkerIdx].scene_id
+    wx.navigateTo({
+      url: "/pages/sceneryShow/sceneryShow?scenery_id=" + tarSceneId,
+    })
+  },
+
+  activateMarker(markerIdx) {
+    var tarMarker = "mapMarkers[" + markerIdx + "]"
+    this.setData({
+      [tarMarker + ".iconPath"]: activeIcon.iconPath,
+      [tarMarker + ".width"]: activeIcon.width,
+      [tarMarker + ".height"]: activeIcon.height,
+      [tarMarker + ".customCallout.display"]: "ALWAYS",
+      [tarMarker + ".active"]: true,
+      // 设置状态：以触发markertap
+      markerTap: true,
+    })
+  },
+
+  handleMarkerActivate(markerIdx) {
+    // 先deactivate的marker
+    this.deactivateAllMarkers() 
+    
+    // 再activate被点击的marker 
+    this.activateMarker(markerIdx)
+
+    // 定位到该marker
+    mapContext.moveToLocation({
+      longitude: this.data.mapMarkers[markerIdx].longitude,
+      latitude: this.data.mapMarkers[markerIdx].latitude,
+      success: (res) => {
+        console.log("mapContext.moveToLocation success")
+      }
+    })
+  },
+
+  deactivateAllMarkers() {
+    this.data.mapMarkers.forEach((item, index) => {
+      if (item.active == true) {
+        var tarMarker = "mapMarkers[" + index + "]"
+        console.log("deactivate:", tarMarker)
+        this.setData({
+          [tarMarker + ".iconPath"]: normalIcon.iconPath,
+          [tarMarker + ".width"]: normalIcon.width,
+          [tarMarker + ".height"]: normalIcon.height,
+          [tarMarker + ".customCallout.display"]: "BYCLICK",
+          [tarMarker + ".active"]: false,
+        })
+      }
+    })
+  },
+
+  onRelocateTap() {
+    console.log("tap relocate")
+    mapContext.includePoints({
+      padding: [40, 40, 40, 40],
+      points: this.data.mapPoints
     })
   },
 
