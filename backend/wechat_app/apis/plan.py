@@ -15,6 +15,7 @@ from numpy import size
 from rest_framework import status
 from utility.models import Plan, Sight
 from utils import permission
+from utils.response import error_response, Error
 from wechat_app.serializers import ScheduleSerializer, ScheduleItemSerializer
 from wechat_app.serializers.plan import PlanSerializer
 from utility.models.plan import Plan
@@ -71,7 +72,7 @@ def calculate(list, tag, start_time, end_time, type):
     # 我们有这样的一个假设，即对于一个综合评分很高的景点，较远的地点是可以容忍的，但是对于一个相对较差的景点，则过远的距离是不好的
     # 所以地点的评分是距离，热度，评价的三元函数
     tag_random = random.uniform(0.5, 1) + type[2]
-    # embedder = SentenceModel()
+    #embedder = SentenceModel()
     corpus_embedding = embedder.encode([tag])[0]
     n = size(list)
     dict = {}
@@ -94,7 +95,7 @@ def calculate(list, tag, start_time, end_time, type):
 def new_plan_item(plan_id, i, name, temp, time):
     data = {}
     data['plan_id'] = plan_id
-    data['sight_id'] = i.get('id')
+    data['sight'] = i.get('id')
     data['name'] = name
     # 放入前端所需要的字段
     data['start_time'] = temp
@@ -172,22 +173,28 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         owner_id = permission.user_check(request)
         if owner_id <= 0:
             owner_id = 1
-            # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
 
         """安全性检验
         plan = Plan.objects.get(id)
         serializer = PlanSerializer(instance=plan)
         plan_id = serializer.data.get('id')"""
-
-        plan_items = PlanItem.objects.filter(plan_id=kwargs.get('pk'))
+        data = {}
+        plan_id = kwargs.get('pk')
+        plan_items = PlanItem.objects.filter(plan_id=plan_id)
         serializer = PlanItemDetailSerializer(plan_items, many=True)
-        return Response(serializer.data)
+        data['plan_items'] = serializer.data
+        plan = Plan.objects.get(id=plan_id)
+        serializer = PlanSerializer(plan)
+        data['name'] = serializer.data.get('name')
+        data['id'] = plan_id
+        return Response(data)
 
     def list(self, request, *args, **kwargs):
         owner_id = permission.user_check(request)
         if owner_id <= 0:
             owner_id = 1
-            # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
         queryset = Plan.objects.filter(owner=owner_id)
         serializer = PlanSerializer(queryset, many=True)
         all_list = []
@@ -198,7 +205,7 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
             for j in item_serializer.data:
                 if j.get('type') != 1:
                     continue
-                sight_id = j.get('sight_id')
+                sight_id = j.get('sight')
                 sight = Sight.objects.get(id=sight_id)
                 sight_serializer = SightPlanSerializer(sight)
                 sights_name.append(sight_serializer.data.get('name'))
@@ -249,7 +256,7 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         owner_id = permission.user_check(request)
         if owner_id <= 0:
             owner_id = 1
-            # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
 
         data = {'owner': owner_id, 'name': name}
         serializer = PlanSerializer(data=data)
@@ -264,5 +271,5 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         owner_id = permission.user_check(request)
         if owner_id <= 0:
             owner_id = 1
-            # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
         return super().destroy(self, request, *args, **kwargs)

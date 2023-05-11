@@ -13,7 +13,7 @@ class PlanItemSerializer(serializers.ModelSerializer):
 
 
 class PlanItemDetailSerializer(serializers.ModelSerializer):
-    sight_id = SightPlanShowSerializer(read_only=True)
+    sight = SightPlanShowSerializer(read_only=True)
 
     class Meta:
         model = PlanItem
