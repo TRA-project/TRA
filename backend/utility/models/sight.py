@@ -22,3 +22,14 @@ class Sight(models.Model):
     images = models.ManyToManyField('Image', related_name='sights')
     types = models.ManyToManyField('SightType', related_name='sights')
     embedding = JSONField(null=True)
+
+
+class SightUpdateRequest(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected')
+    )
+    user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
+    update_request = models.TextField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')

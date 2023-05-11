@@ -7,6 +7,7 @@ from wechat_app.serializers import AdminMessageSerializer
 from utils.response import *
 from utils import permission as _permission, date
 
+
 class AdminMessageApis(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin):
     permission_classes = []
     queryset = FeedBack.objects.all()

@@ -15,13 +15,14 @@ from rest_framework.viewsets import GenericViewSet
 
 from backend import settings
 from utility.models import Comment, Message, AppUser
-from utility.models.sight import Sight
+from utility.models.sight import Sight, SightUpdateRequest
 from utils import permission, conversion
 from utils.api_tools import save_log
 from utils.response import *
 from ..serializers import CommentSerializer
 from ..serializers.sight import SightSerializer, SightBriefSerializer, SightDetailedSerializer
 import numpy as np
+from django.shortcuts import render, redirect
 
 
 class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
@@ -161,3 +162,12 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
     @action(methods=['GET'], detail=False, url_path='tags')
     def tags_retrieve(self, request, *args, **kwargs):
         return Response(settings.TAGS)
+
+    @action(methods=['POST'], detail=False, url_path='update_request')
+    def sight_update(self, request, *args, **kwargs):
+        user_id = permission.user_check(request)
+        user = AppUser.objects.filter(id=1).first()  # TODO: use real user_id instead
+        body = request.body.decode('utf-8')
+        request = SightUpdateRequest(user=user, update_request=body)
+        request.save()
+        return Response("您成功发送了修改申请")  # TODO: replace with real status
