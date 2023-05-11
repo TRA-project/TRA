@@ -1,18 +1,10 @@
 // pages/travelPlanShow/travelPlanShow.js
 
 const utils = require("../../utils/util")
+const defaultData = require("./defaultData") 
 
-const activeIcon = {
-  iconPath: "/images/locate-marker-focus-double.png",
-  width: "49.5rpx",
-  height: "144rpx",
-}
-
-const normalIcon = {
-  iconPath: "/images/locate-marker-double.png",
-  width: "42rpx",
-  height: "120rpx",
-}
+const activeIcon = defaultData.activeIcon
+const normalIcon = defaultData.normalIcon
 
 let mapContext
 
@@ -23,84 +15,17 @@ Page({
   data: {
     mapLongitude: 116.46,
     mapLatitude: 39.92,
-    mapMarkers: [
-      {
-        iconPath: "/images/locate-marker-double.png",
-        width: "42rpx",
-        height: "120rpx",
-        longitude: 116.46,
-        latitude: 39.92,
-      },
-    ],
+    mapMarkers: [],
     mapPoints: [],
-    mapPolyLines: [
-      {
-        points: [
-          {longitude: 116.46, latitude:39.92},
-          {longitude: 116.45, latitude:39.91},
-        ],
-        color: "#00ff00", // green
-        width: 6,
-        borderColor: "#11ff11",
-        borderWidth: 2,
-      },
-    ],
-    markerTap: false,  // 用来过滤markertap时连带触发的maptap
+    mapPolyLines: defaultData.mapPolyLines,
+    markerTapped: false,  // 用来过滤markertap时连带触发的maptap
 
     travelPlanId: 0,
     travelPlanName: "旅行计划x",
     travelPlan: [],
-    tmpTravelPlan: [
-      {
-        id: 1,
-        name: "景点1",
-        desc: "景点介绍1",
-        address: {
-          positon: '景点位置信息1',
-          longitude: 116.46,
-          latitude: 39.90,
-        },
-        time: new Date().getTime(),
-      },
-      {
-        id: 2,
-        name: "景点2",
-        desc: "景点介绍2",
-        address: {
-          positon: '景点位置信息2',
-          longitude: 116.36,
-          latitude: 39.92,
-        },
-        time: new Date().getTime(),
-      },
-      {
-        id: 3,
-        name: "景点3",
-        desc: "景点介绍3",
-        address: {
-          positon: '景点位置信息3',
-          longitude: 116.50,
-          latitude: 39.91,
-        },
-        time: new Date().getTime(),
-      },
-    ],
 
     stepActive: 0,
-    steps: [
-      {
-        text: '步骤一',
-        desc: '描述信息',
-      },
-      {
-        text: '步骤二',
-        desc: '描述信息',
-      },
-      {
-        text: '步骤三',
-        desc: '描述信息',
-      },
-    ],
+    steps: defaultData.steps,
   },
 
   /**
@@ -124,75 +49,79 @@ Page({
         "token-auth": token
       },
       success: (res) => {
-        console.log("get response plan:", res.data)
+        console.log("GET /plan/" + planId + "/", res.data)
         if (res.statusCode !== 200) { // 获取失败
           this.setData({
-            travelPlan: this.data.tmpTravelPlan
+            travelPlan: defaultData.travelPlan,
+            mapMarkers: defaultData.mapMarkers,
           })
         } else { // 获取成功
           this.setData({
-            travelPlan: res.data.sights_detail,
-            travelPlanName: res.data.name
+            travelPlan: res.data.plan_items,
+            travelPlanName: res.data.name,
           })
         }
-        console.log("plan info:", this.data.travelPlan)
-        // 处理获取到的出行计划信息
-        this.data.travelPlan.forEach((item, index) => {
-          // 添加steps
-          var stepItem = {
-            text: item.name,
-            desc: utils.formatTime(new Date())
-          }
-          // 添加markers
-          var markerItem = {
-            id: index,
-            iconPath: normalIcon.iconPath,
-            width: normalIcon.width,
-            height: normalIcon.height,
-            longitude: item.address.longitude,
-            latitude: item.address.latitude,
-            customCallout: {
-              anchorX: "50rpx",  // 单位是px
-              anchorY: "300rpx",
-              display: "BYCLICK",
-              content: "test",
-            },
-            /* 自定义自用字段 */
-            name: item.name,
-            desc: item.desc.length > 24 ? item.desc.slice(0, 23) + "..." : item.desc,
-            active: false,  // 记录是否被点击激活
-            scene_id: item.id
-          }
-          console.log(item.desc.length)
-          // 添加points
-          var pointItem = {
-            longitude: item.address.longitude,
-            latitude: item.address.latitude,
-          }
+        console.log("plan_items:", this.data.travelPlan)
 
-          this.setData({
-            ["steps[" + index + "]"]: stepItem,
-            ["mapMarkers[" + index + "]"]: markerItem,
-            ["mapPoints[" + index + "]"]: pointItem,
-          })
+        // 处理获取到的出行计划信息
+        var markerIdx = 0 // 使marker的id和idx相同
+        this.data.travelPlan.forEach((item, index) => {
+          /* 添加steps */
+          var stepItem = {
+            text: item.sight.name,
+            desc: utils.formatTime(new Date(item.start_time)),
+            type: item.type,
+            idx: markerIdx,
+          }
+          this.data.steps[index] = stepItem
+          
+          if (item.type == 1) {
+            
+            /* 添加markers */
+            var markerItem = {
+              id: markerIdx++,
+              iconPath: normalIcon.iconPath,
+              width: normalIcon.width,
+              height: normalIcon.height,
+              // 坐标相关
+              longitude: item.sight.address.longitude,
+              latitude: item.sight.address.latitude,
+              customCallout: {
+                anchorX: "50rpx",  // 单位是px
+                anchorY: "300rpx",
+                display: "BYCLICK",
+                content: "test",
+              },
+              // 自定义自用字段
+              name: item.sight.name,
+              desc: item.sight.desc.length > 24 ? item.sight.desc.slice(0, 23) + "..." : item.sight.desc,
+              active: false,  // 记录是否被点击激活
+              scene_id: item.sight.id
+            }
+            this.data.mapMarkers.push(markerItem)
+
+            /* 添加points */
+            var pointItem = {
+              longitude: item.sight.address.longitude,
+              latitude: item.sight.address.latitude,
+            }
+            this.data.mapPoints.push(pointItem)
+          }
         })
+
+        this.setData({
+          mapMarkers: this.data.mapMarkers,
+          mapPoints : this.data.mapPoints,
+          steps: this.data.steps,
+        })
+        console.log("onload mapMarkers:", this.data.mapMarkers)
 
         // 添加polyline
-        var initPolyLines = [{
-          points: this.data.mapPoints,
-          color: "#00ff00", // green
-          width: 6,
-          borderColor: "#11ff11",
-          borderWidth: 2,
-        }]
-        this.setData({
-          mapPolyLines: initPolyLines
-        })
-        console.log("mapPolyLine:", this.data.mapPolyLine)
+        console.log("onload mapPolyLine:", this.data.mapPolyLines)
         
-        console.log(this.data.mapPoints)
+        console.log("onload mapPoints", this.data.mapPoints)
         mapContext.includePoints({
-          padding: [40, 40, 40, 40],
+          padding: [30,],
           points: this.data.mapPoints
         })
       },
@@ -223,7 +152,13 @@ Page({
     console.log("stepActive:", this.data.stepActive)
 
     // 激活相应marker
-    this.handleMarkerActivate(this.data.stepActive)
+    var step = this.data.steps[event.detail]
+    if (step.type === 1) {
+      this.handleMarkerActivate(step.idx)
+    } else {
+      this.deactivateAllMarkers()
+    }
+    
   },
 
   onTapDelete() {
@@ -249,10 +184,10 @@ Page({
   },
 
   onMapTap(event) {
-    if (this.data.markerTap == true) {
+    if (this.data.markerTapped == true) {
       // 过滤markertap事件
       this.setData({
-        markerTap: false
+        markerTapped: false
       })
       return
     }
@@ -275,6 +210,7 @@ Page({
   },
 
   activateMarker(markerIdx) {
+    console.log("activate: mapMarkers[" + markerIdx + "]")
     var tarMarker = "mapMarkers[" + markerIdx + "]"
     this.setData({
       [tarMarker + ".iconPath"]: activeIcon.iconPath,
@@ -283,7 +219,7 @@ Page({
       [tarMarker + ".customCallout.display"]: "ALWAYS",
       [tarMarker + ".active"]: true,
       // 设置状态：以触发markertap
-      markerTap: true,
+      markerTapped: true,
     })
   },
 
@@ -322,6 +258,7 @@ Page({
 
   onRelocateTap() {
     console.log("tap relocate")
+    this.deactivateAllMarkers()
     mapContext.includePoints({
       padding: [40, 40, 40, 40],
       points: this.data.mapPoints

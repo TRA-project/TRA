@@ -36,8 +36,16 @@
     steps="{{ steps }}"
     active="{{ stepActive }}"
     direction="vertical"
+    textSlot descSlot 
     active-color="rgba(30, 144, 255, 1.0)" 
     bind:click-step="onClickStep">
+    <view wx:for="{{steps}}" slot="text-{{index}}" wx:key="index">
+      <view wx:if="{{item.type === 1}}">{{item.text}}</view>
+      <view wx:else> {{ type2Str(item.type) }} </view>
+    </view>
+    <view wx:for="{{steps}}" slot="desc-{{index}}" wx:key="index">
+      {{item.desc}}
+    </view>
   </van-steps>
 </view>
 
@@ -47,3 +55,18 @@
     删除计划
   </button>
 </view>
+
+<wxs module="type2Str">
+function type2String(type) {
+  var text = ""
+  switch(type) {
+    case 2: text = "交通"
+      break
+    case 3: text = "住宿"
+      break
+    default: 
+  }
+  return text
+}
+module.exports = type2String
+</wxs>

@@ -4,7 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var component_1 = require("./common/component");
 var color_1 = require("./common/color");
 (0, component_1.VantComponent)({
-    classes: ['desc-class'],
+    classes: [
+      'text-class',
+      'desc-class',
+    ],
     props: {
         icon: String,
         steps: Array,
@@ -26,6 +29,14 @@ var color_1 = require("./common/color");
             value: 'checked',
         },
         inactiveIcon: String,
+        textSlot: {
+            type: Boolean,
+            value: false,
+        },
+        descSlot: {
+            type: Boolean,
+            value: false,
+        }
     },
     methods: {
         onClick: function (event) {
