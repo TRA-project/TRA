@@ -63,9 +63,7 @@
           font-weight: bolder;
           width: 80%;
           /* 文字溢出处理 */
-          white-space: nowrap;  /* 不换行 */
-          overflow: hidden;     /* 超出部分隐藏 */
-          text-overflow: ellipsis;  /* 溢出元素省略号表示 */
+          .single-line()
         }
       
         .callout-bubble-title-jmp-button {
@@ -134,25 +132,48 @@
 
   .travel-plan-step-desc {
     background-color: rgba(202, 202, 202, 0.212);
+    border-radius: 10rpx;
+
     padding: 16rpx;
     margin-top: 10rpx;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     .desc-content {
       padding: 5rpx;
+      width: 100%;
+
+      .content-addr {
+        padding: 5rpx 0rpx;
+        font-weight: bolder;
+        .single-line();
+      }
+
+      .content-desc {
+        padding: 5rpx 0rpx;
+        .single-line();
+      }
     }
 
     .desc-button {
-      height: 50rpx;
-      width: 50rpx;
+      height: 90rpx !important;
+      width: 103rpx !important;
 
       background-color: @TRA-blue;
-      border-radius: 40rpx;
-      padding: 15rpx;
-      
-      margin-right: 10rpx;
+      border-radius: 45rpx;
+
+      .flex-center();
+      padding: 10rpx;
+
+      .button-img {
+        height: 50rpx;
+        width: 50rpx;
+      }
+    }
+    .desc-button-hover {
+      box-shadow: @hover_inset_shadow;
     }
   }
 }

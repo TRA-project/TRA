@@ -68,10 +68,14 @@ Page({
         this.data.travelPlan.forEach((item, index) => {
           /* 添加steps */
           var stepItem = {
-            text: item.sight.name,
-            desc: utils.formatTime(new Date(item.start_time)),
-            type: item.type,
             idx: markerIdx,
+            type: item.type,
+            timing: utils.formatTime(new Date(item.start_time)),
+
+            sight_id: item.sight.id,
+            title: item.sight.name,
+            desc: item.sight.desc,
+            address: item.sight.address.name,
           }
           this.data.steps[index] = stepItem
           
@@ -162,7 +166,6 @@ Page({
   },
 
   onTapDelete() {
-    return
     var url = utils.server_hostname + "/api/core/" + "plan/" + this.data.travelPlanId + "/"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
     wx.request({
@@ -265,6 +268,14 @@ Page({
     mapContext.includePoints({
       padding: [40, 40, 40, 40],
       points: this.data.mapPoints
+    })
+  },
+
+  onTapNearbyHotel(event) {
+    var sight_id = event.currentTarget.dataset.sightid
+    console.log("tap nearby hotel:", sight_id)
+    wx.navigateTo({
+      url: "/pages/travelHotelRestaurant/travelHotelRestaurant?scenery_id=" + sight_id,
     })
   },
 

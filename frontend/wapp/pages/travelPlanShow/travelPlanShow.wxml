@@ -41,7 +41,7 @@
     bind:click-step="onClickStep">
     <view wx:for="{{steps}}" slot="text-{{index}}" wx:key="index"
       class="travel-plan-step-text">
-      <view wx:if="{{item.type === 1}}" class="step-text-if">{{item.text}}</view>
+      <view wx:if="{{item.type === 1}}" class="step-text-if">{{item.title}}</view>
       <view wx:else class="step-text-else"> 
         <view class="text-title">
           {{ stepType.type2Str(item.type) }} 
@@ -54,12 +54,16 @@
     <view wx:for="{{steps}}" slot="desc-{{index}}" wx:key="index"
       class="travel-plan-step-desc">
       <view class="desc-content">
-        {{item.desc}}
+        <view class="content-time">{{ item.timing }}</view>
+        <view wx:if="{{item.type === 1}}" class="content-addr">{{ item.address }}</view>
+        <view wx:if="{{item.type === 1}}" class="content-desc">{{ item.desc }}</view>
       </view>
-      <image wx:if="{{item.type === 3}}"
-        class="desc-button"
-        src="/images/nearby-hotel-reverse.png">
-      </image>
+      <button wx:if="{{item.type === 3}}" class="desc-button" 
+        hover-class="desc-button-hover"
+        bindtap="onTapNearbyHotel"
+        data-sightid="{{item.sight_id}}">
+        <image class="button-img" src="/images/nearby-hotel-reverse.png" />
+      </button>
     </view>
   </van-steps>
 </view>

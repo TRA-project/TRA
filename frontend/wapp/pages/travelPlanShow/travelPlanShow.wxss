@@ -1,5 +1,18 @@
 /* pages/travelPlanShow/travelPlanShow.wxss */
 /* for Unification of CSS */
+.single-line {
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 溢出元素省略号表示 */
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .travel-plan-header-container {
   display: flex;
   justify-content: center;
@@ -120,6 +133,7 @@
 }
 .travel-plan-display-container .travel-plan-step-desc {
   background-color: rgba(202, 202, 202, 0.212);
+  border-radius: 10rpx;
   padding: 16rpx;
   margin-top: 10rpx;
   display: flex;
@@ -128,14 +142,43 @@
 }
 .travel-plan-display-container .travel-plan-step-desc .desc-content {
   padding: 5rpx;
+  width: 100%;
+}
+.travel-plan-display-container .travel-plan-step-desc .desc-content .content-addr {
+  padding: 5rpx 0rpx;
+  font-weight: bolder;
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 溢出元素省略号表示 */
+}
+.travel-plan-display-container .travel-plan-step-desc .desc-content .content-desc {
+  padding: 5rpx 0rpx;
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 溢出元素省略号表示 */
 }
 .travel-plan-display-container .travel-plan-step-desc .desc-button {
+  height: 90rpx !important;
+  width: 103rpx !important;
+  background-color: #1e90ff;
+  border-radius: 45rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10rpx;
+}
+.travel-plan-display-container .travel-plan-step-desc .desc-button .button-img {
   height: 50rpx;
   width: 50rpx;
-  background-color: #1e90ff;
-  border-radius: 40rpx;
-  padding: 15rpx;
-  margin-right: 10rpx;
+}
+.travel-plan-display-container .travel-plan-step-desc .desc-button-hover {
+  box-shadow: 2rpx 1rpx 10rpx 2rpx rgba(71, 71, 71, 0.637) inset;
 }
 .travel-plan-footer-container {
   position: sticky;

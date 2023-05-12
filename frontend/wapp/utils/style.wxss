@@ -1,1 +1,14 @@
 /* for Unification of CSS */
+.single-line {
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 溢出元素省略号表示 */
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
