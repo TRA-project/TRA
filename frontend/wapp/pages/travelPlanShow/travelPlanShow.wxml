@@ -39,24 +39,40 @@
     textSlot descSlot 
     active-color="rgba(30, 144, 255, 1.0)" 
     bind:click-step="onClickStep">
-    <view wx:for="{{steps}}" slot="text-{{index}}" wx:key="index">
-      <view wx:if="{{item.type === 1}}">{{item.text}}</view>
-      <view wx:else> {{ type2Str(item.type) }} </view>
+    <view wx:for="{{steps}}" slot="text-{{index}}" wx:key="index"
+      class="travel-plan-step-text">
+      <view wx:if="{{item.type === 1}}" class="step-text-if">{{item.text}}</view>
+      <view wx:else class="step-text-else"> 
+        <view class="text-title">
+          {{ stepType.type2Str(item.type) }} 
+        </view>
+        <image class="text-image"
+          src="{{stepType.type2Img(item.type)}}">
+        </image>
+      </view>
     </view>
-    <view wx:for="{{steps}}" slot="desc-{{index}}" wx:key="index">
-      {{item.desc}}
+    <view wx:for="{{steps}}" slot="desc-{{index}}" wx:key="index"
+      class="travel-plan-step-desc">
+      <view class="desc-content">
+        {{item.desc}}
+      </view>
+      <image wx:if="{{item.type === 3}}"
+        class="desc-button"
+        src="/images/nearby-hotel-reverse.png">
+      </image>
     </view>
   </van-steps>
 </view>
 
 <view class="travel-plan-footer-container">
-  <button class="travel-plan-delete-button" type="warning"
+  <button class="travel-plan-delete-button" 
+    hover-class="travel-plan-delete-button-hover"
     bindtap="onTapDelete">
     删除计划
   </button>
 </view>
 
-<wxs module="type2Str">
+<wxs module="stepType">
 function type2String(type) {
   var text = ""
   switch(type) {
@@ -68,5 +84,21 @@ function type2String(type) {
   }
   return text
 }
-module.exports = type2String
+
+function type2Image(type) {
+  var img_path = ""
+  switch(type) {
+    case 2: img_path = "/images/traffic.png"
+      break
+    case 3: img_path = "/images/rest.png"
+      break
+    default: 
+  }
+  return img_path
+}
+
+module.exports = {
+  type2Str: type2String,
+  type2Img: type2Image,
+}
 </wxs>

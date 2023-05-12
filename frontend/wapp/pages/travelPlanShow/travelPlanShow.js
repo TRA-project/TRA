@@ -64,7 +64,7 @@ Page({
         console.log("plan_items:", this.data.travelPlan)
 
         // 处理获取到的出行计划信息
-        var markerIdx = 0 // 使marker的id和idx相同
+        var markerIdx = 0
         this.data.travelPlan.forEach((item, index) => {
           /* 添加steps */
           var stepItem = {
@@ -76,10 +76,9 @@ Page({
           this.data.steps[index] = stepItem
           
           if (item.type == 1) {
-            
             /* 添加markers */
             var markerItem = {
-              id: markerIdx++,
+              id: markerIdx++,  // id和mapMarkers的index一致
               iconPath: normalIcon.iconPath,
               width: normalIcon.width,
               height: normalIcon.height,
@@ -87,8 +86,8 @@ Page({
               longitude: item.sight.address.longitude,
               latitude: item.sight.address.latitude,
               customCallout: {
-                anchorX: "50rpx",  // 单位是px
-                anchorY: "300rpx",
+                anchorX: 25,  // 单位是px
+                anchorY: 150,
                 display: "BYCLICK",
                 content: "test",
               },
@@ -96,7 +95,8 @@ Page({
               name: item.sight.name,
               desc: item.sight.desc.length > 24 ? item.sight.desc.slice(0, 23) + "..." : item.sight.desc,
               active: false,  // 记录是否被点击激活
-              scene_id: item.sight.id
+              scene_id: item.sight.id,
+              step_idx: index,
             }
             this.data.mapMarkers.push(markerItem)
 
@@ -162,6 +162,7 @@ Page({
   },
 
   onTapDelete() {
+    return
     var url = utils.server_hostname + "/api/core/" + "plan/" + this.data.travelPlanId + "/"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
     wx.request({
@@ -211,7 +212,7 @@ Page({
 
   activateMarker(markerIdx) {
     console.log("activate: mapMarkers[" + markerIdx + "]")
-    var tarMarker = "mapMarkers[" + markerIdx + "]"
+    var tarMarker = "mapMarkers[" + markerIdx + "]" 
     this.setData({
       [tarMarker + ".iconPath"]: activeIcon.iconPath,
       [tarMarker + ".width"]: activeIcon.width,
@@ -220,6 +221,8 @@ Page({
       [tarMarker + ".active"]: true,
       // 设置状态：以触发markertap
       markerTapped: true,
+      // steps激活
+      stepActive: this.data.mapMarkers[markerIdx].step_idx,
     })
   },
 

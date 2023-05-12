@@ -1,10 +1,11 @@
 /* pages/travelPlanShow/travelPlanShow.wxss */
+/* for Unification of CSS */
 .travel-plan-header-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 80rpx;
-  background-color: #1e8fff;
+  background-color: #1e90ff;
   /* 吸顶 */
   position: sticky;
   top: 0rpx;
@@ -22,9 +23,9 @@
 }
 .travel-plan-map-container .tencent-map {
   width: 100%;
-  height: 600rpx;
+  height: 500rpx;
 }
-.map-callout-bubble {
+.travel-plan-map-container .tencent-map .map-callout-bubble {
   width: 400rpx;
   height: 150rpx;
   /* max-height: 200rpx; */
@@ -33,7 +34,7 @@
   border-radius: 20rpx;
   box-shadow: 6rpx -4rpx 15rpx 1rpx rgba(71, 71, 71, 0.637);
 }
-.map-callout-bubble::before {
+.travel-plan-map-container .tencent-map .map-callout-bubble::before {
   /* 填充 */
   content: "";
   /* 位置 */
@@ -47,13 +48,13 @@
   /* 效果 */
   filter: drop-shadow(6rpx -10rpx 4rpx rgba(71, 71, 71, 0.541));
 }
-.callout-bubble-title {
+.travel-plan-map-container .tencent-map .map-callout-bubble .callout-bubble-title {
   padding: 10rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.callout-bubble-title-text {
+.travel-plan-map-container .tencent-map .map-callout-bubble .callout-bubble-title .callout-bubble-title-text {
   font-weight: bolder;
   width: 80%;
   /* 文字溢出处理 */
@@ -64,12 +65,12 @@
   text-overflow: ellipsis;
   /* 溢出元素省略号表示 */
 }
-.callout-bubble-title-jmp-button {
+.travel-plan-map-container .tencent-map .map-callout-bubble .callout-bubble-title .callout-bubble-title-jmp-button {
   width: 30rpx;
   height: 30rpx;
   padding-right: 15rpx;
 }
-.callout-bubble-desc {
+.travel-plan-map-container .tencent-map .map-callout-bubble .callout-bubble-desc {
   padding: 10rpx;
   white-space: normal;
   /* 文字溢出处理 */
@@ -80,11 +81,12 @@
   /* 行数 */
   -webkit-box-orient: vertical;
 }
-.map-tool-button {
+.travel-plan-map-container .tencent-map .map-tool-button {
   width: 50rpx;
   height: 50rpx;
   /* 位置 */
-  position: relative;
+  position: sticky;
+  z-index: 11;
   top: calc(85%);
   left: calc(88%);
   /* 效果 */
@@ -92,13 +94,66 @@
   border-radius: 30rpx;
   filter: drop-shadow(5rpx -5rpx 3rpx rgba(71, 71, 71, 0.541));
 }
-.map-tool-button:active {
+.travel-plan-map-container .tencent-map .map-tool-button:active {
   filter: drop-shadow(3rpx -3rpx 4rpx rgba(71, 71, 71, 0.541));
 }
+.travel-plan-display-container {
+  position: sticky;
+  top: 580rpx;
+}
+.travel-plan-display-container .travel-plan-step-text {
+  font-size: 32rpx;
+  font-weight: bolder;
+  margin-bottom: 6rpx;
+}
+.travel-plan-display-container .travel-plan-step-text .step-text-else {
+  display: flex;
+  justify-content: baseline;
+}
+.travel-plan-display-container .travel-plan-step-text .step-text-else .text-title {
+  margin-right: 6rpx;
+}
+.travel-plan-display-container .travel-plan-step-text .step-text-else .text-image {
+  height: 36rpx;
+  width: 36rpx;
+  margin-left: 6rpx;
+}
+.travel-plan-display-container .travel-plan-step-desc {
+  background-color: rgba(202, 202, 202, 0.212);
+  padding: 16rpx;
+  margin-top: 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.travel-plan-display-container .travel-plan-step-desc .desc-content {
+  padding: 5rpx;
+}
+.travel-plan-display-container .travel-plan-step-desc .desc-button {
+  height: 50rpx;
+  width: 50rpx;
+  background-color: #1e90ff;
+  border-radius: 40rpx;
+  padding: 15rpx;
+  margin-right: 10rpx;
+}
 .travel-plan-footer-container {
+  position: sticky;
+  bottom: 30rpx;
   margin-top: 30rpx;
   margin-bottom: 20rpx;
+  display: flex;
+  justify-content: center;
 }
 .travel-plan-footer-container .travel-plan-delete-button {
-  color: red;
+  margin: 5rpx 10rpx;
+  padding: 20rpx 10rpx;
+  width: 250rpx !important;
+  border-radius: 40rpx;
+  background-color: red !important;
+  color: white;
+  box-shadow: 6rpx 8rpx 12rpx 3rpx rgba(71, 71, 71, 0.637);
+}
+.travel-plan-footer-container .travel-plan-delete-button-hover {
+  box-shadow: 4rpx 4rpx 8rpx 3rpx #5e5e5e;
 }

@@ -61,6 +61,7 @@ const mapPolyLines = [
     points: [
       {longitude: 116.46, latitude:39.92},
       {longitude: 116.45, latitude:39.91},
+      {longitude: 116.40, latitude:39.90},
     ],
     color: "#00ff00", // green
     width: 6,
