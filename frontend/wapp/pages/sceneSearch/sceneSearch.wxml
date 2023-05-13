@@ -3,8 +3,11 @@
 <!-- 搜索框 -->
 <view class="search-box">
   <my-search-bar class="scene-search-bar"
-    confirmTargetUrl="/pages/sceneList/sceneList" keyword="{{myInput}}"
-    bind:syncinput="onSyncInput" bind:syncconfirm="onSyncConfirm"></my-search-bar>
+    keyword="{{myInput}}"
+    autofocus="true"
+    bind:syncinput="onSyncInput"
+    bind:syncconfirm="onSyncConfirm">
+  </my-search-bar>
 </view>
 
 <!-- 历史记录 -->

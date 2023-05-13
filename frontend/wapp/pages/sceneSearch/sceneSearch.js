@@ -52,6 +52,8 @@ Page({
   // 同步子组件触发bindConfirm，将keyword加入历史记录
   onSyncConfirm(event) {
     console.log("father page: receive Confirm from")
+
+    /* 处理历史记录 */
     var refreshHistoryList = this.data.historyList
     var lastKeyword = event.detail.value
     for (var i = 0; i < refreshHistoryList.length; ++i) {
@@ -66,6 +68,12 @@ Page({
     })
     // 同步到全局
     app.globalData.historyList = this.data.historyList
+
+    /* 处理confirm操作（应由父组件完成） */
+    var myArgs = "?keyword=" + this.data.myInput + "&usage=search"
+    wx.navigateTo({
+      url: "/pages/sceneList/sceneList" + myArgs, 
+    })
   },
   
   /* 填入向子组件的keyword填入history值，不触发confirm */

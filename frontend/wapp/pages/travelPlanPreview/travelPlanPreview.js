@@ -4,11 +4,13 @@ const utils = require("../../utils/util.js");
 const keyMap = {
   "area": "地区",
   "city": "地区",
-  "tag" : "关键词",
+  "tag" : "预期体验",
   "cost": "预期开销",
   "timeStart": "开始时间",
   "timeEnd": "结束时间"
 }
+
+let mapContext
 
 Page({
 
@@ -17,7 +19,10 @@ Page({
    */
   data: {
     customArg: {},
-    planName: "计划",
+    planName: "",
+    titleLength: 0,
+    titleFontSize: 36,
+    titleBlurred: true,
 
     mapLongitude: 116.46,
     mapLatitude: 39.92,
@@ -76,6 +81,11 @@ Page({
         },
       ],
     ],
+
+    afterReselect: false,
+    formerSceneryIdx: -1,
+    formerSceneryId : 0,
+    reselectSceneries: [],
   },
 
   /**
@@ -133,6 +143,8 @@ Page({
         console.log("latitude:" , this.data.mapLatitude)
         console.log("marker longitude:" , this.data.mapMarkers[0].longitude)
         console.log("marker latitude:" , this.data.mapMarkers[0].latitude)
+
+        mapContext = wx.createMapContext("preview-map", this)
         this.upgradeMarkers()
       }
     })
@@ -150,7 +162,31 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    mapContext = wx.createMapContext("preview-map", this)
+    if (this.data.afterReselect) {
+      console.log("reselect sceneries:", this.data.reselectSceneries)
+      
+      this.data.afterReselect = false
+    }
+  },
 
+  onTitleInput(event) {
+    console.log("title input:", event.detail.value)
+    this.setData({
+      titleLength: event.detail.value.length
+    })
+  },
+
+  onTitleFocus() {
+    this.setData({
+      titleBlurred: false
+    })
+  },
+
+  onTitleBlur() {
+    this.setData({
+      titleBlurred: true
+    })
   },
 
   onTabChange(event) {
@@ -173,6 +209,14 @@ Page({
   },
 
   onConfirmPlan(event) {
+    // 过滤计划名为空的行为
+    if (this.data.planName == "") {
+      wx.showToast({
+        title: "请命名该计划,计划名不能为空",
+        icon: "none",
+      })
+      return
+    }
     // 生成formData
     var spotList = []
     var selectPlan = this.data.travelPlansList[this.data.plansActive]
@@ -214,7 +258,6 @@ Page({
 
   upgradeMarkers() {
     console.log("update markers and points")
-    let mapContext = wx.createMapContext("preview-map", this)
 
     // 利用travel plan添加markers和points
     this.data.travelPlansList[this.data.plansActive].forEach((item, index) => {
@@ -247,11 +290,30 @@ Page({
     console.log("father page: receive new tarList")
     console.log(event)
     var tarPlanNo = event.detail.listNo
+    // 同步travelPlan
     this.setData({
       ["travelPlansList[" + tarPlanNo + "]"]: event.detail.newList
     })
-
+    // 同步Points
+    this.upgradeMarkers()
     console.log("after sync, travelPlansList:", this.data.travelPlansList)
+  },
+
+  onSyncReselect(event) {
+    console.log("father page: receive command reselect")
+    console.log(event)
+    
+    // 记录被点击的景点 formerScenery 信息
+    this.setData({
+      formerSceneryId : event.detail.sceneId,
+      formerSceneryIdx: event.detail.sceneIdx,
+    })
+    
+    // 跳转复用sceneList
+    var args = "?keyword=" + event.detail.sceneName + "&usage=reselect"
+      wx.navigateTo({
+        url: "/pages/sceneList/sceneList" + args,
+      })
   },
 
   /**
