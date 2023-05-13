@@ -27,7 +27,10 @@
         </cover-view>
       </cover-view>
     </cover-view>
-    <cover-image class="map-tool-button" src="/images/relocate.png" bindtap="onRelocateTap" />
+    <!-- view上的伪类选择器:active真机确实能生效，cover-view/cover-image便不行 -->
+    <view class="map-tool-button">
+      <image style="width: 50rpx; height: 50rpx;" src="/images/relocate.png" bindtap="onRelocateTap" />
+    </view>
   </map>
 </view>
 
@@ -54,7 +57,11 @@
     <view wx:for="{{steps}}" slot="desc-{{index}}" wx:key="index"
       class="travel-plan-step-desc">
       <view class="desc-content">
-        <view class="content-time">{{ item.timing }}</view>
+        <view class="content-time">{{ item.start_time }}</view>
+        <view wx:if="{{item.type === 2}}" class="content-time">
+          <view style="padding: 10rpx 0rpx;"><text space="ensp">       ↓</text></view>
+          <view>{{ item.end_time }}</view>
+        </view>
         <view wx:if="{{item.type === 1}}" class="content-addr">{{ item.address }}</view>
         <view wx:if="{{item.type === 1}}" class="content-desc">{{ item.desc }}</view>
       </view>

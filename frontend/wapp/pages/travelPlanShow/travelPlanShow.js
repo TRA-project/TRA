@@ -70,7 +70,8 @@ Page({
           var stepItem = {
             idx: markerIdx,
             type: item.type,
-            timing: utils.formatTime(new Date(item.start_time)),
+            start_time: utils.formatTime(new Date(item.start_time)),
+            end_time  : utils.formatTime(new Date(item.end_time)),
 
             sight_id: item.sight.id,
             title: item.sight.name,
@@ -121,6 +122,16 @@ Page({
         console.log("onload mapMarkers:", this.data.mapMarkers)
 
         // 添加polyline
+        var initPolyLines = [{
+          points: this.data.mapPoints,
+          color: "#00ff00", // green
+          width: 6,
+          borderColor: "#11ff11",
+          borderWidth: 2,
+        }]
+        this.setData({
+          mapPolyLines: initPolyLines
+        })
         console.log("onload mapPolyLine:", this.data.mapPolyLines)
         
         console.log("onload mapPoints", this.data.mapPoints)

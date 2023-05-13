@@ -98,7 +98,7 @@
   width: 50rpx;
   height: 50rpx;
   /* 位置 */
-  position: sticky;
+  position: absolute;
   z-index: 11;
   top: calc(85%);
   left: calc(88%);
@@ -164,8 +164,8 @@
   /* 溢出元素省略号表示 */
 }
 .travel-plan-display-container .travel-plan-step-desc .desc-button {
-  height: 90rpx !important;
-  width: 103rpx !important;
+  height: 80rpx !important;
+  width: 93rpx !important;
   background-color: #1e90ff;
   border-radius: 45rpx;
   display: flex;
