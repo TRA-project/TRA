@@ -1,6 +1,6 @@
 <view class="bar">
   <view style="padding: 10rpx;">
-    <text style="font-size: 36rpx;">已选 {{num}} 个</text>
+    <text style="font-size: 36rpx;" wx:if="{{showNum}}">已选 {{num}} 个</text>
   </view>
   <view>
     <van-button round type="info" size="normal"
