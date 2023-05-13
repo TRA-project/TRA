@@ -1,12 +1,5 @@
 <!--pages/travelHotelRestaurant/travelHotelRestaurant.wxml-->
 <view class="page_wrapper">
-  <view class="img_wrapper">
-    <image class="topImage" src="/images/finishPlan.png"></image>
-  </view>
-  <view class="top">
-    <van-icon name="checked" color="green" size="48rpx" class="checkedIcon" />
-    <view class="title">出行计划已生成！</view>
-  </view>
   <van-divider
     contentPosition="center"
     customStyle="color: #ffa502; border-color: #ffa502; font-size: 18px;">
@@ -22,6 +15,7 @@
           distance="{{item.distance}}"
           type="hotel"
           uid="{{item.uid}}"
+          place="{{place}}"
           ></hotelCard>
       </view>
     </van-tab>
@@ -34,10 +28,13 @@
           distance="{{item.distance}}"
           type="restaurant"
           uid="{{item.uid}}"
+          place="{{place}}"
           ></hotelCard>
       </view>
     </van-tab>
   </van-tabs>
   <view style="height: 120rpx;"></view>
-  <statisticBar num="{{numSelected}}" bindclick="onSave"></statisticBar>
+  <statisticBar showNum="{{false}}" bindclick="onSave"></statisticBar>
 </view>
+
+<van-toast id="van-toast" />
