@@ -17,7 +17,7 @@ Page({
     mapLatitude: 39.92,
     mapMarkers: [],
     mapPoints: [],
-    mapPolyLines: defaultData.mapPolyLines,
+    mapPolylines: defaultData.mapPolylines,
     markerTapped: false,  // 用来过滤markertap时连带触发的maptap
 
     travelPlanId: 0,
@@ -122,17 +122,17 @@ Page({
         console.log("onload mapMarkers:", this.data.mapMarkers)
 
         // 添加polyline
-        var initPolyLines = [{
+        var initPolylines = [{
           points: this.data.mapPoints,
-          color: "#00ff00", // green
-          width: 6,
-          borderColor: "#11ff11",
+          color: "#00FF00", // green
+          width: 3,
+          borderColor: "#228B22",
           borderWidth: 2,
         }]
         this.setData({
-          mapPolyLines: initPolyLines
+          mapPolylines: initPolylines
         })
-        console.log("onload mapPolyLine:", this.data.mapPolyLines)
+        console.log("onload mapPolyline:", this.data.mapPolylines)
         
         console.log("onload mapPoints", this.data.mapPoints)
         mapContext.includePoints({

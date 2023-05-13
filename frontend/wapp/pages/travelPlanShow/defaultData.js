@@ -35,15 +35,15 @@ const travelPlan = [
 ]
 
 const activeIcon = {
-  iconPath: "/images/locate-marker-focus-double.png",
+  iconPath: "/images/locate-marker-focus.png",
   width: "49.5rpx",
-  height: "144rpx",
+  height: "72rpx",
 }
 
 const normalIcon = {
-  iconPath: "/images/locate-marker-double.png",
+  iconPath: "/images/locate-marker.png",
   width: "42rpx",
-  height: "120rpx",
+  height: "60rpx",
 }
 
 const mapMarkers = [
@@ -56,7 +56,7 @@ const mapMarkers = [
   },
 ]
 
-const mapPolyLines = [
+const mapPolylines = [
   {
     points: [
       {longitude: 116.46, latitude:39.92},
@@ -64,8 +64,8 @@ const mapPolyLines = [
       {longitude: 116.40, latitude:39.90},
     ],
     color: "#00ff00", // green
-    width: 6,
-    borderColor: "#11ff11",
+    width: 3,
+    borderColor: "#228B22",
     borderWidth: 2,
   },
 ]
@@ -90,6 +90,6 @@ module.exports = {
   activeIcon,
   normalIcon,
   mapMarkers,
-  mapPolyLines,
+  mapPolylines,
   steps,
 }
