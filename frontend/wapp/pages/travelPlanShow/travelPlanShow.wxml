@@ -52,16 +52,19 @@
         <image class="text-image"
           src="{{stepType.type2Img(item.type)}}">
         </image>
+        <view wx:if="{{item.type === 2}}" class="text-timing">
+          {{ item.start_time }} → {{ time.brief(item.end_time) }}
+        </view>
       </view>
     </view>
     <view wx:for="{{steps}}" slot="desc-{{index}}" wx:key="index"
-      class="travel-plan-step-desc">
+      class="travel-plan-step-desc" wx:if="{{item.type !== 2}}">
       <view class="desc-content">
         <view class="content-time">{{ item.start_time }}</view>
-        <view wx:if="{{item.type === 2}}" class="content-time">
+        <!-- <view wx:if="{{item.type === 2}}" class="content-time">
           <view style="padding: 10rpx 0rpx;"><text space="ensp">       ↓</text></view>
           <view>{{ item.end_time }}</view>
-        </view>
+        </view> -->
         <view wx:if="{{item.type === 1}}" class="content-addr">{{ item.address }}</view>
         <view wx:if="{{item.type === 1}}" class="content-desc">{{ item.desc }}</view>
       </view>
@@ -111,5 +114,15 @@ function type2Image(type) {
 module.exports = {
   type2Str: type2String,
   type2Img: type2Image,
+}
+</wxs>
+
+<wxs module="time">
+function briefTime(time) {
+  return time.slice(11)
+}
+
+module.exports = {
+  brief: briefTime,
 }
 </wxs>

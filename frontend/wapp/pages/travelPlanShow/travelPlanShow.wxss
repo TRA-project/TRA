@@ -113,6 +113,7 @@
 .travel-plan-display-container {
   position: sticky;
   top: 580rpx;
+  padding-bottom: 150rpx;
 }
 .travel-plan-display-container .travel-plan-step-text {
   font-size: 32rpx;
@@ -129,7 +130,12 @@
 .travel-plan-display-container .travel-plan-step-text .step-text-else .text-image {
   height: 36rpx;
   width: 36rpx;
+  margin: 0rpx 6rpx;
+}
+.travel-plan-display-container .travel-plan-step-text .step-text-else .text-timing {
   margin-left: 6rpx;
+  font-weight: normal;
+  font-size: small;
 }
 .travel-plan-display-container .travel-plan-step-desc {
   background-color: rgba(202, 202, 202, 0.212);

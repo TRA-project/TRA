@@ -2,6 +2,12 @@
 
 const utils = require("../../utils/util")
 const defaultData = require("./defaultData") 
+const privacy = require("../../utils/privacy")
+const QQMapWX = require("../../miniprogram_npm/qqmap-wx-jssdk1.2/qqmap-wx-jssdk")
+
+var qqmapsdk = new QQMapWX({
+  key: privacy.tencentMapAk
+})
 
 const activeIcon = defaultData.activeIcon
 const normalIcon = defaultData.normalIcon
@@ -70,8 +76,8 @@ Page({
           var stepItem = {
             idx: markerIdx,
             type: item.type,
-            start_time: utils.formatTime(new Date(item.start_time)),
-            end_time  : utils.formatTime(new Date(item.end_time)),
+            start_time: utils.formatTime(new Date(item.start_time)).slice(0, -3),
+            end_time  : utils.formatTime(new Date(item.end_time)).slice(0, -3),
 
             sight_id: item.sight.id,
             title: item.sight.name,
@@ -122,16 +128,7 @@ Page({
         console.log("onload mapMarkers:", this.data.mapMarkers)
 
         // 添加polyline
-        var initPolylines = [{
-          points: this.data.mapPoints,
-          color: "#00FF00", // green
-          width: 3,
-          borderColor: "#228B22",
-          borderWidth: 2,
-        }]
-        this.setData({
-          mapPolylines: initPolylines
-        })
+        this.drawAllPolylines()
         console.log("onload mapPolyline:", this.data.mapPolylines)
         
         console.log("onload mapPoints", this.data.mapPoints)
@@ -143,6 +140,76 @@ Page({
       fail: (err) => {
         console.log(err)
       }
+    })
+  },
+
+  getPolyline(from, to) {
+    var promise = new Promise((resolve, reject) => {
+      console.log("GET: /ws/direction/v1/driving/ API one polyline")
+      qqmapsdk.direction({
+        mode: "driving",
+        from: from,
+        to: to,
+        success: (res) => {
+          console.log(res)
+          var ret = res
+          var coors = ret.result.routes[0].polyline
+          var pl = []
+          //坐标解压（返回的点串坐标，通过前向差分进行压缩）
+          var kr = 1000000  
+          for (var i = 2; i < coors.length; ++i) {
+            coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
+          }
+          //将解压后的坐标放入点串数组pl中
+          for (var i = 0; i < coors.length; i += 2) {
+            pl.push({ latitude: coors[i], longitude: coors[i + 1] })
+          }
+          console.log(pl)
+          resolve(pl)
+        },
+        fail: (err) => {
+          console.log(err)
+          reject("request route failed")
+        }
+      })
+    })
+    return promise
+  },
+
+  drawAllPolylines() {
+    var promiseArr = []
+    var lineNumbers = this.data.mapPoints.length - 1
+    var points = this.data.mapPoints
+    for (var i = 0; i < lineNumbers; ++i) {
+      promiseArr.push(this.getPolyline(points[i], points[i+1]))
+    }
+    Promise.all(promiseArr).then(items => {
+      console.log("Promise all:", items)
+      var initPolylines = []
+      items.forEach(item => {
+        initPolylines.push({
+          points: item,
+          color: "#00FF00",
+          width: 3,
+          borderColor: "#228B22",
+          borderWidth: 2,
+        })
+      })
+      this.setData({
+        mapPolylines: initPolylines
+      })
+    }).catch(err => {
+      console.log("Promise error:", err)
+      var initPolylines = [{
+        points: this.data.mapPoints,
+        color: "#00FF00", // green
+        width: 3,
+        borderColor: "#228B22",
+        borderWidth: 2,
+      }]
+      this.setData({
+        mapPolylines: initPolylines
+      })
     })
   },
 
