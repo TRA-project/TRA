@@ -11,7 +11,7 @@ Page({
         // 以下是景点方面的数据
         id: 0,
         curImage: 0,
-        images: ["../../images/guozhibeiyuan.jpg", "../../images/logo.png"],
+        images: [util.server_hostname + "/media/guozhibeiyuan.jpg", "../../images/logo.png"],
         name: "国家植物馆北园",
         remark: "4.8",
         intro: "国家植物园包括南园（中国科学院植物研究所）和北园（北京市植物园）两个园区。南园建有15个特色专类园，拥有展览温室、康熙御碑等人文景观和菩提树等国礼植物，有亚洲最大的植物标本馆、中国古植物馆等 ...",
