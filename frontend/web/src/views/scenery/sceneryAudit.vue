@@ -12,8 +12,8 @@
             <a-table :row-selection="rowSelection" :columns="columns" :data-source="pane.data" :pagination="false">
               <a slot="id" slot-scope="text, record" @click="addSingle(record)">{{ text}}</a>
               <template slot="action" slot-scope="record" >
-                <a-button style="margin-right:10px" size="small" type="primary" @click="approveSingle(record.id)">批准</a-button>
-                <a-button size="small" @click="rejectSingle(record.id)">不批准</a-button>
+                <a-button style="margin-right:10px" size="small" type="primary" @click="approveRequest(record.id)">批准</a-button>
+                <a-button size="small" @click="rejectRequest(record.id)">不批准</a-button>
               </template>
             </a-table>
             <br>
@@ -155,8 +155,8 @@ export default {
       this.spinning = true;
       this.$axios({
         method: "get",
-        // url: "api/admin/position/",
-        url: "api/admin/sights/audit/",
+        url: "api/admin/position/",
+        // url: "api/admin/sights/audit/",
         params: p,
         headers: {
           // "token-auth": localStorage.getItem('Authorization')
@@ -184,7 +184,7 @@ export default {
     },
     approveRequest(requestId) {
       this.$axios({
-        method: "delete",
+        method: "post",
         url: "api/admin/sights/audit/approve/" + requestId + "/",
         params: {},
         headers: {
@@ -210,7 +210,7 @@ export default {
     },
     rejectRequest(requestId) {
       this.$axios({
-        method: "delete",
+        method: "post",
         url: "api/admin/sights/audit/reject/" + requestId + "/",
         params: {},
         headers: {
@@ -288,35 +288,17 @@ export default {
       }
       if (flag === 1) return
 
-      // Note: 这里调用接口获取景点的详细信息，在新的tab中展示
-      let sceneryId = item.id
-      this.$axios({
-        method: "get",
-        url: "api/admin/sights/" + sceneryId + "/",
-        params: {},
-        headers: {
-          "token-auth": localStorage.getItem('Authorization')
-        },
-        data: {},
-      }).then((res) => {
-        console.log(`getScenery ${sceneryId}`, res);
+      // data就直接是景点的数据了
+      // 加入key是为了去重
+      panes.push({
+        title: item.name,
+        data: item,
+        id: item.id,
+        key: item.key
+      })
 
-        // data就直接是景点的数据了
-        // 加入key是为了去重
-        panes.push({
-          title: item.name,
-          data: res.data,
-          id: item.id,
-          key: item.key
-        })
-
-        this.activeKey = item.key;
-        this.panes = panes;
-      }).catch((error) => {
-        if (error.response.status === 403) {
-          this.visible = true;
-        }
-      });
+      this.activeKey = item.key;
+      this.panes = panes;
     },
 
     // 批量查看景点的信息
