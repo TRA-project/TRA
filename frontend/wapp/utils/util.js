@@ -1,16 +1,18 @@
 const server_hostname = {
   //url: "http://114.116.194.214"
   // url:"http://114.116.53.144"
-  // url:"http://10.128.54.139:8000"  // zyc   10.193.185.225:8000
-  // url:"http://10.192.137.194:8000"  // sy
-  // url: "http://10.128.55.86:8000" // xrb
-  url: "https://tratu1.2022martu1.cn"
-  // url: "http://8.130.65.210:80"
+  // url:"http://10.128.54.139:8000"   // zyc ethernet  
+  // url: "http://10.193.185.225:8000" // zyc wifi
+  // url:"http://10.192.137.194:8000"  // sy wifi
+  // url: "http://10.128.55.86:8000"   // xrb ethernet
+  url: "https://tratu1.2022martu1.cn"  // huaweiyun
+  // url: "http://8.130.65.210:80"     // aliyun
 }
 // 测试账号：test， 密码：12345678
 
 // 日程通知的订阅信息id
 const plan_notification_id = "enb7Qohri1KEzMV8pLafG0jCGC4oqf08uAKGc8yomnI";
+const txMapApiKey = "2OUBZ-ZCMWI-VGDGR-U4DFT-S5L2T-Y2FMG";
 const baiduMapAk = "oHF2ZD7VtDWqGW4fsPiPbDCxU6fGU84E"; // "4n9FbMFLfdU77lVEEtWBoFk7E3oRIEQx";
 
 const formatTime = date => {
@@ -295,6 +297,19 @@ module.exports = {
         })
       }
     })
+  },
+
+  // 获取两地之间的距离
+  GetDistance: function (lat1, lng1, lat2, lng2){
+    var radLat1 = lat1*Math.PI / 180.0;
+    var radLat2 = lat2*Math.PI / 180.0;
+    var a = radLat1 - radLat2;
+    var  b = lng1*Math.PI / 180.0 - lng2*Math.PI / 180.0;
+    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +
+    Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));
+    s = s *6378.137 ;// EARTH_RADIUS;
+    s = Math.round(s * 10000) / 10000;
+    return s;
   },
 
   /*函数节流*/

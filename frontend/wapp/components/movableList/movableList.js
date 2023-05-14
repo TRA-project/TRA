@@ -29,6 +29,8 @@ Component({
    * 组件的初始数据
    */
   data: {
+    server_imagename: utils.server_hostname,
+
     moveDisabled: true,
     statusLongpress: false,  /* 是否在longpress状态，用于在touchend中过滤短按结束的情况 */
     moveId: 0, /* 当前移动的代码 */
@@ -45,13 +47,13 @@ Component({
   methods: {
     drawList() {
       // 初始化位置；根据序列重新分配y的位置
-      const tarListWithPosition = this.properties.tarList.map((item, index) => {
-        item.y = (this.properties.itemMarginTop + this.properties.itemHeight) * index
-        return item
+      this.properties.tarList.map((item, index) => {
+        var newY = (this.properties.itemMarginTop + this.properties.itemHeight) * index
+        this.setData({
+          ["tarList[" + index + "].y"]: newY
+        })
       })
-      this.setData({
-        tarList: tarListWithPosition
-      })
+
       //console.log("draw list:", JSON.stringify(this.properties.tarList))
       // 同步到父页面
       this.triggerEvent("synctarlistchange", {
@@ -150,14 +152,18 @@ Component({
       this.drawList()
     },
     
-    // 权益之计，组件耦合度太太太高了
+    // 查看 + reselect
     viewSceneDetail(event) {
-      console.log("tabView:", event)
-      var idx = event.currentTarget.dataset.moveid
-      var planId = this.data.tarList[idx].id
-      wx.navigateTo({
-        url: "/pages/sceneryShow/sceneryShow?scenery_id=" + planId,
+      console.log("tabView and reselect:", event)
+      var idx = event.currentTarget.dataset.moveid          // 在tarList中的index
+      var sceneName = event.currentTarget.dataset.movename  // scenery name
+      var sceneId = this.data.tarList[idx].id               // scenery id
+      this.triggerEvent("syncreselect", {
+        sceneId  : sceneId,
+        sceneName: sceneName,
+        sceneIdx : idx
       })
+      
     },
 
     endMoveAndReorderList() {

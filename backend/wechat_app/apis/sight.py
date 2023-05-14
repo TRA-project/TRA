@@ -4,28 +4,53 @@
 # @File    : sight.py
 # @Software: PyCharm 
 # @Comment :
+import json
+
 import csv
 import os
 
 from django.db.models import Q
 from django.http import QueryDict
 from rest_framework.decorators import action
-from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin
+from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, UpdateModelMixin
 from rest_framework.viewsets import GenericViewSet
 
 from backend import settings
 from utility.models import Comment, Message, AppUser
-from utility.models.sight import Sight, SightUpdateRequest
+from utility.models.sight import Sight
 from utils import permission, conversion
 from utils.api_tools import save_log
 from utils.response import *
 from ..serializers import CommentSerializer
-from ..serializers.sight import SightSerializer, SightBriefSerializer, SightDetailedSerializer
+from ..serializers.feedback import FeedbackSerializer
+from ..serializers.images import ImageSerializer
+from ..serializers.sight import (
+    SightSerializer,
+    SightBriefSerializer,
+    SightDetailedSerializer
+)
 import numpy as np
-from django.shortcuts import render, redirect
+
+def _feedback(request, *args, **kwargs):
+    user_id = permission.user_check(request)
+    if user_id <= 0:
+        return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+    user = AppUser.objects.filter(id=user_id).first()
+    if not user:
+        return error_response(Error.INVALID_USER, 'Invalid user.', status=status.HTTP_400_BAD_REQUEST)
+
+    # 类型定义见constants feedback部分
+    data = {'content': json.dumps(request.data), 'owner': user_id,
+            'type': 1 if request.method == 'POST' else 2 if request.method == 'PUT' else 0}
+
+    serializer = FeedbackSerializer(data=data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+
+    return Response(serializer.data)
 
 
-class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
+class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateModelMixin):
     queryset = Sight.objects.all()
     serializer_class = SightDetailedSerializer
 
@@ -103,11 +128,28 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         user_id = permission.user_check(request)
+        if user_id <= 0:
+            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
         user = AppUser.objects.filter(id=user_id).first()
+        if not user:
+            return error_response(Error.INVALID_USER, 'Invalid user.', status=status.HTTP_400_BAD_REQUEST)
         collected = user.collections_sight.contains(instance)
         data = dict(serializer.data)
         data['collected'] = collected
         return Response(data)
+
+    @action(methods=['POST'], detail=True, url_path='upload_image')
+    def upload_image(self, request, *args, **kwargs):
+        instance: Sight = self.get_object()
+        data = instance.images.create(image=request.data.get('image'))
+        image_ser = ImageSerializer(data)
+        return Response(image_ser.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        return _feedback(request)
+
+    def create(self, request, *args, **kwargs):
+        return _feedback(request)
 
     @action(methods=['GET'], detail=False, url_path='recommend')
     def recommend(self, request, *args, **kwargs):
@@ -162,12 +204,3 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
     @action(methods=['GET'], detail=False, url_path='tags')
     def tags_retrieve(self, request, *args, **kwargs):
         return Response(settings.TAGS)
-
-    @action(methods=['POST'], detail=False, url_path='update_request')
-    def sight_update(self, request, *args, **kwargs):
-        user_id = permission.user_check(request)
-        user = AppUser.objects.filter(id=1).first()  # TODO: use real user_id instead
-        body = request.body.decode('utf-8')
-        request = SightUpdateRequest(user=user, update_request=body)
-        request.save()
-        return Response("您成功发送了修改申请")  # TODO: replace with real status

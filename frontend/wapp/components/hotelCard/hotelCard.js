@@ -25,6 +25,16 @@ Component({
     type: {
       type: String,
       value: "hotel"
+    },
+    checkable: {
+      // 标明此卡片是否可以选中
+      type: Boolean,
+      value: false
+    },
+    // 标明此卡片的酒店或美食距离某个地方的位置
+    place: {
+      type: String,
+      value: "您"
     }
   },
 

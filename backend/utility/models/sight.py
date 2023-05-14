@@ -6,8 +6,6 @@
 # @Comment :
 from django.db import models
 from django.conf import settings
-from django.contrib.postgres.fields import ArrayField
-from django.contrib.postgres.fields import JSONField
 
 
 class Sight(models.Model):
@@ -18,18 +16,7 @@ class Sight(models.Model):
     grade = models.FloatField(default=5.0)
     open_time = models.CharField(null=True, max_length=128)
     playtime = models.FloatField(null=True)
-    tags = models.ManyToManyField('Tag', related_name='sights')
-    images = models.ManyToManyField('Image', related_name='sights')
-    types = models.ManyToManyField('SightType', related_name='sights')
-    embedding = JSONField(null=True)
-
-
-class SightUpdateRequest(models.Model):
-    STATUS_CHOICES = (
-        ('pending', 'Pending'),
-        ('approved', 'Approved'),
-        ('rejected', 'Rejected')
-    )
-    user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
-    update_request = models.TextField()
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    tags = models.ManyToManyField('Tag', related_name='sights', null=True)
+    images = models.ManyToManyField('Image', related_name='sights', null=True)
+    types = models.ManyToManyField('SightType', related_name='sights', null=True)
+    embedding = models.TextField('embedding', null=True)

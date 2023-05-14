@@ -8,7 +8,7 @@ from rest_framework import serializers
 
 from utility.models.sight import Sight
 from . import ImageSerializer
-from .address import AddressSerializer
+from .address import AddressSerializer, AddressPlanSerializer
 from .price import PriceSerializer
 from .inner_sight import InnerSightSerializer
 
@@ -24,6 +24,15 @@ class SightDetailedSerializer(serializers.ModelSerializer):
         images = [d.get('image') for d in data.pop('images', None)]
         data['images'] = images
         return data
+
+    # def to_internal_value(self, data):
+    #     inner_sights = data.get('inner_sights')
+    #     for inner_sight in inner_sights:
+    #         inner_sight['sight_id'] = self.instance.id
+    #         serializer = InnerSightSerializer(data=inner_sight)
+    #         if serializer.is_valid():
+    #             serializer.save()
+    #     return super().to_internal_value(data)
 
     class Meta:
         model = Sight
@@ -55,8 +64,31 @@ class SightBriefSerializer(serializers.ModelSerializer):
 
 
 class SightPlanSerializer(serializers.ModelSerializer):
-    address = AddressSerializer(read_only=True)
+    address = AddressPlanSerializer(read_only=True)
+    images = ImageSerializer(read_only=True, many=True)
 
     class Meta:
         model = Sight
         fields = '__all__'
+
+    def to_representation(self, value):
+        data = super().to_representation(value)
+        images = data.pop('images', None)
+        cover = images[0] if images else None
+        data['cover'] = cover.get('image') if cover else None
+        return data
+
+class SightPlanShowSerializer(serializers.ModelSerializer):
+    address = AddressPlanSerializer(read_only=True)
+    images = ImageSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Sight
+        exclude = ['embedding']
+
+    def to_representation(self, value):
+        data = super().to_representation(value)
+        images = data.pop('images', None)
+        cover = images[0] if images else None
+        data['cover'] = cover.get('image') if cover else None
+        return data

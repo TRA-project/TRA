@@ -6,7 +6,7 @@ from .position import Position
 from .companion import Companion
 from .image import Image
 from .address import Address
-from .feedback import FeedBack
+from .feedback import Feedback
 from .advertisement import Advertisement
 from .flight import Flight
 from .city import City

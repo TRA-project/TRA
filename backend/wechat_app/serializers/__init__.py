@@ -7,7 +7,7 @@ from .position import PositionSerializer
 from .companion import CompanionSerializer
 from .images import ImageSerializer
 from .address import AddressSerializer
-from .feedback import AdminMessageSerializer
+from .feedback import FeedbackSerializer
 from .advertisement import AdvertisementSerializer
 from .flight import FlightSerializer, FlightDetailedSerializer, CitySerializer, ProvinceSerializer
 from .schedule import ScheduleSerializer, ScheduleBriefSerializer, ScheduleItemSerializer

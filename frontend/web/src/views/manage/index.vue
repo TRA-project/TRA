@@ -82,7 +82,7 @@
               <router-link to="/oldMsg"></router-link>
             </a-menu-item>
           </a-sub-menu>
-          <a-menu-item key="11">
+          <a-menu-item   key="11">
             <a-icon type="user" />用户管理
             <router-link to="/user"></router-link>
           </a-menu-item>
@@ -122,6 +122,17 @@
             <a-icon type="info-circle" />问题反馈
             <router-link to="/feedback"></router-link>
           </a-menu-item>
+          <a-sub-menu key="sub10">
+            <span slot="title"><a-icon type="flag" />景点管理</span>
+            <a-menu-item key="20">
+              景点信息管理
+              <router-link to="/sceneryManage"></router-link>
+            </a-menu-item>
+            <a-menu-item key="21">
+              景点审核
+              <router-link to="/sceneryAudit"></router-link>
+            </a-menu-item>
+          </a-sub-menu>
         </a-menu>
       </a-layout-sider>
 

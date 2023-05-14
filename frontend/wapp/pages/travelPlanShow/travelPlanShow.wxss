@@ -6,6 +6,10 @@
   align-items: center;
   height: 80rpx;
   background-color: rgb(30, 143, 255);
+  /* 吸顶 */
+  position: sticky;
+  top: 0rpx;
+  z-index: 10;
 }
 
 .travel-plan-title {
@@ -14,12 +18,90 @@
 }
 
 .travel-plan-map-container {
-
+  /* 吸顶 */
+  position: sticky;
+  top: 80rpx;
+  z-index: 10;
 }
 
 .tencent-map {
   width: 100%;
-  height: 500rpx;
+  height: 600rpx;
+}
+
+.map-callout-bubble {
+  width: 400rpx;
+  height: 150rpx;
+  /* max-height: 200rpx; */
+  background-color: rgb(255, 255, 255);
+  padding: 20rpx;
+  border-radius: 20rpx;
+  box-shadow: 6rpx -4rpx 15rpx 1rpx rgba(71, 71, 71, 0.637);
+}
+.map-callout-bubble::before {
+  /* 填充 */
+  content: "";
+  /* 位置 */
+  position: absolute;
+  top: -28rpx;
+  left: 150rpx;
+  /* 形状 */
+  border-width: 0rpx 20rpx 36rpx 20rpx;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+  /* 效果 */
+  filter: drop-shadow(6rpx -10rpx 4rpx  rgba(71, 71, 71, 0.541));
+}
+
+.callout-bubble-title {
+  
+  padding: 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.callout-bubble-title-text {
+  font-weight: bolder;
+  width: 80%;
+  /* 文字溢出处理 */
+  white-space: nowrap;  /* 不换行 */
+  overflow: hidden;     /* 超出部分隐藏 */
+  text-overflow: ellipsis;  /* 溢出元素省略号表示 */
+}
+
+.callout-bubble-title-jmp-button {
+  width: 30rpx;
+  height: 30rpx;
+  padding-right: 15rpx;
+}
+
+.callout-bubble-desc {
+  padding: 10rpx;
+  white-space: normal;
+  /* 文字溢出处理 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 2; /* 行数 */
+    -webkit-box-orient: vertical;
+}
+
+.map-tool-button {
+  width: 50rpx;
+  height: 50rpx;
+  /* 位置 */
+  position: relative;
+  top: calc(85%);
+  left: calc(88%);
+  /* 效果 */
+  background-color: rgb(255, 255, 255);
+  border-radius: 30rpx;
+  filter: drop-shadow(5rpx -5rpx 3rpx  rgba(71, 71, 71, 0.541));
+}
+
+.map-tool-button:active {
+  filter: drop-shadow(3rpx -3rpx 4rpx  rgba(71, 71, 71, 0.541));
 }
 
 .travel-plan-display-container {
