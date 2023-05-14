@@ -326,9 +326,9 @@ export default {
           item.preDescription = item.description;
           item.placeImages = [];
           item.images.forEach((image) => {
-            item.placeImages.push("http://114.116.194.214/api/core/images/" + image + "/data/");
+            item.placeImages.push("https://tratu1.2022martu1.cn/api/core/images/" + image + "/data/");
           })
-          item.placeCover = "http://114.116.194.214/api/core/images/" + item.cover + "/data/";
+          item.placeCover = "https://tratu1.2022martu1.cn/api/core/images/" + item.cover + "/data/";
         })
         this.panes[0].data = this.data;
         this.spinning = false;
