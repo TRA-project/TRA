@@ -36,5 +36,8 @@ pnpm-debug.log*
 # package.json  # for deploy
 # package-lock.json
 
+# deploy staff
+*.zip
+
 # Microsoft word
 ~$*.doc

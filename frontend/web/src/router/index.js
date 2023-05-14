@@ -136,6 +136,16 @@ const routes = [
         path:"/userlog",
         name:"userlog",
         component:()=>import("../views/manage/userlog")
+      },
+      {
+        path:"/sceneryManage",
+        name:"sceneryManage",
+        component:()=>import("../views/scenery/sceneryManage")
+      },
+      {
+        path:"/sceneryAudit",
+        name:"sceneryAudit",
+        component:()=>import("../views/scenery/sceneryAudit")
       }
     ]
   },
