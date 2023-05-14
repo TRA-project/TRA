@@ -266,7 +266,7 @@ Page({
       success: (res) => {
         console.log("create plan success")
         wx.navigateTo({
-          url: "/pages/travelHotelRestaurant/travelHotelRestaurant?planid="+ res.data.id,
+          url: "/pages/travelPlanFinish/travelPlanFinish",
         })
       },
       fail: (err) => {

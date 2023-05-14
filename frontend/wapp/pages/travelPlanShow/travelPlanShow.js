@@ -353,7 +353,7 @@ Page({
     var sight_id = event.currentTarget.dataset.sightid
     console.log("tap nearby hotel:", sight_id)
     wx.navigateTo({
-      url: "/pages/travelHotelRestaurant/travelHotelRestaurant?scenery_id=" + sight_id,
+      url: "/pages/travelHotelRestaurant/travelHotelRestaurant?sceneryId=" + sight_id,
     })
   },
 
