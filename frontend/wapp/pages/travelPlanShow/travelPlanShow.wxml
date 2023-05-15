@@ -42,6 +42,7 @@
     textSlot descSlot 
     active-color="rgba(30, 144, 255, 1.0)" 
     bind:click-step="onClickStep">
+    <!-- text slot -->
     <view wx:for="{{steps}}" slot="text-{{index}}" wx:key="index"
       class="travel-plan-step-text">
       <view wx:if="{{item.type === 1}}" class="step-text-if">{{item.title}}</view>
@@ -57,14 +58,16 @@
         </view>
       </view>
     </view>
+    <!-- desc slot -->
     <view wx:for="{{steps}}" slot="desc-{{index}}" wx:key="index"
       class="travel-plan-step-desc" wx:if="{{item.type !== 2}}">
       <view class="desc-content">
         <view class="content-time">{{ item.start_time }}</view>
-        <!-- <view wx:if="{{item.type === 2}}" class="content-time">
-          <view style="padding: 10rpx 0rpx;"><text space="ensp">       ↓</text></view>
-          <view>{{ item.end_time }}</view>
-        </view> -->
+        <button wx:if="{{item.type === 3}}" 
+          class="content-adapt-btn"
+          hover-class="button-hover">
+          作息时间调整
+        </button>
         <view wx:if="{{item.type === 1}}" class="content-addr">{{ item.address }}</view>
         <view wx:if="{{item.type === 1}}" class="content-desc">{{ item.desc }}</view>
       </view>

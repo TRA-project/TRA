@@ -1,4 +1,5 @@
 /* for Unification of CSS */
+/* offset-x | offset-y | blur-radius | spread-radius | color */
 .single-line {
   white-space: nowrap;
   /* 不换行 */

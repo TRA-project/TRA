@@ -275,6 +275,10 @@ Page({
     })
   },
 
+  onRefreshPlan() {
+    console.log("refresh plan", this.plansActive)
+  },
+
   upgradeMarkers() {
     console.log("update markers and points")
 

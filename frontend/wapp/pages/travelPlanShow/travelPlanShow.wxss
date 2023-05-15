@@ -1,5 +1,6 @@
 /* pages/travelPlanShow/travelPlanShow.wxss */
 /* for Unification of CSS */
+/* offset-x | offset-y | blur-radius | spread-radius | color */
 .single-line {
   white-space: nowrap;
   /* 不换行 */
@@ -168,6 +169,18 @@
   /* 超出部分隐藏 */
   text-overflow: ellipsis;
   /* 溢出元素省略号表示 */
+}
+.travel-plan-display-container .travel-plan-step-desc .desc-content .content-adapt-btn {
+  margin: 0rpx;
+  margin-top: 8rpx;
+  padding: 10rpx;
+  width: 250rpx;
+  background-color: #1e90ff;
+  color: white;
+  font-size: 30rpx;
+}
+.travel-plan-display-container .travel-plan-step-desc .desc-content .button-hover {
+  box-shadow: 2rpx 1rpx 10rpx 2rpx rgba(71, 71, 71, 0.637) inset;
 }
 .travel-plan-display-container .travel-plan-step-desc .desc-button {
   height: 80rpx !important;
