@@ -8,3 +8,5 @@ class FeedbackApis(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
+
+
