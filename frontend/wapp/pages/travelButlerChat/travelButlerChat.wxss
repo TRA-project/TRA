@@ -30,6 +30,12 @@ page {
   padding: 20rpx;
 }
 
+.weather{
+  height: 50rpx;
+  width: 50rpx;
+  padding-left: 50rpx;
+}
+
 .arrow{
   height: 35rpx;
   width: 35rpx;
