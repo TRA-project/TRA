@@ -1,5 +1,7 @@
 // pages/sceneSearch/sceneSearch.js
 
+const utils = require("../../utils/util")
+
 var app = getApp()
 
 Page({
@@ -25,6 +27,7 @@ Page({
     this.setData({
       historyList: app.globalData.historyList
     })
+
   },
 
   /**
@@ -37,8 +40,23 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-
+  onShow() { 
+    var url = utils.server_hostname + "/api/core/sights/recommend/"
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
+    wx.request({
+      url: url,
+      method: "GET",
+      header: {
+        "token-auth": token
+      },
+      success:(res) => {
+        console.log("GET /sights/recommend:", res.data)
+        
+      },
+      fail: err => {
+        console.log("fail to request", err)
+      }
+    })
   },
 
   // 同步子组件input内容
