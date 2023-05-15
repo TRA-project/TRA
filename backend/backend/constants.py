@@ -401,7 +401,11 @@ FEEDBACK_TYPE = [
     (1, '景点添加'),
     (2, '景点修改')
 ]
-
+FEEDBACK_STATUS = (
+        (0, 'Draft'),
+        (1, 'Approve'),
+        (2, 'Reject'),
+    )
 
 # travel_tag_query
 TAG_QUERY_ORDER_BY_TIME_UP = 0
