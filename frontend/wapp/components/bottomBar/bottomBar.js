@@ -44,6 +44,11 @@ Component({
     },
     onComment(e) {
       this.triggerEvent("comment", {}, {})
+    },
+    onClick(e) {
+      wx.navigateTo({
+        url: '../../pages/travelPlanInside/travelPlanInside'
+      })
     }
   }
 })

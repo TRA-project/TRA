@@ -31,6 +31,7 @@ from ..serializers.sight import (
 )
 import numpy as np
 
+
 def _feedback(request, *args, **kwargs):
     user_id = permission.user_check(request)
     if user_id <= 0:
@@ -153,10 +154,14 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateMode
 
     @action(methods=['GET'], detail=False, url_path='recommend')
     def recommend(self, request, *args, **kwargs):
-        user_id = request.GET.get('user_id')
-        num = request.GET.get('num', 10)
+        user_id = permission.user_check(request)
+        if user_id <= 0:
+            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+        user = AppUser.objects.filter(id=user_id).first()
+        if not user:
+            return error_response(Error.INVALID_USER, 'Invalid user.', status=status.HTTP_400_BAD_REQUEST)
 
-        user = AppUser.objects.get(id=user_id)
+        num = request.GET.get('num', 10)
 
         user_collections = user.collections_sight.all()
         if len(user_collections) == 0:
