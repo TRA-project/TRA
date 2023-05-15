@@ -1,3 +1,5 @@
+
+// const { decode } = require("XrFrame/core/utils");
 const util = require("../../utils/util");
 const { server_hostname } = require("../../utils/util");
 
@@ -8,8 +10,8 @@ Page({
     outputValue: '', // ai输出的内容 
     chatContent: [],
     toView: '',
-    query1: '附近有哪些好玩的',
-    query2: '推荐一些附近的美食',
+    query1: '我附近有哪些好玩的',
+    query2: '我附近的美食有哪些',
     query3: '当下季节适合去哪',
     hidden: false,
     animation: {}, // 初始动画为空
@@ -111,14 +113,14 @@ Page({
 
   query1: function() {
     this.setData ({
-      inputValue: '附近有哪些好玩的'
+      inputValue: '我附近有哪些好玩的'
     })
     this.sendMessage();
   },
 
   query2: function() {
     this.setData({
-      inputValue: '推荐一些附近的美食'
+      inputValue: '我附近的美食有哪些'
     })
     this.sendMessage();
   },
@@ -160,7 +162,8 @@ Page({
     var formData = {
       chat_id: this.data.chat_id,
       current_time: new Date().getTime(),
-      position: address,
+      // position: address,
+      position: '',
       query: inputValue
     }
 
@@ -174,6 +177,7 @@ Page({
     var that = this
     wx.request({
       url: util.server_hostname + "/chat",
+      // url: "http://127.0.0.1:8000" + "/chat",
       method: 'POST',
       data: formData,
       header: {
@@ -184,10 +188,29 @@ Page({
         if(res.statusCode == 200) {
           wx.hideLoading();
           console.log("get reponse:", res.data)
+          var field = `${res.data}`
+          // const arr = JSON.parse(`[${str.replace(/}\s*{/g, '},{')}]`);
+          // const actionInputs = arr.filter(obj => obj.action_input).map(obj => obj.action_input);
+          const arr = field.split("}").map(str => {
+            if (str.startsWith("{")) {
+                str = str + "}";
+            } else if (str.endsWith("{")) {
+                str = "{" + str;
+            } else {
+                str = "{" + str + "}";
+            }
+            return JSON.parse(str);
+        });
+        
+        const actionInputs = arr.filter(obj => obj.action_input).map(obj => obj.action_input);
+        const sentence = actionInputs.join(" ");
+          console.log(sentence,'提取的str_test');
+
           that.setData({
             chat_id: res.data.chat_id
           })
-          outputValue = res.data.content,
+          // outputValue = res.data.content,
+          outputValue = sentence
           console.log("outputValue:",outputValue)
           chatContent.push({
             id: 'chatContent-' + (chatContent.length + 1),
@@ -212,6 +235,7 @@ Page({
         }
       },
       fail(err){
+        wx.hideLoading();
         console.log(err)
         chatContent.push({
           id: 'chatContent-' + (chatContent.length + 1),
@@ -224,6 +248,7 @@ Page({
         })
       }
     });
+    
     this.setData({   // 更新数据
       chatContent: chatContent,
       inputValue: '',
@@ -237,6 +262,7 @@ Page({
     // console.log("unload")
     wx.request({
       url: util.server_hostname + '/del_chat',
+      // url: 'http://127.0.0.1:8000/del_chat',
       method: 'POST',
       data: {
         chat_id: this.data.chat_id
