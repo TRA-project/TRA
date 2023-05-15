@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 
-
 const routes = [
   {
     path: '/',
@@ -146,6 +145,11 @@ const routes = [
         path:"/sceneryAudit",
         name:"sceneryAudit",
         component:()=>import("../views/scenery/sceneryAudit")
+      },
+      {
+        path:"/planDisplay",
+        name:"planDisplay",
+        component:()=>import("../views/plan/planDisplay")
       }
     ]
   },
