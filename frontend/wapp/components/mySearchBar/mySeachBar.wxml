@@ -4,16 +4,18 @@
 <view class="search-container" style="background-color: {{bgcolor}};">
   <view class="search-box" style="border-radius: {{radius}}rpx;">
     <icon type="search" size="20" />
-    <input class="search-input" type="text" 
-           placeholder="请输入景点关键词" value="{{keyword}}" 
-           bindinput="onInput" focus="true" bindconfirm="onConfirm"/> 
-           <!-- 自动获取焦点 focus 属性 -->
+    <input class="search-input" 
+      type="text" value="{{keyword}}"
+      placeholder="请输入景点关键词" focus="{{autofocus}}"
+      bindinput="onInput"  bindconfirm="onConfirm"
+      bindblur="onBlur" bindfocus="onFocus"
+    /> 
     <icon type="clear" size="20" bindtap="deleteInput" wx:if="{{keyword !== ''}}" />
   </view>
 </view>
 
 <!-- 搜索建议列表 -->
-<view class="suggest-list">
+<view class="suggest-list" wx:if="{{showsuggest}}">
   <view class="suggest-item" wx:for="{{searchRes}}" wx:key="unique" 
     data-name="{{item.name}}" bindtap="confirmSuggest">
     <image src="/images/locate.png" class="locate-icon" />

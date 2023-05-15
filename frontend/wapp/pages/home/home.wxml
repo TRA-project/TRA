@@ -14,7 +14,7 @@
   <view class="function-area">
     <view class="function-box" bindtap="navigateToTravelPlan">
       <view class="function-item">
-        <image class="function-icon" src="/images/plan-function-icon.jpg"></image>
+        <image class="function-icon" src="/images/plan-function-icon.png"></image>
       </view>
       <view class="function-name">出行计划</view>
     </view>

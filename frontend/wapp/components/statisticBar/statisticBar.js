@@ -11,6 +11,10 @@ Component({
       type: String,
       value: "返回"
     },
+    showNum: {
+      type: Boolean,
+      value: true
+    }
   },
 
   /**

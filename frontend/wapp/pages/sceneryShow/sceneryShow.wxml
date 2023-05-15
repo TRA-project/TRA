@@ -1,7 +1,7 @@
 <!--pages/sceneryShow/sceneryShow.wxml-->
 <van-skeleton title row="20" avatar loading="{{loading}}">
 <swiper class="pic" bindchange="onSwiperChange">
-    <swiper-item wx:for="{{images}}">
+    <swiper-item wx:for="{{images}}" wx:key="index">
         <image src="{{item}}"></image>
     </swiper-item>
 </swiper>
@@ -41,7 +41,7 @@
     </view>
     <view class="card priceCard">
         <view class="cardTitle">门票价格</view>
-        <view wx:for="{{price}}">
+        <view wx:for="{{price}}" wx:key="name">
             <view class="item">
                 <view class="name">{{item.name}}</view>
                 <view class="price">￥{{item.price}}</view>
@@ -53,7 +53,7 @@
             <view class="cardTitle">内部游览点</view>
             <image class="add" src="../../images/add.png" style="width: 48rpx; height: 48rpx; float: right;" bindtap="onAddSpot"></image>
         </view>
-        <view wx:for="{{inner_sights}}">
+        <view wx:for="{{inner_sights}}" wx:key="name">
             <view class="divLineX2"></view>
             <view class="listelm">
                 <image src="../../images/flag.png"></image>

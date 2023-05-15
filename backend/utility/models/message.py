@@ -17,7 +17,7 @@ class Message(models.Model):
     """
     time = models.DateTimeField(auto_now_add=True)
     type = models.IntegerField(default=settings.MESSAGE_TYPES_DEFAULT)
-    #read = models.ManyToManyField(AppUser, related_name='read_messages')
+    # read = models.ManyToManyField(AppUser, related_name='read_messages')
 
     related_travel = models.ForeignKey(TravelNotes, null=True, default=None, on_delete=models.CASCADE)
     related_comment = models.ForeignKey(Comment, null=True, default=None, on_delete=models.CASCADE)
@@ -29,7 +29,8 @@ class Message(models.Model):
     content = models.TextField(null=True, default=None, max_length=settings.MAX_MESSAGE_CONTENT_LENGTH)
 
     @classmethod
-    def create_message(cls, source_user, target_user, type, content='', *, travel=None, comment=None, companion=None, schedule_item=None,flight=None, insert=True):
+    def create_message(cls, source_user, target_user, type, content='', *, travel=None, comment=None, companion=None,
+                       schedule_item=None, flight=None, insert=True):
         if not isinstance(source_user, AppUser) and source_user is not None:
             source_user = AppUser.objects.filter(id=source_user)
             if not source_user:
