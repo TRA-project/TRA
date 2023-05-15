@@ -21,8 +21,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    // options包含sceneryId
-
     let token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
     let sceneryId = options.sceneryId;
     let that = this;

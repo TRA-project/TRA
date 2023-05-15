@@ -27,7 +27,10 @@
         </cover-view>
       </cover-view>
     </cover-view>
-    <cover-image class="map-tool-button" src="/images/relocate.png" bindtap="onRelocateTap" />
+    <!-- view上的伪类选择器:active真机确实能生效，cover-view/cover-image便不行 -->
+    <view class="map-tool-button">
+      <image style="width: 50rpx; height: 50rpx;" src="/images/relocate.png" bindtap="onRelocateTap" />
+    </view>
   </map>
 </view>
 
@@ -36,14 +39,93 @@
     steps="{{ steps }}"
     active="{{ stepActive }}"
     direction="vertical"
+    textSlot descSlot 
     active-color="rgba(30, 144, 255, 1.0)" 
     bind:click-step="onClickStep">
+    <!-- text slot -->
+    <view wx:for="{{steps}}" slot="text-{{index}}" wx:key="index"
+      class="travel-plan-step-text">
+      <view wx:if="{{item.type === 1}}" class="step-text-if">{{item.title}}</view>
+      <view wx:else class="step-text-else"> 
+        <view class="text-title">
+          {{ stepType.type2Str(item.type) }} 
+        </view>
+        <image class="text-image"
+          src="{{stepType.type2Img(item.type)}}">
+        </image>
+        <view wx:if="{{item.type === 2}}" class="text-timing">
+          {{ item.start_time }} → {{ time.brief(item.end_time) }}
+        </view>
+      </view>
+    </view>
+    <!-- desc slot -->
+    <view wx:for="{{steps}}" slot="desc-{{index}}" wx:key="index"
+      class="travel-plan-step-desc" wx:if="{{item.type !== 2}}">
+      <view class="desc-content">
+        <view class="content-time">{{ item.start_time }}</view>
+        <button wx:if="{{item.type === 3}}" 
+          class="content-adapt-btn"
+          hover-class="button-hover">
+          作息时间调整
+        </button>
+        <view wx:if="{{item.type === 1}}" class="content-addr">{{ item.address }}</view>
+        <view wx:if="{{item.type === 1}}" class="content-desc">{{ item.desc }}</view>
+      </view>
+      <button wx:if="{{item.type === 3}}" class="desc-button" 
+        hover-class="desc-button-hover"
+        bindtap="onTapNearbyHotel"
+        data-sightid="{{item.sight_id}}">
+        <image class="button-img" src="/images/nearby-hotel-reverse.png" />
+      </button>
+    </view>
   </van-steps>
 </view>
 
 <view class="travel-plan-footer-container">
-  <button class="travel-plan-delete-button" type="warning"
+  <button class="travel-plan-delete-button" 
+    hover-class="travel-plan-delete-button-hover"
     bindtap="onTapDelete">
     删除计划
   </button>
 </view>
+
+<wxs module="stepType">
+function type2String(type) {
+  var text = ""
+  switch(type) {
+    case 2: text = "交通"
+      break
+    case 3: text = "住宿"
+      break
+    default: 
+  }
+  return text
+}
+
+function type2Image(type) {
+  var img_path = ""
+  switch(type) {
+    case 2: img_path = "/images/traffic.png"
+      break
+    case 3: img_path = "/images/rest.png"
+      break
+    default: 
+  }
+  return img_path
+}
+
+module.exports = {
+  type2Str: type2String,
+  type2Img: type2Image,
+}
+</wxs>
+
+<wxs module="time">
+function briefTime(time) {
+  return time.slice(11)
+}
+
+module.exports = {
+  brief: briefTime,
+}
+</wxs>
