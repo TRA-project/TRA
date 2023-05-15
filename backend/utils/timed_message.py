@@ -7,6 +7,7 @@ import datetime
 
 # 定时任务
 def schedule_notify():
+    print('test\n')
     try:
         loca_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         now_date, now_time = loca_time.split(" ")

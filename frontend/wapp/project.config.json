@@ -4,7 +4,12 @@
   "compileType": "miniprogram",
   "libVersion": "2.16.0",
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      {
+        "value": "\\.scss$",
+        "type": "regexp"
+      }
+    ],
     "include": []
   },
   "setting": {

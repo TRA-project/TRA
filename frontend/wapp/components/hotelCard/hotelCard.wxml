@@ -1,7 +1,7 @@
 <!--components/hotelCard/hotelCard.wxml-->
 <view class="card" bindtap="onFlip">
   <view class="left-col">
-    <image src="/images/rujia.jpg" mode="aspectFill"></image>
+    <image src="{{server_hostname}}/media/rujia.jpg" mode="aspectFill"></image>
   </view>
   <view class="right-col">
     <text class="name">{{name}}</text>
@@ -9,7 +9,7 @@
       <view class="tags">
         <view class="tag" wx:for="{{taglist}}" wx:key="{{index}}">{{item}}</view>
       </view>
-      <text class="distance">距您 {{distance}} km</text>
+      <text class="distance">距{{place}} {{distance}} km</text>
     </view>
     <view>
       <text class="remark">{{remark}} 非常棒</text>
@@ -24,7 +24,7 @@
       <view class="text facility">{{facility}}</view>
     </view>
   </view>
-  <view class="checkbox">
+  <view class="checkbox" wx:if="{{checkable}}">
     <van-checkbox value="{{ checked }}" bind:change="onChange"></van-checkbox>
   </view>
 </view>

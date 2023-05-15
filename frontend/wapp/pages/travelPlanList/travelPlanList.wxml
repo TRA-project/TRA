@@ -52,16 +52,10 @@
 
       <van-field
         label="体验期望"
-        clearable
-        model:value="{{ tagsValue }}"
-        placeholder="请输入关键词"
-      />
-
-      <van-field
-        label="预期开销"
-        type="number"
-        model:value="{{ costValue }}"
-        placeholder="请输入预算（单位：￥）"
+        clearable autosize
+        type="textarea"
+        model:value="{{ expectValue }}"
+        placeholder="简述您心中理想的计划"
       />
 
       <van-field

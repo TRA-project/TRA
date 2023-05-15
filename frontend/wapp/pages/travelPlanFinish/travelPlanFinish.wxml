@@ -1,0 +1,12 @@
+<!--pages/travelHotelRestaurant/travelHotelRestaurant.wxml-->
+<view class="page_wrapper">
+  <view class="img_wrapper">
+    <image class="topImage" src="/images/finishPlan.png"></image>
+  </view>
+  <view class="top">
+    <van-icon name="checked" color="green" size="48rpx" class="checkedIcon" />
+    <view class="title">出行计划已生成！</view>
+  </view>
+  <!-- 注意：微信小程序传参需要加{{}},就算是false这样的字面量也需要加{{}} -->
+  <statisticBar showNum="{{false}}" bindclick="onSave"></statisticBar>
+</view>

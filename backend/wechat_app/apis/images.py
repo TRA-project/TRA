@@ -8,6 +8,7 @@ from utility.models import Image
 from wechat_app.serializers import ImageSerializer
 import os
 
+
 class ImageApis(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin,
                 viewsets.mixins.RetrieveModelMixin):
     IMAGE_CONTENT_TYPE = {
@@ -44,9 +45,7 @@ class ImageApis(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin,
         data = imgfile.read()
         return HttpResponse(data, content_type=ctype)
 
-    
-    
 
 @receiver(pre_delete, sender=Image)
-def image_delete(sender, instance:Image, **kwargs):
+def image_delete(sender, instance: Image, **kwargs):
     instance.image.delete(False)

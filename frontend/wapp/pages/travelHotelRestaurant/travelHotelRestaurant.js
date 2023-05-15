@@ -1,5 +1,6 @@
 // pages/travelHotelRestaurant/travelHotelRestaurant.js
 const utils = require("../../utils/util.js");
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast.js';
 
 Page({
 
@@ -13,19 +14,38 @@ Page({
     restaurants: [],
     selected: [],
     numSelected: 0,
+    place: "",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    // // 使用示例
-    // const distance = this.GetDistance(39.923423, 116.368904, 39.922501, 116.387271);
-    // console.log(distance);
-    this.getLoc(() => {
-      this.getHotels()
-      this.getRestaurants()
-    })
+    let token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
+    let sceneryId = options.sceneryId;
+    let that = this;
+    wx.request({
+      url: utils.server_hostname + "/api/core/sights/" + sceneryId + "/",
+      header: {
+        'token-auth': token
+      },
+      success(res) {
+        if (res.statusCode == 200) {
+          that.setData({
+            latitude: res.data.address.latitude,
+            longitude: res.data.address.longitude,
+            place: res.data.name
+          });
+          that.getHotels()
+          that.getRestaurants()
+        } else {
+          Toast.fail(`加载景点位置信息失败！statusCode = ${res.statusCode}`);
+        }
+      },
+      fail(err) {
+        Toast.fail(`加载景点位置信息失败！${err}`);
+      }
+    });
   },
 
   getHotels() {
@@ -43,7 +63,7 @@ Page({
         let results = res.data.results
         console.log(res)
         for (let i = 0; i < results.length; i++) {
-          results[i].distance = that.GetDistance(results[i].location.lat, results[i].location.lng, that.data.latitude, that.data.longitude);
+          results[i].distance = utils.GetDistance(results[i].location.lat, results[i].location.lng, that.data.latitude, that.data.longitude);
           results[i].distance = Number(results[i].distance).toFixed(2);
         }
         that.setData({
@@ -69,7 +89,7 @@ Page({
         let results = res.data.results
         console.log(res)
         for (let i = 0; i < results.length; i++) {
-          results[i].distance = that.GetDistance(results[i].location.lat, results[i].location.lng, that.data.latitude, that.data.longitude);
+          results[i].distance = utils.GetDistance(results[i].location.lat, results[i].location.lng, that.data.latitude, that.data.longitude);
           results[i].distance = Number(results[i].distance).toFixed(2);
         }
         that.setData({
@@ -100,33 +120,22 @@ Page({
     })
   },
 
-  // 获取到两地距离
-  GetDistance( lat1,  lng1,  lat2,  lng2){
-    var radLat1 = lat1*Math.PI / 180.0;
-    var radLat2 = lat2*Math.PI / 180.0;
-    var a = radLat1 - radLat2;
-    var  b = lng1*Math.PI / 180.0 - lng2*Math.PI / 180.0;
-    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +
-    Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));
-    s = s *6378.137 ;// EARTH_RADIUS;
-    s = Math.round(s * 10000) / 10000;
-    return s;
-  },
-
   onSave() {
-    wx.requestSubscribeMessage({
-      tmplIds: [utils.plan_notification_id], // 向用户推送行程提醒消息
-      success: () => {
-        console.log("success")
-      }, 
-      fail: (res) => {
-        console.log(`failed: ${res.errCode}, ${res.errMsg}`)
-        console.log("template id:", utils.plan_notification_id)
-      }
-    })
-    wx.reLaunch({
-      url: "/pages/home/home",
-    })
+    // 下面的代码转移到travelPlanFinish页面实现
+    // wx.requestSubscribeMessage({
+    //   tmplIds: [utils.plan_notification_id], // 向用户推送行程提醒消息
+    //   success: () => {
+    //     console.log("success")
+    //   }, 
+    //   fail: (res) => {
+    //     console.log(`failed: ${res.errCode}, ${res.errMsg}`)
+    //     console.log("template id:", utils.plan_notification_id)
+    //   }
+    // })
+    // wx.reLaunch({
+    //   url: "/pages/home/home",
+    // })
+    wx.navigateBack() // 返回上一级
   },
 
   onSelect(e) {

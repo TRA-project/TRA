@@ -258,16 +258,16 @@
     <view class="tabbar_cover_view_3">
         <view class="tabbar_box">
 
-            <image wx:if="{{tabbar_homepage}}" class="tabbar_pic" mode="widthFix" src="{{server_imagename}}/public/navigation1.png" style="left: 7%;"></image>
-            <image wx:else class="tabbar_pic" src="{{server_imagename}}/public/navigation5.png" bindtap="changeTabbarHomepage" style="left: 7%;">
+            <image wx:if="{{tabbar_homepage}}" class="tabbar_pic" mode="widthFix" src="/images/navigation1.png" style="left: 7%;"></image>
+            <image wx:else class="tabbar_pic" src="/images/navigation5.png" bindtap="changeTabbarHomepage" style="left: 7%;">
             </image>
 
-            <image class="tabbar_pic" src="{{server_imagename}}/public/navigation6.png" style="left:22%;" bindtap="navigate2Flight">
+            <image class="tabbar_pic" src="/images/navigation6.png" style="left:22%;" bindtap="navigate2Flight">
             </image>
 
-            <image class="tabbar_pic" src="{{server_imagename}}/public/navigation7.png" style="left: 65%;" bindtap="navigate2calendar"></image>
+            <image class="tabbar_pic" src="/images/navigation7.png" style="left: 65%;" bindtap="navigate2calendar"></image>
 
-            <image class="tabbar_pic" src="{{server_imagename}}/public/navigation8.png" bindtap="changeTabbarMine" style="left:82%"></image>
+            <image class="tabbar_pic" src="/images/navigation8.png" bindtap="changeTabbarMine" style="left:82%"></image>
 
         </view>
     </view>

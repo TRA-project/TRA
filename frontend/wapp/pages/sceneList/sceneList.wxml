@@ -1,12 +1,24 @@
 <!--pages/sceneList/sceneList.wxml-->
-<view class="search-container">
-  <view class="search-box" bindtap="returnBackToSearch">
-    <icon type="search" size="20" />
-    <input class="search-input" value="{{keyword}}" disabled="disabled"/>
+<view class="search-bar-container">
+  <!-- search -->
+  <view class="search-bar" wx:if="{{usage === 'search'}}">
+    <view class="search-box" bindtap="onSearchBarTap">
+      <icon type="search" size="20" />
+      <input class="search-input" value="{{keyword}}" disabled="{{ true }}"/>
+    </view>
   </view>
+  <!-- reselect -->
+  <my-search-bar class="my-search-bar"
+    wx:if="{{usage === 'reselect'}}"
+    keyword="{{myInput}}" 
+    showsuggest="{{!showSearchRes}}"
+    bind:syncinput="onSyncInput"
+    bind:syncconfirm="onSyncConfirm">
+  </my-search-bar>
 </view>
 
-<view class="top-bar-container">
+  
+<view class="top-bar-container" wx:if="{{showSearchRes}}">
   <van-dropdown-menu active-color="#1989fa" class="drop-down-menu">
     <van-dropdown-item value="{{ typeValue }}" options="{{ optionType }}" bind:change="onChangeType"/>
     <van-dropdown-item value="{{ timeValue }}" options="{{ optionTime }}"></van-dropdown-item>
@@ -18,25 +30,89 @@
   </view>
 </view>
 
-<view class="scenery-list-container">
-  <view class="scenery-list">
-    <view class="scenery-card" wx:for="{{sceneryShowList}}" wx:key="id">
-      <van-card thumb="/images/guozhibeiyuan.jpg" 
-        bindtap="showSceneryDetail" data-id="{{item.id}}"
-        desc="{{item.desc}}" title="{{item.name}}" price="{{item.price}}" 
-        custom-class="self-custom-class"
-        thumb-class="self-thumb-class"
-        title-class="self-title-class"
-        desc-class="self-desc-class"
-        price-class="self-price-class">
-        <view slot="tags">
-          预计时长：{{item.time}}
-        </view>
-      </van-card>
+<view class="scenery-list-container" wx:if="{{showSearchRes}}">
+  <!-- reselect 专用 -->
+  <van-card wx:if="{{usage === 'reselect'}}"
+    bindtap="showSceneryDetail" data-id="{{formerScenery.id}}"
+    custom-class="reselect-former-scene-card"
+    desc="{{formerScenery.desc}}" 
+    title="{{formerScenery.name}}" 
+    price="{{formerScenery.price}}" 
+    tag="原景点"
+    title-class="self-title-class"
+    desc-class="self-desc-class"
+    price-class="self-price-class">
+    <view slot="tags">
+      预计时长：{{formerScenery.time}}
     </view>
+    <view class="self-thumb-class" slot="thumb">
+      <image class="scene-card-image" src="{{server_imagename+formerScenery.cover}}" />
+    </view>
+    <view class="self-footer-class" slot="footer">
+      <checkbox class="scene-card-checkbox" 
+        value="{{ formerScenery.id }}" 
+        checked="{{ formerScenery.checked }}"
+        catchtap="onFormerSceneryCheckboxTap">
+      </checkbox>
+    </view>
+  </van-card>
+  <!-- reselect 专用 -->
+
+  <view class="scenery-list">
+    <checkbox-group bindchange="onCheckboxChange">
+      <view class="scenery-card" wx:for="{{sceneryShowList}}" wx:key="id">
+        <van-card
+          data-id="{{item.id}}"
+          price="{{item.price}}" 
+          custom-class="self-custom-class"
+          price-class="self-price-class">
+          <view class="self-title-class" slot="title"
+            bindtap="showSceneryDetail"
+            data-id="{{item.id}}">
+            {{item.name}}
+          </view>
+          <view class="self-desc-class" slot="desc"
+            bindtap="showSceneryDetail"
+            data-id="{{item.id}}">
+            {{item.desc}}
+          </view>
+          <view class="self-thumb-class" slot="thumb"
+            bindtap="showSceneryDetail">
+            <image class="scene-card-image" src="{{server_imagename+item.cover}}" />
+          </view>
+          <view slot="tags">
+            预计时长：{{item.time}}
+          </view>
+          <view class="self-footer-class" slot="footer"
+            wx:if="{{usage === 'reselect'}}">
+            <checkbox class="scene-card-checkbox" 
+              value="{{ item.id }}" 
+              checked="{{ item.checked }}">
+            </checkbox>
+          </view>
+        </van-card>
+      </view>
+    </checkbox-group>
     <view class="scenery-list-placeholder" wx:if="{{sceneryShowList.length === 0}}">
       <image src="/images/null-placeholder.jpg" style="height: 300rpx; width: 365rpx;"></image>
     </view>
   </view>
 </view>
 
+<view class="scenery-reselect-confirm-container" 
+  wx:if="{{usage === 'reselect' && showSearchRes}}">
+  <button class="return-back-button"
+    style="visibility:hidden">
+    占位而已
+  </button>
+  <button class="reselect-confirm-button"
+    hover-class="reselect-confirm-button-hover"
+    bindtap="onTapConfirm">
+    确认替换
+  </button>
+  <button class="return-back-button"
+    hover-class="return-back-button-hover"
+    bindtap="onTapReturn">
+    <image class="return-back-button-img" src="/images/returnback.png"></image>
+  </button>
+</view>

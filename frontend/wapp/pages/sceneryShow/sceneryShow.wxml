@@ -1,6 +1,7 @@
 <!--pages/sceneryShow/sceneryShow.wxml-->
+<van-skeleton title row="20" avatar loading="{{loading}}">
 <swiper class="pic" bindchange="onSwiperChange">
-    <swiper-item wx:for="{{images}}">
+    <swiper-item wx:for="{{images}}" wx:key="index">
         <image src="{{item}}"></image>
     </swiper-item>
 </swiper>
@@ -22,9 +23,9 @@
         <view class="bottom">
             <view class="leftColumn">
                 <view>{{position}}</view>
-                <view class="dist">距您{{distance}}公里</view>
+                <view class="dist">距您 {{distance}} 公里</view>
             </view>
-            <view class="rightColumn">
+            <view class="rightColumn" bindtap="navigate2map">
                 <image src="../../images/map.png" style="width: 64rpx; height: 64rpx;"></image>
                 <text style="line-height: 64rpx;">地图</text>
             </view>
@@ -40,7 +41,7 @@
     </view>
     <view class="card priceCard">
         <view class="cardTitle">门票价格</view>
-        <view wx:for="{{price}}">
+        <view wx:for="{{price}}" wx:key="name">
             <view class="item">
                 <view class="name">{{item.name}}</view>
                 <view class="price">￥{{item.price}}</view>
@@ -52,7 +53,7 @@
             <view class="cardTitle">内部游览点</view>
             <image class="add" src="../../images/add.png" style="width: 48rpx; height: 48rpx; float: right;" bindtap="onAddSpot"></image>
         </view>
-        <view wx:for="{{inner_sights}}">
+        <view wx:for="{{inner_sights}}" wx:key="name">
             <view class="divLineX2"></view>
             <view class="listelm">
                 <image src="../../images/flag.png"></image>
@@ -96,7 +97,7 @@
     <!-- 空出下面工具栏的高度 -->
     <view style="height: 100rpx;"></view>
 
-    <bottomBar isCollect="{{isCollect}}" numComment="{{numComment}}"  bind:comment="onComment" bind:collect="onCollect"></bottomBar>
+    <bottomBar isCollect="{{isCollect}}" numComment="{{numComment}}"  bind:comment="onComment" bind:collect="onCollect" style="width: 0rpx; height: -44rpx; display: block; box-sizing: border-box"></bottomBar>
     
     <!-- <van-submit-bar
       price="{{ 3050 }}"
@@ -124,5 +125,7 @@
     </van-dialog>
 </view>
 
-<van-toast id="van-toast" />
 <comment-box toHideModal="{{hideComment}}" sightId="{{id}}" bind:numComment="update_numComment"></comment-box>
+</van-skeleton>
+
+<van-toast id="van-toast" />
