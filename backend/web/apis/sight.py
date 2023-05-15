@@ -6,9 +6,12 @@
 # @Comment :
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from utility.models.sight import Sight
+from utility.models.feedback import Feedback
 from ..serializers.sight import SightSerializer
+from ..serializers.feedback import FeedbackSerializer
 from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
 
@@ -43,4 +46,26 @@ class SightApis(ModelViewSet):
         serializer = self.get_serializer(paginated_sights, many=True)
         return paginator.get_paginated_response(serializer.data)
 
+    @action(detail=False, methods=['GET'], url_path='audit')
+    def retrieve_feedbacks(self, request, *args, **kwargs):
+        feedbacks = Feedback.objects.all()
+        paginator = self.pagination_class()
+        paginated_sights = paginator.paginate_queryset(feedbacks, request)
+        serializer = FeedbackSerializer(paginated_sights, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
+    @action(detail=False, methods=['POST'], url_path='audit/approve')
+    def audit_approve(self, request):
+        audit_id = request.POST.get('audit_id')
+        feedback = Feedback.objects.filter(id=audit_id).first()
+        feedback.status = 1  # approve
+        # TODO: write the database to renew data
+        return Response(FeedbackSerializer(feedback).data)
+
+    @action(detail=False, methods=['POST'], url_path='audit/reject')
+    def audit_reject(self, request):
+        audit_id = request.data.get('audit_id')
+        print(audit_id)
+        feedback = Feedback.objects.filter(id=audit_id).first()
+        feedback.status = 2  # reject
+        return Response(FeedbackSerializer(feedback).data)
