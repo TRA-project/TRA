@@ -242,7 +242,7 @@ Component({
             that.getComments()
   
             wx.request({
-              url: utils.server_hostname + '/api/core/travels/' + that.data.travel.id + '/',
+              url: utils.server_hostname + '/api/core/sights/' + that.data.sightId + '/',
               method: 'GET',
               header: {
                 'content-type': 'application/json',
@@ -265,6 +265,13 @@ Component({
           }
         },
         fail: function(res) { console.log(res) }
+      })
+    },
+
+    clearReply: function() {
+      this.setData({
+        reply_id: "",
+        reply_nickname: "发表评论"
       })
     },
   
@@ -296,13 +303,22 @@ Component({
           var list = res.data.results
           if (list) {
             that.triggerEvent("numComment", list.length)
+            that.setData({
+              comments: list.length
+            })
           } else {
             that.triggerEvent("numComment", 0)
+            that.setData({
+              comments: 0
+            })
           }
   
           for (var i in list) {
             var item = list[i]
             // console.log(item)
+
+            // 如果此条评论是一条回复，就先不要加载它
+            if (item.reply !== null) continue
   
             item["time"] = item["time"].substring(0,10) + " " + item["time"].substring(11,16)
   
