@@ -1,3 +1,5 @@
+
+// const { decode } = require("XrFrame/core/utils");
 const util = require("../../utils/util");
 const { server_hostname } = require("../../utils/util");
 
@@ -8,8 +10,8 @@ Page({
     outputValue: '', // ai输出的内容 
     chatContent: [],
     toView: '',
-    query1: '附近有哪些好玩的',
-    query2: '推荐一些附近的美食',
+    query1: '我附近有哪些好玩的',
+    query2: '我附近的美食有哪些',
     query3: '当下季节适合去哪',
     hidden: false,
     animation: {}, // 初始动画为空
@@ -17,9 +19,16 @@ Page({
     showMask: true,
     height: '400',
     marginTop: '400',
+    scrollHeight: '700',
     latitude: '',   // 当前位置的纬度
     longitude: '', // 当前位置的精度
     address: ''
+  },
+
+  OnReady: function(){
+    this.setData({
+      toView: 'chatContent-' + this.data.chatContent.length
+    })
   },
 
   toggleCard: function(){
@@ -36,12 +45,14 @@ Page({
       var imageUrl = '../../images/down.png';
       var height =  '130';
       var marginTop = '130';
+      var scrollHeight = '970'
     }else {
       // 显示卡片
       animation.height('auto').opacity(1).step();
       var imageUrl = '../../images/up.png'
       var height =  '400';
       var marginTop = '400';
+      var scrollHeight = '700'
     }
     // 更新卡片状态和动画
     that.setData({
@@ -50,7 +61,8 @@ Page({
       imageUrl: imageUrl,
       showMask: showMask,
       height : height,
-      marginTop : marginTop
+      marginTop : marginTop,
+      scrollHeight: scrollHeight
     })
   },
 
@@ -101,14 +113,14 @@ Page({
 
   query1: function() {
     this.setData ({
-      inputValue: '附近有哪些好玩的'
+      inputValue: '我附近有哪些好玩的'
     })
     this.sendMessage();
   },
 
   query2: function() {
     this.setData({
-      inputValue: '推荐一些附近的美食'
+      inputValue: '我附近的美食有哪些'
     })
     this.sendMessage();
   },
@@ -127,19 +139,31 @@ Page({
     var chatContent = this.data.chatContent;
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
     
+    console.log(chatContent.length)
+
     chatContent.push({
+      id: 'chatContent-' + (chatContent.length + 1),
       message: inputValue,
       sender: 'user'
     });
 
-    console.log(new Date().getTime());
+    console.log(chatContent.length)
+
+    this.setData({   // 更新数据
+      chatContent: chatContent,
+      inputValue: '',
+      toView: 'chatContent-' + chatContent.length
+    });
+
+    console.log(this.data.toView)
 
     this.getLocation()
 
     var formData = {
       chat_id: this.data.chat_id,
       current_time: new Date().getTime(),
-      position: address,
+      // position: address,
+      position: '',
       query: inputValue
     }
 
@@ -153,6 +177,7 @@ Page({
     var that = this
     wx.request({
       url: util.server_hostname + "/chat",
+      // url: "http://127.0.0.1:8000" + "/chat",
       method: 'POST',
       data: formData,
       header: {
@@ -163,40 +188,71 @@ Page({
         if(res.statusCode == 200) {
           wx.hideLoading();
           console.log("get reponse:", res.data)
+          var field = `${res.data}`
+          // const arr = JSON.parse(`[${str.replace(/}\s*{/g, '},{')}]`);
+          // const actionInputs = arr.filter(obj => obj.action_input).map(obj => obj.action_input);
+          const arr = field.split("}").map(str => {
+            if (str.startsWith("{")) {
+                str = str + "}";
+            } else if (str.endsWith("{")) {
+                str = "{" + str;
+            } else {
+                str = "{" + str + "}";
+            }
+            return JSON.parse(str);
+        });
+        
+        const actionInputs = arr.filter(obj => obj.action_input).map(obj => obj.action_input);
+        const sentence = actionInputs.join(" ");
+          console.log(sentence,'提取的str_test');
+
           that.setData({
             chat_id: res.data.chat_id
           })
-          outputValue = res.data.content,
+          // outputValue = res.data.content,
+          outputValue = sentence
           console.log("outputValue:",outputValue)
           chatContent.push({
+            id: 'chatContent-' + (chatContent.length + 1),
             message: outputValue,
             sender: 'ai'
           })
           that.setData({
             chatContent: chatContent,
+            toView: 'chatContent-' + chatContent.length
           })
         } else {
           wx.hideLoading();
-          that.setData({
-            outputValue: "error",
-          })
           chatContent.push({
-            message: outputValue,
+            id: 'chatContent-' + (chatContent.length + 1),
+            message: "sorry",
             sender: 'ai'
+          })
+          that.setData({
+            chatContent: chatContent,
+            toView: 'chatContent-' + chatContent.length
           })
         }
       },
       fail(err){
+        wx.hideLoading();
         console.log(err)
+        chatContent.push({
+          id: 'chatContent-' + (chatContent.length + 1),
+          message: "error",
+          sender: 'ai'
+        })
         that.setData({
-          outputValue : 'sorry'
+          chatContent: chatContent,
+          toView: 'chatContent-' + chatContent.length
         })
       }
     });
+    
     this.setData({   // 更新数据
       chatContent: chatContent,
       inputValue: '',
-      toView: 'chatContent-' + (chatContent.length - 1)
+      toView: 'chatContent-' + chatContent.length
     });
   },
 
@@ -206,6 +262,7 @@ Page({
     // console.log("unload")
     wx.request({
       url: util.server_hostname + '/del_chat',
+      // url: 'http://127.0.0.1:8000/del_chat',
       method: 'POST',
       data: {
         chat_id: this.data.chat_id
@@ -219,6 +276,12 @@ Page({
           chat_id: ''
         })
       }
+    })
+  },
+
+  goWeather: function() {
+    wx.navigateTo({
+      url: '../weather/weather'
     })
   }
 })
