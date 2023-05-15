@@ -89,7 +89,9 @@ Component({
     remark: 4.7,
     level: "非常棒",
     num_comment: 29,
-    facility: "房间内高速上网 客房WIFI 书桌 多种规格电源插座 遮光窗帘 手动窗帘 床具:鸭绒被 空调 沙发"
+    facility: "房间内高速上网 客房WIFI 书桌 多种规格电源插座 遮光窗帘 手动窗帘 床具:鸭绒被 空调 沙发",
+
+    server_hostname: util.server_hostname,
   },
 
   /**

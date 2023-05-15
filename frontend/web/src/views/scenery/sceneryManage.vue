@@ -11,7 +11,7 @@
             <a-select-option value="id">
               景点编号
             </a-select-option>
-            <a-select-option value="name">
+            <a-select-option value="keyword">
               景点名称
             </a-select-option>
           </a-select>
@@ -49,40 +49,40 @@
         <div v-else style="margin:10px 0 10px 15px;">
           <a-descriptions title="景点信息" bordered>
             <a-descriptions-item label="景点编号" :span="2">
-              {{data[pane.key-1].id}}
+              {{pane.data.id}}
             </a-descriptions-item>
             <a-descriptions-item label="景点名称" :span="2">
-              {{data[pane.key-1].name}}
+              {{pane.data.name}}
             </a-descriptions-item>
             <a-descriptions-item label="景点评分" :span="2">
-              {{data[pane.key-1].name}}
+              {{pane.data.grade}}
             </a-descriptions-item>
             <a-descriptions-item label="景点描述" :span="2">
-              {{data[pane.key-1].name}}
+              {{pane.data.desc}}
             </a-descriptions-item>
             <a-descriptions-item label="景点位置" :span="2">
-              {{data[pane.key-1].name}}
+              {{pane.data.address.name}}
             </a-descriptions-item>
             <a-descriptions-item label="景点经纬度" :span="2">
-              {{data[pane.key-1].name}}
+              {{pane.data.address.latitude}}, {{pane.data.address.longitude}}
             </a-descriptions-item>
             <a-descriptions-item label="景点开放时间" :span="2">
-              {{data[pane.key-1].name}}
+              {{pane.data.open_time}}
             </a-descriptions-item>
             <a-descriptions-item label="景点游玩时间" :span="2">
-              {{data[pane.key-1].name}}
+              {{pane.data.playtime}}
             </a-descriptions-item>
             <a-descriptions-item label="景点标签" :span="2">
-              {{data[pane.key-1].name}}
+              {{pane.data.tags}}
             </a-descriptions-item>
             <a-descriptions-item label="子景点信息" :span="2">
-              <li style="list-style-type: decimal">
-                入口：描述
+              <li style="list-style-type: decimal" v-for="sight in data.inner_sights" :key="sight.id">
+                {{sight.name}}：{{ sight.desc }}
               </li>
             </a-descriptions-item>
             <a-descriptions-item label="票价信息" :span="2">
-              <li style="list-style-type: decimal">
-                学生票：描述
+              <li style="list-style-type: decimal" v-for="priceData in data.prices" :key="priceData.name">
+                {{ priceData.name }}：{{ priceData.desc }}
               </li>
             </a-descriptions-item>
 
@@ -379,6 +379,8 @@ export default {
       })
       this.panes = panes; */
     },
+
+    // 删除指定key的tab
     remove(targetKey) {
       let activeKey = this.activeKey;
       let lastIndex;
