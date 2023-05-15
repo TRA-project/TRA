@@ -103,7 +103,7 @@
 }
 
 .function-icon {
-  width: 70rpx;
+  width: 80rpx;
   height: 80rpx;
   border-radius: 20rpx;
 }
