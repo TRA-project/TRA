@@ -21,15 +21,17 @@
 <view class = "scroll" style="height: {{height}}rpx;">
   <scroll-view class="chat-view" scroll-y="true" scroll-into-view="{{toView}}" scroll-with-animation="true" enable-back-to-top="true" style="margin-top: {{marginTop}}rpx; height: {{scrollHeight}}rpx"> 
     <block wx:for="{{chatContent}}" wx:key="{{item.id}}">
-      <view class="{{item.sender}}" id="{{item.id}}">{{item.message}}</view>
+      <text class="{{item.sender}}" id="{{item.id}}">{{item.message}}</text>
     </block>
   </scroll-view>
 </view>
 
 <view class = "input-wrapper">
   <input class="input" type="text" name="input" placeholder="请输入要发送的消息" bindinput="onInput" value="{{inputValue}}" bindconfirm="sendMessage"/>
-  <image class = "image" src = '../../images/audio_button.png'></image>
+  <!-- <image class = "image" src = '../../images/audio_button.png'></image> -->
 </view>
 
 <!-- 添加一个蒙层，可以点击关掉弹窗 -->
 <view class = "mask" hidden = "{{!showMask}}" catchtap = "toggleCard"></view>
+
+<van-dialog id="operation-dialog" show="{{ showDialog }}" title="提示" message="1分钟内仅允许一次操作" show-confirm-button></van-dialog>

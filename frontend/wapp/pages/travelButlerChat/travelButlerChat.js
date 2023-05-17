@@ -22,13 +22,20 @@ Page({
     scrollHeight: '700',
     latitude: '',   // 当前位置的纬度
     longitude: '', // 当前位置的精度
-    address: ''
+    address: '',
+    socket: null,
+    isOperationAllowed: true,
+    showDialoge: false
   },
 
-  OnReady: function(){
+  onReady: function(){
     this.setData({
       toView: 'chatContent-' + this.data.chatContent.length
     })
+  },
+
+  onLoad() {
+    
   },
 
   toggleCard: function(){
@@ -113,21 +120,21 @@ Page({
 
   query1: function() {
     this.setData ({
-      inputValue: '我附近有哪些好玩的'
+      inputValue: this.data.query1
     })
     this.sendMessage();
   },
 
   query2: function() {
     this.setData({
-      inputValue: '我附近的美食有哪些'
+      inputValue: this.data.query2
     })
     this.sendMessage();
   },
 
   query3: function() {
     this.setData ({
-      inputValue: '当下季节适合去哪'
+      inputValue: this.data.query3
     })
     this.sendMessage();
   },
@@ -138,32 +145,50 @@ Page({
     var address = this.data.address;
     var chatContent = this.data.chatContent;
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
-    
-    console.log(chatContent.length)
 
+    // 等待一分钟后发送消息
+    if (!this.data.isOperationAllowed) {
+      // 如果操作不允许，则显示弹窗
+      this.setData({
+        showDialog: true
+      });
+      return;
+    }
+
+    // 将操作状态设为不允许
+    this.setData({
+      isOperationAllowed: false
+    });
+
+    // 等待1分钟后重新允许操作
+    setTimeout(() => {
+      this.setData({
+        isOperationAllowed: true
+      });
+    }, 60000); // 1分钟等于60000毫秒
+
+    // 显示用户输入
     chatContent.push({
       id: 'chatContent-' + (chatContent.length + 1),
       message: inputValue,
       sender: 'user'
     });
-
-    console.log(chatContent.length)
+    // console.log(chatContent.length)
 
     this.setData({   // 更新数据
       chatContent: chatContent,
       inputValue: '',
       toView: 'chatContent-' + chatContent.length
     });
-
-    console.log(this.data.toView)
-
+    // console.log(this.data.toView)
+    
     this.getLocation()
 
     var formData = {
       chat_id: this.data.chat_id,
       current_time: new Date().getTime(),
       // position: address,
-      position: '',
+      position: '北京航空航天大学',
       query: inputValue
     }
 
@@ -174,85 +199,102 @@ Page({
       // customClass: 'custom-loading'
     })
     
-    var that = this
-    wx.request({
-      url: util.server_hostname + "/chat",
-      // url: "http://127.0.0.1:8000" + "/chat",
-      method: 'POST',
-      data: formData,
-      header: {
-        'content-type': 'application/json',
-        "token-auth": token
-      },
-      success(res){
-        if(res.statusCode == 200) {
-          wx.hideLoading();
-          console.log("get reponse:", res.data)
-          var field = `${res.data}`
-          // const arr = JSON.parse(`[${str.replace(/}\s*{/g, '},{')}]`);
-          // const actionInputs = arr.filter(obj => obj.action_input).map(obj => obj.action_input);
-          const arr = field.split("}").map(str => {
-            if (str.startsWith("{")) {
-                str = str + "}";
-            } else if (str.endsWith("{")) {
-                str = "{" + str;
-            } else {
-                str = "{" + str + "}";
-            }
-            return JSON.parse(str);
-        });
-        
-        const actionInputs = arr.filter(obj => obj.action_input).map(obj => obj.action_input);
-        const sentence = actionInputs.join(" ");
-          console.log(sentence,'提取的str_test');
 
-          that.setData({
-            chat_id: res.data.chat_id
-          })
-          // outputValue = res.data.content,
-          outputValue = sentence
-          console.log("outputValue:",outputValue)
-          chatContent.push({
-            id: 'chatContent-' + (chatContent.length + 1),
-            message: outputValue,
-            sender: 'ai'
-          })
-          that.setData({
-            chatContent: chatContent,
-            toView: 'chatContent-' + chatContent.length
-          })
-        } else {
-          wx.hideLoading();
-          chatContent.push({
-            id: 'chatContent-' + (chatContent.length + 1),
-            message: "sorry",
-            sender: 'ai'
-          })
-          that.setData({
-            chatContent: chatContent,
-            toView: 'chatContent-' + chatContent.length
-          })
-        }
-      },
-      fail(err){
+    // 创建 WebSocket 连接
+    this.data.socket = wx.connectSocket({
+      url: 'ws://8.130.84.81/chat' // WebSocket 服务器地址
+    });
+
+    // 监听 WebSocket 连接成功事件
+    wx.onSocketOpen(() => {
+      console.log('WebSocket 连接已打开');
+      // 发送数据到后端
+      const data = {
+        chat_id: this.data.chat_id,
+        current_time: '',
+        position: '北京航空航天大学',
+        query: this.data.inputValue
+      };
+      this.data.socket.send({
+        data: JSON.stringify(data)
+      });
+    });
+
+    let question_count = 1; 
+    chatContent.push({
+      id: 'chatContent-' + (chatContent.length + 1),
+      message: '',
+      sender: 'ai'
+    });
+    const finalAnswer = this.data.chatContent[chatContent.length - 1];
+    // 监听 WebSocket 接收到消息事件
+    var that = this;
+    wx.onSocketMessage((res) => {
+      
+      const utf8Data = res.data;
+      const obj = JSON.parse(utf8Data);
+      console.log(obj);
+      
+      // 将消息添加到页面数据中，实现流式输出
+      if(obj.action == "Final Answer") {
         wx.hideLoading();
-        console.log(err)
-        chatContent.push({
-          id: 'chatContent-' + (chatContent.length + 1),
-          message: "error",
-          sender: 'ai'
-        })
+        const token = obj.action_input;
+        finalAnswer.message += token; 
         that.setData({
           chatContent: chatContent,
           toView: 'chatContent-' + chatContent.length
         })
+      } else if(obj.action == "New Question"){
+        wx.hideLoading();
+        if(question_count >= 3)  {
+          question_count = question_count - 3;
+        } else if (question_count == 1) {
+          that.setData({
+            query1: obj.action_input
+          })
+          question_count = question_count + 1;
+        } else if (question_count == 2) {
+          that.setData({
+            query2: obj.action_input
+          })
+          question_count = question_count + 1;
+        } else if (question_count == 3) {
+          that.setData({
+            query3: obj.action_input
+          })
+          question_count = question_count + 1;
+        }
+      } else if(obj.action == 'chat_id'){
+        that.setData({
+          chat_id: obj.action_input
+        })
+      } else {
+        // 步骤
       }
     });
-    
-    this.setData({   // 更新数据
+
+    // 监听 WebSocket 错误事件
+    wx.onSocketError((error) => {
+      console.error('WebSocket 错误:', error);
+    });
+
+    // 监听 WebSocket 连接关闭事件
+    wx.onSocketClose(() => {
+      console.log('WebSocket 连接已关闭');
+    });
+
+    // 更新数据
+    this.setData({   
       chatContent: chatContent,
       inputValue: '',
       toView: 'chatContent-' + chatContent.length
+    });
+  },
+
+  confirmDialog: function() {
+    // 用户点击弹窗的确认按钮时触发的事件
+    this.setData({
+      showDialog: false
     });
   },
 
@@ -261,9 +303,9 @@ Page({
 
     // console.log("unload")
     wx.request({
-      url: util.server_hostname + '/del_chat',
+      url: util.server_hostname + '/chat',
       // url: 'http://127.0.0.1:8000/del_chat',
-      method: 'POST',
+      method: 'DELETE',
       data: {
         chat_id: this.data.chat_id
       },
@@ -283,5 +325,10 @@ Page({
     wx.navigateTo({
       url: '../weather/weather'
     })
+  },
+
+  // 关闭 WebSocket 连接
+  closeConnection() {
+    wx.closeSocket();
   }
 })
