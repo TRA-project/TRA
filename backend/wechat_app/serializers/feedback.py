@@ -9,8 +9,8 @@ class FeedbackSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
     owner = PrimaryKeyNestedField(serializer=UserSerializer)
     content = serializers.CharField(allow_null=False)
-    status = serializers.ChoiceField(choices=settings.FEEDBACK_STATUS, source='get_status_display')
-    type = serializers.ChoiceField(choices=settings.FEEDBACK_TYPE, source='get_type_display')
+    status = serializers.ChoiceField(choices=settings.FEEDBACK_STATUS)
+    type = serializers.ChoiceField(choices=settings.FEEDBACK_TYPE)
 
     class Meta:
         model = Feedback

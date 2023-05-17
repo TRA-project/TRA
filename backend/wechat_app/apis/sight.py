@@ -41,7 +41,7 @@ def _feedback(request, *args, **kwargs):
         return error_response(Error.INVALID_USER, 'Invalid user.', status=status.HTTP_400_BAD_REQUEST)
 
     # 类型定义见constants feedback部分
-    data = {'content': json.dumps(request.data), 'owner': user_id,
+    data = {'content': json.dumps(request.data), 'owner': user_id, 'status': 0,
             'type': 1 if request.method == 'POST' else 2 if request.method == 'PUT' else 0}
 
     serializer = FeedbackSerializer(data=data)
