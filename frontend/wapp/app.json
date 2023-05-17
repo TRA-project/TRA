@@ -44,7 +44,6 @@
     "pages/sceneryShow/sceneryShow",
     "pages/travelHotelRestaurant/travelHotelRestaurant",
     "pages/sceneSearch/sceneSearch",
-    "pages/travelPlanGen/travelPlanGen",
     "pages/travelPlanPreview/travelPlanPreview",
     "pages/sceneList/sceneList",
     "pages/travelPlanList/travelPlanList",
@@ -59,11 +58,10 @@
     "pages/weather/weather",
     "pages/travelPlanFinish/travelPlanFinish"
   ],
-
   "requiredPrivateInfos": [
     "getLocation"
   ],
-
+  "lazyCodeLoading": "requiredComponents",
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

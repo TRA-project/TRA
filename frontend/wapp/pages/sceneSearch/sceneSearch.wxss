@@ -1,58 +1,68 @@
 /* pages/sceneSearch/sceneSearch.wxss */
-
+/* for Unification of CSS */
+/* offset-x | offset-y | blur-radius | spread-radius | color */
+.single-line {
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 溢出元素省略号表示 */
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .search-box {
-  position: sticky; /* 吸顶效果 */
+  position: sticky;
+  /* 吸顶效果 */
   top: 0;
   z-index: 99;
 }
-
-.trash-icon {
-  width: 34rpx;
-  height: 34rpx;
-  margin-right: 20rpx;
-}
-
 .history-box {
   position: sticky;
   top: 50;
   z-index: 5;
-  padding: 10rpx 20rpx; /* 上下 左右 */
+  padding: 10rpx 20rpx;
+  /* 上下 左右 */
 }
-
-.history-title {
+.history-box .history-title {
   display: flex;
-  justify-content: space-between; /* 两端贴边对齐 */
+  justify-content: space-between;
+  /* 两端贴边对齐 */
   align-items: center;
   height: 80rpx;
   font-weight: bolder;
 }
-
-.history-list {
-  display: flex;
-  flex-wrap: wrap;  /* 一行放不下，允许换行 */
+.history-box .history-title .trash-icon {
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 20rpx;
 }
-
-.history-item {
+.history-box .history-list {
+  display: flex;
+  flex-wrap: wrap;
+  /* 一行放不下，允许换行 */
+}
+.history-box .history-list .history-item {
   background-color: rgba(219, 219, 219, 0.705);
   border-radius: 20rpx;
   padding: 8rpx 12rpx;
   margin: 5rpx 10rpx;
 }
-
 .preference-box {
-  padding: 10rpx 20rpx; /* 上下 左右 */
+  padding: 10rpx 20rpx;
+  /* 上下 左右 */
 }
-
-.preference-title {
+.preference-box .preference-title {
   align-items: center;
   font-weight: bolder;
 }
-
-.preference-list {
+.preference-box .preference-list {
   padding: 5rpx 20rpx;
 }
-
-.preference-item {
+.preference-box .preference-list .preference-item {
   height: 94rpx;
   font-size: 30rpx;
   display: flex;
@@ -60,30 +70,35 @@
   justify-content: space-between;
   border-bottom: 2rpx solid rgba(189, 187, 187, 0.938);
 }
-
-.scenery-info {
-  width: 80%;
-  white-space: nowrap;  /* 不换行 */
-  overflow: hidden;     /* 超出部分隐藏 */
-  text-overflow: ellipsis;  /* 溢出元素省略号表示 */
-  text-align: left;
-}
-
-.scenery-name {
-  font-weight: bolder;
-}
-
-.scenery-position {
-  font-size: 24rpx;
-  color: rgba(119, 119, 119, 1);
-}
-
-.locate-icon {
+.preference-box .preference-list .preference-item .locate-icon {
   height: 50rpx;
   width: 40rpx;
 }
-
-.rightarrow-icon {
+.preference-box .preference-list .preference-item .scenery-info {
+  width: 80%;
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 溢出元素省略号表示 */
+  text-align: left;
+}
+.preference-box .preference-list .preference-item .scenery-info .scenery-name {
+  font-weight: bolder;
+}
+.preference-box .preference-list .preference-item .scenery-info .scenery-position {
+  font-size: 24rpx;
+  color: #777777;
+  width: 90%;
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 溢出元素省略号表示 */
+}
+.preference-box .preference-list .preference-item .rightarrow-icon {
   height: 60rpx;
   width: 60rpx;
 }
