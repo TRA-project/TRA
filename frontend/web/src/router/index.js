@@ -146,6 +146,11 @@ const routes = [
         path:"/sceneryAudit",
         name:"sceneryAudit",
         component:()=>import("../views/scenery/sceneryAudit")
+      },
+      {
+        path:"/planDisplay",
+        name:"planDisplay",
+        component:()=>import("../views/plan/planDisplay")
       }
     ]
   },
