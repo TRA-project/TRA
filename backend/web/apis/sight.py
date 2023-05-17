@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 from utility.models.sight import Sight
 from utility.models.feedback import Feedback
-from ..serializers.sight import SightSerializer, SightDetailedSerializer
+from ..serializers.sight import SightSerializer
 from ..serializers.feedback import FeedbackSerializer
 from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
@@ -25,7 +25,7 @@ class SightPagination(PageNumberPagination):
 class SightApis(ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Sight.objects.all()
-    serializer_class = SightDetailedSerializer
+    serializer_class = SightSerializer
     pagination_class = SightPagination
 
     @action(detail=False, methods=['GET'])
