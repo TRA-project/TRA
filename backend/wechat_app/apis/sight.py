@@ -162,16 +162,14 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateMode
             return error_response(Error.INVALID_USER, 'Invalid user.', status=status.HTTP_400_BAD_REQUEST)
 
         num = request.GET.get('num', 10)
-
         user_collections = user.collections_sight.all()
         if len(user_collections) == 0:
             return self.recommend_by_hot(self, request, *args, **kwargs)
 
-        user_sights_embeddings = np.array([i.embedding for i in user_collections])
+        user_sights_embeddings = np.array([eval(i.embedding) for i in user_collections])
 
         all_sights = Sight.objects.all()
-        all_sights_embeddings = np.array([i.embedding for i in all_sights])
-
+        all_sights_embeddings = np.array([eval(i.embedding) for i in all_sights])
         user_pref_embedding = np.mean(user_sights_embeddings, axis=0)
 
         cosine_similarities = np.dot(user_pref_embedding, all_sights_embeddings.T) / (
