@@ -328,7 +328,7 @@ export default {
       this.$axios({
         method: "get",
         url: "api/admin/sights/" + sceneryId + "/",
-        params: {},
+        params: { },
         headers: {
           Authorization: localStorage.getItem('Authorization')
         },
