@@ -7,6 +7,7 @@
 from rest_framework import serializers
 
 from utility.models.sight import Sight
+from utility.models.image import Image
 from utility.models.address import Address
 from .address import AddressSerializer
 from .price import PriceSerializer
@@ -27,3 +28,4 @@ class SightSerializer(serializers.ModelSerializer):
         model = Sight
         fields = '__all__'
         read_only_fields = ('subsight_set', 'price_set')
+
