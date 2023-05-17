@@ -213,12 +213,12 @@ export default {
         url: "api/admin/sights/search/",
         params: p,
         headers: {
-          "token-auth": localStorage.getItem('Authorization')
+          Authorization: localStorage.getItem('Authorization')
         },
         data: {},
       }).then((res) => {
         this.data = res.data.results;
-        this.pageNum = res.data.pages;
+        this.pageNum = Math.ceil(res.data.count / 10); // 每页固定10条
         let key = 1;
 
         // 对每个元素赋以key，数值递增
@@ -241,7 +241,7 @@ export default {
         url: "api/admin/sights/" + sceneryId + "/",
         params: {},
         headers: {
-          "token-auth": localStorage.getItem('Authorization')
+          Authorization: localStorage.getItem('Authorization')
         },
         data: {},
       }).then((res) => {
@@ -270,7 +270,9 @@ export default {
     onSearch(value){
       let params = {"page":"1"};
       this.searchText = value;
-      params[this.searchType] = this.searchText;
+      if (this.searchType === "id") {
+        params[this.searchType] = parseInt(value);
+      }
       this.getSceneries(params);
     },
     onPageChange(page) {
@@ -328,7 +330,7 @@ export default {
         url: "api/admin/sights/" + sceneryId + "/",
         params: {},
         headers: {
-          "token-auth": localStorage.getItem('Authorization')
+          Authorization: localStorage.getItem('Authorization')
         },
         data: {},
       }).then((res) => {

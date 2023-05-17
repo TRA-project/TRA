@@ -155,11 +155,9 @@ export default {
       this.spinning = true;
       this.$axios({
         method: "get",
-        url: "api/admin/position/",
-        // url: "api/admin/sights/audit/",
+        url: "api/admin/sights/audit/",
         params: p,
         headers: {
-          // "token-auth": localStorage.getItem('Authorization')
           Authorization: localStorage.getItem('Authorization')
         },
         data: {},
@@ -188,7 +186,7 @@ export default {
         url: "api/admin/sights/audit/approve/" + requestId + "/",
         params: {},
         headers: {
-          "token-auth": localStorage.getItem('Authorization')
+          Authorization: localStorage.getItem('Authorization')
         },
         data: {},
       }).then((res) => {
@@ -214,7 +212,7 @@ export default {
         url: "api/admin/sights/audit/reject/" + requestId + "/",
         params: {},
         headers: {
-          "token-auth": localStorage.getItem('Authorization')
+          Authorization: localStorage.getItem('Authorization')
         },
         data: {},
       }).then((res) => {

@@ -152,9 +152,12 @@ Page({
         data = {"desc": this.data.open_time}
       }
       wx.request({
-        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/edit",
-        method: "POST",
+        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/",
+        method: "PUT",
         data: data,
+        header: {
+          "token-auth": this.data.token
+        },
         success(res) {
           Toast("编辑成功，待审核")
         },
@@ -173,8 +176,11 @@ Page({
         add_elm: false
       })
       wx.request({
-        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/edit",
-        method: "POST",
+        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/",
+        method: "PUT",
+        header: {
+          "token-auth": this.data.token
+        },
         data: data,
         success(res) {
           Toast("推荐游览点成功，待审核")
