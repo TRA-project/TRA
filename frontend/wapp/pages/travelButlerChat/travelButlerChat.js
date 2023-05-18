@@ -202,7 +202,8 @@ Page({
 
     // 创建 WebSocket 连接
     this.data.socket = wx.connectSocket({
-      url: 'ws://8.130.84.81/chat' // WebSocket 服务器地址
+      // url: 'ws://8.130.84.81/chat',
+      url: 'wss://tratu1.2022martu1.cn/chat',
     });
 
     // 监听 WebSocket 连接成功事件
@@ -301,7 +302,7 @@ Page({
   onUnload(){
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
 
-    // console.log("unload")
+    console.log("unload")
     wx.request({
       url: util.server_hostname + '/chat',
       // url: 'http://127.0.0.1:8000/del_chat',

@@ -27,11 +27,11 @@
 </view>
 
 <view class = "input-wrapper">
-  <input class="input" type="text" name="input" placeholder="请输入要发送的消息" bindinput="onInput" value="{{inputValue}}" bindconfirm="sendMessage"/>
+  <input class="input" type="text" name="input" placeholder="受api限制，请避免频繁请求" bindinput="onInput" value="{{inputValue}}" bindconfirm="sendMessage"/>
   <!-- <image class = "image" src = '../../images/audio_button.png'></image> -->
 </view>
 
 <!-- 添加一个蒙层，可以点击关掉弹窗 -->
 <view class = "mask" hidden = "{{!showMask}}" catchtap = "toggleCard"></view>
 
-<van-dialog id="operation-dialog" show="{{ showDialog }}" title="提示" message="1分钟内仅允许一次操作" show-confirm-button></van-dialog>
+<van-dialog id="operation-dialog" show="{{ showDialog }}" title="提示" message="受api限制，请避免频繁请求" show-confirm-button></van-dialog>
