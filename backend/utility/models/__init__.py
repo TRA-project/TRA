@@ -27,4 +27,6 @@ from .sight_type import SightType
 from .hotel import Hotel
 from .food import Food
 from .plan import Plan
+from .plan_schedule import PlanSchedule
+from .plan_create_log import PlanCreateLog
 

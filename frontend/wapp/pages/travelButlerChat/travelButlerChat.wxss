@@ -52,8 +52,8 @@ page {
 
 .card-query-wrapper{
   padding-bottom: 15rpx;
-  padding-left: 190rpx;
-  padding-right: 190rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
   text-align: center;
 }
 
@@ -92,7 +92,7 @@ page {
 .scroll{
   flex:1;
   overflow: scroll;
-  padding-bottom: 20rpx;
+  padding-bottom: 10rpx;
   padding-right: 5rpx;
   padding-left: 5rpx;
 }
