@@ -51,7 +51,7 @@ class SightApis(ModelViewSet):
 
     @action(detail=False, methods=['GET'], url_path='audit')
     def retrieve_feedbacks(self, request, *args, **kwargs):
-        feedbacks = Feedback.objects.all()
+        feedbacks = Feedback.objects.filter(status=0) # Draft
         paginator = self.pagination_class()
         paginated_sights = paginator.paginate_queryset(feedbacks, request)
         serializer = FeedbackSerializer(paginated_sights, many=True)
@@ -62,6 +62,8 @@ class SightApis(ModelViewSet):
         audit_id = request.POST.get('audit_id')
         feedback = Feedback.objects.filter(id=audit_id).first()
         feedback.status = 1  # approve
+        feedback.save()
+
         # write the database to renew data
         request = json.loads(feedback.content)
         # print(request)
@@ -94,4 +96,6 @@ class SightApis(ModelViewSet):
         # print(audit_id)
         feedback = Feedback.objects.filter(id=audit_id).first()
         feedback.status = 2  # reject
+        feedback.save()
+        
         return Response(FeedbackSerializer(feedback).data)
