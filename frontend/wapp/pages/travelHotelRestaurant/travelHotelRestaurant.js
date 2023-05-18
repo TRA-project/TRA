@@ -21,10 +21,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    // options包含sceneryId
-
     let token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
-    let sceneryId = 77; //options.sceneryId;
+    let sceneryId = options.sceneryId;
     let that = this;
     wx.request({
       url: utils.server_hostname + "/api/core/sights/" + sceneryId + "/",

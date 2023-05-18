@@ -29,7 +29,7 @@
 
 .down-chevron-icon {
   position: fixed;
-  height: 7%;
+  height: 5%;
   bottom: 2%;
 }
 
@@ -103,7 +103,7 @@
 }
 
 .function-icon {
-  width: 70rpx;
+  width: 80rpx;
   height: 80rpx;
   border-radius: 20rpx;
 }

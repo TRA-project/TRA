@@ -1,7 +1,8 @@
 import requests
 
-#api_key = '4n9FbMFLfdU77lVEEtWBoFk7E3oRIEQx'
+# api_key = '4n9FbMFLfdU77lVEEtWBoFk7E3oRIEQx'
 api_key = 'GMnoYcHpQDt0MQEyVRTCp9Vz'
+
 
 def search_nearby_hotels(**kwargs):
     return search(**kwargs, query='酒店', tag='星级酒店')

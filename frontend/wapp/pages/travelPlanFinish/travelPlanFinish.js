@@ -34,7 +34,7 @@ Page({
       }
     })
     wx.reLaunch({
-      url: "/pages/home/home",
+      url: "/pages/travelPlanList/travelPlanList",
     })
   },
   

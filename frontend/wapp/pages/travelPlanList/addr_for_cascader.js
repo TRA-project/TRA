@@ -1,5 +1,4 @@
 
-
 const areaOptions = [
   {
     "text": "北京市",

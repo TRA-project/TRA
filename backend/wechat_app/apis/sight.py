@@ -6,6 +6,10 @@
 # @Comment :
 import json
 
+import csv
+import os
+
+from django.db.models import Q
 from django.http import QueryDict
 from rest_framework.decorators import action
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, UpdateModelMixin
@@ -25,6 +29,7 @@ from ..serializers.sight import (
     SightBriefSerializer,
     SightDetailedSerializer
 )
+import numpy as np
 
 
 def _feedback(request, *args, **kwargs):
@@ -36,7 +41,7 @@ def _feedback(request, *args, **kwargs):
         return error_response(Error.INVALID_USER, 'Invalid user.', status=status.HTTP_400_BAD_REQUEST)
 
     # 类型定义见constants feedback部分
-    data = {'content': json.dumps(request.data), 'owner': user_id,
+    data = {'content': json.dumps(request.data), 'owner': user_id, 'status': 0,
             'type': 1 if request.method == 'POST' else 2 if request.method == 'PUT' else 0}
 
     serializer = FeedbackSerializer(data=data)
@@ -146,3 +151,59 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateMode
 
     def create(self, request, *args, **kwargs):
         return _feedback(request)
+
+    @action(methods=['GET'], detail=False, url_path='recommend')
+    def recommend(self, request, *args, **kwargs):
+        user_id = permission.user_check(request)
+        if user_id <= 0:
+            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+        user = AppUser.objects.filter(id=user_id).first()
+        if not user:
+            return error_response(Error.INVALID_USER, 'Invalid user.', status=status.HTTP_400_BAD_REQUEST)
+
+        num = request.GET.get('num', 10)
+        user_collections = user.collections_sight.all()
+        if len(user_collections) == 0:
+            return self.recommend_by_hot(self, request, *args, **kwargs)
+
+        user_sights_embeddings = np.array([eval(i.embedding) for i in user_collections])
+
+        all_sights = Sight.objects.all()
+        all_sights_embeddings = np.array([eval(i.embedding) for i in all_sights])
+        user_pref_embedding = np.mean(user_sights_embeddings, axis=0)
+
+        cosine_similarities = np.dot(user_pref_embedding, all_sights_embeddings.T) / (
+                np.linalg.norm(user_pref_embedding) * np.linalg.norm(all_sights_embeddings, axis=1))
+
+        top_n_idx = np.argsort(cosine_similarities)[::-1].tolist()
+
+        user_collection_ids = [i.id for i in user_collections]
+
+        ret = []
+        for idx in top_n_idx:
+            sight = all_sights[idx]
+            if len(ret) > num:
+                break
+            if sight.id in user_collection_ids:
+                continue
+            ret.append(sight)
+
+        serializer = SightSerializer(instance=ret, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False, url_path='recommend_by_tag')
+    def recommend_by_tag(self, request, *args, **kwargs):
+        tag_name = request.GET.get('tag')
+        sights = Sight.objects.filter(Q(tags__name__icontains=tag_name)).order_by('-hot')[:10]
+        serializer = SightSerializer(instance=sights, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False, url_path='recommend_by_hot')
+    def recommend_by_hot(self, request, *args, **kwargs):
+        sights = Sight.objects.order_by('-hot')[:10]
+        serializer = SightSerializer(instance=sights, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False, url_path='tags')
+    def tags_retrieve(self, request, *args, **kwargs):
+        return Response(settings.TAGS)

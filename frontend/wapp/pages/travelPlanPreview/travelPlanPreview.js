@@ -165,7 +165,26 @@ Page({
     mapContext = wx.createMapContext("preview-map", this)
     if (this.data.afterReselect) {
       console.log("reselect sceneries:", this.data.reselectSceneries)
-      
+      // 去重
+      let tarList = this.data.travelPlansList[this.data.plansActive]
+      tarList.splice(this.data.formerSceneryIdx, 1)
+      var dedupReselect = this.data.reselectSceneries.filter(item => {
+        for (var i in tarList) {
+          if (item.id === tarList[i].id) {
+            return false
+          }
+        }
+        return true
+      })
+      console.log("after dedup:", dedupReselect)
+      for (var i in dedupReselect) {
+        tarList.splice(this.data.formerSceneryIdx + i, 0, dedupReselect[i])
+      }
+      console.log(tarList)
+      this.setData({
+        ["travelPlansList[" + this.data.plansActive + "]"]: tarList
+      })
+
       this.data.afterReselect = false
     }
   },
@@ -247,13 +266,17 @@ Page({
       success: (res) => {
         console.log("create plan success")
         wx.navigateTo({
-          url: "/pages/travelHotelRestaurant/travelHotelRestaurant?planid="+ res.data.id,
+          url: "/pages/travelPlanFinish/travelPlanFinish",
         })
       },
       fail: (err) => {
         console.log(err)
       }
     })
+  },
+
+  onRefreshPlan() {
+    console.log("refresh plan", this.plansActive)
   },
 
   upgradeMarkers() {

@@ -37,5 +37,18 @@
 </view>
 
 <view class="travel-plan-footer-container">
-  <button class="travel-plan-submit-button" type="primary" hover-class="button-hover" bindtap="onConfirmPlan">确认方案</button>
+  <button class="regen-button"
+    style="visibility:hidden">
+    占位而已
+  </button>
+  <button class="submit-button" 
+    hover-class="button-hover" 
+    bindtap="onConfirmPlan">
+    确认方案
+  </button>
+  <button class="regen-button"
+    hover-class="button-hover"
+    bindtap="onRefreshPlan">
+    <image src="/images/refresh.png" class="refresh-image" />
+  </button>
 </view>
