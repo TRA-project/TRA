@@ -13,9 +13,9 @@
               用户编号
             </a-select-option>
           </a-select>
-          <a-input-search placeholder="请输入搜索文本" style="width: 300px; margin:0 5px 0 2px"  @search="onSearch" />
-          <a-button style="margin:0 5px 0 50px" type="primary" @click="add">查看</a-button>
-          <a-button style="margin:0 5px" type="danger" @click="deletePlaces">删除</a-button>
+          <!-- <a-input-search placeholder="请输入搜索文本" style="width: 300px; margin:0 5px 0 2px"  @search="onSearch" /> -->
+          <!-- <a-button style="margin:0 5px 0 50px" type="primary" @click="add">查看</a-button> -->
+          <!-- <a-button style="margin:0 5px" type="danger" @click="deletePlaces">删除</a-button> -->
 
 <!--          表格的主体-->
           <a-spin :spinning="spinning">
@@ -29,20 +29,17 @@
 
 <!--        2. 详细信息tab-->
         <div v-else style="margin:10px 0 10px 15px;">
-          <a-descriptions title="旅行计划信息" bordered>
+          <a-descriptions-items title="旅行计划信息" bordered>
             <a-descriptions-item label="旅行计划编号" :span="2">
               {{pane.data.id}}
             </a-descriptions-item>
             <a-descriptions-item label="旅行计划名称" :span="2">
               {{pane.data.name}}
             </a-descriptions-item>
-            <a-descriptions-item label="景点" :span="2">
-              {{pane.data.sights}}
+            <a-descriptions-item label="旅行计划详情" :span="2">
+              {{pane.data.plan_items}}
             </a-descriptions-item>
-            <!-- <a-descriptions-item label="景点经纬度" :span="2">
-              {{pane.data.address.latitude}}, {{pane.data.address.longitude}}
-            </a-descriptions-item> -->
-          </a-descriptions>
+          </a-descriptions-items>
         </div>
       </a-tab-pane>
     </a-tabs>
@@ -57,6 +54,7 @@
     </a-modal>
   </div>
 </template>
+
 <script>
 const columns = [
   {
@@ -72,18 +70,10 @@ const columns = [
     title: '用户编号',
     dataIndex: 'owner',
   }
-  // {
-  //   title: '景点概述',
-  //   dataIndex: 'desc',
-  // },
-  // {
-  //   title: '景点评分',
-  //   dataIndex: 'grade'
-  // },
 ];
 
 export default {
-  name:"sceneryManage",
+  name:"planDisplay",
   data() {
     const panes = [
       { title: '旅行计划管理', data:[],  key: '0' ,closable: false },
@@ -133,19 +123,18 @@ export default {
   mounted(){
     // 默认加载全部景点
     this.getPlans({
-      "page":"1",
-      // "keyword": ""
+      "page":"1"
     })
   },
   methods: {
-    getSceneries(p) {
+    getPlans(p) {
       this.spinning = true;
       this.$axios({
         method: "get",
         url: "api/admin/plan",
         params: p,
         headers: {
-          "token-auth": localStorage.getItem('Authorization')
+          Authorization: localStorage.getItem('Authorization')
         },
         data: {},
       }).then((res) => {
@@ -202,8 +191,17 @@ export default {
     onSearch(value){
       let params = {"page":"1"};
       this.searchText = value;
-      params[this.searchType] = this.searchText;
-      this.getSceneries(params);
+      if (this.searchType === "id") {
+        if (isNaN(Number(value))) {
+          alert("输入的旅行计划id不是数字！")
+        }
+        else {
+          params[this.searchType] = parseInt(value);
+        }
+      } else {
+        params[this.searchType] = value;
+      }
+      this.getPlans(params);
     },
     onPageChange(page) {
       for (let i = 1; i < this.panes.length; i++) {
@@ -214,17 +212,17 @@ export default {
       this.selectedRowKeys = [];
       let params = {"page": page};
       params[this.searchType] = this.searchText;
-      this.getSceneries(params);
+      this.getPlans(params);
     },
-    deletePlaces() {
-      this.selectedRows.forEach((item)=>{
-        this.deletePlace(item.id);
-        this.remove(item.key);
-      });
-      this.getSceneries({"page":"1"});
-      this.selectedRows = [];
-      this.selectedRowKeys = [];
-    },
+    // deletePlaces() {
+    //   this.selectedRows.forEach((item)=>{
+    //     this.deletePlace(item.id);
+    //     this.remove(item.key);
+    //   });
+    //   this.getPlans({"page":"1"});
+    //   this.selectedRows = [];
+    //   this.selectedRowKeys = [];
+    // },
     callback(key) {
       console.log(key);
     },
@@ -235,7 +233,7 @@ export default {
       console.log(this.panes);
     },
 
-    // 逐个查看景点的信息
+    // 逐个查看计划的信息
     addSingle(record){
       console.log(record);
       const panes = this.panes;
@@ -243,7 +241,7 @@ export default {
       console.log("addSinge:", item);
 
       let flag = 0
-      // 检测tab中是否已经有了该景点的信息，如果有了，就直接跳过
+      // 检测tab中是否已经有了该旅行计划的信息，如果有了，就直接跳过
       for(let j = 0; j<panes.length;j++){
         if(panes[j].id === item.id){
           console.log("item.id:"+item.id);
@@ -253,20 +251,20 @@ export default {
       }
       if (flag === 1) return
 
-      // Note: 这里调用接口获取景点的详细信息，在新的tab中展示
-      let sceneryId = item.id
+      // Note: 这里调用接口获取旅行计划的详细信息，在新的tab中展示
+      let planId = item.id
       this.$axios({
         method: "get",
-        url: "api/admin/sights/" + sceneryId + "/",
-        params: {},
+        url: "api/admin/plan/" + planId + "/",
+        params: { },
         headers: {
-          "token-auth": localStorage.getItem('Authorization')
+          Authorization: localStorage.getItem('Authorization')
         },
         data: {},
       }).then((res) => {
-        console.log(`getScenery ${sceneryId}`, res);
+        console.log(`getPlan ${planId}`, res);
 
-        // data就直接是景点的数据了
+        // data就直接是旅行计划的数据了
         // 加入key是为了去重
         panes.push({
           title: item.name,

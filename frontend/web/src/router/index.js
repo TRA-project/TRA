@@ -3,10 +3,6 @@ import VueRouter from 'vue-router'
 //装插件
 Vue.use(VueRouter)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> dev
 const routes = [
   {
     path: '/',
