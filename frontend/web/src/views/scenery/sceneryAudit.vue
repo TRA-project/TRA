@@ -13,8 +13,8 @@
             <a-table :row-selection="rowSelection" :columns="columns" :data-source="pane.data" :pagination="false">
               <a slot="id" slot-scope="text, record" @click="addSingle(record)">{{ text}}</a>
               <template slot="action" slot-scope="record" >
-                <a-button style="margin-right:10px" size="small" type="primary" @click="approveRequest(record.id)">批准</a-button>
-                <a-button size="small" @click="rejectRequest(record.id)">不批准</a-button>
+                <a-button style="margin-right:10px" size="small" type="primary" @click="approveSingle(record.id)">批准</a-button>
+                <a-button size="small" @click="rejectSingle(record.id)">不批准</a-button>
               </template>
             </a-table>
             <br>
@@ -222,60 +222,90 @@ export default {
       })
     },
     approveRequest(requestId) {
-      this.$axios({
-        method: "post",
-        url: "api/admin/sights/audit/approve/",
-        params: {},
-        data: {
-          "audit_id": requestId,
-        },
-        headers: {
-          Authorization: localStorage.getItem('Authorization')
-        },
-      }).then((res) => {
-        console.log(`approveRequest ${requestId}`, res);
-      }).catch((error) => {
-        if (error.response.status === 403) {
-          this.visible = true;
-        }
-      });
+      return new Promise((resolve, reject) => {
+        this.$axios({
+          method: "post",
+          url: "api/admin/sights/audit/approve/",
+          params: {},
+          data: {
+            "audit_id": requestId,
+          },
+          headers: {
+            Authorization: localStorage.getItem('Authorization')
+          },
+        }).then((res) => {
+          console.log(`approveRequest ${requestId}`, res);
+          resolve();
+        }).catch((error) => {
+          if (error.response.status === 403) {
+            this.visible = true;
+          }
+          reject();
+        })
+      })
+    },
+    approveSingle(requestId) {
+      this.approveRequest(requestId).then(() => {
+        this.getAudits({"page":"1"});
+        this.selectedRows = [];
+        this.selectedRowKeys = [];
+      })
     },
     approveRequests() {
+      let promises = []
       this.selectedRows.forEach((item)=>{
-        this.approveRequest(item.id);
+        let promise = this.approveRequest(item.id);
+        promises.push(promise);
         this.remove(item.key);
       });
-      this.getAudits({"page":"1"});
-      this.selectedRows = [];
-      this.selectedRowKeys = [];
+      Promise.all(promises).then(() => {
+        this.getAudits({"page":"1"});
+        this.selectedRows = [];
+        this.selectedRowKeys = [];
+      })
     },
     rejectRequest(requestId) {
-      this.$axios({
-        method: "post",
-        url: "api/admin/sights/audit/reject/",
-        params: {},
-        headers: {
-          Authorization: localStorage.getItem('Authorization')
-        },
-        data: {
-          "audit_id": requestId,
-        },
-      }).then((res) => {
-        console.log(`rejectRequest ${requestId}`, res);
-      }).catch((error) => {
-        if (error.response.status === 403) {
-          this.visible = true;
-        }
-      });
+      return new Promise(((resolve, reject) => {
+        this.$axios({
+          method: "post",
+          url: "api/admin/sights/audit/reject/",
+          params: {},
+          headers: {
+            Authorization: localStorage.getItem('Authorization')
+          },
+          data: {
+            "audit_id": requestId,
+          },
+        }).then((res) => {
+          console.log(`rejectRequest ${requestId}`, res);
+          resolve()
+        }).catch((error) => {
+          if (error.response.status === 403) {
+            this.visible = true;
+          }
+          reject()
+        });
+      }))
+    },
+    rejectSingle(requestId) {
+      this.rejectRequest(requestId).then(() => {
+        this.getAudits({"page":"1"});
+        this.selectedRows = [];
+        this.selectedRowKeys = [];
+      })
     },
     rejectRequests() {
+      let promises = []
       this.selectedRows.forEach((item)=>{
-        this.rejectRequest(item.id);
+        let promise = this.rejectRequest(item.id);
+        promises.push(promise);
         this.remove(item.key);
       });
-      this.getAudits({"page":"1"});
-      this.selectedRows = [];
-      this.selectedRowKeys = [];
+      Promise.all(promises).then(() => {
+        this.getAudits({"page":"1"});
+        this.selectedRows = [];
+        this.selectedRowKeys = [];
+      })
     },
     handleOk() {
       this.ModalText = '该对话框将在2秒后关闭';

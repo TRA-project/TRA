@@ -146,10 +146,10 @@ Page({
         showDialog: false,
       })
       let data
-      if (this.dialogMode === "intro") {
-        data = {"desc": this.data.editText, id: this.data.id}
+      if (this.data.dialogMode == "intro") {
+        data = {"desc": this.data.editText, sight_id: this.data.id}
       } else {
-        data = {"open_time": this.data.editText, id: this.data.id}
+        data = {"open_time": this.data.editText, sight_id: this.data.id}
       }
       wx.request({
         url: util.server_hostname + "/api/core/sights/" + this.data.id + "/",
@@ -170,7 +170,7 @@ Page({
     // 确认添加某个游览点
     onConfirmSpot(e) {
       let data = {
-        id: this.data.id,
+        sight_id: this.data.id,
         inner_sights: [
           {
             name: this.data.editSpotName,
