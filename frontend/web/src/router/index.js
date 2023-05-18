@@ -146,6 +146,11 @@ const routes = [
         path:"/sceneryAudit",
         name:"sceneryAudit",
         component:()=>import("../views/scenery/sceneryAudit")
+      },
+      {
+        path:"/travelCreateLog",
+        name:"travelCreateLog",
+        component:()=>import("../views/travel/travelCreateLog")
       }
     ]
   },

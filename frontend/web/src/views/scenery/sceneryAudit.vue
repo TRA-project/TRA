@@ -5,6 +5,7 @@
 
         <!--        1. 表格tab-->
         <div v-if="pane.key === '0'">
+          <a-button style="margin:0 5px 0 50px" @click="refresh">刷新</a-button>
           <a-button style="margin:0 5px 0 50px" type="primary" @click="add">查看</a-button>
           <a-button style="margin:0 5px" type="primary" @click="approveRequests">通过</a-button>
           <a-button style="margin:0 5px" type="primary" @click="rejectRequests">不通过</a-button>
@@ -68,21 +69,21 @@
 <script>
 const columns = [
   {
-    title: '景点编号',
+    title: '审批编号',
     dataIndex: 'id',
     scopedSlots: { customRender: 'id' },
+  },
+  {
+    title: '景点编号',
+    dataIndex: 'sceneryId',
   },
   {
     title: '景点名称',
     dataIndex: 'name',
   },
   {
-    title: '景点描述',
-    dataIndex: 'desc',
-  },
-  {
-    title: '景点图片',
-    dataIndex: 'image'
+    title: '修改或新建的内容',
+    dataIndex: 'content'
   },
   {
     title: '请求类型',
@@ -146,8 +147,7 @@ export default {
   mounted(){
     // 默认加载全部景点
     this.getAudits({
-      "page":"1",
-      "keyword": ""
+      "page":"1"
     })
   },
   methods: {
@@ -163,32 +163,75 @@ export default {
         data: {},
       }).then((res) => {
         this.data = res.data.results;
-        this.pageNum = res.data.pages;
+        this.pageNum = Math.ceil(res.data.count / 10); // 每页固定10条;
         let key = 1;
+        let promises = []
 
         // 对每个元素赋以key，数值递增
         this.data.forEach((item)=>{
           item.key = key + '';
           key = key + 1;
-        })
 
-        this.panes[0].data = this.data;
-        this.spinning = false;
+          // 将json中的\u???(utf-8编码)转换为中文格式
+          item.content = item.content.replace(/\\u(\w{4})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));
+          item.sceneryId = JSON.parse(item.content).id
+
+          // 有sceneryId，且没有填入信息
+          if (item.sceneryId !== undefined && item.name === undefined) {
+            let sceneryId = item.sceneryId
+            let promise = this.$axios({
+              method: "get",
+              url: "api/admin/sights/" + sceneryId + "/",
+              params: {},
+              headers: {
+                Authorization: localStorage.getItem('Authorization')
+              },
+              data: {},
+            }).then((res) => {
+              console.log(`getScenery ${sceneryId}`, res);
+              // Note: 将返回数据填入this.data中
+              this.data.forEach(item => {
+                if (item.sceneryId === sceneryId) {
+                  item.name = res.data.name
+                  // TODO: 填入其他信息
+                  console.log(this.data)
+                }
+              })
+            }).catch((error) => {
+              alert(`${error}`)
+            });
+            promises.push(promise)
+          } else {
+            item.name = "None"
+            item.sceneryId = "None"
+          }
+        })
+        Promise.all(promises).then(() => {
+          this.panes[0].data = this.data;
+          this.spinning = false;
+        })
       }).catch((error) => {
         if (error.response.status === 403) {
           this.visible = true;
         }
       });
     },
+    refresh() {
+      this.getAudits({
+        "page":"1"
+      })
+    },
     approveRequest(requestId) {
       this.$axios({
         method: "post",
-        url: "api/admin/sights/audit/approve/" + requestId + "/",
+        url: "api/admin/sights/audit/approve/",
         params: {},
+        data: {
+          "audit_id": requestId,
+        },
         headers: {
           Authorization: localStorage.getItem('Authorization')
         },
-        data: {},
       }).then((res) => {
         console.log(`approveRequest ${requestId}`, res);
       }).catch((error) => {
@@ -209,12 +252,14 @@ export default {
     rejectRequest(requestId) {
       this.$axios({
         method: "post",
-        url: "api/admin/sights/audit/reject/" + requestId + "/",
+        url: "api/admin/sights/audit/reject/",
         params: {},
         headers: {
           Authorization: localStorage.getItem('Authorization')
         },
-        data: {},
+        data: {
+          "audit_id": requestId,
+        },
       }).then((res) => {
         console.log(`rejectRequest ${requestId}`, res);
       }).catch((error) => {
