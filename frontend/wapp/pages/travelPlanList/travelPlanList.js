@@ -105,7 +105,7 @@ Page({
         "token-auth": token
       },
       success: (res) => {
-        console.log("plan receive: ", res)
+        console.log("plan receive: ", res.data)
         // 获取内容填入travelPlanList(成功/失败)
         if (res.statusCode !== 200) {
           this.setData({

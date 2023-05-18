@@ -16,6 +16,9 @@ node_modules/
 miniprogram_npm/
 project.private.config.json
 
+# Privacy
+*privacy.js
+
 
 ########### from Node.gitignore ###########
 # Logs

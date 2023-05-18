@@ -1,0 +1,32 @@
+<!--pages/travelPlanInside/travelPlanInside.wxml-->
+
+<view class="travel-plan-title-container">
+  <input class="travel-plan-title" placeholder="定制新计划名" 
+    model:value="{{planName}}" />
+</view>
+
+<view class="custom-argument-display-container">
+  <view class="custom-arg-display-title">配置信息</view>
+  <view class="custom-arg-item" wx:for="{{customArg}}">
+    {{index}} : {{item}}
+  </view>
+</view>
+
+<view class="travel-plan-map-container">
+  <map class="tencent-map" longitude="{{mapLongitude}}" latitude="{{mapLatitude}}" id="preview-map" show-location
+       markers="{{mapMarkers}}"></map>
+</view>
+
+<view class="travel-plans-display-container">
+  <van-tabs animated active="{{plansActive}}" bind:change="onTabChange" color="rgba(30,144,255,1.0)">
+    <van-tab wx:for="{{travelPlansList}}" wx:key="*this" title="方案{{index+1}}">
+      <my-movable-list planNo="{{index}}" tarList="{{item}}" 
+        bind:synctarlistchange="onSyncTarListChange">
+      </my-movable-list>
+    </van-tab>
+  </van-tabs>
+</view>
+
+<view class="travel-plan-footer-container">
+  <button class="travel-plan-submit-button" type="primary" hover-class="button-hover" bindtap="onConfirmPlan">确认方案</button>
+</view>

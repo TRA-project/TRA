@@ -1,5 +1,7 @@
 // pages/sceneSearch/sceneSearch.js
 
+const utils = require("../../utils/util")
+
 var app = getApp()
 
 Page({
@@ -11,9 +13,9 @@ Page({
     historyList: [],
     myInput: "",
     preferenceList: [
-      {"name": "量子之海", "position": "？？？"},
-      {"name": "托尔巴纳", "position": "艾恩格朗特"},
-      {"name": "来生","position": "沃森-歌舞伎区"},
+      {"name": "量子之海", "desc": "？？？"},
+      {"name": "托尔巴纳", "desc": "艾恩格朗特"},
+      {"name": "来生","desc": "沃森-歌舞伎区"},
     ],
   },
 
@@ -25,6 +27,7 @@ Page({
     this.setData({
       historyList: app.globalData.historyList
     })
+
   },
 
   /**
@@ -37,8 +40,26 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-
+  onShow() { 
+    var url = utils.server_hostname + "/api/core/sights/recommend/"
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
+    wx.request({
+      url: url,
+      method: "GET",
+      header: {
+        "token-auth": token
+      },
+      success:(res) => {
+        console.log("GET /sights/recommend:", res.data)
+        var list = res.data.splice(0, 5)
+        this.setData({
+          preferenceList: list
+        })
+      },
+      fail: err => {
+        console.log("fail to request", err)
+      }
+    })
   },
 
   // 同步子组件input内容
@@ -83,7 +104,7 @@ Page({
       myInput: event.currentTarget.dataset.name
     })
     var mySearchBar = this.selectComponent(".scene-search-bar")
-    mySearchBar.getSearchList()
+    mySearchBar.getSuggestList()
   },
 
   deleteHistory() {
@@ -101,7 +122,7 @@ Page({
       myInput: event.currentTarget.dataset.name
     })
     var mySearchBar = this.selectComponent(".scene-search-bar")
-    mySearchBar.getSearchList()
+    mySearchBar.getSuggestList()
     mySearchBar.onConfirm()
   },
 

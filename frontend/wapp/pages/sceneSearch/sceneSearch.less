@@ -1,0 +1,106 @@
+/* pages/sceneSearch/sceneSearch.wxss */
+@import "../../utils/style.less";
+
+.search-box {
+  position: sticky; /* 吸顶效果 */
+  top: 0;
+  z-index: 99;
+}
+
+.history-box {
+  position: sticky;
+  top: 50;
+  z-index: 5;
+  padding: 10rpx 20rpx; /* 上下 左右 */
+
+  .history-title {
+    display: flex;
+    justify-content: space-between; /* 两端贴边对齐 */
+    align-items: center;
+    height: 80rpx;
+    font-weight: bolder;
+
+    .trash-icon {
+      width: 34rpx;
+      height: 34rpx;
+      margin-right: 20rpx;
+    }
+  }
+
+  .history-list {
+    display: flex;
+    flex-wrap: wrap;  /* 一行放不下，允许换行 */
+
+    .history-item {
+      background-color: rgba(219, 219, 219, 0.705);
+      border-radius: 20rpx;
+      padding: 8rpx 12rpx;
+      margin: 5rpx 10rpx;
+    }
+  }
+}
+
+.preference-box {
+  padding: 10rpx 20rpx; /* 上下 左右 */
+
+  .preference-title {
+    align-items: center;
+    font-weight: bolder;
+  }
+
+  .preference-list {
+    padding: 5rpx 20rpx;
+
+    .preference-item {
+      height: 94rpx;
+      font-size: 30rpx;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2rpx solid rgba(189, 187, 187, 0.938);
+
+      .locate-icon {
+        height: 50rpx;
+        width: 40rpx;
+      }
+
+      .scenery-info {
+        width: 80%;
+        white-space: nowrap;  /* 不换行 */
+        overflow: hidden;     /* 超出部分隐藏 */
+        text-overflow: ellipsis;  /* 溢出元素省略号表示 */
+        text-align: left;
+
+        .scenery-name {
+          font-weight: bolder;
+        }
+        
+        .scenery-position {
+          font-size: 24rpx;
+          color: rgba(119, 119, 119, 1);
+          width: 90%;
+          .single-line();
+        }
+      }
+
+      .rightarrow-icon {
+        height: 60rpx;
+        width: 60rpx;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

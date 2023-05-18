@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "van-button": "@vant/weapp/button/index",
-    "my-movable-list": "/components/movableList/movableList"
-  }
-}

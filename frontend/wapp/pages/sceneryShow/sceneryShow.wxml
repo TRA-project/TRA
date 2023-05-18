@@ -1,7 +1,7 @@
 <!--pages/sceneryShow/sceneryShow.wxml-->
 <van-skeleton title row="20" avatar loading="{{loading}}">
 <swiper class="pic" bindchange="onSwiperChange">
-    <swiper-item wx:for="{{images}}">
+    <swiper-item wx:for="{{images}}" wx:key="index">
         <image src="{{item}}"></image>
     </swiper-item>
 </swiper>
@@ -41,7 +41,7 @@
     </view>
     <view class="card priceCard">
         <view class="cardTitle">门票价格</view>
-        <view wx:for="{{price}}">
+        <view wx:for="{{price}}" wx:key="name">
             <view class="item">
                 <view class="name">{{item.name}}</view>
                 <view class="price">￥{{item.price}}</view>
@@ -53,7 +53,7 @@
             <view class="cardTitle">内部游览点</view>
             <image class="add" src="../../images/add.png" style="width: 48rpx; height: 48rpx; float: right;" bindtap="onAddSpot"></image>
         </view>
-        <view wx:for="{{inner_sights}}">
+        <view wx:for="{{inner_sights}}" wx:key="name">
             <view class="divLineX2"></view>
             <view class="listelm">
                 <image src="../../images/flag.png"></image>
@@ -73,12 +73,13 @@
               <image src="/images/flag.png" style="vertical-align: top; margin-top: 20rpx;"></image>
               <view class="info">
                   <view>
-                      <input value="{{editSpotName}}" focus="{{focusAddElm}}" placeholder="输入游览点名称"/>
+                  <!-- 双向绑定 -->
+                      <input model:value="{{editSpotName}}" focus="{{focusAddElm}}" placeholder="输入游览点名称"/>
                   </view>
                   <view style="margin-top: 10rpx;">
                     <van-cell-group>
                       <van-field
-                        value="{{ editSpotIntro }}"
+                        model:value="{{ editSpotIntro }}"
                         type="textarea"
                         placeholder="请输入游览点介绍"
                         autosize
@@ -97,7 +98,7 @@
     <!-- 空出下面工具栏的高度 -->
     <view style="height: 100rpx;"></view>
 
-    <bottomBar isCollect="{{isCollect}}" numComment="{{numComment}}"  bind:comment="onComment" bind:collect="onCollect"></bottomBar>
+    <bottomBar isCollect="{{isCollect}}" numComment="{{numComment}}"  bind:comment="onComment" bind:collect="onCollect" style="width: 0rpx; height: -44rpx; display: block; box-sizing: border-box"></bottomBar>
     
     <!-- <van-submit-bar
       price="{{ 3050 }}"
@@ -115,7 +116,7 @@
       bind:confirm="onConfirm"
     >
     <van-field
-      value="{{ editText }}"
+      model:value="{{editText}}"
       type="textarea"
       placeholder="请输入游览点介绍"
       autosize
