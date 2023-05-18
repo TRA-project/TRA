@@ -3,49 +3,49 @@
     <a-tabs v-model="activeKey" type="editable-card" @edit="onEdit" hide-add>
       <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
 
-<!--        1. 表格tab-->
+        <!--        1. 表格tab-->
         <div v-if="pane.key === '0'">
 
-<!--          选择搜索文本按照什么来搜索-->
+          <!--          选择搜索文本按照什么来搜索-->
           <a-select default-value="id" style="width: 100px; margin:0px 10px 15px 0px" @change="handleChange">
             <a-select-option value="id">
-              景点编号
+              出行记录生成编号
             </a-select-option>
             <a-select-option value="keyword">
-              景点名称
+              出行记录生成时间
             </a-select-option>
           </a-select>
           <a-input-search placeholder="请输入搜索文本" style="width: 300px; margin:0 5px 0 2px"  @search="onSearch" />
           <a-button style="margin:0 5px 0 50px" type="primary" @click="add">查看</a-button>
           <a-button style="margin:0 5px" type="danger" @click="deletePlaces">删除</a-button>
 
-<!--          借用这个模态框做其他事情-->
-<!--          <a-modal v-model="addImgModalVisible" title="添加地点图片" @ok="addImgOk" @cancel="addImgCancel">-->
-<!--            <a-form>-->
-<!--              <a-form-item label="地点编号：">-->
-<!--                <a-input placeholder="请输入地点编号" v-model="placeId" />-->
-<!--              </a-form-item>-->
-<!--              <a-form-item label="地点图片：">-->
-<!--                <input id="uploadFile" type="file" multiple ref="placeImgs" @change="imgChange" accept="image/*" >-->
-<!--              </a-form-item>-->
-<!--            </a-form>-->
-<!--          </a-modal>-->
+          <!--          借用这个模态框做其他事情-->
+          <!--          <a-modal v-model="addImgModalVisible" title="添加地点图片" @ok="addImgOk" @cancel="addImgCancel">-->
+          <!--            <a-form>-->
+          <!--              <a-form-item label="地点编号：">-->
+          <!--                <a-input placeholder="请输入地点编号" v-model="placeId" />-->
+          <!--              </a-form-item>-->
+          <!--              <a-form-item label="地点图片：">-->
+          <!--                <input id="uploadFile" type="file" multiple ref="placeImgs" @change="imgChange" accept="image/*" >-->
+          <!--              </a-form-item>-->
+          <!--            </a-form>-->
+          <!--          </a-modal>-->
 
-<!--          表格的主体-->
+          <!--          表格的主体-->
           <a-spin :spinning="spinning">
             <a-table :row-selection="rowSelection" :columns="columns" :data-source="pane.data" :pagination="false">
               <a slot="id" slot-scope="text, record" @click="addSingle(record)">{{ text}}</a>
-<!--              <template slot="action" slot-scope="record" >-->
-<!--                <a-button style="margin-right:10px" size="small" type="primary" @click="passSinglePlace(record)">上架</a-button>-->
-<!--                <a-button size="small" @click="failSinglePlace(record)">下架</a-button>-->
-<!--              </template>-->
+              <!--              <template slot="action" slot-scope="record" >-->
+              <!--                <a-button style="margin-right:10px" size="small" type="primary" @click="passSinglePlace(record)">上架</a-button>-->
+              <!--                <a-button size="small" @click="failSinglePlace(record)">下架</a-button>-->
+              <!--              </template>-->
             </a-table>
             <br>
             <a-pagination show-quick-jumper :page-size="1" :total="pageNum" @change="onPageChange" />
           </a-spin>
         </div>
 
-<!--        2. 详细信息tab-->
+        <!--        2. 详细信息tab-->
         <div v-else style="margin:10px 0 10px 15px;">
           <a-descriptions title="景点信息" bordered>
             <a-descriptions-item label="景点编号" :span="2">
@@ -85,35 +85,6 @@
                 {{ priceData.name }}：{{ priceData.desc }}
               </li>
             </a-descriptions-item>
-
-<!--            下面是可修改项-->
-  <!--            <a-descriptions-item label="地点描述" :span="2" :key="descriptionEditable">-->
-  <!--              <div v-if="data[pane.key-1].descriptionEditable">-->
-  <!--                <a-textarea v-model="data[pane.key-1].description" style="width: 700px" auto-size/>-->
-  <!--                <a-button style="margin-left: 40px; width: 64px; height: 32px" type="primary" @click="descriptionSave">保存</a-button>-->
-  <!--                <a-button style="margin-left: 20px; width: 64px; height: 32px" @click="descriptionCancel">取消</a-button>-->
-  <!--              </div>-->
-  <!--              <div v-else >-->
-  <!--                {{ data[pane.key-1].description }}-->
-  <!--                <a-icon-->
-  <!--                    type="edit"-->
-  <!--                    theme="twoTone"-->
-  <!--                    style="fontSize: 18px;"-->
-  <!--                    @click="descriptionEdit"-->
-  <!--                />-->
-  <!--              </div>-->
-  <!--            </a-descriptions-item>-->
-
-<!--            以下是图片相关的信息-->
-<!--            <a-descriptions-item label="地点封面" :span="3">-->
-<!--              <img :src="data[pane.key-1].placeCover" width="200" alt="">-->
-<!--            </a-descriptions-item>-->
-<!--            <a-descriptions-item label="地点图片" :span="3">-->
-<!--              <div v-for="item in data[pane.key-1].placeImages" :key="item">-->
-<!--                <img :src="item" width="200" alt="">-->
-<!--                <a-button style="margin-left: 40px; width: 64px; height: 32px" type="primary" @click="deletePlaceImages(item)">删除</a-button>-->
-<!--              </div>-->
-<!--            </a-descriptions-item>-->
           </a-descriptions>
         </div>
       </a-tab-pane>
@@ -154,7 +125,7 @@ export default {
   name:"sceneryManage",
   data() {
     const panes = [
-      { title: '景点管理', data:[],  key: '0' ,closable: false },
+      { title: '出行计划生成记录', data:[],  key: '0' ,closable: false },
     ];
     return {
       spinning:true,
@@ -271,14 +242,7 @@ export default {
       let params = {"page":"1"};
       this.searchText = value;
       if (this.searchType === "id") {
-        if (isNaN(Number(value))) {
-          alert("输入的景点id不是数字！")
-        }
-        else {
-          params[this.searchType] = parseInt(value);
-        }
-      } else {
-        params[this.searchType] = value;
+        params[this.searchType] = parseInt(value);
       }
       this.getSceneries(params);
     },

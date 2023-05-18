@@ -20,3 +20,4 @@ class InnerSightSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'prices': {'min_value': 0, 'required': True}
         }
+        fields = '__all__'
