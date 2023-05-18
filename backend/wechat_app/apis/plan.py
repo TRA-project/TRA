@@ -36,11 +36,27 @@ testflag = 1
 def string_to_time(a):
     return int(float(a))
 
+
+def day(a):
+    return a * 86400
+
+
+def hour(a):
+    return a * 3600
+
+
+def minute(a):
+    return 60 * a
+
+
 def time_to_schedule(a):
     pass
 
+
 def time_to_schedule_item():
     pass
+
+
 def data_create(data, serializer_class):
     serializer = serializer_class(data=data)
     serializer.is_valid(raise_exception=True)
@@ -136,27 +152,27 @@ def new_plan_item(plan_id, i, name, temp, time):
 
 
 def manage(plan_id, sight_list, start_time, end_time, get_up_time, sleep_time):
-    time = start_time + datetime.timedelta(hours=get_up_time)
+    present_time = start_time + hour(get_up_time)
     list = []
     last = None
     for sight_id in sight_list:
         sight = Sight.objects.get(id=eval(sight_id))
         i = SightPlanSerializer(sight).data
-
         if last is not None:
-            temp = time
-            time += datetime.timedelta(hours=1)
-            new_item = new_plan_item(plan_id, last, '交通', temp, time)
+            temp = present_time
+            present_time += hour(get_up_time)
+            new_item = new_plan_item(plan_id, last, '交通', temp, present_time)
             list.append(new_item)
-        if time.hour > sleep_time or time.hour + i.get('playtime') > sleep_time:
-            temp = time
-            persistent = datetime.timedelta(days=1) - datetime.timedelta(hours=time.hour)
-            persistent += datetime.timedelta(hours=8)
-            time += persistent
-            new_item = new_plan_item(plan_id, last, '住宿', temp, time)
+        timeArray = time.localtime(present_time)
+        if timeArray.tm_hour > sleep_time or timeArray.tm_hour + i.get('playtime') > sleep_time:
+            temp = present_time
+            persistent = day(1) - hour(timeArray.tm_hour)
+            persistent += hour(get_up_time)
+            present_time += persistent
+            new_item = new_plan_item(plan_id, last, '住宿', temp, present_time)
             list.append(new_item)
-        temp = time
-        time += datetime.timedelta(hours=i.get('playtime'))
+        temp = present_time
+        present_time += hour(string_to_time(i.get('playtime')))
         new_item = new_plan_item(plan_id, i, i.get('name'), temp, time)
         list.append(new_item)
         last = i
@@ -167,8 +183,8 @@ def create_schedule(plan_id, owner_id, name, list):
     base_date = None
     schedule_id = -1
     for i in list:
-        if int(i.get('start_time')/86400) != base_date:
-            base_date = int(i.get('start_time')/86400)
+        if int(i.get('start_time') / 86400) != base_date:
+            base_date = int(i.get('start_time') / 86400)
             data = {'owner': owner_id, 'title': name, 'date': time.localtime(i.get('start_time'))}
             schedule = data_create(data, ScheduleSerializer).data
             schedule_id = schedule.get('id')
@@ -291,7 +307,7 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         plan = data_create(data, PlanSerializer).data
         plan_id = plan.get('id')
         list = manage(plan_id, sights, start_time, end_time, get_up_time, sleep_time)
-        create_schedule(plan_id, owner_id, name, list)
+        #create_schedule(plan_id, owner_id, name, list)
         return Response(plan)
 
     def destroy(self, request, *args, **kwargs):

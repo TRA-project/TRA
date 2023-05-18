@@ -56,3 +56,6 @@ class Address(models.Model):
             address.save()
 
         return address
+
+    def __str__(self):
+        return self.name

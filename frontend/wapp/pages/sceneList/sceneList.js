@@ -210,15 +210,15 @@ Page({
           console.log(res)
           var scene = res.data
           var item = {
+            id: scene.id,
             address: {
               name: scene.address.name,
               latitude: scene.address.latitude,
               longitude: scene.address.longitude
             },
-            cover: scene.images[0].substr(utils.server_hostname.length),
-            desc: scene.desc,
-            id: scene.id,
             name: scene.name,
+            desc: scene.desc,
+            cover: scene.images.length > 0 ? scene.images[0].substr(utils.server_hostname.length) : "/media/images/null",
           }
           resolve(item)
         },

@@ -47,13 +47,15 @@ Component({
   methods: {
     drawList() {
       // 初始化位置；根据序列重新分配y的位置
-      this.properties.tarList.map((item, index) => {
+      var list = this.data.tarList
+      for (var index in list) {
         var newY = (this.properties.itemMarginTop + this.properties.itemHeight) * index
-        this.setData({
-          ["tarList[" + index + "].y"]: newY
-        })
+        list[index].y = newY
+      }
+      this.setData({
+        list
       })
-
+      
       //console.log("draw list:", JSON.stringify(this.properties.tarList))
       // 同步到父页面
       this.triggerEvent("synctarlistchange", {

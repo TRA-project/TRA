@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "van-steps": "@vant/weapp/steps/index"
+    "van-steps": "/components/mySteps/mySteps"
   },
   "navigationBarTitleText": "出行计划详情"
 }

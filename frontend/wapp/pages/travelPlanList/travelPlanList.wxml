@@ -52,10 +52,9 @@
 
       <van-field
         label="体验期望"
-        clearable
-        model:value="{{ expectValue }}"
+        clearable autosize
         type="textarea"
-        autosize
+        model:value="{{ expectValue }}"
         placeholder="简述您心中理想的计划"
       />
 

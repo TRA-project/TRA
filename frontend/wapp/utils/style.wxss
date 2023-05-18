@@ -1,0 +1,15 @@
+/* for Unification of CSS */
+/* offset-x | offset-y | blur-radius | spread-radius | color */
+.single-line {
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 溢出元素省略号表示 */
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

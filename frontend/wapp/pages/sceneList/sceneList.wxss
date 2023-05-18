@@ -63,6 +63,7 @@
 }
 
 .scenery-list-container {
+  min-height: 1000rpx;
   display: flex;
   flex-direction: column;
 }
@@ -147,7 +148,7 @@
 
 .scenery-reselect-confirm-container {
   position: sticky;
-  bottom: 5%;
+  bottom: 80rpx;
 
   display: flex;
   justify-content: center;

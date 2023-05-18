@@ -11,7 +11,7 @@ Page({
         // 以下是景点方面的数据
         id: 0,
         curImage: 0,
-        images: ["../../images/guozhibeiyuan.jpg", "../../images/logo.png"],
+        images: [util.server_hostname + "/media/guozhibeiyuan.jpg", "../../images/logo.png"],
         name: "国家植物馆北园",
         remark: "4.8",
         intro: "国家植物园包括南园（中国科学院植物研究所）和北园（北京市植物园）两个园区。南园建有15个特色专类园，拥有展览温室、康熙御碑等人文景观和菩提树等国礼植物，有亚洲最大的植物标本馆、中国古植物馆等 ...",
@@ -147,14 +147,17 @@ Page({
       })
       let data
       if (this.dialogMode === "intro") {
-        data = {"desc": this.data.editText}
+        data = {"desc": this.data.editText, id: this.data.id}
       } else {
-        data = {"desc": this.data.open_time}
+        data = {"open_time": this.data.editText, id: this.data.id}
       }
       wx.request({
-        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/edit",
-        method: "POST",
+        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/",
+        method: "PUT",
         data: data,
+        header: {
+          "token-auth": this.data.token
+        },
         success(res) {
           Toast("编辑成功，待审核")
         },
@@ -166,15 +169,26 @@ Page({
 
     // 确认添加某个游览点
     onConfirmSpot(e) {
-      let data = [{name: this.data.editSpotName, desc: this.data.editSpotIntro}]
+      let data = {
+        id: this.data.id,
+        inner_sights: [
+          {
+            name: this.data.editSpotName,
+            desc: this.data.editSpotIntro
+          }
+        ]
+      }
       this.setData({
         editSpotName: "",
         editSpotIntro: "",
         add_elm: false
       })
       wx.request({
-        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/edit",
-        method: "POST",
+        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/",
+        method: "PUT",
+        header: {
+          "token-auth": this.data.token
+        },
         data: data,
         success(res) {
           Toast("推荐游览点成功，待审核")
