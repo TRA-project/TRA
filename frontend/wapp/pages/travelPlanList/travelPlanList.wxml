@@ -66,6 +66,7 @@
         bindtap="onDateBeginPickerShow"
       />
       <van-datetime-picker
+        type="date"
         wx:if="{{ showDateBeginPicker }}"
         value="{{ dateBeginPickerValue }}"
         min-date="{{ minDate }}"
@@ -81,6 +82,7 @@
         bindtap="onDateEndPickerShow"
       />
       <van-datetime-picker
+        type="date"
         wx:if="{{ showDateEndPicker }}"
         value="{{ dateEndPickerValue }}"
         min-date="{{ minDate }}"
