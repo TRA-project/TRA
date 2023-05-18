@@ -21,13 +21,9 @@ ROUTER.register(r'city', CityApis)
 ROUTER.register(r'province', ProvinceApis)
 ROUTER.register(r'log', LogApis)
 ROUTER.register(r'sight', SightApis)
-<<<<<<< HEAD
 ROUTER.register(r'sights', SightApis)
 ROUTER.register(r'plan', PlanApis)
-=======
-ROUTER.register(r'plan', PlanApis)
-ROUTER.register(r'sights', SightApis)
->>>>>>> 02ede61a2b3a72c4a502cb6be5dd05fa9701cd0a
+
 
 
 urlpatterns = [
