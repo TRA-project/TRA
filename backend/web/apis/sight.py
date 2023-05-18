@@ -65,21 +65,27 @@ class SightApis(ModelViewSet):
         # write the database to renew data
         request = json.loads(feedback.content)
         # print(request)
-        sight_id = request.get('id')
+        sight_id = request.get('sight_id')
+
         desc = request.get('desc')
         open_time = request.get('open_time')
         # print(desc, open_time)
 
-        sight = Sight.objects.get(id=sight_id)
-        sight.desc = desc
-        sight.open_time = open_time
+        if sight_id is None:
+            sight = Sight(desc=desc, open_time=open_time)
+            sight.save()
+        else:
+            sight = Sight.objects.get(id=sight_id)
+            sight.desc = desc
+            sight.open_time = open_time
+            sight.save()
 
         for data in request.get('inner_sights'):
             inner_sight = InnerSight(name=data.get('name'),
                                      desc=data.get('desc'),
                                      sight=sight)
             inner_sight.save()
-        sight.save()
+
         return Response(SightDetailedSerializer(sight).data)
 
     @action(detail=False, methods=['POST'], url_path='audit/reject')
