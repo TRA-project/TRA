@@ -297,12 +297,12 @@ Page({
     that.selectSceneryFromTag()
   },
 
-  addScenery() {
-    console.log("tap")
-    wx.navigateTo({
-      url: '/pages/spotAdd/spotAdd',
-    })
-  },
+  // addScenery() {
+  //   console.log("tap")
+  //   wx.navigateTo({
+  //     url: '/pages/spotAdd/spotAdd',
+  //   })
+  // },
 
   onCheckboxChange(event) {
     console.log("checkbox changed, value:")
