@@ -62,10 +62,18 @@ Page({
             mapMarkers: defaultData.mapMarkers,
           })
         } else { // 获取成功
+          var planItems = res.data.plan_items
+          // 调整后端python秒级时间戳为毫秒级
+          planItems.map(item => {
+            item.start_time *= 1000
+            item.end_time *= 1000
+            return item
+          })
           this.setData({
-            travelPlan: res.data.plan_items,
+            travelPlan: planItems,
             travelPlanName: res.data.name,
           })
+
         }
         console.log("plan_items:", this.data.travelPlan)
 

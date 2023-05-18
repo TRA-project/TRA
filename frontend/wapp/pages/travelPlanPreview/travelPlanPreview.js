@@ -7,8 +7,8 @@ const keyMap = {
   "city": "地区",
   "tag" : "预期体验",
   "cost": "预期开销",
-  "timeStart": "开始时间",
-  "timeEnd": "结束时间"
+  "start_time": "开始时间",
+  "end_time": "结束时间"
 }
 
 let mapContext
@@ -62,8 +62,8 @@ Page({
       // 处理配置信息
       var transData = Object.keys(data.arg).reduce((newData, key) => {
         let newKey = keyMap[key] || key
-        if (key === "timeStart" || key === "timeEnd") {
-          newData[newKey] = utils.formatTime(new Date(data.arg[key]))
+        if (key === "start_time" || key === "end_time") {
+          newData[newKey] = utils.getNowDateLine(new Date(data.arg[key]))
         } else {
           newData[newKey] = data.arg[key]
         }
@@ -204,6 +204,8 @@ Page({
     var formData = {
       name: this.data.planName,
       sights: spotList,
+      start_time: this.data.rawCustomArg.start_time,
+      end_time: this.data.rawCustomArg.end_time,
     }
     console.log("confirm formData:", formData)
 
