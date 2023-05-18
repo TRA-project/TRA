@@ -3,7 +3,10 @@ import VueRouter from 'vue-router'
 //装插件
 Vue.use(VueRouter)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 const routes = [
   {
     path: '/',
@@ -150,6 +153,11 @@ const routes = [
         path:"/planDisplay",
         name:"planDisplay",
         component:()=>import("../views/plan/planDisplay")
+      },
+      {
+        path:"/travelCreateLog",
+        name:"travelCreateLog",
+        component:()=>import("../views/travel/travelCreateLog")
       }
     ]
   },
