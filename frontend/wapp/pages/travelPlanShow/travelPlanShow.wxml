@@ -65,7 +65,8 @@
         <view class="content-time">{{ item.start_time }}</view>
         <button wx:if="{{item.type === 3}}" 
           class="content-adapt-btn"
-          hover-class="button-hover">
+          hover-class="button-hover"
+          bindtap="onTapSetPlayTime">
           作息时间调整
         </button>
         <view wx:if="{{item.type === 1}}" class="content-addr">{{ item.address }}</view>
@@ -88,6 +89,36 @@
     删除计划
   </button>
 </view>
+
+<van-dialog id="van-dialog"
+  custom-class="dialog-change-play-time"
+  use-slot title="调整作息时间"
+  show="{{ dialogShow }}"
+  show-cancel-button
+  bind:close="onDialogClose"
+  bind:confirm="onDialogConfirm"
+  theme="round-button"
+>
+  <view class="slider-scale-text"> 
+    <view class="scale-left">0 </view>
+    <view class="scale-right">24</view>
+  </view>
+  <van-slider class="play-time-slider"
+    value="{{ playTimeShow }}"
+    bind:drag="onSliderDrag"
+    use-button-slot range 
+    min="0" max="24" step="1" 
+    bar-height="8"
+  >
+    <view class="slider-button" slot="left-button">
+      <view>{{ playTimeShow[0] }}</view>
+    </view>
+    <view class="slider-button" slot="right-button">
+      <view>{{ playTimeShow[1] }}</view>
+    </view>
+  </van-slider>
+  <view class="dialog-des"> *蓝色区间：每天出行游玩时间 </view>
+</van-dialog>
 
 <wxs module="stepType">
 function type2String(type) {
