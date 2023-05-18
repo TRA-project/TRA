@@ -59,8 +59,9 @@ class SightApis(ModelViewSet):
 
     @action(detail=False, methods=['POST'], url_path='audit/approve')
     def audit_approve(self, request):
-        audit_id = request.POST.get('audit_id')
+        audit_id = request.data.get('audit_id')
         feedback = Feedback.objects.filter(id=audit_id).first()
+        print(audit_id, feedback)
         feedback.status = 1  # approve
         feedback.save()
 
@@ -78,15 +79,18 @@ class SightApis(ModelViewSet):
             sight.save()
         else:
             sight = Sight.objects.get(id=sight_id)
-            sight.desc = desc
-            sight.open_time = open_time
+            if desc:
+                sight.desc = desc
+            if open_time:
+                sight.open_time = open_time
             sight.save()
 
-        for data in request.get('inner_sights'):
-            inner_sight = InnerSight(name=data.get('name'),
-                                     desc=data.get('desc'),
-                                     sight=sight)
-            inner_sight.save()
+        if request.get('inner_sights'):
+            for data in request.get('inner_sights'):
+                inner_sight = InnerSight(name=data.get('name'),
+                                        desc=data.get('desc'),
+                                        sight=sight)
+                inner_sight.save()
 
         return Response(SightDetailedSerializer(sight).data)
 
