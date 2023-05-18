@@ -26,7 +26,7 @@ class SightPagination(PageNumberPagination):
 
 
 class SightApis(ModelViewSet):
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Sight.objects.all()
     serializer_class = SightDetailedSerializer
     pagination_class = SightPagination
