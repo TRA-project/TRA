@@ -4,13 +4,16 @@
 # @File    : sight.py
 # @Software: PyCharm 
 # @Comment :
+import json
+
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from utility.models.sight import Sight
+from utility.models.inner_sight import InnerSight
 from utility.models.feedback import Feedback
-from ..serializers.sight import SightSerializer
+from ..serializers.sight import SightSerializer, SightDetailedSerializer
 from ..serializers.feedback import FeedbackSerializer
 from rest_framework import permissions
 from rest_framework.pagination import PageNumberPagination
@@ -25,7 +28,7 @@ class SightPagination(PageNumberPagination):
 class SightApis(ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Sight.objects.all()
-    serializer_class = SightSerializer
+    serializer_class = SightDetailedSerializer
     pagination_class = SightPagination
 
     @action(detail=False, methods=['GET'])
@@ -59,13 +62,36 @@ class SightApis(ModelViewSet):
         audit_id = request.POST.get('audit_id')
         feedback = Feedback.objects.filter(id=audit_id).first()
         feedback.status = 1  # approve
-        # TODO: write the database to renew data
-        return Response(FeedbackSerializer(feedback).data)
+        # write the database to renew data
+        request = json.loads(feedback.content)
+        # print(request)
+        sight_id = request.get('sight_id')
+
+        desc = request.get('desc')
+        open_time = request.get('open_time')
+        # print(desc, open_time)
+
+        if sight_id is None:
+            sight = Sight(desc=desc, open_time=open_time)
+            sight.save()
+        else:
+            sight = Sight.objects.get(id=sight_id)
+            sight.desc = desc
+            sight.open_time = open_time
+            sight.save()
+
+        for data in request.get('inner_sights'):
+            inner_sight = InnerSight(name=data.get('name'),
+                                     desc=data.get('desc'),
+                                     sight=sight)
+            inner_sight.save()
+
+        return Response(SightDetailedSerializer(sight).data)
 
     @action(detail=False, methods=['POST'], url_path='audit/reject')
     def audit_reject(self, request):
         audit_id = request.data.get('audit_id')
-        print(audit_id)
+        # print(audit_id)
         feedback = Feedback.objects.filter(id=audit_id).first()
         feedback.status = 2  # reject
         return Response(FeedbackSerializer(feedback).data)
