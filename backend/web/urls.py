@@ -3,6 +3,7 @@ from django.urls import path, include
 from .apis import *
 from utils import routers
 
+
 ROUTER = routers.TravelRouter()
 ROUTER.register(r'users', UserApis)
 ROUTER.register(r'travels', TravelNotesApis)
@@ -20,6 +21,7 @@ ROUTER.register(r'city', CityApis)
 ROUTER.register(r'province', ProvinceApis)
 ROUTER.register(r'log', LogApis)
 ROUTER.register(r'sight', SightApis)
+ROUTER.register(r'plan', PlanApis)
 
 urlpatterns = [
     path('', include(ROUTER.urls)),
