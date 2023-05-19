@@ -5,16 +5,16 @@
 <!--        1. 表格tab-->
         <div v-if="pane.key === '0'">
 <!--          选择搜索文本按照什么来搜索-->
-          <a-select default-value="id" style="width: 140px; margin:0px 10px 15px 0px" @change="handleChange">
+          <!-- <a-select default-value="id" style="width: 140px; margin:0px 10px 15px 0px" @change="handleChange">
             <a-select-option value="id">
               旅行计划编号
             </a-select-option>
             <a-select-option value="owner">
               用户编号
             </a-select-option>
-          </a-select>
+          </a-select> -->
           <!-- <a-input-search placeholder="请输入搜索文本" style="width: 300px; margin:0 5px 0 2px"  @search="onSearch" /> -->
-          <!-- <a-button style="margin:0 5px 0 50px" type="primary" @click="add">查看</a-button> -->
+          <a-button style="margin:0 5px 0 50px" type="primary" @click="add">查看</a-button>
           <!-- <a-button style="margin:0 5px" type="danger" @click="deletePlaces">删除</a-button> -->
 
 <!--          表格的主体-->
@@ -29,7 +29,7 @@
 
 <!--        2. 详细信息tab-->
         <div v-else style="margin:10px 0 10px 15px;">
-          <a-descriptions-items title="旅行计划信息" bordered>
+          <a-descriptions title="旅行计划信息" bordered>
             <a-descriptions-item label="旅行计划编号" :span="2">
               {{pane.data.id}}
             </a-descriptions-item>
@@ -37,9 +37,22 @@
               {{pane.data.name}}
             </a-descriptions-item>
             <a-descriptions-item label="旅行计划详情" :span="2">
-              {{pane.data.plan_items}}
+              <!-- {{pane.data.plan_items}} -->
+              <ul>
+                <li v-for="item in pane.data.plan_items" :key="item.id">
+                  事项类型：{{ item.type }}
+                  <br>
+                  <!-- 时间:{{item.start_time}}--{{item.end_time}}
+                  <br> -->
+                  景点名称：{{item.sight.name}}
+                  <br>
+                  景点信息：{{item.sight.desc}}
+                  <br>
+                  景点地址：{{item.sight.address.name}}
+                </li>
+              </ul>
             </a-descriptions-item>
-          </a-descriptions-items>
+          </a-descriptions>
         </div>
       </a-tab-pane>
     </a-tabs>
@@ -69,7 +82,12 @@ const columns = [
   {
     title: '用户编号',
     dataIndex: 'owner',
-  }
+  },
+  // {
+  //   title: '旅行计划列表',
+  //   dataIndex: 'sights', 
+  //   scopedSlots:  { customRender: 'sights' }
+  // }
 ];
 
 export default {
