@@ -42,6 +42,7 @@ Page({
     plansActive: 0,
     travelPlansList: [],
     tmpTravelPlansList: defaultData.travelPlansList,
+    planLoading: false,
 
     afterReselect: false,
     formerSceneryIdx: -1,
@@ -127,10 +128,12 @@ Page({
     mapContext = wx.createMapContext("preview-map", this)
     if (this.data.afterReselect) {
       console.log("reselect sceneries:", this.data.reselectSceneries)
-      // 去重
-      let tarList = this.data.travelPlansList[this.data.plansActive]
-      tarList.splice(this.data.formerSceneryIdx, 1)
-      var dedupReselect = this.data.reselectSceneries.filter(item => {
+      /* 去重 */
+      let tarList = this.data.travelPlansList[this.data.plansActive] // 出if就会删除，所以要深拷贝
+      // 原数组去除formerScenery
+      tarList.splice(this.data.formerSceneryIdx, 1) 
+      // 新返回数组去重
+      let dedupReselect = this.data.reselectSceneries.filter(item => {
         for (var i in tarList) {
           if (item.id === tarList[i].id) {
             return false
@@ -139,14 +142,20 @@ Page({
         return true
       })
       console.log("after dedup:", dedupReselect)
+      // 原数组加回去重后的新返回数组
       for (var i in dedupReselect) {
         tarList.splice(this.data.formerSceneryIdx + i, 0, dedupReselect[i])
       }
       console.log(tarList)
       this.setData({
-        ["travelPlansList[" + this.data.plansActive + "]"]: tarList
+        ["travelPlansList[" + this.data.plansActive + "]"]: JSON.parse(JSON.stringify(tarList))
       })
 
+      // 激活movableList的drawList，填入y值后重排序
+      let movableList = this.selectComponent(".scene-movable-list" + this.data.plansActive)
+      movableList.drawList()
+
+      // 完成reselect
       this.data.afterReselect = false
     }
   },
@@ -236,6 +245,10 @@ Page({
   onRefreshPlan() {
     console.log("refresh plan", this.data.plansActive)
     console.log("rawCustomArg", this.data.rawCustomArg)
+    var that = this
+    that.setData({
+      planLoading: true,
+    })
 
     var url = utils.server_hostname + "/api/core/" + "plan/new/"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync
@@ -248,16 +261,39 @@ Page({
       },
       success: res => {
         console.log("refresh:", res.data)
-        this.setData({
-          travelPlansList: res.data
+        if (res.statusCode === 200) {
+          that.setData({
+            travelPlansList: res.data
+          })
+          that.upgradeMarkers()
+          // 激活movableList的drawList，填入y值后重排序
+          for (var index in that.data.travelPlansList) {
+            var movableList = that.selectComponent(".scene-movable-list" + index.toString())
+            movableList.drawList()
+          }
+          wx.showToast({
+            title: "刷新成功 ",
+            icon: "none",
+          })
+        } else {
+          wx.showToast({
+            title: "刷新失败",
+            icon: "none",
+          })
+        }
+        that.setData({
+          planLoading: false
         })
-        this.upgradeMarkers()
-        // 子组件进行处理显示
-        var movableList = this.selectComponent(".scene-movable-list")
-        movableList.drawList()
       },
       fail: err => {
         console.log("refresh failed", err)
+        wx.showToast({
+          title: "刷新请求发送失败",
+          icon: "none",
+        })
+        that.setData({
+          planLoading: false
+        })
       }
     })
   },
