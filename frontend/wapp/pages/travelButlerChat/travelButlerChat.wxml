@@ -34,4 +34,4 @@
 <!-- 添加一个蒙层，可以点击关掉弹窗 -->
 <view class = "mask" hidden = "{{!showMask}}" catchtap = "toggleCard"></view>
 
-<van-dialog id="operation-dialog" show="{{ showDialog }}" title="提示" message="受api限制，请避免频繁请求" show-confirm-button></van-dialog>
+<van-dialog id="operation-dialog" show="{{ showDialog }}" title="提示" message="受api限制，请避免在1分钟内频繁请求" show-confirm-button></van-dialog>
