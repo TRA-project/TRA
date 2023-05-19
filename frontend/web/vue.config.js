@@ -17,6 +17,7 @@ module.exports = {
                 //ws: true,
                 //target: 'http://39.106.249.212:80/api',
                 target: 'https://tratu1.2022martu1.cn/api/',
+                // target: 'http://10.193.185.225:8000/api',
                 secure:false,
                 changOrigin: true,  //允许跨域
                 pathRewrite: {

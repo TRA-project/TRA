@@ -13,7 +13,7 @@ from utility.models.plan_item import PlanItem
 from utils.baiduAPI import *
 from numpy import size
 from rest_framework import status
-from utility.models import Plan, Sight
+from utility.models import Plan, Sight, Schedule
 from utils import permission
 from utils.response import error_response, Error
 from wechat_app.serializers import ScheduleSerializer, ScheduleItemSerializer
@@ -26,6 +26,7 @@ from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, DestroyM
 
 from wechat_app.serializers.plan_create_log import PlanCreateLogSerializer
 from wechat_app.serializers.plan_item import PlanItemSerializer, PlanItemDetailSerializer
+from wechat_app.serializers.plan_schedule import PlanScheduleSerializer
 from wechat_app.serializers.sight import SightSerializer, SightPlanSerializer
 from text2vec import SentenceModel
 
@@ -33,14 +34,37 @@ from text2vec import SentenceModel
 testflag = 1
 
 
-def string_to_time(a):
-    return int(float(a))
+def string_to_time(a, rate=1):
+    temp = int(float(a) / rate)
+    if rate == 1000:
+        temp = int((temp + hour(8)) / 86400) * 86400 - hour(8)
+    return temp
+
+
+def time_to_day(time):
+    return int((time + hour(8)) / 86400)
+
+
+def day(a):
+    return a * 86400
+
+
+def hour(a):
+    return a * 3600
+
+
+def minute(a):
+    return 60 * a
+
 
 def time_to_schedule(a):
     pass
 
+
 def time_to_schedule_item():
     pass
+
+
 def data_create(data, serializer_class):
     serializer = serializer_class(data=data)
     serializer.is_valid(raise_exception=True)
@@ -104,7 +128,9 @@ def calculate(list, tag, start_time, end_time, type):
               + i.get('grade') * grade_random
         dict[seq] = num
         seq = seq + 1
-    days = int((end_time - start_time) / 86400)
+    print(start_time)
+    print(end_time)
+    days = int((end_time - start_time) / 86400) + 1
     print(days)
     sys = sorted(dict.items(), key=lambda d: d[1], reverse=True)[0:days * 3]
     better_sight = []
@@ -136,28 +162,29 @@ def new_plan_item(plan_id, i, name, temp, time):
 
 
 def manage(plan_id, sight_list, start_time, end_time, get_up_time, sleep_time):
-    time = start_time + datetime.timedelta(hours=get_up_time)
+    present_time = start_time + hour(get_up_time)
+    print('total start time is ', time.localtime(present_time))
     list = []
     last = None
     for sight_id in sight_list:
         sight = Sight.objects.get(id=eval(sight_id))
         i = SightPlanSerializer(sight).data
-
         if last is not None:
-            temp = time
-            time += datetime.timedelta(hours=1)
-            new_item = new_plan_item(plan_id, last, '交通', temp, time)
+            temp = present_time
+            present_time += hour(1)
+            new_item = new_plan_item(plan_id, last, '交通', temp, present_time)
             list.append(new_item)
-        if time.hour > sleep_time or time.hour + i.get('playtime') > sleep_time:
-            temp = time
-            persistent = datetime.timedelta(days=1) - datetime.timedelta(hours=time.hour)
-            persistent += datetime.timedelta(hours=8)
-            time += persistent
-            new_item = new_plan_item(plan_id, last, '住宿', temp, time)
+        timeArray = time.localtime(present_time)
+        if timeArray.tm_hour > sleep_time or timeArray.tm_hour + i.get('playtime') > sleep_time:
+            temp = present_time
+            persistent = day(1) - hour(timeArray.tm_hour)
+            persistent += hour(get_up_time)
+            present_time += persistent
+            new_item = new_plan_item(plan_id, last, '住宿', temp, present_time)
             list.append(new_item)
-        temp = time
-        time += datetime.timedelta(hours=i.get('playtime'))
-        new_item = new_plan_item(plan_id, i, i.get('name'), temp, time)
+        temp = present_time
+        present_time += hour(string_to_time(i.get('playtime')))
+        new_item = new_plan_item(plan_id, i, i.get('name'), temp, present_time)
         list.append(new_item)
         last = i
     return list
@@ -167,16 +194,21 @@ def create_schedule(plan_id, owner_id, name, list):
     base_date = None
     schedule_id = -1
     for i in list:
-        if int(i.get('start_time')/86400) != base_date:
-            base_date = int(i.get('start_time')/86400)
-            data = {'owner': owner_id, 'title': name, 'date': time.localtime(i.get('start_time'))}
+        if time_to_day(i.get('start_time')) != base_date:
+            base_date = time_to_day(i.get('start_time'))
+            # 创建一个新的schedule以及新的schedule与plan的对应关系
+            data = {'owner': owner_id, 'title': name,
+                    'date': time.strftime("%Y-%m-%d", time.localtime(i.get('start_time')))}
             schedule = data_create(data, ScheduleSerializer).data
             schedule_id = schedule.get('id')
-
-        schedule_item = {'start_time': "{hour}:{minute}".format(hour=i.get('start_time').hour,
-                                                                minute=i.get('start_time').minute),
-                         'end_time': "{hour}:{minute}".format(hour=i.get('end_time').hour,
-                                                              minute=i.get('end_time').minute), 'schedule': schedule_id,
+            data = {'plan_id': plan_id, 'schedule_id': schedule_id}
+            data_create(data, PlanScheduleSerializer)
+        start_struct_time = time.localtime(i.get('start_time'))
+        end_struct_time = time.localtime(i.get('end_time'))
+        schedule_item = {'start_time': "{hour}:{minute}".format(hour=start_struct_time.tm_hour,
+                                                                minute=start_struct_time.tm_min),
+                         'end_time': "{hour}:{minute}".format(hour=end_struct_time.tm_hour,
+                                                              minute=end_struct_time.tm_min), 'schedule': schedule_id,
                          'content': i.get('name')}
         if name != '交通' and name != '休息':
             data['if_alarm'] = 1
@@ -245,9 +277,19 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         # 还有哪些硬性条件？
         city = request.GET.get('city', '北京市')
         tag = request.GET.get('tag', ' ')
-        start_time = string_to_time(request.GET.get('start_time', time.time()))
+        start_time = string_to_time(request.GET.get('start_time', time.time()), rate=1000)
 
-        end_time = string_to_time(request.GET.get('end_time', time.time() + 86400 * 3))
+        end_time = string_to_time(request.GET.get('end_time', time.time() + 86400 * 3), rate=1000)
+
+        this_time = start_time
+        while this_time <= end_time:
+            print(time.strftime("%Y-%m-%d", time.localtime(this_time)))
+            schedule = Schedule.objects.filter(owner_id=owner_id,
+                                               date=time.strftime("%Y-%m-%d", time.localtime(this_time)))
+            if schedule.exists():
+                return error_response(Error.SCHEDULE_OVERLAP, 'The current schedule is already scheduled',
+                                      status=status.HTTP_403_FORBIDDEN)
+            this_time += day(1)
 
         data = {'owner': owner_id, 'create_time': int(time.time()),
                 'start_time': start_time, 'end_time': end_time,
@@ -272,8 +314,8 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         return Response(all_list)
 
     def create(self, request, *args, **kwargs):
-        start_time = string_to_time(request.POST.get('start_time'))
-        end_time = string_to_time(request.POST.get('end_time'))
+        start_time = string_to_time(request.POST.get('start_time'), rate=1000)
+        end_time = string_to_time(request.POST.get('end_time'), rate=1000)
         sights = request.POST.get('sights')
         sights = sights.split(',')
 
@@ -285,7 +327,8 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
             name = '旅行计划'
         owner_id = permission.user_check(request)
         if owner_id <= 0:
-            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            owner_id = 1
+            # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
 
         data = {'owner': owner_id, 'name': name, 'start_time': start_time, 'end_time': end_time}
         plan = data_create(data, PlanSerializer).data
