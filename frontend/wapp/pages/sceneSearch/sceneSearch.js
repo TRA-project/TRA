@@ -17,6 +17,7 @@ Page({
       {"name": "托尔巴纳", "desc": "艾恩格朗特"},
       {"name": "来生","desc": "沃森-歌舞伎区"},
     ],
+    preferenceLoading: false,
   },
 
   /**
@@ -41,6 +42,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() { 
+    this.setData({
+      preferenceLoading: true,
+    })
     var url = utils.server_hostname + "/api/core/sights/recommend/"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
     wx.request({
@@ -51,13 +55,23 @@ Page({
       },
       success:(res) => {
         console.log("GET /sights/recommend:", res.data)
-        var list = res.data.splice(0, 5)
+        if (res.statusCode === 200) {
+          var list = res.data.splice(0, 5)
+          this.setData({
+            preferenceList: list
+          })
+        } else {
+          console.log("encounter some error")
+        }
         this.setData({
-          preferenceList: list
+          preferenceLoading: false
         })
       },
       fail: err => {
         console.log("fail to request", err)
+        this.setData({
+          preferenceLoading: false
+        })
       }
     })
   },
