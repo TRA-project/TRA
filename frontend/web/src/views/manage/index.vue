@@ -133,6 +133,10 @@
               <router-link to="/sceneryAudit"></router-link>
             </a-menu-item>
           </a-sub-menu>
+          <a-menu-item key="22">
+            <a-icon type="schedule" />旅行计划管理
+            <router-link to="/planDisplay"></router-link>
+          </a-menu-item>
         </a-menu>
       </a-layout-sider>
 
