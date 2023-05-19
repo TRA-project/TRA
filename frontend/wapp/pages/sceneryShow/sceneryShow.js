@@ -146,15 +146,18 @@ Page({
         showDialog: false,
       })
       let data
-      if (this.dialogMode === "intro") {
-        data = {"desc": this.data.editText}
+      if (this.data.dialogMode == "intro") {
+        data = {"desc": this.data.editText, sight_id: this.data.id}
       } else {
-        data = {"desc": this.data.open_time}
+        data = {"open_time": this.data.editText, sight_id: this.data.id}
       }
       wx.request({
-        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/edit",
-        method: "POST",
+        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/",
+        method: "PUT",
         data: data,
+        header: {
+          "token-auth": this.data.token
+        },
         success(res) {
           Toast("编辑成功，待审核")
         },
@@ -166,15 +169,26 @@ Page({
 
     // 确认添加某个游览点
     onConfirmSpot(e) {
-      let data = [{name: this.data.editSpotName, desc: this.data.editSpotIntro}]
+      let data = {
+        sight_id: this.data.id,
+        inner_sights: [
+          {
+            name: this.data.editSpotName,
+            desc: this.data.editSpotIntro
+          }
+        ]
+      }
       this.setData({
         editSpotName: "",
         editSpotIntro: "",
         add_elm: false
       })
       wx.request({
-        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/edit",
-        method: "POST",
+        url: util.server_hostname + "/api/core/sights/" + this.data.id + "/",
+        method: "PUT",
+        header: {
+          "token-auth": this.data.token
+        },
         data: data,
         success(res) {
           Toast("推荐游览点成功，待审核")

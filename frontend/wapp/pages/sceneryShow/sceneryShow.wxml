@@ -73,12 +73,13 @@
               <image src="/images/flag.png" style="vertical-align: top; margin-top: 20rpx;"></image>
               <view class="info">
                   <view>
-                      <input value="{{editSpotName}}" focus="{{focusAddElm}}" placeholder="输入游览点名称"/>
+                  <!-- 双向绑定 -->
+                      <input model:value="{{editSpotName}}" focus="{{focusAddElm}}" placeholder="输入游览点名称"/>
                   </view>
                   <view style="margin-top: 10rpx;">
                     <van-cell-group>
                       <van-field
-                        value="{{ editSpotIntro }}"
+                        model:value="{{ editSpotIntro }}"
                         type="textarea"
                         placeholder="请输入游览点介绍"
                         autosize
@@ -115,7 +116,7 @@
       bind:confirm="onConfirm"
     >
     <van-field
-      value="{{ editText }}"
+      model:value="{{editText}}"
       type="textarea"
       placeholder="请输入游览点介绍"
       autosize

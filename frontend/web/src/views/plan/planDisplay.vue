@@ -2,43 +2,25 @@
   <div style="text-align:left;margin:10px 0">
     <a-tabs v-model="activeKey" type="editable-card" @edit="onEdit" hide-add>
       <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
-
 <!--        1. 表格tab-->
         <div v-if="pane.key === '0'">
-
 <!--          选择搜索文本按照什么来搜索-->
-          <a-select default-value="id" style="width: 100px; margin:0px 10px 15px 0px" @change="handleChange">
+          <a-select default-value="id" style="width: 140px; margin:0px 10px 15px 0px" @change="handleChange">
             <a-select-option value="id">
-              景点编号
+              旅行计划编号
             </a-select-option>
-            <a-select-option value="keyword">
-              景点名称
+            <a-select-option value="owner">
+              用户编号
             </a-select-option>
           </a-select>
-          <a-input-search placeholder="请输入搜索文本" style="width: 300px; margin:0 5px 0 2px"  @search="onSearch" />
-          <a-button style="margin:0 5px 0 50px" type="primary" @click="add">查看</a-button>
-          <a-button style="margin:0 5px" type="danger" @click="deletePlaces">删除</a-button>
-
-<!--          借用这个模态框做其他事情-->
-<!--          <a-modal v-model="addImgModalVisible" title="添加地点图片" @ok="addImgOk" @cancel="addImgCancel">-->
-<!--            <a-form>-->
-<!--              <a-form-item label="地点编号：">-->
-<!--                <a-input placeholder="请输入地点编号" v-model="placeId" />-->
-<!--              </a-form-item>-->
-<!--              <a-form-item label="地点图片：">-->
-<!--                <input id="uploadFile" type="file" multiple ref="placeImgs" @change="imgChange" accept="image/*" >-->
-<!--              </a-form-item>-->
-<!--            </a-form>-->
-<!--          </a-modal>-->
+          <!-- <a-input-search placeholder="请输入搜索文本" style="width: 300px; margin:0 5px 0 2px"  @search="onSearch" /> -->
+          <!-- <a-button style="margin:0 5px 0 50px" type="primary" @click="add">查看</a-button> -->
+          <!-- <a-button style="margin:0 5px" type="danger" @click="deletePlaces">删除</a-button> -->
 
 <!--          表格的主体-->
           <a-spin :spinning="spinning">
             <a-table :row-selection="rowSelection" :columns="columns" :data-source="pane.data" :pagination="false">
               <a slot="id" slot-scope="text, record" @click="addSingle(record)">{{ text}}</a>
-<!--              <template slot="action" slot-scope="record" >-->
-<!--                <a-button style="margin-right:10px" size="small" type="primary" @click="passSinglePlace(record)">上架</a-button>-->
-<!--                <a-button size="small" @click="failSinglePlace(record)">下架</a-button>-->
-<!--              </template>-->
             </a-table>
             <br>
             <a-pagination show-quick-jumper :page-size="1" :total="pageNum" @change="onPageChange" />
@@ -47,74 +29,17 @@
 
 <!--        2. 详细信息tab-->
         <div v-else style="margin:10px 0 10px 15px;">
-          <a-descriptions title="景点信息" bordered>
-            <a-descriptions-item label="景点编号" :span="2">
+          <a-descriptions-items title="旅行计划信息" bordered>
+            <a-descriptions-item label="旅行计划编号" :span="2">
               {{pane.data.id}}
             </a-descriptions-item>
-            <a-descriptions-item label="景点名称" :span="2">
+            <a-descriptions-item label="旅行计划名称" :span="2">
               {{pane.data.name}}
             </a-descriptions-item>
-            <a-descriptions-item label="景点评分" :span="2">
-              {{pane.data.grade}}
+            <a-descriptions-item label="旅行计划详情" :span="2">
+              {{pane.data.plan_items}}
             </a-descriptions-item>
-            <a-descriptions-item label="景点描述" :span="2">
-              {{pane.data.desc}}
-            </a-descriptions-item>
-            <a-descriptions-item label="景点位置" :span="2">
-              {{pane.data.address.name}}
-            </a-descriptions-item>
-            <a-descriptions-item label="景点经纬度" :span="2">
-              {{pane.data.address.latitude}}, {{pane.data.address.longitude}}
-            </a-descriptions-item>
-            <a-descriptions-item label="景点开放时间" :span="2">
-              {{pane.data.open_time}}
-            </a-descriptions-item>
-            <a-descriptions-item label="景点游玩时间" :span="2">
-              {{pane.data.playtime}}
-            </a-descriptions-item>
-            <a-descriptions-item label="景点标签" :span="2">
-              {{pane.data.tags}}
-            </a-descriptions-item>
-            <a-descriptions-item label="子景点信息" :span="2">
-              <li style="list-style-type: decimal" v-for="sight in data.inner_sights" :key="sight.id">
-                {{sight.name}}：{{ sight.desc }}
-              </li>
-            </a-descriptions-item>
-            <a-descriptions-item label="票价信息" :span="2">
-              <li style="list-style-type: decimal" v-for="priceData in data.prices" :key="priceData.name">
-                {{ priceData.name }}：{{ priceData.desc }}
-              </li>
-            </a-descriptions-item>
-
-<!--            下面是可修改项-->
-  <!--            <a-descriptions-item label="地点描述" :span="2" :key="descriptionEditable">-->
-  <!--              <div v-if="data[pane.key-1].descriptionEditable">-->
-  <!--                <a-textarea v-model="data[pane.key-1].description" style="width: 700px" auto-size/>-->
-  <!--                <a-button style="margin-left: 40px; width: 64px; height: 32px" type="primary" @click="descriptionSave">保存</a-button>-->
-  <!--                <a-button style="margin-left: 20px; width: 64px; height: 32px" @click="descriptionCancel">取消</a-button>-->
-  <!--              </div>-->
-  <!--              <div v-else >-->
-  <!--                {{ data[pane.key-1].description }}-->
-  <!--                <a-icon-->
-  <!--                    type="edit"-->
-  <!--                    theme="twoTone"-->
-  <!--                    style="fontSize: 18px;"-->
-  <!--                    @click="descriptionEdit"-->
-  <!--                />-->
-  <!--              </div>-->
-  <!--            </a-descriptions-item>-->
-
-<!--            以下是图片相关的信息-->
-<!--            <a-descriptions-item label="地点封面" :span="3">-->
-<!--              <img :src="data[pane.key-1].placeCover" width="200" alt="">-->
-<!--            </a-descriptions-item>-->
-<!--            <a-descriptions-item label="地点图片" :span="3">-->
-<!--              <div v-for="item in data[pane.key-1].placeImages" :key="item">-->
-<!--                <img :src="item" width="200" alt="">-->
-<!--                <a-button style="margin-left: 40px; width: 64px; height: 32px" type="primary" @click="deletePlaceImages(item)">删除</a-button>-->
-<!--              </div>-->
-<!--            </a-descriptions-item>-->
-          </a-descriptions>
+          </a-descriptions-items>
         </div>
       </a-tab-pane>
     </a-tabs>
@@ -129,32 +54,29 @@
     </a-modal>
   </div>
 </template>
+
 <script>
 const columns = [
   {
-    title: '景点编号',
+    title: '旅行计划编号',
     dataIndex: 'id',
     scopedSlots: { customRender: 'id' },
   },
   {
-    title: '景点名称',
+    title: '旅行计划名称',
     dataIndex: 'name',
   },
   {
-    title: '景点概述',
-    dataIndex: 'desc',
-  },
-  {
-    title: '景点评分',
-    dataIndex: 'grade'
-  },
+    title: '用户编号',
+    dataIndex: 'owner',
+  }
 ];
 
 export default {
-  name:"sceneryManage",
+  name:"planDisplay",
   data() {
     const panes = [
-      { title: '景点管理', data:[],  key: '0' ,closable: false },
+      { title: '旅行计划管理', data:[],  key: '0' ,closable: false },
     ];
     return {
       spinning:true,
@@ -200,17 +122,16 @@ export default {
   },
   mounted(){
     // 默认加载全部景点
-    this.getSceneries({
-      "page":"1",
-      "keyword": ""
+    this.getPlans({
+      "page":"1"
     })
   },
   methods: {
-    getSceneries(p) {
+    getPlans(p) {
       this.spinning = true;
       this.$axios({
         method: "get",
-        url: "api/admin/sights/search/",
+        url: "api/admin/plan",
         params: p,
         headers: {
           Authorization: localStorage.getItem('Authorization')
@@ -218,7 +139,7 @@ export default {
         data: {},
       }).then((res) => {
         this.data = res.data.results;
-        this.pageNum = Math.ceil(res.data.count / 10); // 每页固定10条
+        this.pageNum = res.data.pages;
         let key = 1;
 
         // 对每个元素赋以key，数值递增
@@ -235,23 +156,23 @@ export default {
         }
       });
     },
-    deletePlace(sceneryId) {
-      this.$axios({
-        method: "delete",
-        url: "api/admin/sights/" + sceneryId + "/",
-        params: {},
-        headers: {
-          Authorization: localStorage.getItem('Authorization')
-        },
-        data: {},
-      }).then((res) => {
-        console.log(`deleteScenery ${sceneryId}`, res);
-      }).catch((error) => {
-        if (error.response.status == 403) {
-          this.visible = true;
-        }
-      });
-    },
+    // deletePlace(sceneryId) {
+    //   this.$axios({
+    //     method: "delete",
+    //     url: "api/admin/sights/" + sceneryId + "/",
+    //     params: {},
+    //     headers: {
+    //       "token-auth": localStorage.getItem('Authorization')
+    //     },
+    //     data: {},
+    //   }).then((res) => {
+    //     console.log(`deleteScenery ${sceneryId}`, res);
+    //   }).catch((error) => {
+    //     if (error.response.status == 403) {
+    //       this.visible = true;
+    //     }
+    //   });
+    // },
     handleOk() {
       this.ModalText = '该对话框将在2秒后关闭';
       this.confirmLoading = true;
@@ -272,7 +193,7 @@ export default {
       this.searchText = value;
       if (this.searchType === "id") {
         if (isNaN(Number(value))) {
-          alert("输入的景点id不是数字！")
+          alert("输入的旅行计划id不是数字！")
         }
         else {
           params[this.searchType] = parseInt(value);
@@ -280,7 +201,7 @@ export default {
       } else {
         params[this.searchType] = value;
       }
-      this.getSceneries(params);
+      this.getPlans(params);
     },
     onPageChange(page) {
       for (let i = 1; i < this.panes.length; i++) {
@@ -291,17 +212,17 @@ export default {
       this.selectedRowKeys = [];
       let params = {"page": page};
       params[this.searchType] = this.searchText;
-      this.getSceneries(params);
+      this.getPlans(params);
     },
-    deletePlaces() {
-      this.selectedRows.forEach((item)=>{
-        this.deletePlace(item.id);
-        this.remove(item.key);
-      });
-      this.getSceneries({"page":"1"});
-      this.selectedRows = [];
-      this.selectedRowKeys = [];
-    },
+    // deletePlaces() {
+    //   this.selectedRows.forEach((item)=>{
+    //     this.deletePlace(item.id);
+    //     this.remove(item.key);
+    //   });
+    //   this.getPlans({"page":"1"});
+    //   this.selectedRows = [];
+    //   this.selectedRowKeys = [];
+    // },
     callback(key) {
       console.log(key);
     },
@@ -312,7 +233,7 @@ export default {
       console.log(this.panes);
     },
 
-    // 逐个查看景点的信息
+    // 逐个查看计划的信息
     addSingle(record){
       console.log(record);
       const panes = this.panes;
@@ -320,7 +241,7 @@ export default {
       console.log("addSinge:", item);
 
       let flag = 0
-      // 检测tab中是否已经有了该景点的信息，如果有了，就直接跳过
+      // 检测tab中是否已经有了该旅行计划的信息，如果有了，就直接跳过
       for(let j = 0; j<panes.length;j++){
         if(panes[j].id === item.id){
           console.log("item.id:"+item.id);
@@ -330,20 +251,20 @@ export default {
       }
       if (flag === 1) return
 
-      // Note: 这里调用接口获取景点的详细信息，在新的tab中展示
-      let sceneryId = item.id
+      // Note: 这里调用接口获取旅行计划的详细信息，在新的tab中展示
+      let planId = item.id
       this.$axios({
         method: "get",
-        url: "api/admin/sights/" + sceneryId + "/",
+        url: "api/admin/plan/" + planId + "/",
         params: { },
         headers: {
           Authorization: localStorage.getItem('Authorization')
         },
         data: {},
       }).then((res) => {
-        console.log(`getScenery ${sceneryId}`, res);
+        console.log(`getPlan ${planId}`, res);
 
-        // data就直接是景点的数据了
+        // data就直接是旅行计划的数据了
         // 加入key是为了去重
         panes.push({
           title: item.name,

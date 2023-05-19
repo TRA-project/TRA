@@ -1,13 +1,14 @@
 // pages/travelPlanPreview/travelPlanPreview.js
 const utils = require("../../utils/util.js");
+const defaultData = require("./defaultData") 
 
 const keyMap = {
   "area": "地区",
   "city": "地区",
   "tag" : "预期体验",
   "cost": "预期开销",
-  "timeStart": "开始时间",
-  "timeEnd": "结束时间"
+  "start_time": "开始时间",
+  "end_time": "结束时间"
 }
 
 let mapContext
@@ -18,6 +19,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    rawCustomArg: {},
     customArg: {},
     planName: "",
     titleLength: 0,
@@ -39,48 +41,7 @@ Page({
 
     plansActive: 0,
     travelPlansList: [],
-    tmpTravelPlansList: [
-      [
-        {
-          id: 1,
-          name: "北京航空航天大学",
-          position: "北京市海淀区学院路37号",
-          image: "scenery-preview.png"
-        },
-        {
-          id: 2,
-          name: "肯德基（长城电脑大厦店）",
-          position: "北京市海淀区学院路38号长城电脑大厦",
-          image: "scenery-preview.png"
-        },
-        {
-          id: 3,
-          name: "麦当劳（花园北路餐厅）",
-          position: "北京市海淀区学院路甲38号",
-          image: "scenery-preview.png"
-        },
-      ],
-      [
-        {
-          id: 4,
-          name: "层岩巨渊",
-          position: "提瓦特北陆璃月南侧",
-          image: "scenery-preview.png"
-        },
-        {
-          id: 5,
-          name: "道成林",
-          position: "提瓦特央陆须弥东侧",
-          image: "scenery-preview.png"
-        },
-        {
-          id: 6,
-          name: "恒纳兰那",
-          position: "提瓦特央陆须弥北侧",
-          image: "scenery-preview.png"
-        },
-      ],
-    ],
+    tmpTravelPlansList: defaultData.travelPlansList,
 
     afterReselect: false,
     formerSceneryIdx: -1,
@@ -96,12 +57,13 @@ Page({
     const eventChannel = this.getOpenerEventChannel()
     eventChannel.on("travelPlan", data => {
       console.log("eventChannel:", data)
+      this.data.rawCustomArg = data.arg
 
       // 处理配置信息
       var transData = Object.keys(data.arg).reduce((newData, key) => {
         let newKey = keyMap[key] || key
-        if (key === "timeStart" || key === "timeEnd") {
-          newData[newKey] = utils.formatTime(new Date(data.arg[key]))
+        if (key === "start_time" || key === "end_time") {
+          newData[newKey] = utils.getNowDateLine(new Date(data.arg[key]))
         } else {
           newData[newKey] = data.arg[key]
         }
@@ -221,12 +183,6 @@ Page({
     this.upgradeMarkers()
   },
 
-  onStepClick(event) {
-    this.setData({
-      stepsActive: event.detail
-    })
-  },
-
   onConfirmPlan(event) {
     // 过滤计划名为空的行为
     if (this.data.planName == "") {
@@ -248,6 +204,8 @@ Page({
     var formData = {
       name: this.data.planName,
       sights: spotList,
+      start_time: this.data.rawCustomArg.start_time,
+      end_time: this.data.rawCustomArg.end_time,
     }
     console.log("confirm formData:", formData)
 
@@ -276,11 +234,37 @@ Page({
   },
 
   onRefreshPlan() {
-    console.log("refresh plan", this.plansActive)
+    console.log("refresh plan", this.data.plansActive)
+    console.log("rawCustomArg", this.data.rawCustomArg)
+
+    var url = utils.server_hostname + "/api/core/" + "plan/new/"
+    var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync
+    wx.request({
+      url: url,
+      method: "GET",
+      data: this.data.rawCustomArg,
+      header: {
+        "token-auth": token
+      },
+      success: res => {
+        console.log("refresh:", res.data)
+        this.setData({
+          travelPlansList: res.data
+        })
+        this.upgradeMarkers()
+        // 子组件进行处理显示
+        var movableList = this.selectComponent(".scene-movable-list")
+        movableList.drawList()
+      },
+      fail: err => {
+        console.log("refresh failed", err)
+      }
+    })
   },
 
   upgradeMarkers() {
     console.log("update markers and points")
+    mapContext = wx.createMapContext("preview-map", this)
 
     // 利用travel plan添加markers和points
     this.data.travelPlansList[this.data.plansActive].forEach((item, index) => {

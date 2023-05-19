@@ -47,7 +47,7 @@ Page({
     // 预期时间
     minHour: 0,
     maxHour: 24,
-    minDate: new Date().getTime(),
+    minDate: new Date(new Date().setHours(0, 0, 0, 0)).getTime(), // 当天0点的时间戳
     maxDate: new Date(2030, 10, 1).getTime(),
 
     dateBeginFieldValue: "",
@@ -182,12 +182,13 @@ Page({
 
   onDateBeginPickerConfirm(event) {
     var date = new Date(event.detail)
-    console.log(utils.formatTime(date))
+    console.log("change start date begin:", event.detail)
+    console.log(utils.getNowDateLine(date))
     
     this.setData({
       showDateBeginPicker: false,
       dateBeginPickerValue: event.detail,
-      dateBeginFieldValue: utils.formatTime(date)
+      dateBeginFieldValue: utils.getNowDateLine(date)
     })
   },
 
@@ -199,12 +200,13 @@ Page({
 
   onDateEndPickerConfirm(event) {
     var date = new Date(event.detail)
-    console.log(utils.formatTime(date))
+    console.log("change end date begin:", event.detail)
+    console.log(utils.getNowDateLine(date))
     
     this.setData({
       showDateEndPicker: false,
       dateEndPickerValue: event.detail,
-      dateEndFieldValue: utils.formatTime(date)
+      dateEndFieldValue: utils.getNowDateLine(date)
     })
   },
 
@@ -212,9 +214,10 @@ Page({
     var formData = {
       city: this.data.areaFieldValue.split('/')[1],
       tag: this.data.expectValue,
-      timeStart: this.data.dateBeginPickerValue,
-      timeEnd: this.data.dateEndPickerValue,
+      start_time: this.data.dateBeginPickerValue,
+      end_time: this.data.dateEndPickerValue,
     }
+    console.log("")
 
     // 过滤空输入
     if (this.data.areaFieldValue === "") {
@@ -243,19 +246,12 @@ Page({
       success: (res) => {
         wx.hideLoading()
         if (res.statusCode !== 200) {
+          var errdata = res.data
           wx.showToast({
-            title: "生成失败",
+            title: res.data.detail,
             icon: "error"
           })
-          // 姑且先跳转过去
-          wx.navigateTo({
-            url: "/pages/travelPlanPreview/travelPlanPreview?status=false",
-            success: (navRes) => {
-              navRes.eventChannel.emit("travelPlan", {
-                arg: formData,
-              })
-            }
-          })
+
         } else {
           wx.navigateTo({
             url: "/pages/travelPlanPreview/travelPlanPreview?status=true",
