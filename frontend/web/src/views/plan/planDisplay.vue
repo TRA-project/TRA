@@ -42,8 +42,8 @@
                 <li v-for="item in pane.data.plan_items" :key="item.id">
                   事项类型：{{ item.type }}
                   <br>
-                  <!-- 时间:{{item.start_time}}--{{item.end_time}}
-                  <br> -->
+                  时间:{{start_time}}--{{end_time}}
+                  <br>
                   景点名称：{{item.sight.name}}
                   <br>
                   景点信息：{{item.sight.desc}}
@@ -293,6 +293,15 @@ export default {
 
         this.activeKey = item.key;
         this.panes = panes;
+        const starttime = item.plan_items.start_time;
+        const endtime = item.plaan_items.end_time;
+        const startdate = new Date(starttime);
+        const enddate = new Date(endtime);
+        const startyear = startdate.getFullYear();
+        const endyear = enddate.getFullYear();
+        
+        this.start_time = startyear;
+        this.end_time = endyear;
       }).catch((error) => {
         if (error.response.status === 403) {
           this.visible = true;
