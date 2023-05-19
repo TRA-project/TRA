@@ -301,6 +301,7 @@ Page({
 
   onUnload(){
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
+    var that = this;
 
     console.log("unload")
     wx.request({
@@ -315,7 +316,7 @@ Page({
         "token-auth": token
       },
       success(res) {
-        this.setData({
+        that.setData({
           chat_id: ''
         })
       }
