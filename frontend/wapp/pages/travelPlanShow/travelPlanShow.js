@@ -179,7 +179,6 @@ Page({
           for (var i = 0; i < coors.length; i += 2) {
             pl.push({ latitude: coors[i], longitude: coors[i + 1] })
           }
-          console.log(pl)
           resolve(pl)
         },
         fail: (err) => {
@@ -195,35 +194,51 @@ Page({
     var promiseArr = []
     var lineNumbers = this.data.mapPoints.length - 1
     var points = this.data.mapPoints
-    for (var i = 0; i < lineNumbers; ++i) {
-      promiseArr.push(this.getPolyline(points[i], points[i+1]))
-    }
-    Promise.all(promiseArr).then(items => {
-      console.log("Promise all:", items)
-      var initPolylines = []
-      items.forEach(item => {
-        initPolylines.push({
-          points: item,
-          color: "#00FF00",
+
+    // 简陋的并发控制：每隔200ms发一次请求（或稍<200ms）
+    var fillPromiseArr = new Promise((resolve) => {
+      let i = 0
+      let interval = setInterval(() => {
+        if (i >= lineNumbers - 1) {
+          console.log("end")
+          resolve()
+          clearInterval(interval)
+        }
+        promiseArr.push(this.getPolyline(points[i], points[i+1]))
+        console.log(i)
+        i += 1
+      }, 200)
+    })
+    
+    fillPromiseArr.then(() => {
+      console.log("PromiseArr filled")
+      Promise.all(promiseArr).then(items => {
+        console.log("Promise all:", items)
+        var initPolylines = []
+        items.forEach(item => {
+          initPolylines.push({
+            points: item,
+            color: "#00FF00",
+            width: 3,
+            borderColor: "#228B22",
+            borderWidth: 2,
+          })
+        })
+        this.setData({
+          mapPolylines: initPolylines
+        })
+      }).catch(err => {
+        console.log("Promise error:", err)
+        var initPolylines = [{
+          points: this.data.mapPoints,
+          color: "#00FF00", // green
           width: 3,
           borderColor: "#228B22",
           borderWidth: 2,
+        }]
+        this.setData({
+          mapPolylines: initPolylines
         })
-      })
-      this.setData({
-        mapPolylines: initPolylines
-      })
-    }).catch(err => {
-      console.log("Promise error:", err)
-      var initPolylines = [{
-        points: this.data.mapPoints,
-        color: "#00FF00", // green
-        width: 3,
-        borderColor: "#228B22",
-        borderWidth: 2,
-      }]
-      this.setData({
-        mapPolylines: initPolylines
       })
     })
   },
