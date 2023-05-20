@@ -228,3 +228,46 @@
   }
 }
 
+.dialog-change-play-time {
+  padding: 0rpx 40rpx;
+  
+  .slider-scale-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0rpx -10rpx;
+  }
+
+  .play-time-slider {
+
+    .slider-button {
+      width: 50rpx;
+      height: 40rpx;
+      .flex-center();
+      // text-align: center;
+      // vertical-align: middle;
+
+      background-color: @TRA-blue;
+      color: white;
+      border-radius: 30rpx;
+    }
+  }
+
+  .dialog-des {
+    margin-top: 30rpx;
+    font-size: 28rpx;
+    color: gray;
+  }
+
+  /* 小程序v2带来的样式混乱，不想去除style: v2 */
+  .van-dialog__header {
+    padding: 28rpx;
+    padding-top: 36rpx;
+    font-weight: bold;
+  }
+
+  .van-button {
+    width: 100%;
+  }
+
+}

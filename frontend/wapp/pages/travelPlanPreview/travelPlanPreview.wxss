@@ -22,7 +22,7 @@
   position: sticky;
   /* 吸顶 */
   top: 0;
-  z-index: 100;
+  z-index: 101;
   background-color: white;
 }
 .travel-plan-title {

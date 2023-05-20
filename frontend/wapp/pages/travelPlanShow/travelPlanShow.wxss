@@ -219,3 +219,36 @@
 .travel-plan-footer-container .travel-plan-delete-button-hover {
   box-shadow: 4rpx 4rpx 8rpx 3rpx #5e5e5e;
 }
+.dialog-change-play-time {
+  padding: 0rpx 40rpx;
+  /* 小程序v2带来的样式混乱，不想去除style: v2 */
+}
+.dialog-change-play-time .slider-scale-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0rpx -10rpx;
+}
+.dialog-change-play-time .play-time-slider .slider-button {
+  width: 50rpx;
+  height: 40rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1e90ff;
+  color: white;
+  border-radius: 30rpx;
+}
+.dialog-change-play-time .dialog-des {
+  margin-top: 30rpx;
+  font-size: 28rpx;
+  color: gray;
+}
+.dialog-change-play-time .van-dialog__header {
+  padding: 28rpx;
+  padding-top: 36rpx;
+  font-weight: bold;
+}
+.dialog-change-play-time .van-button {
+  width: 100%;
+}

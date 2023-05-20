@@ -180,14 +180,22 @@ Page({
     })
   },
 
+  onDateBeginPickerCancel() {
+    this.setData({
+      showDateBeginPicker: false
+    })
+  },
+
   onDateBeginPickerConfirm(event) {
-    var date = new Date(event.detail)
-    console.log("change start date begin:", event.detail)
+    // 规整到0点
+    var timeStamp = Math.round(event.detail / 8640000) * 8640000 
+    var date = new Date(timeStamp)
+    console.log("change start date begin:", timeStamp)
     console.log(utils.getNowDateLine(date))
     
     this.setData({
       showDateBeginPicker: false,
-      dateBeginPickerValue: event.detail,
+      dateBeginPickerValue: timeStamp,
       dateBeginFieldValue: utils.getNowDateLine(date)
     })
   },
@@ -198,14 +206,21 @@ Page({
     })
   },
 
+  onDateEndPickerCancel() {
+    this.setData({
+      showDateEndPicker: false
+    })
+  },
+
   onDateEndPickerConfirm(event) {
-    var date = new Date(event.detail)
+    var timeStamp = Math.round(event.detail / 8640000) * 8640000 
+    var date = new Date(timeStamp)
     console.log("change end date begin:", event.detail)
     console.log(utils.getNowDateLine(date))
     
     this.setData({
       showDateEndPicker: false,
-      dateEndPickerValue: event.detail,
+      dateEndPickerValue: timeStamp,
       dateEndFieldValue: utils.getNowDateLine(date)
     })
   },
@@ -223,6 +238,15 @@ Page({
     if (this.data.areaFieldValue === "") {
       wx.showToast({
         title: "目标地区不能为空",
+        icon: "none",
+      })
+      return
+    }
+
+    // 过滤非法时间
+    if (formData.start_time > formData.end_time) {
+      wx.showToast({
+        title: "结束时间不应早于开始",
         icon: "none",
       })
       return

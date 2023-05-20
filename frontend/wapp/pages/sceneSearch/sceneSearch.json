@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "my-search-bar": "/components/mySearchBar/mySeachBar"
+    "my-search-bar": "/components/mySearchBar/mySeachBar",
+    "van-skeleton": "@vant/weapp/skeleton/index"
   }
 }

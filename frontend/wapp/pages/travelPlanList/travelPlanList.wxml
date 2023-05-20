@@ -72,6 +72,7 @@
         min-date="{{ minDate }}"
         formatter="{{ timeFormatter }}"
         bind:confirm="onDateBeginPickerConfirm"
+        bind:cancel="onDateBeginPickerCancel"
       />
 
       <van-field
@@ -88,6 +89,7 @@
         min-date="{{ minDate }}"
         formatter="{{ timeFormatter }}"
         bind:confirm="onDateEndPickerConfirm"
+        bind:cancel="onDateEndPickerCancel"
       />
       
       <button class="travel-plan-gen-button" hover-class="travel-plan-gen-button-hover"
