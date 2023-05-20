@@ -13,7 +13,7 @@ from utility.models.plan_item import PlanItem
 from utils.baiduAPI import *
 from numpy import size
 from rest_framework import status
-from utility.models import Plan, Sight, Schedule
+from utility.models import Plan, Sight, Schedule, PlanSchedule
 from utils import permission
 from utils.response import error_response, Error
 from wechat_app.serializers import ScheduleSerializer, ScheduleItemSerializer
@@ -149,9 +149,9 @@ def new_plan_item(plan_id, i, name, temp, time):
     # 放入前端所需要的字段
     data['start_time'] = temp
     data['end_time'] = time
-    if name is '交通':
+    if name == '交通':
         data['type'] = 2
-    elif name is '住宿':
+    elif name == '住宿':
         data['type'] = 3
     else:
         data['type'] = 1
@@ -167,6 +167,7 @@ def manage(plan_id, sight_list, start_time, end_time, get_up_time, sleep_time):
     list = []
     last = None
     for sight_id in sight_list:
+        print(eval(sight_id))
         sight = Sight.objects.get(id=eval(sight_id))
         i = SightPlanSerializer(sight).data
         if last is not None:
@@ -318,7 +319,6 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         end_time = string_to_time(request.POST.get('end_time'), rate=1000)
         sights = request.POST.get('sights')
         sights = sights.split(',')
-
         get_up_time = eval(request.POST.get('get_up_time', '8'))
         sleep_time = eval(request.POST.get('sleep_time', '20'))
         try:
@@ -341,13 +341,55 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         owner_id = permission.user_check(request)
         if owner_id <= 0:
             owner_id = 1
-            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+        # 还是一样的处理方法，根据这个id，找到对应所有计划，所有计划，之后在删除这个plan
+        plan_id = kwargs.get('pk')
+        schedules = PlanSchedule.objects.filter(plan_id=plan_id)
+        serializer = PlanScheduleSerializer(schedules, many=True)
+        for i in serializer.data:
+            schedules_id = i.get('schedule_id')
+            print(schedules_id)
+            schedule = Schedule.objects.get(id=schedules_id).delete()
         return super().destroy(self, request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
         owner_id = permission.user_check(request)
         if owner_id <= 0:
-            return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            owner_id = 1
+            #return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
         plan_id = kwargs.get('pk')
-        PlanItem.objects.filter(plan_id=plan_id).delete()
-        return super().create(self, request, *args, **kwargs)
+
+        """
+        先获取plan的全部信息
+        """
+        plan = Plan.objects.get(id=plan_id)
+        plan_serializer = PlanSerializer(plan)
+        data = plan_serializer.data
+
+        start_time = data.get('start_time')
+        end_time = data.get('end_time')
+        name = data.get('name')
+        sights = []
+        plan_item = PlanItem.objects.filter(plan_id=plan_id)
+        serializer = PlanItemDetailSerializer(plan_item, many=True)
+        data = serializer.data
+        for i in data:
+            if i.get('type') == 1:
+                sights.append(i.get('id'))
+        get_up_time = eval(request.POST.get('get_up_time', '8'))
+        sleep_time = eval(request.POST.get('sleep_time', '20'))
+
+        schedules = PlanSchedule.objects.filter(plan_id=plan_id)
+        serializer = PlanScheduleSerializer(schedules, many=True)
+        for i in serializer.data:
+            schedules_id = str(i.get('schedule_id'))
+            print(schedules_id)
+            schedule = Schedule.objects.get(id=schedules_id).delete()
+        super().destroy(self, request, *args, **kwargs)
+
+        data = {'owner': owner_id, 'name': name, 'start_time': start_time, 'end_time': end_time}
+        plan = data_create(data, PlanSerializer).data
+        plan_id = plan.get('id')
+        list = manage(plan_id, sights, start_time, end_time, get_up_time, sleep_time)
+        create_schedule(plan_id, owner_id, name, list)
+        return Response(plan)
