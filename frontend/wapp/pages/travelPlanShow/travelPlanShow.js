@@ -195,7 +195,7 @@ Page({
     var lineNumbers = this.data.mapPoints.length - 1
     var points = this.data.mapPoints
 
-    // 简陋的并发控制：每隔200ms发一次请求（或稍<200ms）
+    // 简陋的并发控制：每隔200ms发一次请求
     var fillPromiseArr = new Promise((resolve) => {
       let i = 0
       let interval = setInterval(() => {
