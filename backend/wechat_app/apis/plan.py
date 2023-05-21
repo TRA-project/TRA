@@ -163,12 +163,11 @@ def new_plan_item(plan_id, i, name, temp, time):
 
 def manage(plan_id, sight_list, start_time, end_time, get_up_time, sleep_time):
     present_time = start_time + hour(get_up_time)
-    print('total start time is ', time.localtime(present_time))
+    print('present_time  is ', present_time)
     list = []
     last = None
     for sight_id in sight_list:
-        print(eval(sight_id))
-        sight = Sight.objects.get(id=eval(sight_id))
+        sight = Sight.objects.get(id=int(sight_id))
         i = SightPlanSerializer(sight).data
         if last is not None:
             temp = present_time
@@ -245,7 +244,6 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         return Response(data)
 
     def list(self, request, *args, **kwargs):
-        print(float(123.235))
         owner_id = permission.user_check(request)
         if owner_id <= 0:
             owner_id = 1
@@ -347,21 +345,20 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         schedules = PlanSchedule.objects.filter(plan_id=plan_id)
         serializer = PlanScheduleSerializer(schedules, many=True)
         for i in serializer.data:
-            schedules_id = i.get('schedule_id')
-            print(schedules_id)
-            schedule = Schedule.objects.get(id=schedules_id).delete()
+            try:
+                schedules_id = i.get('schedule_id')
+                schedule = Schedule.objects.get(id=schedules_id)
+                schedule.delete()
+            except Schedule.DoesNotExist:
+                pass
         return super().destroy(self, request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
         owner_id = permission.user_check(request)
         if owner_id <= 0:
             owner_id = 1
-            #return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
+            # return error_response(Error.NOT_LOGIN, 'Please login.', status=status.HTTP_403_FORBIDDEN)
         plan_id = kwargs.get('pk')
-
-        """
-        先获取plan的全部信息
-        """
         plan = Plan.objects.get(id=plan_id)
         plan_serializer = PlanSerializer(plan)
         data = plan_serializer.data
@@ -375,18 +372,24 @@ class PlanApis(GenericViewSet, CreateModelMixin, RetrieveModelMixin, DestroyMode
         data = serializer.data
         for i in data:
             if i.get('type') == 1:
-                sights.append(i.get('id'))
-        get_up_time = eval(request.POST.get('get_up_time', '8'))
-        sleep_time = eval(request.POST.get('sleep_time', '20'))
+                sight = i.get('sight')
+                sights.append(str(sight.get('id')))
+        get_up_time = int(request.data.get('get_up_time', '8'))
+        sleep_time = int(request.data.get('sleep_time', '20'))
 
         schedules = PlanSchedule.objects.filter(plan_id=plan_id)
         serializer = PlanScheduleSerializer(schedules, many=True)
-        for i in serializer.data:
-            schedules_id = str(i.get('schedule_id'))
-            print(schedules_id)
-            schedule = Schedule.objects.get(id=schedules_id).delete()
-        super().destroy(self, request, *args, **kwargs)
 
+        for i in serializer.data:
+            for i in serializer.data:
+                try:
+                    schedules_id = i.get('schedule_id')
+                    schedule = Schedule.objects.get(id=schedules_id)
+                    schedule.delete()
+                except Schedule.DoesNotExist:
+                    pass
+
+        super().destroy(self, request, *args, **kwargs)
         data = {'owner': owner_id, 'name': name, 'start_time': start_time, 'end_time': end_time}
         plan = data_create(data, PlanSerializer).data
         plan_id = plan.get('id')
