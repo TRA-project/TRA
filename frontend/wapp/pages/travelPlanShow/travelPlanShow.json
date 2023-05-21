@@ -1,6 +1,8 @@
 {
   "usingComponents": {
-    "van-steps": "/components/mySteps/mySteps"
+    "van-steps": "/components/mySteps/mySteps",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-slider": "@vant/weapp/slider/index"
   },
   "navigationBarTitleText": "出行计划详情"
 }

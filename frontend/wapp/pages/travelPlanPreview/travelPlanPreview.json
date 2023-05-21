@@ -4,7 +4,8 @@
     "van-tabs": "@vant/weapp/tabs/index",
     "van-swipe-cell": "@vant/weapp/swipe-cell/index",
     "van-field": "@vant/weapp/field/index",
-    "my-movable-list": "/components/movableList/movableList"
+    "my-movable-list": "/components/movableList/movableList",
+    "van-skeleton": "@vant/weapp/skeleton/index"
   },
   "navigationBarTitleText": "出行计划生成"
 }

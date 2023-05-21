@@ -794,7 +794,7 @@ Page({
         if(res.tapIndex == 0){
           wx.clearStorageSync()
           wx.redirectTo({
-            url: '/pages/index/index'
+            url: '/pages/login/login'
           })
         }
         else if (res.tapIndex == 1) {

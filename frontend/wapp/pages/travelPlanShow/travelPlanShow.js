@@ -1,5 +1,7 @@
 // pages/travelPlanShow/travelPlanShow.js
 
+import Dialog from '@vant/weapp/dialog/dialog';
+
 const utils = require("../../utils/util")
 const defaultData = require("./defaultData") 
 const privacy = require("../../utils/privacy")
@@ -12,7 +14,7 @@ var qqmapsdk = new QQMapWX({
 const activeIcon = defaultData.activeIcon
 const normalIcon = defaultData.normalIcon
 
-let mapContext
+var mapContext
 
 Page({
   /**
@@ -32,6 +34,11 @@ Page({
 
     stepActive: 0,
     steps: defaultData.steps,
+
+    // 作息时间调整 弹窗
+    dialogShow: false,
+    playTimeConfirm: [8, 20],
+    playTimeShow: [8, 20],
   },
 
   /**
@@ -172,7 +179,6 @@ Page({
           for (var i = 0; i < coors.length; i += 2) {
             pl.push({ latitude: coors[i], longitude: coors[i + 1] })
           }
-          console.log(pl)
           resolve(pl)
         },
         fail: (err) => {
@@ -188,35 +194,51 @@ Page({
     var promiseArr = []
     var lineNumbers = this.data.mapPoints.length - 1
     var points = this.data.mapPoints
-    for (var i = 0; i < lineNumbers; ++i) {
-      promiseArr.push(this.getPolyline(points[i], points[i+1]))
-    }
-    Promise.all(promiseArr).then(items => {
-      console.log("Promise all:", items)
-      var initPolylines = []
-      items.forEach(item => {
-        initPolylines.push({
-          points: item,
-          color: "#00FF00",
+
+    // 简陋的并发控制：每隔200ms发一次请求（或稍<200ms）
+    var fillPromiseArr = new Promise((resolve) => {
+      let i = 0
+      let interval = setInterval(() => {
+        if (i >= lineNumbers - 1) {
+          console.log("end")
+          resolve()
+          clearInterval(interval)
+        }
+        promiseArr.push(this.getPolyline(points[i], points[i+1]))
+        console.log(i)
+        i += 1
+      }, 200)
+    })
+    
+    fillPromiseArr.then(() => {
+      console.log("PromiseArr filled")
+      Promise.all(promiseArr).then(items => {
+        console.log("Promise all:", items)
+        var initPolylines = []
+        items.forEach(item => {
+          initPolylines.push({
+            points: item,
+            color: "#00FF00",
+            width: 3,
+            borderColor: "#228B22",
+            borderWidth: 2,
+          })
+        })
+        this.setData({
+          mapPolylines: initPolylines
+        })
+      }).catch(err => {
+        console.log("Promise error:", err)
+        var initPolylines = [{
+          points: this.data.mapPoints,
+          color: "#00FF00", // green
           width: 3,
           borderColor: "#228B22",
           borderWidth: 2,
+        }]
+        this.setData({
+          mapPolylines: initPolylines
         })
-      })
-      this.setData({
-        mapPolylines: initPolylines
-      })
-    }).catch(err => {
-      console.log("Promise error:", err)
-      var initPolylines = [{
-        points: this.data.mapPoints,
-        color: "#00FF00", // green
-        width: 3,
-        borderColor: "#228B22",
-        borderWidth: 2,
-      }]
-      this.setData({
-        mapPolylines: initPolylines
       })
     })
   },
@@ -362,6 +384,98 @@ Page({
     console.log("tap nearby hotel:", sight_id)
     wx.navigateTo({
       url: "/pages/travelHotelRestaurant/travelHotelRestaurant?sceneryId=" + sight_id,
+    })
+  },
+
+  onTapSetPlayTime() {
+    this.setData({
+      dialogShow: true,
+      playTimeShow: this.data.playTimeConfirm
+    })
+  },
+
+  onDialogClose() {
+    this.setData({
+      dialogShow: false
+    })
+  },
+
+  onDialogConfirm() {
+    let newPlayTime = this.data.playTimeShow
+    let that = this
+    let isChanged = false
+
+    const beforeClose = (action) => new Promise((resolve) => {
+      /* 好像resolve并不会向return一样截断其后语句的运行
+       * 之前resolve(true)后还是发生了request请求 */
+      if (action !== "confirm") {
+        // 1. 非confirm的关闭
+        resolve(true) // 直接关闭
+      } else if (newPlayTime[1] - newPlayTime[0] < 3) {
+        // 2. 间隔不得小于等于3
+        wx.showToast({
+          title: "游玩时间不应少于3小时",
+          icon: "none"
+        })
+        resolve(false) // 拦截确认
+      } else {
+        // 3. 允许更改
+        var url = utils.server_hostname + "/api/core/" + "plan/" + this.data.travelPlanId + "/"
+        var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
+        wx.request({
+          url: url,
+          method: "PUT",
+          data: {
+            get_up_time: newPlayTime[0],
+            sleep_time : newPlayTime[1],
+          },
+          header: {
+            "token-auth": token,
+          },
+          success: res => {
+            if (res.statusCode !== 200) {
+              wx.showToast({
+                title: "出了点小意外，修改有问题qwq",
+                icon: "none"
+              })
+              resolve(false)  // 拦截确认
+            } else {
+              that.setData({
+                playTimeConfirm: newPlayTime
+              })
+              isChanged = true
+              resolve(true)
+            }
+          },
+          fail: err => {
+            wx.showToast({
+              title: "请求都发不出去",
+              icon: "none"
+            })
+            console.log(err)
+            resolve(false)  // 拦截确认
+          }
+        })
+      }
+    });
+    
+    Dialog.confirm({
+      title: "调整作息时间",
+      beforeClose
+    });
+    
+    if (isChanged) {
+      console.log("reload travelPlanShow")
+      this.onLoad({
+        planid: this.data.travelPlanId
+      })
+    }
+  },
+
+  onSliderDrag(event) {
+    var playTime = event.detail.value
+    this.setData({
+      playTimeShow: playTime
     })
   },
 
