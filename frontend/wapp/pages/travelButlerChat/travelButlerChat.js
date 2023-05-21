@@ -116,6 +116,7 @@ Page({
     this.setData({
       inputValue: event.detail.value,
     });
+    console.log(`${this.data.inputValue}`)
   },
 
   query1: function() {
@@ -142,6 +143,7 @@ Page({
   sendMessage: function() {   // 点击发送按钮发送消息
     var outputValue = this.data.outputValue;
     var inputValue = this.data.inputValue;
+    console.log("sendMessage", inputValue)
     var address = this.data.address;
     var chatContent = this.data.chatContent;
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token');
@@ -165,7 +167,7 @@ Page({
       this.setData({
         isOperationAllowed: true
       });
-    }, 60000); // 1分钟等于60000毫秒
+    }, 20000); // 1分钟等于60000毫秒
 
     // 显示用户输入
     chatContent.push({
@@ -206,6 +208,8 @@ Page({
       url: 'wss://tratu1.2022martu1.cn/chat',
     });
 
+    let that = this;
+    console.log("聊天内容：", that.data.inputValue)
     // 监听 WebSocket 连接成功事件
     wx.onSocketOpen(() => {
       console.log('WebSocket 连接已打开');
@@ -214,7 +218,7 @@ Page({
         chat_id: this.data.chat_id,
         current_time: '',
         position: '北京航空航天大学',
-        query: this.data.inputValue
+        query: inputValue
       };
       this.data.socket.send({
         data: JSON.stringify(data)
@@ -229,7 +233,6 @@ Page({
     });
     const finalAnswer = this.data.chatContent[chatContent.length - 1];
     // 监听 WebSocket 接收到消息事件
-    var that = this;
     wx.onSocketMessage((res) => {
       
       const utf8Data = res.data;
@@ -247,7 +250,7 @@ Page({
         })
       } else if(obj.action == "New Question"){
         wx.hideLoading();
-        if(question_count >= 3)  {
+        if(question_count > 3)  {
           question_count = question_count - 3;
         } else if (question_count == 1) {
           that.setData({
