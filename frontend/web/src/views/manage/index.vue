@@ -124,19 +124,23 @@
           </a-menu-item>
           <a-sub-menu key="sub10">
             <span slot="title"><a-icon type="flag" />景点管理</span>
-            <a-menu-item key="20">
-              景点信息管理
-              <router-link to="/sceneryManage"></router-link>
-            </a-menu-item>
+
             <a-menu-item key="21">
               景点审核
               <router-link to="/sceneryAudit"></router-link>
             </a-menu-item>
           </a-sub-menu>
-          <a-menu-item key="22">
-            <a-icon type="schedule" />旅行计划管理
-            <router-link to="/planDisplay"></router-link>
-          </a-menu-item>
+          <a-sub-menu key="sub11">
+            <span slot="title"><a-icon type="schedule"></a-icon>旅行管理</span>
+            <a-menu-item key="22">
+              旅行计划管理
+              <router-link to="/planDisplay"></router-link>
+            </a-menu-item>
+            <a-menu-item key="23">
+              出行计划生成日志
+              <router-link to="/travelCreateLog"></router-link>
+            </a-menu-item>
+          </a-sub-menu>
         </a-menu>
       </a-layout-sider>
 
