@@ -144,5 +144,11 @@ Page({
       wx.navigateTo({
         url: "/pages/RealMyzone/RealMyzone",
       })
+    },
+
+    onTapSettings() {
+      wx.navigateTo({
+        url: "/pages/Settings/Settings",
+      })
     }
 })

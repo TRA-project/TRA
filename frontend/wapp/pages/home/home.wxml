@@ -1,11 +1,16 @@
 
 <view class="container" style="opacity: {{opacity}};" bindtouchstart="onTouchStart" bindtouchend="onTouchEnd">
   <view class="header-container">
-    <view class="user-avatar" bindtap="onTapMyZone">
-      <image src="{{ userAvatar }}" class="avatar-img" />
+    <view class="user-block">
+      <view class="user-avatar" bindtap="onTapMyZone">
+        <image src="{{ userAvatar }}" class="avatar-img" />
+      </view>
+      <view class="user-greetings">
+        {{ greetings }}
+      </view>
     </view>
-    <view class="user-greetings">
-      {{ greetings }}
+    <view class="setting-block" bindtap="onTapSettings">
+      <image src="/images/sys-setting.png" class="setting-img"/>
     </view>
   </view>
   <view class="body-container">

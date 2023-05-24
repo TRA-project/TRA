@@ -12,44 +12,65 @@
     height: 15%;
     width: 100%;
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
 
-    .user-avatar {
-      height: 65rpx;
-      width: 65rpx;
-      border-radius: 42rpx;
+    .user-block {
+      display: flex;
+      justify-content: start;
+      align-items: center;
 
-      border-width: 2rpx;
-      border-style: solid;
-      border-color: @TRA-blue;
-      box-shadow: 3rpx 3rpx 8rpx 4rpx rgba(133, 133, 133, 0.438);
-      
-      .flex-center();
-      margin: 20rpx;
-      margin-left: 35rpx;
-      
-      overflow: hidden;
-
-      .avatar-img {
+      .user-avatar {
         height: 65rpx;
         width: 65rpx;
+        border-radius: 42rpx;
+  
+        border-width: 2rpx;
+        border-style: solid;
+        border-color: @TRA-blue;
+        box-shadow: 3rpx 3rpx 8rpx 4rpx rgba(133, 133, 133, 0.438);
+        
+        .flex-center();
+        margin: 20rpx;
+        margin-left: 35rpx;
+        
+        overflow: hidden;
+  
+        .avatar-img {
+          height: 65rpx;
+          width: 65rpx;
+        }
+      }
+
+      .user-greetings {
+        box-shadow: 2rpx 2rpx 6rpx 4rpx rgba(133, 133, 133, 0.185);
+        border-radius: 20rpx;
+        padding: 10rpx 20rpx;
       }
     }
+    
+    .setting-block {
+      .flex-center();
+      margin-right: 20rpx;
+      padding: 10rpx;
 
-    .user-greetings {
-      box-shadow: 2rpx 2rpx 6rpx 4rpx rgba(133, 133, 133, 0.185);
-      border-radius: 20rpx;
-      padding: 10rpx 20rpx;
+      .setting-img {
+        height: 45rpx;
+        width: 45rpx;
+      }
     }
   }
 
   .body-container {
     height: 70%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
 
     .logo-view {
-      margin-top: 250rpx;
-      margin-bottom: 50rpx;
+      margin-top: 280rpx;
+      margin-bottom: 30rpx;
       display: flex;
       justify-content: center;
     
@@ -59,9 +80,12 @@
     }
 
     .search-bar {
+      margin-left: 10%;
+      margin-right: 10%;
       .flex-center();
-      width: 600rpx;
+      width: 80%;
       height: 100rpx;
+      
       border-radius: 50rpx;
       background-color: #fff;
       box-shadow: 1rpx 5rpx 10rpx rgba(0, 0, 0, 0.1);
@@ -88,7 +112,10 @@
     }
 
     .function-area {
-      padding: 30rpx 20rpx;
+      margin-left: 10%;
+      margin-right: 10%;
+      margin-top: 30rpx;
+      
       width: 80%;
       display: flex;
       flex-wrap: wrap;
