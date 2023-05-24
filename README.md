@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://i.postimg.cc/9FPMHNyB/logo.png" width="200px"/> <br/>
+  <img src="https://i.postimg.cc/9FPMHNyB/logo.png" width="120px"/> <br/>
   <img src="https://img.shields.io/github/license/TRA-project/TRA" />
   <img src="https://img.shields.io/github/issues-pr-closed/TRA-project/TRA" />
   <img src="https://img.shields.io/github/issues-closed/TRA-project/TRA" />
