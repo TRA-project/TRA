@@ -34,7 +34,13 @@ Page({
       }
     })
     wx.reLaunch({
-      url: "/pages/travelPlanList/travelPlanList",
+      url: "/pages/home/home",
+      success: res => {
+        console.log("success")
+        wx.navigateTo({
+          url: "/pages/travelPlanList/travelPlanList",
+        })
+      }
     })
   },
   
