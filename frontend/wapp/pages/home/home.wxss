@@ -78,7 +78,7 @@ page {
   vertical-align: middle;
 }
 .container .body-container .logo-view {
-  margin-top: 44%;
+  margin-top: 45%;
   margin-bottom: 30rpx;
   display: flex;
   justify-content: center;
