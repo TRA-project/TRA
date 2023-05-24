@@ -115,7 +115,6 @@ Page({
     onShow: function(){
       this.getNotification()
       this.getAds()
-      //this.onPullDownRefresh()
       this.setData({
         pal_ids:[],
         pal_titles:[],
@@ -731,7 +730,7 @@ Page({
      */
     onPullDownRefresh: function () {
       wx.reLaunch({
-        url: '/pages/index/index',
+        url: '/pages/home/home',
       })
     },
 

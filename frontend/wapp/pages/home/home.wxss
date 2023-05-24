@@ -1,99 +1,106 @@
+/* for Unification of CSS */
+/* offset-x | offset-y | blur-radius | spread-radius | color */
+.single-line {
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 超出部分隐藏 */
+  text-overflow: ellipsis;
+  /* 溢出元素省略号表示 */
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .container {
-    position: fixed;
-    top: 0;
-    transition: opacity 0.5s ease-in-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  padding: 0rpx;
+  height: 100%;
+  width: 100%;
+  transition: opacity 0.5s ease-in-out;
 }
-
-.container.hidden {
-  opacity: 0;
-  z-index: -1;
+.container .header-container {
+  height: 15%;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
-
-.logo-view {
-  margin-top: 350rpx;
+.container .header-container .user-avatar {
+  height: 65rpx;
+  width: 65rpx;
+  border-radius: 42rpx;
+  border-width: 2rpx;
+  border-style: solid;
+  border-color: #1e90ff;
+  box-shadow: 3rpx 3rpx 8rpx 4rpx rgba(133, 133, 133, 0.438);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20rpx;
+  margin-left: 35rpx;
+  overflow: hidden;
+}
+.container .header-container .user-avatar .avatar-img {
+  height: 65rpx;
+  width: 65rpx;
+}
+.container .header-container .user-greetings {
+  box-shadow: 2rpx 2rpx 6rpx 4rpx rgba(133, 133, 133, 0.185);
+  border-radius: 20rpx;
+  padding: 10rpx 20rpx;
+}
+.container .body-container {
+  height: 70%;
+}
+.container .body-container .logo-view {
+  margin-top: 250rpx;
   margin-bottom: 50rpx;
   display: flex;
   justify-content: center;
-  /* border: 1px solid #000 ; */
 }
-
-.logo-img {
+.container .body-container .logo-view .logo-img {
   height: 150rpx;
-  /* border: 1px solid #000 ; */
 }
-
-.down-chevron-icon {
-  position: fixed;
-  height: 5%;
-  bottom: 2%;
+.container .body-container .search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  background-color: #fff;
+  box-shadow: 1rpx 5rpx 10rpx rgba(0, 0, 0, 0.1);
 }
-
-.search-icon{
-    margin-left: 25rpx;
-    margin-right: 25rpx;
-    border-radius:10rpx;
-    opacity:0.6;
+.container .body-container .search-bar .search-icon {
+  margin-left: 25rpx;
+  margin-right: 25rpx;
+  border-radius: 10rpx;
+  opacity: 0.6;
 }
-
-.search-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 600rpx;
-    height: 100rpx;
-    border-radius: 50rpx;
-    background-color: #fff;
-    box-shadow: 0 5rpx 10rpx rgba(0, 0, 0, 0.1);
+.container .body-container .search-bar .search-input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  font-size: 32rpx;
 }
-  
-.logo {
-    width: 80rpx;
-    height: 80rpx;
-    margin-right: 10rpx;
-}
-  
-.search-input {
-    flex: 1;
-    height: 100%;
-    border: none;
-    font-size: 32rpx;
-}
-  
-.search-btn {
-    width: 176rpx;
-    height: 100%;
-    border: none;
-    border-radius: 50rpx;
-    background-color: #3385ff;
-    color: #fff;
-    font-size: 30rpx;
-    margin-left: 20rpx;
-}
-
-.audio-button {
+.container .body-container .search-bar .audio-button {
   width: 64rpx;
   height: 64rpx;
   padding: 20rpx;
 }
-
-.function-area {
+.container .body-container .function-area {
   padding: 30rpx 20rpx;
   width: 80%;
   display: flex;
   flex-wrap: wrap;
 }
-
-.function-box {
+.container .body-container .function-area .function-box {
   text-align: center;
   padding: 20rpx 10rpx;
 }
-
-.function-item {
+.container .body-container .function-area .function-box .function-item {
   height: 80rpx;
   width: 80rpx;
   border-radius: 40rpx;
@@ -101,15 +108,27 @@
   background-color: rgba(17, 122, 221, 0.966);
   align-items: center;
 }
-
-.function-icon {
+.container .body-container .function-area .function-box .function-item .function-icon {
   width: 80rpx;
   height: 80rpx;
   border-radius: 20rpx;
 }
-
-.function-name {
+.container .body-container .function-area .function-box .function-name {
   margin-top: 6rpx;
   font-weight: bolder;
   font-size: 30rpx;
+}
+.container .footer-container {
+  height: 15%;
+}
+.container .footer-container .logo-view {
+  margin-top: 10rpx;
+  margin-bottom: 50rpx;
+  display: flex;
+  justify-content: center;
+}
+.container .footer-container .logo-view .down-chevron-icon {
+  position: fixed;
+  height: 5%;
+  bottom: 2%;
 }
