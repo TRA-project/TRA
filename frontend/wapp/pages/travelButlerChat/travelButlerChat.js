@@ -186,7 +186,7 @@ Page({
       this.setData({
         isOperationAllowed: true
       });
-    }, 20000); // 1分钟等于60000毫秒
+    }, 60000); // 1分钟等于60000毫秒
 
     // 显示用户输入
     chatContent.push({
