@@ -102,6 +102,11 @@ Page({
       }
     },
 
+    // 什么都不做
+    nothing() {
+
+    },
+
     onAddSpot(e) {
       this.setData({
         add_elm: !this.data.add_elm
