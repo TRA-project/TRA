@@ -30,7 +30,7 @@ from wechat_app.serializers.plan_schedule import PlanScheduleSerializer
 from wechat_app.serializers.sight import SightSerializer, SightPlanSerializer
 from text2vec import SentenceModel
 
-# embedder = SentenceModel()
+embedder = SentenceModel()
 testflag = 1
 
 
@@ -114,11 +114,13 @@ def calculate(list, tag, start_time, end_time, type):
     # 我们有这样的一个假设，即对于一个综合评分很高的景点，较远的地点是可以容忍的，但是对于一个相对较差的景点，则过远的距离是不好的
     # 所以地点的评分是距离，热度，评价的三元函数
     tag_random = random.uniform(0.5, 1) + type[2]
+    """
     corpus_embedding = 0
-    """
+    
     embedder = SentenceModel()
-    corpus_embedding = embedder.encode([tag])[0]
     """
+    corpus_embedding = embedder.encode([tag])[0]
+
     n = size(list)
     dict = {}
     seq = 0
