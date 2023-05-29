@@ -1,0 +1,206 @@
+/* pages/sceneList/sceneList.wxss */
+@import "../../utils/style.less";
+
+.search-bar-container {
+  position: sticky; /* 吸顶效果 */
+  top: 0rpx;
+  z-index: 99;
+
+  .search-bar {
+    height: 100rpx;
+    background-color: rgba(30, 144, 255, 1.0);
+    display: flex;
+    align-items: center;
+    padding: 0 20rpx;
+
+    .search-box {
+      height: 72rpx;
+      background-color: white;
+      border-radius: 36rpx;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;  /* 内部元素横向从左向右排列 */
+      align-items: center;      /* 内部元素纵向居中 */
+      padding-left: 20rpx;
+      padding-right: 10rpx;
+
+      .search-input {
+        font-size: 30rpx;
+        margin-left: 10rpx;
+        width: 85%;
+      }
+    }
+  }
+}
+
+.top-bar-container {
+  display: flex;
+  align-items: center;
+  vertical-align: center;
+  justify-content: space-between;
+  background-color: rgba(145, 188, 235, 0.26);
+
+  position: sticky; /* 吸顶效果 */
+  top: 100rpx;
+  z-index: 98;
+
+  .drop-down-menu {
+    width: 83%;
+    margin: 10rpx;
+  }
+
+  .add-scenery-button {
+    width: 12%;
+    display: flex;
+    align-items: center;
+    vertical-align: center;
+    margin: 10rpx;
+
+    .add-scenery-icon {
+      width: 90rpx;
+      height: 90rpx;
+    }
+  }
+}
+
+.scenery-list-container {
+  min-height: 1000rpx;
+  display: flex;
+  flex-direction: column;
+
+  .scenery-list {
+    border-radius: 10rpx;
+  }
+  
+  .scenery-card {
+    border-radius: 10rpx;
+    margin: 5rpx;
+    width: 100%;
+  }
+  
+  .reselect-former-scene-card {
+    background-color: rgb(172, 211, 255) !important;
+    margin: 10rpx;
+    filter: drop-shadow(4rpx 4rpx 3rpx rgb(160, 160, 160));
+    border-radius: 30rpx;
+    /* 吸顶 */
+    position: sticky;
+    top: 0;
+  }
+  
+  /* van-card根节点样式 */
+  .self-custom-class {
+    border-bottom-style: solid;
+    border-bottom-width: 3rpx;
+    border-bottom-color: rgb(182, 182, 182);
+  }
+  
+  .self-thumb-class {
+    padding: 5rpx 0rpx;
+    .flex-center();
+  
+    height: 200rpx;
+    width: 180rpx;
+    overflow: hidden;
+  
+    .scene-card-image {
+      height: 200rpx !important;
+      width: 280rpx !important;
+    }
+  }
+  
+  .self-title-class {
+    font-size: 30rpx;
+    font-weight: bolder;
+    height: 30%;
+  }
+  
+  .self-desc-class {
+    margin-top: 5rpx;
+    margin-bottom: 5rpx;
+    
+    font-size: 24rpx;
+    line-height: 40rpx;
+    height: 80rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+      -webkit-line-clamp: 2; /* 行数 */
+      -webkit-box-orient: vertical;
+  }
+  
+  .self-price-class {
+    padding-top: 10rpx;
+  }
+  
+  .self-footer-class {
+    /* margin-top: -60rpx; */
+    position: absolute;
+    right: 20rpx;
+    bottom: 25rpx;
+  }
+  
+  .scenery-list-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 600rpx;
+  }
+}
+
+
+
+.scenery-reselect-confirm-container {
+  position: sticky;
+  bottom: 80rpx;
+
+  display: flex;
+  justify-content: center;
+
+  .reselect-confirm-button {
+    width: 40% !important;
+    height: 80rpx !important;
+    color: white;
+    background-color: rgba(30, 144, 255, 1.0);
+    border-radius: 30rpx !important;
+    box-shadow: 5rpx 5rpx 10rpx 5rpx rgb(73, 73, 73);
+  
+    margin: 5rpx 20rpx !important;
+  }
+
+  .reselect-confirm-button-hover {
+    box-shadow: 3rpx 3rpx 6rpx 3rpx rgb(94, 94, 94);
+  }
+  .return-back-button {
+    width: 80rpx !important;
+    height: 80rpx !important;
+    background-color: rgba(30, 144, 255, 1.0);
+    border-radius: 40rpx;
+    box-shadow: 5rpx 5rpx 10rpx 5rpx rgb(73, 73, 73);
+    
+    margin: 5rpx 20rpx !important;
+    padding: 5rpx !important;
+  
+    display: flex;
+    justify-content: center;
+
+    .return-back-button-img {
+      width: 40rpx;
+      height: 40rpx;
+      margin: 0rpx;
+      padding: 0rpx;
+      /* 完全反色(100%) */
+      filter: invert(100%); 
+    
+      align-self: center;
+    }
+  }
+  .return-back-button-hover {
+    box-shadow: 3rpx 3rpx 6rpx 3rpx rgb(94, 94, 94);
+  }
+}
+
+
+
+
+
