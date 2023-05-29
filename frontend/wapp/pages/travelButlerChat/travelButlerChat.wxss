@@ -109,7 +109,7 @@ page {
   border: 1px solid #747d8c;
   background-color:white;
   border-radius: 30rpx;
-  height: 40px;
+  height: 40rpx;
   min-height: 30px;
   padding-left: 10rpx;
   font-size: 35rpx;
