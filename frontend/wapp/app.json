@@ -58,7 +58,8 @@
     "pages/travelPlanFinish/travelPlanFinish"
   ],
   "requiredPrivateInfos": [
-    "getLocation"
+    "getLocation",
+    "chooseLocation"
   ],
   "lazyCodeLoading": "requiredComponents",
   "window": {

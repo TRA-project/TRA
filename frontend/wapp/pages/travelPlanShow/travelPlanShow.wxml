@@ -80,6 +80,12 @@
       </button>
     </view>
   </van-steps>
+  <button wx:if="{{!hasRest}}" 
+          class="content-adapt-btn-out"
+          hover-class="button-hover"
+          bindtap="onTapSetPlayTime">
+          作息时间调整
+  </button>
 </view>
 
 <view class="travel-plan-footer-container">

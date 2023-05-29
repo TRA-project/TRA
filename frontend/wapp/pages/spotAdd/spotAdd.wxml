@@ -1,17 +1,14 @@
 <!--pages/spotAdd/spotAdd.wxml-->
 <form catchsubmit="formSubmit" catchreset="formReset">
     <view class = "divider"></view>
-    
     <view class="page-section">
-        <view class="page-section-title">景点名称</view>
-            <view class="weui-cell__bd" style="margin: 30rpx 0" >
-              <input class="weui-input" name="input" placeholder="请输入新增景点名称" />
+        <view class="page-section-title">景点名称（必填项）</view>
+            <view class="weui-cell__bd" style="margin: 30rpx 0">
+              <input bindinput="spotnameInput" placeholder="请输入新增景点名称" />
             </view>
     </view>
-
     <view class = "divider"></view>
-
-    <view class="img-wrap">
+    <!-- <view class="img-wrap">
         <view class="txt">上传景点图片</view>
         <view class="imglist">
             <view class="item" wx:for="{{imgs}}" wx:key="item">
@@ -24,37 +21,57 @@
                 <text class="sign">+</text>
             </view>
         </view>
-    </view>
-
-    <view class = "divider"></view>
-    
+    </view> -->
+    <!-- <view class = "divider"></view> -->
     <view class="page-section">
-        <view class="page-section-title">景点地址</view>
+        <view class="page-section-title">景点地址（必填项）</view>
         <view class="weui-cell__bd" style="margin: 30rpx 0" >
-            <input class="weui-input" name="input" placeholder="请输入新增景点地址" />
+            <input bindinput="spotaddrInput" class="weui-input" name="input" placeholder="请输入新增景点地址" />
         </view>
     </view>
-
     <view class = "divider"></view>
-    
+    <view class="page-section">
+        <view class="page-section-title">景点描述</view>
+        <view class="weui-cell__bd" style="margin: 30rpx 0" >
+            <input bindinput="spotdescInput" class="weui-input" name="input" placeholder="请输入新增景点描述" />
+        </view>
+    </view>
+    <view class = "divider"></view>
+    <view class="page-section">
+        <view class="page-section-title">景点开放时间</view>
+        <view class="weui-cell__bd" style="margin: 30rpx 0" >
+            <input bindinput="spotplaytimeInput" class="weui-input" name="input" placeholder="请输入新增景点开放时间" />
+        </view>
+    </view>
+    <view class = "divider"></view>
+    <view class="page-section">
+        <view class="page-section-title">景点建议游览时间</view>
+        <view class="weui-cell__bd" style="margin: 30rpx 0" >
+            <input bindinput="spotaddrInput" class="weui-input" name="input" placeholder="请输入新增景点建议游览时间" />
+        </view>
+    </view>
+    <view class = "divider"></view>
     <view class="page-section">
         <view class="page-section-title">票价/元</view>
             <view class="weui-cell__bd" style="margin: 30rpx 0" >
-            <input class="weui-input" name="input" placeholder="请输入新增景点票价" />
+            <input bindinput="spottickettypeInput" class="weui-input" name="input" placeholder="请输入新增景点门票类型" />
+            <input bindinput="spotticketInput" class="weui-input" name="input" placeholder="请输入新增景点票价" />
             </view>
     </view>
-
     <view class = "divider"></view>
-    
     <view class="page-section">
+        <view class="page-section-title">景点类型</view>
+        <view class="weui-cell__bd" style="margin: 30rpx 0" >
+            <input bindinput="spottypeInput" class="weui-input" name="input" placeholder="请输入新增景点类型" />
+        </view>
+    </view>
+    <!-- <view class="page-section">
         <view class="page-section-title">添加游览点</view>
             <view class="weui-cell__bd" style="margin: 30rpx 0" >
             <input class="weui-input" name="input" placeholder="请输入新增景点游览点"/>
             </view>
-    </view>
-
-    <view class = "divider"></view>
-    
+    </view> -->
+    <!-- <view class = "divider"></view> -->
     <view class="btn-area">
         <button style="margin: 30rpx 0" type="primary" formType="submit" bindtap = "onclick">上传</button>
         <button style="margin: 30rpx 0" formType="reset">清空所有内容</button>

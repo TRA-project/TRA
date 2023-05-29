@@ -22,6 +22,8 @@ class SightDetailedSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         images = [d.get('image') for d in data.pop('images', None)]
+        if len(images) == 0:
+            images.append('http://116.63.12.111/media/images/default.jpg')
         data['images'] = images
         return data
 

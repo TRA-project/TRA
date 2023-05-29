@@ -2,7 +2,7 @@
 <view class="search-bar-container">
   <!-- search -->
   <view class="search-bar" wx:if="{{usage === 'search'}}">
-    <view class="search-box" bindtap="onSearchBarTap">
+    <view class="search-box" bindtap="onTapReturn">
       <icon type="search" size="20" />
       <input class="search-input" value="{{keyword}}" disabled="{{ true }}"/>
     </view>
@@ -21,8 +21,8 @@
 <view class="top-bar-container" wx:if="{{showSearchRes}}">
   <van-dropdown-menu active-color="#1989fa" class="drop-down-menu">
     <van-dropdown-item value="{{ typeValue }}" options="{{ optionType }}" bind:change="onChangeType"/>
-    <van-dropdown-item value="{{ timeValue }}" options="{{ optionTime }}"></van-dropdown-item>
-    <van-dropdown-item value="{{ costValue }}" options="{{ optionCost }}" />
+    <van-dropdown-item value="{{ timeValue }}" options="{{ optionTime }}" bind:change="onChangeTime"/>
+    <van-dropdown-item value="{{ costValue }}" options="{{ optionCost }}" disabled/>
   </van-dropdown-menu>
   <!-- <van-button round type="primary" class="add-scenery-button" icon="https://img.yzcdn.cn/vant/logo.png">+</van-button> -->
   <view class="add-scenery-button">
@@ -43,7 +43,7 @@
     desc-class="self-desc-class"
     price-class="self-price-class">
     <view slot="tags">
-      预计时长：{{formerScenery.time}}
+      预计时长：{{formerScenery.playtime}}h
     </view>
     <view class="self-thumb-class" slot="thumb">
       <image class="scene-card-image" src="{{server_imagename+formerScenery.cover}}" />
@@ -58,7 +58,7 @@
   </van-card>
   <!-- reselect 专用 -->
 
-  <view class="scenery-list">
+  <view class="scenery-list" wx:if="{{!listLoading}}">
     <checkbox-group bindchange="onCheckboxChange">
       <view class="scenery-card" wx:for="{{sceneryShowList}}" wx:key="id">
         <van-card
@@ -81,7 +81,7 @@
             <image class="scene-card-image" src="{{server_imagename+item.cover}}" />
           </view>
           <view slot="tags">
-            预计时长：{{item.time}}
+            预计时长：{{item.playtime}}h
           </view>
           <view class="self-footer-class" slot="footer"
             wx:if="{{usage === 'reselect'}}">
@@ -96,6 +96,11 @@
     <view class="scenery-list-placeholder" wx:if="{{sceneryShowList.length === 0}}">
       <image src="/images/null-placeholder.jpg" style="height: 300rpx; width: 365rpx;"></image>
     </view>
+  </view>
+  <view wx:if="{{ listLoading }}">
+    <van-skeleton wx:for="{{[1,2,3,4]}}" 
+      style="margin: 20rpx;"
+      title row="3" loading="{{ listLoading }}" />
   </view>
 </view>
 

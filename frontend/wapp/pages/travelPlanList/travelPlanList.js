@@ -252,6 +252,15 @@ Page({
       return
     }
 
+    let duration = (formData.end_time - formData.start_time) / 1000;
+    if (duration / 432000 > 5) {
+      wx.showToast({
+        title: `超出5天\r\n爱护后端，人人有责doge`,
+        icon: "none",
+      })
+      return
+    }
+
     // 进入加载状态
     wx.showLoading({
       title: "加载中",

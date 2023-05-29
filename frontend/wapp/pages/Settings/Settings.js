@@ -55,7 +55,7 @@ Page({
 
     navigate2logout() {
         wx.clearStorageSync()
-        wx.navigateTo({
+        wx.reLaunch({
           url: '/pages/login/login',
         })
     },
