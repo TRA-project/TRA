@@ -39,6 +39,8 @@ Page({
     dialogShow: false,
     playTimeConfirm: [8, 20],
     playTimeShow: [8, 20],
+
+    hasRest: false, // 是否有rest项，若没有则在末尾添上“作息时间调整”按钮
   },
 
   /**
@@ -47,7 +49,8 @@ Page({
   onLoad(options) {
     const planId = options.planid // 获取出行计划id
     this.setData({
-      travelPlanId: planId
+      travelPlanId: planId,
+      hasRest: false  // 初始化
     })
 
     mapContext = wx.createMapContext("map", this)
@@ -132,6 +135,8 @@ Page({
               latitude: item.sight.address.latitude,
             }
             this.data.mapPoints.push(pointItem)
+          } else if (item.type == 3) {
+            this.data.hasRest = true
           }
         })
 
@@ -139,6 +144,7 @@ Page({
           mapMarkers: this.data.mapMarkers,
           mapPoints : this.data.mapPoints,
           steps: this.data.steps,
+          hasRest: this.data.hasRest, // 最终刷新在视图层
         })
         console.log("onload mapMarkers:", this.data.mapMarkers)
 
@@ -404,6 +410,7 @@ Page({
     let newPlayTime = this.data.playTimeShow
     let that = this
     let isChanged = false
+    let newPlanId = this.data.travelPlanId
 
     const beforeClose = (action) => new Promise((resolve) => {
       /* 好像resolve并不会向return一样截断其后语句的运行
@@ -440,9 +447,17 @@ Page({
               })
               resolve(false)  // 拦截确认
             } else {
-              that.setData({
-                playTimeConfirm: newPlayTime
+              wx.showToast({
+                title: "修改成功，调整计划",
+                icon: "none"
               })
+              that.setData({
+                playTimeConfirm: newPlayTime,
+                dialogShow: false,
+                travelPlanId: res.data.id,
+              })
+              newPlanId = res.data.id
+              console.log("new plan id:", newPlanId)
               isChanged = true
               resolve(true)
             }
@@ -457,6 +472,13 @@ Page({
           }
         })
       }
+    }).then(() => {
+      if (isChanged) {
+        console.log("reload travelPlanShow")
+        this.onLoad({
+          planid: this.data.travelPlanId
+        })
+      }
     });
     
     Dialog.confirm({
@@ -464,12 +486,6 @@ Page({
       beforeClose
     });
     
-    if (isChanged) {
-      console.log("reload travelPlanShow")
-      this.onLoad({
-        planid: this.data.travelPlanId
-      })
-    }
   },
 
   onSliderDrag(event) {
