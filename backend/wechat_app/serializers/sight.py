@@ -23,7 +23,7 @@ class SightDetailedSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         images = [d.get('image') for d in data.pop('images', None)]
         if len(images) == 0:
-            images.append('/media/images/default.jpg')
+            images.append('http://116.63.12.111/media/images/default.jpg')
         data['images'] = images
         return data
 
@@ -51,7 +51,7 @@ class SightSerializer(serializers.ModelSerializer):
         data['price'] = min(prices_data, default=0)
         images = data.pop('images', None)
         cover = images[0] if images else None
-        data['cover'] = cover.get('image') if cover else 'http://116.63.12.111/media/images/default.jpg'
+        data['cover'] = cover.get('image') if cover else '/media/images/default.jpg'
         return data
 
     class Meta:
