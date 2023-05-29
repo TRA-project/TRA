@@ -2,7 +2,7 @@
 <view class="search-bar-container">
   <!-- search -->
   <view class="search-bar" wx:if="{{usage === 'search'}}">
-    <view class="search-box" bindtap="onSearchBarTap">
+    <view class="search-box" bindtap="onTapReturn">
       <icon type="search" size="20" />
       <input class="search-input" value="{{keyword}}" disabled="{{ true }}"/>
     </view>
@@ -22,7 +22,7 @@
   <van-dropdown-menu active-color="#1989fa" class="drop-down-menu">
     <van-dropdown-item value="{{ typeValue }}" options="{{ optionType }}" bind:change="onChangeType"/>
     <van-dropdown-item value="{{ timeValue }}" options="{{ optionTime }}" bind:change="onChangeTime"/>
-    <van-dropdown-item value="{{ costValue }}" options="{{ optionCost }}" />
+    <van-dropdown-item value="{{ costValue }}" options="{{ optionCost }}" disabled/>
   </van-dropdown-menu>
   <!-- <van-button round type="primary" class="add-scenery-button" icon="https://img.yzcdn.cn/vant/logo.png">+</van-button> -->
   <view class="add-scenery-button">
