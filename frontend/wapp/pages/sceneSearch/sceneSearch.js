@@ -91,18 +91,21 @@ Page({
     /* 处理历史记录 */
     var refreshHistoryList = this.data.historyList
     var lastKeyword = event.detail.value
-    for (var i = 0; i < refreshHistoryList.length; ++i) {
-      if (refreshHistoryList[i] === lastKeyword) {
-        refreshHistoryList.splice(i, 1)
-        break
+    if (lastKeyword !== "") {
+      for (var i = 0; i < refreshHistoryList.length; ++i) {
+        if (refreshHistoryList[i] === lastKeyword) {
+          refreshHistoryList.splice(i, 1)
+          break
+        }
       }
+      refreshHistoryList.unshift(lastKeyword)
+      this.setData({
+        historyList: refreshHistoryList
+      })
+      // 同步到全局
+      app.globalData.historyList = this.data.historyList
     }
-    refreshHistoryList.unshift(lastKeyword)
-    this.setData({
-      historyList: refreshHistoryList
-    })
-    // 同步到全局
-    app.globalData.historyList = this.data.historyList
+    
 
     /* 处理confirm操作（应由父组件完成） */
     var myArgs = "?keyword=" + this.data.myInput + "&usage=search"
