@@ -114,7 +114,9 @@
       confirm-button-open-type="confirm"
       bind:close="onClose"
       bind:confirm="onConfirm"
+      catchtouchmove="nothing"
     >
+    <!-- 上面一句是为了禁止滑动穿透 -->
     <van-field
       model:value="{{editText}}"
       type="textarea"
@@ -126,7 +128,9 @@
     </van-dialog>
 </view>
 
-<comment-box toHideModal="{{hideComment}}" sightId="{{id}}" bind:numComment="update_numComment"></comment-box>
+<comment-box toHideModal="{{hideComment}}" sightId="{{id}}"  
+catchtouchmove="nothing"
+bind:numComment="update_numComment"></comment-box>
 </van-skeleton>
 
 <van-toast id="van-toast" />

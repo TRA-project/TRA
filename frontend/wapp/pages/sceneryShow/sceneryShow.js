@@ -102,6 +102,11 @@ Page({
       }
     },
 
+    // 什么都不做
+    nothing() {
+
+    },
+
     onAddSpot(e) {
       this.setData({
         add_elm: !this.data.add_elm
@@ -304,6 +309,15 @@ Page({
                 distance: Number(dist).toFixed(2)
               })
             })
+            data.images = data.images.map((item) => {
+                if (!String(item).startsWith("http")) {
+                    console.log("here!");
+                    return util.server_hostname + item;
+                } else {
+                    return item;
+                }
+            })
+            console.log("images", data.images)
             this.setData({
               id: data.id,
               images: data.images,
