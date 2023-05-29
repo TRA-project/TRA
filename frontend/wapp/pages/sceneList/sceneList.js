@@ -249,7 +249,7 @@ Page({
     // 该页面由sceneSearch而来
     if (this.data.usage === "search") {
       console.log("for search: back")
-      //wx.navigateBack()
+      wx.navigateBack()
     }
     // 该页面由travelPlanPreview而来
     if (this.data.usage === "reselect") {
