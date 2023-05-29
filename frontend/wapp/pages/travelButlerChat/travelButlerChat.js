@@ -17,9 +17,11 @@ Page({
     animation: {}, // 初始动画为空
     imageUrl: '../../images/up.png',
     showMask: true,
-    height: '400',
-    marginTop: '400',
-    scrollHeight: '700',
+    height: 400,   // 卡片高度
+    marginTop: 400,   // 滚动框的上边距
+    scrollHeight: 700,   // 滚动区域的高度
+    screenHeight: 0,  //  存储设备屏幕的高度
+    screenWidth: 0,  // 存储设备屏幕的宽度
     latitude: '',   // 当前位置的纬度
     longitude: '', // 当前位置的精度
     address: '',
@@ -35,7 +37,24 @@ Page({
   },
 
   onLoad() {
-    
+    // 获取设备信息
+    wx.getSystemInfo({
+      success: res => {
+        const screenHeight = res.screenHeight;
+        const screenWidth = res.screenWidth;
+        const height = 400;
+        const marginTop = 400;
+        const scrollHeight = (screenHeight * 750 / screenWidth) - 450;
+        console.log("scrollHeight is ", scrollHeight);
+        this.setData({
+          screenHeight: screenHeight,
+          screenWidth: screenWidth,
+          height: height,
+          marginTop: marginTop,
+          scrollHeight: scrollHeight
+        });
+      }
+    })
   },
 
   toggleCard: function(){
@@ -50,16 +69,16 @@ Page({
       // 隐藏卡片
       animation.height(0).opacity(0).step();
       var imageUrl = '../../images/down.png';
-      var height =  '130';
-      var marginTop = '130';
-      var scrollHeight = '970'
+      var height =  130;
+      var marginTop = 130;
+      var scrollHeight = (this.data.screenHeight * 750 / this.data.screenWidth) - 180;
     }else {
       // 显示卡片
       animation.height('auto').opacity(1).step();
       var imageUrl = '../../images/up.png'
-      var height =  '400';
-      var marginTop = '400';
-      var scrollHeight = '700'
+      var height =  400;
+      var marginTop = 400;
+      var scrollHeight = (this.data.screenHeight * 750 / this.data.screenWidth) - 450;
     }
     // 更新卡片状态和动画
     that.setData({
@@ -167,7 +186,7 @@ Page({
       this.setData({
         isOperationAllowed: true
       });
-    }, 20000); // 1分钟等于60000毫秒
+    }, 60000); // 1分钟等于60000毫秒
 
     // 显示用户输入
     chatContent.push({

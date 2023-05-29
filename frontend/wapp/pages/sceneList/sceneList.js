@@ -269,6 +269,13 @@ Page({
     this.getSceneryList(this.data.keyword, false)
   },
 
+  addScenery() {
+    console.log("tap")
+    wx.navigateTo({
+      url: '/pages/spotAdd/spotAdd',
+    })
+  },
+
   onCheckboxChange(event) {
     console.log("checkbox changed, value:")
     const values = event.detail.value.map(Number)

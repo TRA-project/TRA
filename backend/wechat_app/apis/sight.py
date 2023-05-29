@@ -9,7 +9,7 @@ import json
 import csv
 import os
 
-from django.db.models import Q
+from django.db.models import Q, When, Case, Value, IntegerField
 from django.http import QueryDict
 from rest_framework.decorators import action
 from rest_framework.mixins import RetrieveModelMixin, CreateModelMixin, UpdateModelMixin
@@ -65,7 +65,29 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateMode
     @action(methods=['GET'], detail=False, url_path='search')
     def search(self, request):
         kw = request.query_params.get('keyword')
-        sight_queryset = Sight.objects.filter(name__contains=kw)
+        tag = request.query_params.get('tag')
+        time = request.query_params.get('time')
+        sight_queryset = Sight.objects.all()
+
+        if kw:
+            sight_queryset = sight_queryset.filter(Q(name__contains=kw) | Q(desc__contains=kw))
+
+        if tag:
+            sight_queryset = sight_queryset.filter(Q(tags__name__icontains=tag))
+
+        if time:
+            # Assuming you have a 'time' field in the Sight model
+            time = time.split()
+            begin_time = time[0]
+            end_time = time[1]
+            sight_queryset = sight_queryset.filter(playtime__range=[begin_time, end_time])
+        sight_queryset = sight_queryset.annotate(
+            keyword_match=Case(
+                When(name__icontains=kw, then=Value(2)),
+                default=Value(1),
+                output_field=IntegerField(),
+            )
+        ).order_by('-keyword_match')
         serializer = SightSerializer(instance=sight_queryset, many=True)
         return Response(serializer.data)
 
