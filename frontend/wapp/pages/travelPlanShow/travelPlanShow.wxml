@@ -97,7 +97,6 @@
   show-cancel-button
   bind:close="onDialogClose"
   bind:confirm="onDialogConfirm"
-  theme="round-button"
 >
   <view class="slider-scale-text"> 
     <view class="scale-left">0 </view>

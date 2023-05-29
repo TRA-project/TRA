@@ -49,7 +49,7 @@ class SightSerializer(serializers.ModelSerializer):
         data['price'] = min(prices_data, default=0)
         images = data.pop('images', None)
         cover = images[0] if images else None
-        data['cover'] = cover.get('image') if cover else None
+        data['cover'] = cover.get('image') if cover else '/media/images/default.jpg'
         return data
 
     class Meta:
@@ -75,7 +75,7 @@ class SightPlanSerializer(serializers.ModelSerializer):
         data = super().to_representation(value)
         images = data.pop('images', None)
         cover = images[0] if images else None
-        data['cover'] = cover.get('image') if cover else None
+        data['cover'] = cover.get('image') if cover else '/media/images/default.jpg'
         return data
 
 class SightPlanShowSerializer(serializers.ModelSerializer):
@@ -90,5 +90,5 @@ class SightPlanShowSerializer(serializers.ModelSerializer):
         data = super().to_representation(value)
         images = data.pop('images', None)
         cover = images[0] if images else None
-        data['cover'] = cover.get('image') if cover else None
+        data['cover'] = cover.get('image') if cover else '/media/images/default.jpg'
         return data
