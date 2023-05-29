@@ -58,7 +58,7 @@
   </van-card>
   <!-- reselect 专用 -->
 
-  <view class="scenery-list">
+  <view class="scenery-list" wx:if="{{!listLoading}}">
     <checkbox-group bindchange="onCheckboxChange">
       <view class="scenery-card" wx:for="{{sceneryShowList}}" wx:key="id">
         <van-card
@@ -96,6 +96,11 @@
     <view class="scenery-list-placeholder" wx:if="{{sceneryShowList.length === 0}}">
       <image src="/images/null-placeholder.jpg" style="height: 300rpx; width: 365rpx;"></image>
     </view>
+  </view>
+  <view wx:if="{{ listLoading }}">
+    <van-skeleton wx:for="{{[1,2,3,4]}}" 
+      style="margin: 20rpx;"
+      title row="3" loading="{{ listLoading }}" />
   </view>
 </view>
 

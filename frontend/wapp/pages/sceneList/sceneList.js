@@ -38,6 +38,7 @@ Page({
     ],
     costValue: 0,
 
+    listLoading: false,
     sceneryTotalList: [],
     sceneryShowList: [],
     tmpSceneryList: defaultData.sceneryList,
@@ -65,6 +66,9 @@ Page({
 
   getSceneryList(keyword, initFormer) {
     console.log("GET: sceneryList ? keyword =", keyword)
+    this.setData({
+      listLoading: true,
+    })
 
     var formData = {
       "keyword": keyword,
@@ -125,13 +129,17 @@ Page({
 
         /* 选择显示的列表 */
         this.setData({
-          sceneryShowList: this.data.sceneryTotalList
+          sceneryShowList: this.data.sceneryTotalList,
+          listLoading: false,
         })
         console.log(this.data.sceneryShowList)
       },
       fail: (res) => {
         console.log("请求景点列表失败")
         console.log(res)
+        this.setData({
+          listLoading: false,
+        })
       },
     })  
   },
