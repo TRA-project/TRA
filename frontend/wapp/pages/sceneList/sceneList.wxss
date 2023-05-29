@@ -99,18 +99,22 @@
   border-bottom-width: 3rpx;
   border-bottom-color: #b6b6b6;
 }
+.scenery-list-container .van-card__thumb {
+  overflow: hidden;
+  height: 220rpx;
+}
 .scenery-list-container .self-thumb-class {
   padding: 5rpx 0rpx;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200rpx;
-  width: 180rpx;
+  height: 220rpx;
+  width: 280rpx;
   overflow: hidden;
 }
 .scenery-list-container .self-thumb-class .scene-card-image {
-  height: 200rpx !important;
-  width: 280rpx !important;
+  height: 210rpx ;
+  width: 280rpx ;
 }
 .scenery-list-container .self-title-class {
   font-size: 30rpx;
