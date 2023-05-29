@@ -199,6 +199,17 @@
 .travel-plan-display-container .travel-plan-step-desc .desc-button-hover {
   box-shadow: 2rpx 1rpx 10rpx 2rpx rgba(71, 71, 71, 0.637) inset;
 }
+.travel-plan-display-container .content-adapt-btn-out {
+  margin: 8rpx 30rpx;
+  padding: 10rpx;
+  width: 250rpx;
+  background-color: #1e90ff;
+  color: white;
+  font-size: 30rpx;
+}
+.travel-plan-display-container .button-hover {
+  box-shadow: 2rpx 1rpx 10rpx 2rpx rgba(71, 71, 71, 0.637) inset;
+}
 .travel-plan-footer-container {
   position: sticky;
   bottom: 30rpx;

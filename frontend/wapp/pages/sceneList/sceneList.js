@@ -1,4 +1,9 @@
 const utils = require("../../utils/util")
+const defaultData = require("./defaultData")
+
+const typeMap = ['全部类型', '风景区', '交通便利', '文物古迹', '适合亲子', '情侣约会']
+const timeMap = ['全部时长', '3h以内', '3h及以上']
+const timeDataMap = ['', '0 2.9', '3 5']
 
 // pages/sceneList/sceneList.js
 Page({
@@ -12,16 +17,18 @@ Page({
     usage: "search",
 
     optionType: [
-      { text: '全部类型', value: 0 },
-      { text: '亲子出行', value: 1 },
-      { text: '休闲娱乐', value: 2 },
-      { text: '曲径探幽', value: 3 },
+      { text: typeMap[0], value: 0 },
+      { text: typeMap[1], value: 1 },
+      { text: typeMap[2], value: 2 },
+      { text: typeMap[3], value: 3 },
+      { text: typeMap[4], value: 4 },
+      { text: typeMap[5], value: 5 },
     ],
     typeValue: 0,
     optionTime: [
-      { text: '全部时长', value: 0 },
-      { text: '3h 以内', value: 1 },
-      { text: '1天内', value: 2 },
+      { text: timeMap[0], value: 0 },
+      { text: timeMap[1], value: 1 },
+      { text: timeMap[2], value: 2 },
     ],
     timeValue: 0,
     optionCost: [
@@ -31,65 +38,10 @@ Page({
     ],
     costValue: 0,
 
+    listLoading: false,
     sceneryTotalList: [],
     sceneryShowList: [],
-    tmpSceneryList: [
-      {
-        id: 1,
-        name: "回忆之丘",
-        desc: "艾恩格朗特47层南侧野外迷宫",
-        tags: ["休闲娱乐", "复活"],
-        type: 2,
-        time: "3h",
-        score: 5,
-        price: 10,
-        image: "preview.png",
-      },
-      {
-        id: 2,
-        name: "西边山脉",
-        desc: "艾恩格朗特55层，吞食水晶的魔龙出没，占位符占位符占位符占位符占位符占位符占位符占位符占位符占位符",
-        tags: ["亲子出行", "锻造材料"],
-        type: 1,
-        time: "8h",
-        score: 4,
-        price: 50,
-        image: "preview.png",
-      },
-      {
-        id: 3,
-        name: "森之屋",
-        desc: "艾恩格朗特22层南部高拉尔村外围",
-        tags: ["曲径探幽"],
-        type: 3,
-        time: "3h",
-        score: 5,
-        price: 0,
-        image: "preview.png",
-      },
-      {
-        id: 4,
-        name: "塞尔穆布鲁克",
-        desc: "艾恩格朗特61层中心市区",
-        tags: ["休闲娱乐", "居家"],
-        type: 2,
-        time: "3h",
-        score: 5,
-        price: 10,
-        image: "preview.png",
-      },
-      {
-        id: 5,
-        name: "莉兹贝特武器店",
-        desc: "艾恩格朗特48层主街区琳达司",
-        tags: ["休闲娱乐", "锻造"],
-        type: 2,
-        time: "3h",
-        score: 5,
-        price: 20,
-        image: "preview.png",
-      },
-    ],
+    tmpSceneryList: defaultData.sceneryList,
 
     // reselect 专用
     formerScenery: {},
@@ -114,14 +66,26 @@ Page({
 
   getSceneryList(keyword, initFormer) {
     console.log("GET: sceneryList ? keyword =", keyword)
+    this.setData({
+      listLoading: true,
+    })
+
+    var formData = {
+      "keyword": keyword,
+    }
+    if (this.data.typeValue != 0) {
+      formData["tag"] = typeMap[this.data.typeValue]
+    }
+    if (this.data.timeValue != 0) {
+      formData["time"] = timeDataMap[this.data.timeValue];
+    }
+
     var url = utils.server_hostname + "/api/core/" + "sights/search"
     var token = (wx.getStorageSync('token') == '')? "notoken" : wx.getStorageSync('token')
     wx.request({
       url: url,
       method: "GET",
-      data: {
-        "keyword": keyword
-      },
+      data: formData,
       header: {
         "token-auth": token
       },
@@ -165,13 +129,17 @@ Page({
 
         /* 选择显示的列表 */
         this.setData({
-          sceneryShowList: this.data.sceneryTotalList
+          sceneryShowList: this.data.sceneryTotalList,
+          listLoading: false,
         })
         console.log(this.data.sceneryShowList)
       },
       fail: (res) => {
         console.log("请求景点列表失败")
         console.log(res)
+        this.setData({
+          listLoading: false,
+        })
       },
     })  
   },
@@ -249,7 +217,7 @@ Page({
     // 该页面由sceneSearch而来
     if (this.data.usage === "search") {
       console.log("for search: back")
-      //wx.navigateBack()
+      wx.navigateBack()
     }
     // 该页面由travelPlanPreview而来
     if (this.data.usage === "reselect") {
@@ -292,9 +260,13 @@ Page({
     this.setData({
       typeValue: event.detail
     })
-    console.log("change type to", this.data.typeValue)
-    var that = this // 使用自定义函数时得用
-    that.selectSceneryFromTag()
+    this.getSceneryList(this.data.keyword, false)
+  },
+  onChangeTime(event) {
+    this.setData({
+      timeValue: event.detail
+    })
+    this.getSceneryList(this.data.keyword, false)
   },
 
   addScenery() {
