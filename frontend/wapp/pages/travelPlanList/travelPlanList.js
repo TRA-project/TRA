@@ -270,10 +270,14 @@ Page({
       success: (res) => {
         wx.hideLoading()
         if (res.statusCode !== 200) {
-          var errdata = res.data
+          let errdata = res.data
+          let msg = "发生错误，无法提交"
+          if (errdata.error_code === 664) {
+            msg = "设定时间已存在计划"
+          }
           wx.showToast({
-            title: res.data.detail,
-            icon: "error"
+            title: msg,
+            icon: "none"
           })
 
         } else {

@@ -65,7 +65,22 @@ class SightApis(GenericViewSet, RetrieveModelMixin, CreateModelMixin, UpdateMode
     @action(methods=['GET'], detail=False, url_path='search')
     def search(self, request):
         kw = request.query_params.get('keyword')
-        sight_queryset = Sight.objects.filter(name__contains=kw)
+        tag = request.query_params.get('tag')
+        time = request.query_params.get('time')
+        sight_queryset = Sight.objects.all()
+
+        if kw:
+            sight_queryset = sight_queryset.filter(Q(name__contains=kw) | Q(desc__contains=kw))
+        if tag:
+            sight_queryset = sight_queryset.filter(Q(tags__name__icontains=tag))
+
+        if time:
+            # Assuming you have a 'time' field in the Sight model
+            time = time.split()
+            begin_time = time[0]
+            end_time = time[1]
+            sight_queryset = sight_queryset.filter(playtime__range=[begin_time, end_time])
+
         serializer = SightSerializer(instance=sight_queryset, many=True)
         return Response(serializer.data)
 
