@@ -67,7 +67,7 @@ class PlanApis(ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         data = {}
         plan_id = kwargs.get('pk')
-        plan_items = PlanItem.objects.filter(plan_id=plan_id)
+        plan_items = PlanItem.objects.filter(plan_id=plan_id,type=1)
         serializer = PlanItemDetailSerializer(plan_items, many=True)
         data['plan_items'] = serializer.data
         plan = Plan.objects.get(id=plan_id)
