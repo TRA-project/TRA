@@ -10,7 +10,7 @@
       bindinput="onInput"  bindconfirm="onConfirm"
       bindblur="onBlur" bindfocus="onFocus"
     /> 
-    <icon type="clear" size="20" bindtap="deleteInput" wx:if="{{keyword !== ''}}" />
+    <icon type="clear" size="26" bindtap="deleteInput" wx:if="{{keyword !== ''}}" />
   </view>
 </view>
 

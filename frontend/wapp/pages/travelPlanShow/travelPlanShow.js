@@ -213,7 +213,7 @@ Page({
         promiseArr.push(this.getPolyline(points[i], points[i+1]))
         console.log(i)
         i += 1
-      }, 200)
+      }, 250)
     })
     
     fillPromiseArr.then(() => {
@@ -472,19 +472,23 @@ Page({
           }
         })
       }
-    }).then(() => {
+    })
+    
+    Dialog.confirm({
+      title: "调整作息时间",
+      beforeClose
+    }).then(() => { /* confirm */
       if (isChanged) {
         console.log("reload travelPlanShow")
         this.onLoad({
           planid: this.data.travelPlanId
         })
       }
-    });
-    
-    Dialog.confirm({
-      title: "调整作息时间",
-      beforeClose
-    });
+    }).catch(() => { /* cancel */
+      this.setData({
+        dialogShow: false
+      })
+    })
     
   },
 

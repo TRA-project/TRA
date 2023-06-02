@@ -61,7 +61,7 @@ Page({
       usage: options.usage,
     })
 
-    this.getSceneryList(this.data.keyword, true)
+    this.getSceneryList(this.data.keyword, this.data.usage === "reselect")
   },
 
   getSceneryList(keyword, initFormer) {
