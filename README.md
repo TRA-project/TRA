@@ -27,9 +27,9 @@
 
 ## 功能介绍
 
-基本功能展示
+省流 ↓
 
-![home-preview.jpg](https://i.postimg.cc/Qx2NMf9H/home-preview.jpg)
+![home-preview.jpg](https://i.postimg.cc/9MHMdmJV/cover.png)
 
 ## 使用方法
 微信小程序搜索： xxx
