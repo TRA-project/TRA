@@ -57,20 +57,21 @@ page{
     height: 100%;
 }
 
+/* 不得不说，这aboutUs写得好稀烂啊 */
 .bg_down{
     display: flex;
     position: relative;
     flex-direction: column;
     align-items: center;
     top:-500rpx;
-    height: 3300rpx;
+    height: 4100rpx;
     background: #256df3;
     z-index: 1;
 }
 .bg_down::before{
     content: '';
     width: 120%;
-    height: 2100rpx;
+    height: 3100rpx;
     position: absolute;
     z-index: 1;
     left: -10%;
@@ -109,7 +110,7 @@ page{
     height: auto;
     width: 100%;
     z-index:2;
-    font-size: 45rpx;
+    font-size: 42rpx;
     font-weight:750;
     color:#0058fc;
 }
