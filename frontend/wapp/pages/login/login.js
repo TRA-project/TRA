@@ -21,15 +21,30 @@ Page({
   },
 
   // 输入框聚焦时显示输入功能按钮
-  focus: function(event) {
+  onFocus(event) {
+    console.log(event);
     var id = event.currentTarget.id
     var visible_img = (id == "password")? utils.server_imagename + "/unvisible.png" : ""
-    this.setData({focus:id, unvisible:true, visible_img:visible_img})
+    this.setData({
+      focus:id, 
+      unvisible:true, 
+      visible_img:visible_img}
+    )
   },
 
   // 输入框失焦时隐藏输入功能按钮
-  blur: function(event) {
-    this.setData({focus:"",unvisible:true,visible_img:""})
+  onBlur(event) {
+    this.setData({
+      focus:"",
+      unvisible:true,
+      visible_img:""}
+    )
+  },
+
+  onNameConfirm() {
+    this.setData({
+      focus:"password"
+    })
   },
 
   // 点击密码可见按钮后切换密码可见状态

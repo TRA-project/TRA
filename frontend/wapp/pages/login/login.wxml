@@ -5,11 +5,12 @@
 
 <!-- 用户名输入模块 -->
 <view class="box_view">
-  <image class="input_bg" src="{{server_imagename}}/input_bg.png"></image>
+  <image class="input_bg" src="{{server_imagename}}/input_bg.png"></image> <!-- （:原来是这么解决的嘛doge） -->
   <view class="input_view">
-    <input id="name" class="name" 
-    type="text" placeholder="用户名" placeholder-class="center"
-    bindinput="input" bindfocus="focus" bindblur="blur"></input>
+    <input id="name" class="name" focus="{{focus === 'name'}}"
+      type="text" placeholder="用户名" placeholder-class="center"
+      bindinput="input" bindfocus="onFocus" bindblur="onBlur"
+      bindconfirm="onNameConfirm"></input>
   </view>
 </view>
 
@@ -17,13 +18,14 @@
 <view class="box_view">
   <image class="input_bg" src="{{server_imagename}}/input_bg.png"></image>
   <view class="input_view">
-    <button id="visible_btt" class="visible_btt" style="width:80rpx;height:100rpx" bindtap="visibleTap">
-    </button>
+    <!-- 显示密码：应该是之前没写完，那咱也不加了 -->
+    <!-- <button class="visible_btt" style="width:80rpx;height:100rpx" bindtap="visibleTap"></button> -->
     <!-- <image class="visible_img" src="{{visible_img}}"></image> -->
 
-    <input id="password" class="password" 
-    type="text" password="{{unvisible}}" placeholder="输入密码" placeholder-class="center" hold-keyboard="true"
-    bindinput="input" bindfocus="focus" bindblur="blur">
+    <input id="password" class="password" focus="{{focus === 'password'}}"
+      type="text" password="{{unvisible}}" hold-keyboard="{{true}}"
+      placeholder="输入密码" placeholder-class="center" 
+      bindinput="input" bindfocus="onFocus" bindblur="onBlur">
     </input>
   </view>
 </view>
