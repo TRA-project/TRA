@@ -124,7 +124,10 @@
           </a-menu-item>
           <a-sub-menu key="sub10">
             <span slot="title"><a-icon type="flag" />景点管理</span>
-
+            <a-menu-item key="20">
+              景点信息管理
+              <router-link to="/sceneryManage"></router-link>
+            </a-menu-item>
             <a-menu-item key="21">
               景点审核
               <router-link to="/sceneryAudit"></router-link>
